@@ -1,4 +1,4 @@
-# Slint Rust Template
+# Young Shell
 
 A template for a Rust application that's using [Slint](https://slint.rs/) for the user interface.
 
@@ -7,6 +7,48 @@ A template for a Rust application that's using [Slint](https://slint.rs/) for th
 This template helps you get started developing a Rust application with Slint as toolkit
 for the user interface. It demonstrates the integration between the `.slint` UI markup and
 Rust code, how to react to callbacks, get and set properties, and use basic widgets.
+
+
+## Features
+- Top status bar (`astal toggle top`)
+  - [ ] Weather
+  - [ ] Network status
+  - [ ] Time
+  - [ ] Wallpaper switcher
+- Right music bar (`astal toggle right`)
+  - [ ] Music controls (Uses MPRIS)
+  - [ ] Lyrics (requires [sptlrx](https://github.com/raitonoberu/sptlrx) in mpris mode)
+  - [ ] Music visualizer (uses [CAVA](https://github.com/karlstav/cava))
+- Notifications
+  - Uses regular wayland protocols for notifications
+- Launcher
+  - [ ] Fuzzy app launcher
+  - [ ] Calculator (requires [libqalculate](https://qalculate.github.io/). `= ` prefix)
+  - [ ] Journal entry (requires Obsidian + Thino Pro plugin. I will add support for other journaling apps soon™. `; ` prefix)
+  - [ ] Task taking (will use ticktick. I will add support for other task managers soon™)
+
+- [ ] App Launcher
+- [ ] Power Menu
+- [ ] Wallpaper Selector
+- [ ] System Tray
+- [ ] Notifications
+- [ ] Terminal
+- [ ] Pins
+- [ ] Kanban Board
+- [ ] Calendar (Incomplete)
+- [ ] Color Picker
+- [ ] Dashboard
+- [ ] Network Manager
+- [ ] Bluetooth Manager
+- [ ] Power Manager
+- [ ] Settings
+- [ ] Screenshot Tool
+- [ ] Screen Recorder
+- [ ] Clipboard Manager
+- [ ] Dock
+- [ ] Workspaces Overview
+- [ ] Multimodal AI Assistant
+- [ ] Vertical Layout
 
 ## Usage
 
@@ -25,14 +67,3 @@ Rust code, how to react to callbacks, get and set properties, and use basic widg
 5. Run the application binary:
     ```
     cargo run
-    ```
-
-We recommend using an IDE for development, along with our [LSP-based IDE integration for `.slint` files](https://github.com/slint-ui/slint/blob/master/tools/lsp/README.md). You can also load this project directly in [Visual Studio Code](https://code.visualstudio.com) and install our [Slint extension](https://marketplace.visualstudio.com/items?itemName=Slint.slint).
-
-## Next Steps
-
-We hope that this template helps you get started, and that you enjoy exploring making user interfaces with Slint. To learn more
-about the Slint APIs and the `.slint` markup language, check out our [online documentation](https://slint.dev/docs).
-
-Don't forget to edit this readme to replace it by yours, and edit the `name =` field in `Cargo.toml` to match the name of your
-project.
