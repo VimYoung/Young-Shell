@@ -19,7 +19,12 @@ You can use Spell by adding it to your project and finding more about it in the 
 ```
 cargo add Spell
 ```
-Look at wuickstart for getting your first widget displaced.
+Look at quickstart for getting your first widget displaced.
+I haven't still included any batteries in spell specific to desktop shell creation,
+yet examples of various utilities could soon be found inside Young-Shell (like battery,
+time, systemtry etc). Yet, since the backend is rust, you can virtually create anything
+yourself. Pull up a few crates and start coding. Maybe pull a PR if you have implemented
+any common function that can be converted into a battery/utility.
 
 ### Why Slint ??
 If you are cross the question of why not use any other gtk based widget system,
