@@ -413,7 +413,7 @@ fn main() {
     let layer =
         layer_shell.create_layer_surface(&qh, surface, Layer::Top, Some("simple_layer"), None);
     // Configure the layer surface, providing things like the anchor on screen, desired size and the keyboard
-    // interactivity
+    // interactivity::new(0, 0, 0)
     layer.set_anchor(Anchor::BOTTOM);
     layer.set_keyboard_interactivity(KeyboardInteractivity::OnDemand);
     layer.set_size(256, 256);

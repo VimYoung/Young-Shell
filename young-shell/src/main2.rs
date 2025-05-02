@@ -1,4 +1,4 @@
-use std::{convert::TryInto, error::Error, num::NonZeroU32, rc::Rc};
+use std::{cell::RefCell, convert::TryInto, error::Error, num::NonZeroU32, rc::Rc};
 
 use slint::{
     platform::{
@@ -36,17 +36,17 @@ use smithay_client_toolkit::{
     },
 };
 
-pub struct WayWinAdapter {
-    window: Window,
+struct SpellWindowInner {
     rendered: SoftwareRenderer,
-    size: PhysicalSize, //I am not adding any more properties for now and not puttinting it in a
-
     slint_buffer: [Rgb8Pixel; 256 * 256],
-    //Cell
+}
+
+pub struct SpellWindowAdapter {
+    window: Window,
+    inner: RefCell<SpellWindowInner>,
+    size: PhysicalSize,
     registry_state: RegistryState,
-    // seat_state: SeatState,
     output_state: OutputState,
-    event_queue: EventQueue<Self>,
     shm: Shm,
     pool: SlotPool,
     layer: LayerSurface,
@@ -56,16 +56,14 @@ pub struct WayWinAdapter {
     first_configure: bool,
 }
 
-impl WayWinAdapter {
+impl SpellWindowAdapter {
     fn new(
         repaint_buffer_type: RepaintBufferType,
         width: u32,
         height: u32,
         slint_buffer: [Rgb8Pixel; 256 * 256],
         registry_state: RegistryState,
-        // seat_state: SeatState,
         output_state: OutputState,
-        event_queue: EventQueue<Self>,
         shm: Shm,
         pool: SlotPool,
         layer: LayerSurface,
@@ -74,22 +72,25 @@ impl WayWinAdapter {
         exit: bool,
         first_configure: bool,
     ) -> Rc<Self> {
-        Rc::<WayWinAdapter>::new_cyclic(|adapter| WayWinAdapter {
-            window: Window::new(adapter.clone()),
-            rendered: SoftwareRenderer::new_with_repaint_buffer_type(repaint_buffer_type),
-            size: PhysicalSize { width, height },
-            slint_buffer,
-            registry_state,
-            // seat_state,
-            output_state,
-            event_queue,
-            shm,
-            pool,
-            layer,
-            keyboard_focus,
-            pointer,
-            exit,
-            first_configure,
+        Rc::<SpellWindowAdapter>::new_cyclic(|adapter| {
+            let window = Window::new(adapter.clone());
+            SpellWindowAdapter {
+                window,
+                inner: RefCell::new(SpellWindowInner {
+                    rendered: SoftwareRenderer::new_with_repaint_buffer_type(repaint_buffer_type),
+                    slint_buffer,
+                }),
+                size: PhysicalSize { width, height },
+                registry_state,
+                output_state,
+                shm,
+                pool,
+                layer,
+                keyboard_focus,
+                pointer,
+                exit,
+                first_configure,
+            }
         })
     }
 
@@ -108,19 +109,24 @@ impl WayWinAdapter {
             .expect("create buffer");
         // Drawing the window
         {
+            let inner = self.inner.borrow();
             canvas
                 .chunks_exact_mut(4)
                 .enumerate()
                 .for_each(|(index, chunk)| {
-                    let a: u8 = 0xFF;
-                    let r = self.slint_buffer[index].r;
-                    let g = self.slint_buffer[index].g;
-                    let b = self.slint_buffer[index].b;
-                    let color: u32 =
-                        ((a as u32) << 24) | ((r as u32) << 16) | ((g as u32) << 8) | (b as u32);
+                    if index < inner.slint_buffer.len() {
+                        let a: u8 = 0xFF;
+                        let r = inner.slint_buffer[index].r;
+                        let g = inner.slint_buffer[index].g;
+                        let b = inner.slint_buffer[index].b;
+                        let color: u32 = ((a as u32) << 24)
+                            | ((r as u32) << 16)
+                            | ((g as u32) << 8)
+                            | (b as u32);
 
-                    let array: &mut [u8; 4] = chunk.try_into().unwrap();
-                    *array = color.to_le_bytes();
+                        let array: &mut [u8; 4] = chunk.try_into().unwrap();
+                        *array = color.to_le_bytes();
+                    }
                 });
         }
 
@@ -139,24 +145,15 @@ impl WayWinAdapter {
             .attach_to(self.layer.wl_surface())
             .expect("buffer attach");
         self.layer.commit();
-
-        // TODO save and reuse buffer when the window size is unchanged.  This is especially
-        // useful if you do damage tracking, since you don't need to redraw the undamaged parts
-        // of the canvas.
-    }
-
-    fn initialise_application(&mut self, mut event_queue: EventQueue<Self>) {
-        self.event_queue.blocking_dispatch(self).unwrap();
     }
 }
 
-impl WindowAdapter for WayWinAdapter {
+impl WindowAdapter for SpellWindowAdapter {
     fn window(&self) -> &Window {
         &self.window
     }
 
     fn size(&self) -> PhysicalSize {
-        // This value have to be made dynamic by using `xandr`
         PhysicalSize {
             width: self.size.width,
             height: self.size.height,
@@ -164,47 +161,42 @@ impl WindowAdapter for WayWinAdapter {
     }
 
     fn renderer(&self) -> &dyn slint::platform::Renderer {
-        &self.rendered
+        // This is safe because we're ensuring the lifetime of the reference doesn't exceed
+        // the lifetime of the borrow
+        &self.inner.borrow().rendered
     }
 }
 
 struct SlintLayerShell {
-    window_adapter: Rc<WayWinAdapter>,
+    window_adapter: Rc<SpellWindowAdapter>,
 }
 
 impl Platform for SlintLayerShell {
     fn create_window_adapter(&self) -> Result<Rc<dyn WindowAdapter>, slint::PlatformError> {
         Ok(self.window_adapter.clone())
     }
-
-    // THis function doesn't only run the event loop. It i also responsible for
-    //the creation of variables and their use in various sector.
-    // fn run_event_loop(&self) -> Result<(), slint::PlatformError> {
-    // }
 }
 
 slint::include_modules!();
 fn main() -> Result<(), Box<dyn Error>> {
-    // Dimentions for the widget size
-    let width = 256; //1366;
-    let height = 256; //768;
+    // Dimensions for the widget size
+    let width = 256;
+    let height = 256;
 
-    // let width = self.window_adapter.size.width;
-    // let height = self.window_adapter.size.height;
     const DISPLAY_WIDTH: usize = 256;
     const DISPLAY_HEIGHT: usize = 256;
 
     let mut buffer1 = [Rgb8Pixel::new(0, 0, 0); DISPLAY_WIDTH * DISPLAY_HEIGHT];
     let mut buffer2 = [Rgb8Pixel::new(0, 0, 0); DISPLAY_WIDTH * DISPLAY_HEIGHT];
 
-    //configure wayland to use these bufferes.
+    // Configure wayland to use these buffers
     let mut currently_displayed_buffer: &mut [_] = &mut buffer1;
     let mut work_buffer: &mut [_] = &mut buffer2;
 
-    // Initialisation of wayland components.
+    // Initialisation of wayland components
     let conn = Connection::connect_to_env().unwrap();
     let (globals, mut event_queue) = registry_queue_init(&conn).unwrap();
-    let qh: QueueHandle<WayWinAdapter> = event_queue.handle();
+    let qh: QueueHandle<SpellWindowAdapter> = event_queue.handle();
 
     let compositor = CompositorState::bind(&globals, &qh).expect("wl_compositor is not available");
     let layer_shell = LayerShell::bind(&globals, &qh).expect("layer shell is not available");
@@ -214,19 +206,17 @@ fn main() -> Result<(), Box<dyn Error>> {
     let layer =
         layer_shell.create_layer_surface(&qh, surface, Layer::Top, Some("simple_layer"), None);
     layer.set_anchor(Anchor::BOTTOM);
-    // layer.set_keyboard_interactivity(KeyboardInteractivity::OnDemand);
     layer.set_size(width, height);
     layer.commit();
     let pool = SlotPool::new(256 * 256 * 4, &shm).expect("Failed to create pool");
 
-    let mut window = WayWinAdapter::new(
+    let window = SpellWindowAdapter::new(
         SwappedBuffers,
         width,
         height,
         currently_displayed_buffer.try_into()?,
         RegistryState::new(&globals),
-        /*SeatState::new(&globals, &qh),*/ OutputState::new(&globals, &qh),
-        event_queue,
+        OutputState::new(&globals, &qh),
         shm,
         pool,
         layer,
@@ -247,7 +237,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         panic!("{err}");
     });
 
-    //Slint Managing Inputs;
+    // Slint Managing Inputs
     ui.on_request_increase_value({
         let ui_handle = ui.as_weak();
         move || {
@@ -256,47 +246,55 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
     });
 
-    // ui.run()?;
-
     println!("Starting the event loop");
+
+    // Create a separate mutable reference to handle the Rc
+    let window_handle = Rc::new(RefCell::new(window));
 
     loop {
         slint::platform::update_timers_and_animations();
-        // Following line does the updates to the buffer. Now those updates
-        // needs to be picked by the compositer/windowing system and then
-        // displayed accordingly.
-        window.rendered.render(work_buffer, DISPLAY_WIDTH);
-        // self.window_adapter
-        //     .rendered
-        //     .render(work_buffer, DISPLAY_WIDTH);
 
-        // let wayland_buffer = converter(work_buffer);
-        // window.initialise_application(event_queue);
-        // event_queue.(&mut window).unwrap();
-        window.converter(&qh);
+        // Fix for line 267 - properly access the inner renderer with mutable borrow
+        {
+            let window_ref = window_handle.borrow();
+            let mut inner = window_ref.inner.borrow_mut();
+            inner.rendered.render(work_buffer, DISPLAY_WIDTH);
+        }
 
+        // Handle event queue with proper borrowing
+        {
+            let mut window_ref = window_handle.borrow_mut();
+            event_queue.blocking_dispatch(&mut *window_ref).unwrap();
+        }
+
+        // Swap buffers
         core::mem::swap::<&mut [_]>(&mut work_buffer, &mut currently_displayed_buffer);
-    }
 
-    // Ok(())
+        // Update the buffer in window's inner state
+        {
+            let window_ref = window_handle.borrow();
+            let mut inner = window_ref.inner.borrow_mut();
+            // Only update if conversion succeeds
+            if let Ok(buffer) = currently_displayed_buffer.try_into() {
+                inner.slint_buffer = buffer;
+            }
+        }
+    }
 }
 
-delegate_compositor!(WayWinAdapter);
-delegate_registry!(WayWinAdapter);
-delegate_output!(WayWinAdapter);
-delegate_shm!(WayWinAdapter);
-// delegate_seat!(WayWinAdapter);
-// delegate_keyboard!(WayWinAdapter);
-// delegate_pointer!(WayWinAdapter);
-delegate_layer!(WayWinAdapter);
+delegate_compositor!(SpellWindowAdapter);
+delegate_registry!(SpellWindowAdapter);
+delegate_output!(SpellWindowAdapter);
+delegate_shm!(SpellWindowAdapter);
+delegate_layer!(SpellWindowAdapter);
 
-impl ShmHandler for WayWinAdapter {
+impl ShmHandler for SpellWindowAdapter {
     fn shm_state(&mut self) -> &mut Shm {
         &mut self.shm
     }
 }
 
-impl OutputHandler for WayWinAdapter {
+impl OutputHandler for SpellWindowAdapter {
     fn output_state(&mut self) -> &mut OutputState {
         &mut self.output_state
     }
@@ -326,7 +324,7 @@ impl OutputHandler for WayWinAdapter {
     }
 }
 
-impl CompositorHandler for WayWinAdapter {
+impl CompositorHandler for SpellWindowAdapter {
     fn scale_factor_changed(
         &mut self,
         _conn: &Connection,
@@ -378,7 +376,7 @@ impl CompositorHandler for WayWinAdapter {
     }
 }
 
-impl LayerShellHandler for WayWinAdapter {
+impl LayerShellHandler for SpellWindowAdapter {
     fn closed(&mut self, _conn: &Connection, _qh: &QueueHandle<Self>, _layer: &LayerSurface) {
         self.exit = true;
     }
@@ -402,63 +400,9 @@ impl LayerShellHandler for WayWinAdapter {
     }
 }
 
-// impl SeatHandler for WayWinAdapter {
-//     fn seat_state(&mut self) -> &mut SeatState {
-//         &mut self.seat_state
-//     }
-//
-//     fn new_seat(&mut self, _: &Connection, _: &QueueHandle<Self>, _: wl_seat::WlSeat) {}
-//
-//     fn new_capability(
-//         &mut self,
-//         _conn: &Connection,
-//         qh: &QueueHandle<Self>,
-//         seat: wl_seat::WlSeat,
-//         capability: Capability,
-//     ) {
-//         if capability == Capability::Keyboard && self.keyboard.is_none() {
-//             println!("Set keyboard capability");
-//             let keyboard = self
-//                 .seat_state
-//                 .get_keyboard(qh, &seat, None)
-//                 .expect("Failed to create keyboard");
-//             self.keyboard = Some(keyboard);
-//         }
-//
-//         if capability == Capability::Pointer && self.pointer.is_none() {
-//             println!("Set pointer capability");
-//             let pointer = self
-//                 .seat_state
-//                 .get_pointer(qh, &seat)
-//                 .expect("Failed to create pointer");
-//             self.pointer = Some(pointer);
-//         }
-//     }
-//
-//     fn remove_capability(
-//         &mut self,
-//         _conn: &Connection,
-//         _: &QueueHandle<Self>,
-//         _: wl_seat::WlSeat,
-//         capability: Capability,
-//     ) {
-//         if capability == Capability::Keyboard && self.keyboard.is_some() {
-//             println!("Unset keyboard capability");
-//             self.keyboard.take().unwrap().release();
-//         }
-//
-//         if capability == Capability::Pointer && self.pointer.is_some() {
-//             println!("Unset pointer capability");
-//             self.pointer.take().unwrap().release();
-//         }
-//     }
-//
-//     fn remove_seat(&mut self, _: &Connection, _: &QueueHandle<Self>, _: wl_seat::WlSeat) {}
-// }
-//
-impl ProvidesRegistryState for WayWinAdapter {
+impl ProvidesRegistryState for SpellWindowAdapter {
     fn registry(&mut self) -> &mut RegistryState {
         &mut self.registry_state
     }
-    registry_handlers![OutputState /*, SeatState*/];
+    registry_handlers![OutputState];
 }
