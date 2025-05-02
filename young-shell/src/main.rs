@@ -36,17 +36,49 @@ use smithay_client_toolkit::{
     },
 };
 
-pub struct WayWinAdapter {
+struct SpellWinAdapter {
     window: Window,
     rendered: SoftwareRenderer,
     size: PhysicalSize, //I am not adding any more properties for now and not puttinting it in a
+}
 
-    slint_buffer: [Rgb8Pixel; 256 * 256],
+impl SpellWinAdapter {
+    fn new(repaint_buffer_type: RepaintBufferType, width: u32, height: u32) -> Rc<Self> {
+        Rc::<SpellWinAdapter>::new_cyclic(|adapter| SpellWinAdapter {
+            window: Window::new(adapter.clone()),
+            rendered: SoftwareRenderer::new_with_repaint_buffer_type(repaint_buffer_type),
+            size: PhysicalSize { width, height },
+        })
+    }
+}
+
+impl WindowAdapter for SpellWinAdapter {
+    fn window(&self) -> &Window {
+        &self.window
+    }
+
+    fn size(&self) -> PhysicalSize {
+        // This value have to be made dynamic by using `xandr`
+        PhysicalSize {
+            width: self.size.width,
+            height: self.size.height,
+        }
+    }
+
+    fn renderer(&self) -> &dyn slint::platform::Renderer {
+        &self.rendered
+    }
+}
+
+pub struct WayWinAdapter {
+    width: u32,
+    height: u32,
+    slint_buffer: Option<[Rgb8Pixel; 256 * 256]>,
     //Cell
     registry_state: RegistryState,
     // seat_state: SeatState,
     output_state: OutputState,
-    event_queue: EventQueue<Self>,
+    // event_queue: EventQueue<Self>,
     shm: Shm,
     pool: SlotPool,
     layer: LayerSurface,
@@ -58,14 +90,12 @@ pub struct WayWinAdapter {
 
 impl WayWinAdapter {
     fn new(
-        repaint_buffer_type: RepaintBufferType,
-        width: u32,
-        height: u32,
-        slint_buffer: [Rgb8Pixel; 256 * 256],
+        width_height: (u32, u32),
+        slint_buffer: Option<[Rgb8Pixel; 256 * 256]>,
         registry_state: RegistryState,
         // seat_state: SeatState,
         output_state: OutputState,
-        event_queue: EventQueue<Self>,
+        // event_queue: EventQueue<Self>,
         shm: Shm,
         pool: SlotPool,
         layer: LayerSurface,
@@ -73,16 +103,15 @@ impl WayWinAdapter {
         pointer: Option<wl_pointer::WlPointer>,
         exit: bool,
         first_configure: bool,
-    ) -> Rc<Self> {
-        Rc::<WayWinAdapter>::new_cyclic(|adapter| WayWinAdapter {
-            window: Window::new(adapter.clone()),
-            rendered: SoftwareRenderer::new_with_repaint_buffer_type(repaint_buffer_type),
-            size: PhysicalSize { width, height },
+    ) -> Self {
+        WayWinAdapter {
+            width: width_height.0,
+            height: width_height.1,
             slint_buffer,
             registry_state,
             // seat_state,
             output_state,
-            event_queue,
+            // event_queue,
             shm,
             pool,
             layer,
@@ -90,13 +119,17 @@ impl WayWinAdapter {
             pointer,
             exit,
             first_configure,
-        })
+        }
+    }
+
+    fn set_buffer(&mut self, buffer: [Rgb8Pixel; 256 * 256]) {
+        self.slint_buffer = Some(buffer);
     }
 
     fn converter(&mut self, qh: &QueueHandle<Self>) {
-        let width = self.size.width;
-        let height = self.size.height;
-        let stride = self.size.width as i32 * 4;
+        let width = self.width;
+        let height = self.height;
+        let stride = self.width as i32 * 4;
         let (buffer, canvas) = self
             .pool
             .create_buffer(
@@ -113,9 +146,9 @@ impl WayWinAdapter {
                 .enumerate()
                 .for_each(|(index, chunk)| {
                     let a: u8 = 0xFF;
-                    let r = self.slint_buffer[index].r;
-                    let g = self.slint_buffer[index].g;
-                    let b = self.slint_buffer[index].b;
+                    let r = self.slint_buffer.unwrap()[index].r;
+                    let g = self.slint_buffer.unwrap()[index].g;
+                    let b = self.slint_buffer.unwrap()[index].b;
                     let color: u32 =
                         ((a as u32) << 24) | ((r as u32) << 16) | ((g as u32) << 8) | (b as u32);
 
@@ -145,31 +178,13 @@ impl WayWinAdapter {
         // of the canvas.
     }
 
-    fn initialise_application(&mut self, mut event_queue: EventQueue<Self>) {
-        self.event_queue.blocking_dispatch(self).unwrap();
-    }
-}
-
-impl WindowAdapter for WayWinAdapter {
-    fn window(&self) -> &Window {
-        &self.window
-    }
-
-    fn size(&self) -> PhysicalSize {
-        // This value have to be made dynamic by using `xandr`
-        PhysicalSize {
-            width: self.size.width,
-            height: self.size.height,
-        }
-    }
-
-    fn renderer(&self) -> &dyn slint::platform::Renderer {
-        &self.rendered
-    }
+    // fn initialise_application(&mut self, mut event_queue: EventQueue<Self>) {
+    //     self.event_queue.blocking_dispatch(self).unwrap();
+    // }
 }
 
 struct SlintLayerShell {
-    window_adapter: Rc<WayWinAdapter>,
+    window_adapter: Rc<SpellWinAdapter>,
 }
 
 impl Platform for SlintLayerShell {
@@ -219,14 +234,12 @@ fn main() -> Result<(), Box<dyn Error>> {
     layer.commit();
     let pool = SlotPool::new(256 * 256 * 4, &shm).expect("Failed to create pool");
 
-    let mut window = WayWinAdapter::new(
-        SwappedBuffers,
-        width,
-        height,
-        currently_displayed_buffer.try_into()?,
+    let window = SpellWinAdapter::new(SwappedBuffers, width, height);
+    let mut waywindow = WayWinAdapter::new(
+        (width, height),
+        None,
         RegistryState::new(&globals),
         /*SeatState::new(&globals, &qh),*/ OutputState::new(&globals, &qh),
-        event_queue,
         shm,
         pool,
         layer,
@@ -258,7 +271,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     // ui.run()?;
 
-    println!("Starting the event loop");
+    println!("Casting the Spell");
 
     loop {
         slint::platform::update_timers_and_animations();
@@ -266,15 +279,9 @@ fn main() -> Result<(), Box<dyn Error>> {
         // needs to be picked by the compositer/windowing system and then
         // displayed accordingly.
         window.rendered.render(work_buffer, DISPLAY_WIDTH);
-        // self.window_adapter
-        //     .rendered
-        //     .render(work_buffer, DISPLAY_WIDTH);
-
-        // let wayland_buffer = converter(work_buffer);
-        // window.initialise_application(event_queue);
-        // event_queue.(&mut window).unwrap();
-        window.converter(&qh);
-
+        waywindow.set_buffer(currently_displayed_buffer.try_into()?);
+        // println!("Ran till here.");
+        event_queue.blocking_dispatch(&mut waywindow).unwrap();
         core::mem::swap::<&mut [_]>(&mut work_buffer, &mut currently_displayed_buffer);
     }
 
@@ -391,8 +398,8 @@ impl LayerShellHandler for WayWinAdapter {
         configure: LayerSurfaceConfigure,
         _serial: u32,
     ) {
-        self.size.width = NonZeroU32::new(configure.new_size.0).map_or(256, NonZeroU32::get);
-        self.size.height = NonZeroU32::new(configure.new_size.1).map_or(256, NonZeroU32::get);
+        self.width = NonZeroU32::new(configure.new_size.0).map_or(256, NonZeroU32::get);
+        self.height = NonZeroU32::new(configure.new_size.1).map_or(256, NonZeroU32::get);
 
         // Initiate the first draw.
         if self.first_configure {
