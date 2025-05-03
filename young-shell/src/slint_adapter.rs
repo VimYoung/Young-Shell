@@ -1,14 +1,14 @@
-use std::{convert::TryInto, error::Error, num::NonZeroU32, rc::Rc};
+use std::rc::Rc;
 
 use slint::{
     platform::{
         software_renderer::{
-            RepaintBufferType::{self, SwappedBuffers},
+            RepaintBufferType::{self},
             SoftwareRenderer,
         },
         Platform, WindowAdapter,
     },
-    PhysicalSize, Rgb8Pixel, Window,
+    PhysicalSize, Window,
 };
 
 pub struct SpellWinAdapter {

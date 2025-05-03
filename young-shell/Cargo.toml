@@ -7,10 +7,12 @@ edition = "2021"
 
 [dependencies]
 env_logger = "0.11.7"
-i = "0.1.0"
 i-slint-backend-winit = "1.10.0"
 raw-window-handle = "0.6.2"
-slint = { version = "1.8.0", features = ["raw-window-handle-06", "renderer-software"] }
+slint = { version = "1.8.0", features = [
+  "raw-window-handle-06",
+  "renderer-software",
+] }
 slint-interpreter = "1.10.0"
 smithay-client-toolkit = "0.19.2"
 

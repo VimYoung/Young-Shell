@@ -1,45 +1,33 @@
-use std::{convert::TryInto, error::Error, num::NonZeroU32, rc::Rc};
+use std::{convert::TryInto, num::NonZeroU32};
 
-use slint::{
-    platform::{
-        software_renderer::{
-            RepaintBufferType::{self, SwappedBuffers},
-            SoftwareRenderer,
-        },
-        Platform, WindowAdapter,
-    },
-    PhysicalSize, Rgb8Pixel, Window,
-};
+use slint::Rgb8Pixel;
 use smithay_client_toolkit::{
-    compositor::{CompositorHandler, CompositorState},
-    delegate_compositor, delegate_layer, delegate_output, delegate_registry, delegate_seat,
-    delegate_shm,
+    compositor::CompositorHandler,
+    delegate_compositor, delegate_layer, delegate_output, delegate_registry, delegate_shm,
     output::{OutputHandler, OutputState},
     reexports::client::{
-        globals::registry_queue_init,
         protocol::{wl_output, wl_pointer, wl_shm, wl_surface},
         Connection, EventQueue, QueueHandle,
     },
     registry::{ProvidesRegistryState, RegistryState},
     registry_handlers,
-    seat::SeatState,
     shell::{
-        wlr_layer::{
-            Anchor, KeyboardInteractivity, Layer, LayerShell, LayerShellHandler, LayerSurface,
-            LayerSurfaceConfigure,
-        },
+        wlr_layer::{LayerShellHandler, LayerSurface, LayerSurfaceConfigure},
         WaylandSurface,
     },
-    shm::{
-        slot::{Buffer, SlotPool},
-        Shm, ShmHandler,
-    },
+    shm::{slot::SlotPool, Shm, ShmHandler},
 };
 
-pub struct WayWinAdapter {
+use smithay_client_toolkit::{
+    compositor::CompositorState,
+    reexports::client::globals::registry_queue_init,
+    shell::wlr_layer::{Anchor, Layer, LayerShell},
+};
+
+pub struct SpellWin {
     pub width: u32,
     pub height: u32,
-    pub slint_buffer: Option<[Rgb8Pixel; 256 * 256]>,
+    pub slint_buffer: Option<Vec<Rgb8Pixel>>,
     pub registry_state: RegistryState,
     pub output_state: OutputState,
     pub shm: Shm,
@@ -51,10 +39,10 @@ pub struct WayWinAdapter {
     pub first_configure: bool,
 }
 
-impl WayWinAdapter {
-    pub fn new(
+impl SpellWin {
+    fn new(
         width_height: (u32, u32),
-        slint_buffer: Option<[Rgb8Pixel; 256 * 256]>,
+        slint_buffer: Option<Vec<Rgb8Pixel>>,
         registry_state: RegistryState,
         // seat_state: SeatState,
         output_state: OutputState,
@@ -67,7 +55,7 @@ impl WayWinAdapter {
         exit: bool,
         first_configure: bool,
     ) -> Self {
-        WayWinAdapter {
+        SpellWin {
             width: width_height.0,
             height: width_height.1,
             slint_buffer,
@@ -85,7 +73,62 @@ impl WayWinAdapter {
         }
     }
 
-    pub fn set_buffer(&mut self, buffer: [Rgb8Pixel; 256 * 256]) {
+    pub fn invoke_spell<'a>(
+        width: u32,
+        height: u32,
+        buffer1: &'a mut Vec<Rgb8Pixel>,
+        buffer2: &'a mut Vec<Rgb8Pixel>,
+    ) -> (
+        Self,
+        &'a mut [Rgb8Pixel],
+        &'a mut [Rgb8Pixel],
+        EventQueue<SpellWin>,
+    ) {
+        //configure wayland to use these bufferes.
+        let currently_displayed_buffer: &mut [_] = buffer1;
+        let work_buffer: &mut [_] = buffer2;
+
+        // Initialisation of wayland components.
+        let conn = Connection::connect_to_env().unwrap();
+        let (globals, event_queue) = registry_queue_init(&conn).unwrap();
+        let qh: QueueHandle<SpellWin> = event_queue.handle();
+
+        let compositor =
+            CompositorState::bind(&globals, &qh).expect("wl_compositor is not available");
+        let layer_shell = LayerShell::bind(&globals, &qh).expect("layer shell is not available");
+        let shm = Shm::bind(&globals, &qh).expect("wl_shm is not available");
+        let surface = compositor.create_surface(&qh);
+
+        let layer =
+            layer_shell.create_layer_surface(&qh, surface, Layer::Top, Some("simple_layer"), None);
+        layer.set_anchor(Anchor::BOTTOM);
+        // layer.set_keyboard_interactivity(KeyboardInteractivity::OnDemand);
+        layer.set_size(width, height);
+        layer.commit();
+        let pool =
+            SlotPool::new((width * height * 4) as usize, &shm).expect("Failed to create pool");
+
+        return (
+            SpellWin::new(
+                (width, height),
+                None,
+                RegistryState::new(&globals),
+                /*SeatState::new(&globals, &qh),*/ OutputState::new(&globals, &qh),
+                shm,
+                pool,
+                layer,
+                false,
+                None,
+                false,
+                true,
+            ),
+            work_buffer,
+            currently_displayed_buffer,
+            event_queue,
+        );
+    }
+
+    pub fn set_buffer(&mut self, buffer: Vec<Rgb8Pixel>) {
         self.slint_buffer = Some(buffer);
     }
 
@@ -109,9 +152,9 @@ impl WayWinAdapter {
                 .enumerate()
                 .for_each(|(index, chunk)| {
                     let a: u8 = 0xFF;
-                    let r = self.slint_buffer.unwrap()[index].r;
-                    let g = self.slint_buffer.unwrap()[index].g;
-                    let b = self.slint_buffer.unwrap()[index].b;
+                    let r = self.slint_buffer.as_ref().unwrap()[index].r;
+                    let g = self.slint_buffer.as_ref().unwrap()[index].g;
+                    let b = self.slint_buffer.as_ref().unwrap()[index].b;
                     let color: u32 =
                         ((a as u32) << 24) | ((r as u32) << 16) | ((g as u32) << 8) | (b as u32);
 
@@ -146,22 +189,22 @@ impl WayWinAdapter {
     // }
 }
 
-delegate_compositor!(WayWinAdapter);
-delegate_registry!(WayWinAdapter);
-delegate_output!(WayWinAdapter);
-delegate_shm!(WayWinAdapter);
-// delegate_seat!(WayWinAdapter);
-// delegate_keyboard!(WayWinAdapter);
-// delegate_pointer!(WayWinAdapter);
-delegate_layer!(WayWinAdapter);
+delegate_compositor!(SpellWin);
+delegate_registry!(SpellWin);
+delegate_output!(SpellWin);
+delegate_shm!(SpellWin);
+// delegate_seat!(SpellWin);
+// delegate_keyboard!(SpellWin);
+// delegate_pointer!(SpellWin);
+delegate_layer!(SpellWin);
 
-impl ShmHandler for WayWinAdapter {
+impl ShmHandler for SpellWin {
     fn shm_state(&mut self) -> &mut Shm {
         &mut self.shm
     }
 }
 
-impl OutputHandler for WayWinAdapter {
+impl OutputHandler for SpellWin {
     fn output_state(&mut self) -> &mut OutputState {
         &mut self.output_state
     }
@@ -191,7 +234,7 @@ impl OutputHandler for WayWinAdapter {
     }
 }
 
-impl CompositorHandler for WayWinAdapter {
+impl CompositorHandler for SpellWin {
     fn scale_factor_changed(
         &mut self,
         _conn: &Connection,
@@ -243,7 +286,7 @@ impl CompositorHandler for WayWinAdapter {
     }
 }
 
-impl LayerShellHandler for WayWinAdapter {
+impl LayerShellHandler for SpellWin {
     fn closed(&mut self, _conn: &Connection, _qh: &QueueHandle<Self>, _layer: &LayerSurface) {
         self.exit = true;
     }
@@ -267,7 +310,7 @@ impl LayerShellHandler for WayWinAdapter {
     }
 }
 
-// impl SeatHandler for WayWinAdapter {
+// impl SeatHandler for SpellWin {
 //     fn seat_state(&mut self) -> &mut SeatState {
 //         &mut self.seat_state
 //     }
@@ -321,7 +364,7 @@ impl LayerShellHandler for WayWinAdapter {
 //     fn remove_seat(&mut self, _: &Connection, _: &QueueHandle<Self>, _: wl_seat::WlSeat) {}
 // }
 //
-impl ProvidesRegistryState for WayWinAdapter {
+impl ProvidesRegistryState for SpellWin {
     fn registry(&mut self) -> &mut RegistryState {
         &mut self.registry_state
     }

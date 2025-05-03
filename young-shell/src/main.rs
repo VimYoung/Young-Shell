@@ -1,84 +1,35 @@
-use std::{convert::TryInto, error::Error, num::NonZeroU32, rc::Rc};
+use std::error::Error;
 
-use slint::{
-    platform::software_renderer::RepaintBufferType::{self, SwappedBuffers},
-    PhysicalSize, Rgb8Pixel, Window,
-};
+use slint::{platform::software_renderer::RepaintBufferType::SwappedBuffers, Rgb8Pixel};
 use smithay_client_toolkit::{
-    compositor::{CompositorHandler, CompositorState},
-    output::{OutputHandler, OutputState},
+    compositor::CompositorState,
+    output::OutputState,
     reexports::client::{globals::registry_queue_init, Connection, QueueHandle},
-    registry::{ProvidesRegistryState, RegistryState},
+    registry::RegistryState,
     shell::{
-        wlr_layer::{
-            Anchor, KeyboardInteractivity, Layer, LayerShell, LayerShellHandler, LayerSurface,
-        },
+        wlr_layer::{Anchor, Layer, LayerShell},
         WaylandSurface,
     },
-    shm::{
-        slot::{Buffer, SlotPool},
-        Shm, ShmHandler,
-    },
+    shm::{slot::SlotPool, Shm},
 };
 
 mod slint_adapter;
 mod wayland_adapter;
 use crate::{
     slint_adapter::{SlintLayerShell, SpellWinAdapter},
-    wayland_adapter::WayWinAdapter,
+    wayland_adapter::SpellWin,
 };
 
 slint::include_modules!();
 fn main() -> Result<(), Box<dyn Error>> {
     // Dimentions for the widget size
-    let width = 256; //1366;
-    let height = 256; //768;
-
-    // let width = self.window_adapter.size.width;
-    // let height = self.window_adapter.size.height;
-    const DISPLAY_WIDTH: usize = 256;
-    const DISPLAY_HEIGHT: usize = 256;
-
-    let mut buffer1 = [Rgb8Pixel::new(0, 0, 0); DISPLAY_WIDTH * DISPLAY_HEIGHT];
-    let mut buffer2 = [Rgb8Pixel::new(0, 0, 0); DISPLAY_WIDTH * DISPLAY_HEIGHT];
-
-    //configure wayland to use these bufferes.
-    let mut currently_displayed_buffer: &mut [_] = &mut buffer1;
-    let mut work_buffer: &mut [_] = &mut buffer2;
-
-    // Initialisation of wayland components.
-    let conn = Connection::connect_to_env().unwrap();
-    let (globals, mut event_queue) = registry_queue_init(&conn).unwrap();
-    let qh: QueueHandle<WayWinAdapter> = event_queue.handle();
-
-    let compositor = CompositorState::bind(&globals, &qh).expect("wl_compositor is not available");
-    let layer_shell = LayerShell::bind(&globals, &qh).expect("layer shell is not available");
-    let shm = Shm::bind(&globals, &qh).expect("wl_shm is not available");
-    let surface = compositor.create_surface(&qh);
-
-    let layer =
-        layer_shell.create_layer_surface(&qh, surface, Layer::Top, Some("simple_layer"), None);
-    layer.set_anchor(Anchor::BOTTOM);
-    // layer.set_keyboard_interactivity(KeyboardInteractivity::OnDemand);
-    layer.set_size(width, height);
-    layer.commit();
-    let pool = SlotPool::new(256 * 256 * 4, &shm).expect("Failed to create pool");
-
+    let width: u32 = 256; //1366;
+    let height: u32 = 256; //768;
     let window = SpellWinAdapter::new(SwappedBuffers, width, height);
-    let mut waywindow = WayWinAdapter::new(
-        (width, height),
-        None,
-        RegistryState::new(&globals),
-        /*SeatState::new(&globals, &qh),*/ OutputState::new(&globals, &qh),
-        shm,
-        pool,
-        layer,
-        false,
-        None,
-        false,
-        true,
-    );
+    let (mut buffer1, mut buffer2) = get_spell_ingredients(width, height);
 
+    let (mut waywindow, mut work_buffer, mut currently_displayed_buffer, mut event_queue) =
+        SpellWin::invoke_spell(width, height, &mut buffer1, &mut buffer2);
     let platform_setting = slint::platform::set_platform(Box::new(SlintLayerShell {
         window_adapter: window.clone(),
     }));
@@ -99,8 +50,6 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
     });
 
-    // ui.run()?;
-
     println!("Casting the Spell");
 
     loop {
@@ -109,12 +58,17 @@ fn main() -> Result<(), Box<dyn Error>> {
         // needs to be picked by the compositer/windowing system and then
         // displayed accordingly.
         println!("Running the loop");
-        window.rendered.render(work_buffer, DISPLAY_WIDTH);
-        waywindow.set_buffer(currently_displayed_buffer.try_into()?);
+        window.rendered.render(work_buffer, width as usize);
+        waywindow.set_buffer(work_buffer.to_vec());
         // println!("Ran till here.");
         event_queue.blocking_dispatch(&mut waywindow).unwrap();
         core::mem::swap::<&mut [_]>(&mut work_buffer, &mut currently_displayed_buffer);
     }
+}
 
-    // Ok(())
+fn get_spell_ingredients(width: u32, height: u32) -> (Vec<Rgb8Pixel>, Vec<Rgb8Pixel>) {
+    (
+        vec![Rgb8Pixel::new(0, 0, 0); width as usize * height as usize],
+        vec![Rgb8Pixel::new(0, 0, 0); width as usize * height as usize],
+    )
 }
