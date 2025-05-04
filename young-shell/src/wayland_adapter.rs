@@ -1,16 +1,24 @@
-use std::{convert::TryInto, num::NonZeroU32};
+use std::{convert::TryInto, num::NonZeroU32, rc::Rc};
 
-use slint::Rgb8Pixel;
+use slint::{
+    platform::{PointerEventButton, WindowEvent},
+    Rgb8Pixel,
+};
 use smithay_client_toolkit::{
     compositor::CompositorHandler,
-    delegate_compositor, delegate_layer, delegate_output, delegate_registry, delegate_shm,
+    delegate_compositor, delegate_layer, delegate_output, delegate_pointer, delegate_registry,
+    delegate_seat, delegate_shm,
     output::{OutputHandler, OutputState},
     reexports::client::{
-        protocol::{wl_output, wl_pointer, wl_shm, wl_surface},
+        protocol::{wl_output, wl_pointer, wl_seat, wl_shm, wl_surface},
         Connection, EventQueue, QueueHandle,
     },
     registry::{ProvidesRegistryState, RegistryState},
     registry_handlers,
+    seat::{
+        pointer::{PointerEvent, PointerEventKind, PointerHandler},
+        Capability, SeatHandler, SeatState,
+    },
     shell::{
         wlr_layer::{LayerShellHandler, LayerSurface, LayerSurfaceConfigure},
         WaylandSurface,
@@ -18,6 +26,7 @@ use smithay_client_toolkit::{
     shm::{slot::SlotPool, Shm, ShmHandler},
 };
 
+use crate::slint_adapter::SpellWinAdapter;
 use smithay_client_toolkit::{
     compositor::CompositorState,
     reexports::client::globals::registry_queue_init,
@@ -25,10 +34,10 @@ use smithay_client_toolkit::{
 };
 
 pub struct SpellWin {
-    pub width: u32,
-    pub height: u32,
+    pub window: Rc<SpellWinAdapter>,
     pub slint_buffer: Option<Vec<Rgb8Pixel>>,
     pub registry_state: RegistryState,
+    pub seat_state: SeatState,
     pub output_state: OutputState,
     pub shm: Shm,
     pub pool: SlotPool,
@@ -41,12 +50,11 @@ pub struct SpellWin {
 
 impl SpellWin {
     fn new(
-        width_height: (u32, u32),
+        window: Rc<SpellWinAdapter>,
         slint_buffer: Option<Vec<Rgb8Pixel>>,
         registry_state: RegistryState,
-        // seat_state: SeatState,
+        seat_state: SeatState,
         output_state: OutputState,
-        // event_queue: EventQueue<Self>,
         shm: Shm,
         pool: SlotPool,
         layer: LayerSurface,
@@ -56,13 +64,11 @@ impl SpellWin {
         first_configure: bool,
     ) -> Self {
         SpellWin {
-            width: width_height.0,
-            height: width_height.1,
+            window,
             slint_buffer,
             registry_state,
-            // seat_state,
+            seat_state,
             output_state,
-            // event_queue,
             shm,
             pool,
             layer,
@@ -74,10 +80,14 @@ impl SpellWin {
     }
 
     pub fn invoke_spell<'a>(
+        name: &str,
         width: u32,
         height: u32,
-        buffer1: &'a mut Vec<Rgb8Pixel>,
-        buffer2: &'a mut Vec<Rgb8Pixel>,
+        buffer1: &'a mut [Rgb8Pixel],
+        buffer2: &'a mut [Rgb8Pixel],
+        anchor: Anchor,
+        layer_type: Layer,
+        window: Rc<SpellWinAdapter>,
     ) -> (
         Self,
         &'a mut [Rgb8Pixel],
@@ -99,21 +109,22 @@ impl SpellWin {
         let shm = Shm::bind(&globals, &qh).expect("wl_shm is not available");
         let surface = compositor.create_surface(&qh);
 
-        let layer =
-            layer_shell.create_layer_surface(&qh, surface, Layer::Top, Some("simple_layer"), None);
-        layer.set_anchor(Anchor::BOTTOM);
+        let layer = layer_shell.create_layer_surface(&qh, surface, layer_type, Some(name), None);
+        layer.set_anchor(anchor);
         // layer.set_keyboard_interactivity(KeyboardInteractivity::OnDemand);
         layer.set_size(width, height);
         layer.commit();
         let pool =
             SlotPool::new((width * height * 4) as usize, &shm).expect("Failed to create pool");
 
-        return (
+        (
             SpellWin::new(
-                (width, height),
+                // (width, height),
+                window,
                 None,
                 RegistryState::new(&globals),
-                /*SeatState::new(&globals, &qh),*/ OutputState::new(&globals, &qh),
+                SeatState::new(&globals, &qh),
+                OutputState::new(&globals, &qh),
                 shm,
                 pool,
                 layer,
@@ -125,7 +136,7 @@ impl SpellWin {
             work_buffer,
             currently_displayed_buffer,
             event_queue,
-        );
+        )
     }
 
     pub fn set_buffer(&mut self, buffer: Vec<Rgb8Pixel>) {
@@ -133,9 +144,9 @@ impl SpellWin {
     }
 
     fn converter(&mut self, qh: &QueueHandle<Self>) {
-        let width = self.width;
-        let height = self.height;
-        let stride = self.width as i32 * 4;
+        let width = self.window.size.width;
+        let height = self.window.size.height;
+        let stride = self.window.size.width as i32 * 4;
         let (buffer, canvas) = self
             .pool
             .create_buffer(
@@ -193,9 +204,9 @@ delegate_compositor!(SpellWin);
 delegate_registry!(SpellWin);
 delegate_output!(SpellWin);
 delegate_shm!(SpellWin);
-// delegate_seat!(SpellWin);
+delegate_seat!(SpellWin);
 // delegate_keyboard!(SpellWin);
-// delegate_pointer!(SpellWin);
+delegate_pointer!(SpellWin);
 delegate_layer!(SpellWin);
 
 impl ShmHandler for SpellWin {
@@ -263,6 +274,7 @@ impl CompositorHandler for SpellWin {
         _time: u32,
     ) {
         self.converter(qh);
+        // println!("Next draws called");
     }
 
     fn surface_enter(
@@ -299,74 +311,153 @@ impl LayerShellHandler for SpellWin {
         configure: LayerSurfaceConfigure,
         _serial: u32,
     ) {
-        self.width = NonZeroU32::new(configure.new_size.0).map_or(256, NonZeroU32::get);
-        self.height = NonZeroU32::new(configure.new_size.1).map_or(256, NonZeroU32::get);
+        // THis error
+        // self.window.size.width = NonZeroU32::new(configure.new_size.0).map_or(256, NonZeroU32::get);
+        // self.window.size.height =
+        //     NonZeroU32::new(configure.new_size.1).map_or(256, NonZeroU32::get);
 
         // Initiate the first draw.
         if self.first_configure {
             self.first_configure = false;
             self.converter(qh);
+            println!("First draw called");
         }
     }
 }
 
-// impl SeatHandler for SpellWin {
-//     fn seat_state(&mut self) -> &mut SeatState {
-//         &mut self.seat_state
-//     }
-//
-//     fn new_seat(&mut self, _: &Connection, _: &QueueHandle<Self>, _: wl_seat::WlSeat) {}
-//
-//     fn new_capability(
-//         &mut self,
-//         _conn: &Connection,
-//         qh: &QueueHandle<Self>,
-//         seat: wl_seat::WlSeat,
-//         capability: Capability,
-//     ) {
-//         if capability == Capability::Keyboard && self.keyboard.is_none() {
-//             println!("Set keyboard capability");
-//             let keyboard = self
-//                 .seat_state
-//                 .get_keyboard(qh, &seat, None)
-//                 .expect("Failed to create keyboard");
-//             self.keyboard = Some(keyboard);
-//         }
-//
-//         if capability == Capability::Pointer && self.pointer.is_none() {
-//             println!("Set pointer capability");
-//             let pointer = self
-//                 .seat_state
-//                 .get_pointer(qh, &seat)
-//                 .expect("Failed to create pointer");
-//             self.pointer = Some(pointer);
-//         }
-//     }
-//
-//     fn remove_capability(
-//         &mut self,
-//         _conn: &Connection,
-//         _: &QueueHandle<Self>,
-//         _: wl_seat::WlSeat,
-//         capability: Capability,
-//     ) {
-//         if capability == Capability::Keyboard && self.keyboard.is_some() {
-//             println!("Unset keyboard capability");
-//             self.keyboard.take().unwrap().release();
-//         }
-//
-//         if capability == Capability::Pointer && self.pointer.is_some() {
-//             println!("Unset pointer capability");
-//             self.pointer.take().unwrap().release();
-//         }
-//     }
-//
-//     fn remove_seat(&mut self, _: &Connection, _: &QueueHandle<Self>, _: wl_seat::WlSeat) {}
-// }
-//
+impl SeatHandler for SpellWin {
+    fn seat_state(&mut self) -> &mut SeatState {
+        &mut self.seat_state
+    }
+
+    fn new_seat(&mut self, _: &Connection, _: &QueueHandle<Self>, _: wl_seat::WlSeat) {}
+
+    fn new_capability(
+        &mut self,
+        _conn: &Connection,
+        qh: &QueueHandle<Self>,
+        seat: wl_seat::WlSeat,
+        capability: Capability,
+    ) {
+        // if capability == Capability::Keyboard && self.keyboard.is_none() {
+        //     println!("Set keyboard capability");
+        //     let keyboard = self
+        //         .seat_state
+        //         .get_keyboard(qh, &seat, None)
+        //         .expect("Failed to create keyboard");
+        //     self.keyboard = Some(keyboard);
+        // }
+        //
+        if capability == Capability::Pointer && self.pointer.is_none() {
+            println!("Set pointer capability");
+            let pointer = self
+                .seat_state
+                .get_pointer(qh, &seat)
+                .expect("Failed to create pointer");
+            self.pointer = Some(pointer);
+        }
+    }
+
+    fn remove_capability(
+        &mut self,
+        _conn: &Connection,
+        _: &QueueHandle<Self>,
+        _: wl_seat::WlSeat,
+        capability: Capability,
+    ) {
+        // if capability == Capability::Keyboard && self.keyboard.is_some() {
+        //     println!("Unset keyboard capability");
+        //     self.keyboard.take().unwrap().release();
+        // }
+
+        if capability == Capability::Pointer && self.pointer.is_some() {
+            println!("Unset pointer capability");
+            self.pointer.take().unwrap().release();
+        }
+    }
+
+    fn remove_seat(&mut self, _: &Connection, _: &QueueHandle<Self>, _: wl_seat::WlSeat) {}
+}
+
+impl PointerHandler for SpellWin {
+    fn pointer_frame(
+        &mut self,
+        _conn: &Connection,
+        _qh: &QueueHandle<Self>,
+        _pointer: &wl_pointer::WlPointer,
+        events: &[PointerEvent],
+    ) {
+        use PointerEventKind::*;
+        for event in events {
+            // Ignore events for other surfaces
+            if &event.surface != self.layer.wl_surface() {
+                continue;
+            }
+            match event.kind {
+                Enter { .. } => {
+                    println!("Pointer entered @{:?}", event.position);
+                }
+                Leave { .. } => {
+                    println!("Pointer left");
+                    self.window
+                        .window
+                        .try_dispatch_event(WindowEvent::PointerExited)
+                        .unwrap();
+                }
+                Motion { .. } => {
+                    // println!("Pointer entered @{:?}", event.position);
+                    self.window
+                        .window
+                        .try_dispatch_event(WindowEvent::PointerMoved {
+                            position: slint::LogicalPosition {
+                                x: event.position.0 as f32,
+                                y: event.position.1 as f32,
+                            },
+                        })
+                        .unwrap();
+                }
+                Press { button, .. } => {
+                    println!("Press {:x} @ {:?}", button, event.position);
+                    self.window
+                        .window
+                        .try_dispatch_event(WindowEvent::PointerPressed {
+                            position: slint::LogicalPosition {
+                                x: event.position.0 as f32,
+                                y: event.position.1 as f32,
+                            },
+                            button: PointerEventButton::Left,
+                        })
+                        .unwrap();
+                }
+                Release { button, .. } => {
+                    println!("Release {:x} @ {:?}", button, event.position);
+                    self.window
+                        .window
+                        .try_dispatch_event(WindowEvent::PointerReleased {
+                            position: slint::LogicalPosition {
+                                x: event.position.0 as f32,
+                                y: event.position.1 as f32,
+                            },
+                            button: PointerEventButton::Left,
+                        })
+                        .unwrap();
+                }
+                Axis {
+                    horizontal,
+                    vertical,
+                    ..
+                } => {
+                    println!("Scroll H:{horizontal:?}, V:{vertical:?}");
+                }
+            }
+        }
+    }
+}
+
+// FIND What is the use of registery_handlers here?
 impl ProvidesRegistryState for SpellWin {
     fn registry(&mut self) -> &mut RegistryState {
         &mut self.registry_state
     }
-    registry_handlers![OutputState /*, SeatState*/];
+    registry_handlers![OutputState, SeatState];
 }

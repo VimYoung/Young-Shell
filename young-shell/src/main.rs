@@ -1,17 +1,7 @@
-use std::error::Error;
+use std::{any::Any, env, error::Error};
 
-use slint::{platform::software_renderer::RepaintBufferType::SwappedBuffers, Rgb8Pixel};
-use smithay_client_toolkit::{
-    compositor::CompositorState,
-    output::OutputState,
-    reexports::client::{globals::registry_queue_init, Connection, QueueHandle},
-    registry::RegistryState,
-    shell::{
-        wlr_layer::{Anchor, Layer, LayerShell},
-        WaylandSurface,
-    },
-    shm::{slot::SlotPool, Shm},
-};
+use slint::Rgb8Pixel;
+use smithay_client_toolkit::shell::wlr_layer::{Anchor, Layer};
 
 mod slint_adapter;
 mod wayland_adapter;
@@ -22,16 +12,27 @@ use crate::{
 
 slint::include_modules!();
 fn main() -> Result<(), Box<dyn Error>> {
+    env::set_var("WAYLAND_DEBUG", "1");
     // Dimentions for the widget size
     let width: u32 = 256; //1366;
     let height: u32 = 256; //768;
-    let window = SpellWinAdapter::new(SwappedBuffers, width, height);
+    let window_adapter = SpellWinAdapter::new(width, height);
     let (mut buffer1, mut buffer2) = get_spell_ingredients(width, height);
 
     let (mut waywindow, mut work_buffer, mut currently_displayed_buffer, mut event_queue) =
-        SpellWin::invoke_spell(width, height, &mut buffer1, &mut buffer2);
+        SpellWin::invoke_spell(
+            "counter widget",
+            width,
+            height,
+            &mut buffer1,
+            &mut buffer2,
+            Anchor::BOTTOM,
+            Layer::Top,
+            window_adapter.clone(),
+        );
+
     let platform_setting = slint::platform::set_platform(Box::new(SlintLayerShell {
-        window_adapter: window.clone(),
+        window_adapter: window_adapter.clone(),
     }));
 
     if let Err(error) = platform_setting {
@@ -57,11 +58,17 @@ fn main() -> Result<(), Box<dyn Error>> {
         // Following line does the updates to the buffer. Now those updates
         // needs to be picked by the compositer/windowing system and then
         // displayed accordingly.
-        println!("Running the loop");
-        window.rendered.render(work_buffer, width as usize);
-        waywindow.set_buffer(work_buffer.to_vec());
-        // println!("Ran till here.");
-        event_queue.blocking_dispatch(&mut waywindow).unwrap();
+        // println!("Running the loop");
+        window_adapter.rendered.render(work_buffer, width as usize);
+        waywindow.set_buffer(currently_displayed_buffer.to_vec());
+        if waywindow.first_configure {
+            event_queue.roundtrip(&mut waywindow).unwrap();
+        } else {
+            event_queue.flush().unwrap();
+            event_queue.dispatch_pending(&mut waywindow).unwrap();
+            event_queue.blocking_dispatch(&mut waywindow).unwrap();
+        }
+
         core::mem::swap::<&mut [_]>(&mut work_buffer, &mut currently_displayed_buffer);
     }
 }

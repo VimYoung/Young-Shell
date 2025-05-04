@@ -18,10 +18,12 @@ pub struct SpellWinAdapter {
 }
 
 impl SpellWinAdapter {
-    pub fn new(repaint_buffer_type: RepaintBufferType, width: u32, height: u32) -> Rc<Self> {
+    pub fn new(width: u32, height: u32) -> Rc<Self> {
         Rc::<SpellWinAdapter>::new_cyclic(|adapter| SpellWinAdapter {
             window: Window::new(adapter.clone()),
-            rendered: SoftwareRenderer::new_with_repaint_buffer_type(repaint_buffer_type),
+            rendered: SoftwareRenderer::new_with_repaint_buffer_type(
+                RepaintBufferType::SwappedBuffers,
+            ),
             size: PhysicalSize { width, height },
         })
     }

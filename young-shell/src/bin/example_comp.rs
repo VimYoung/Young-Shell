@@ -451,6 +451,7 @@ fn main() {
 
     // We don't draw immediately, the configure will notify us when to first draw.
     loop {
+        println!("Running loop");
         event_queue.blocking_dispatch(&mut simple_layer).unwrap();
 
         if simple_layer.exit {
