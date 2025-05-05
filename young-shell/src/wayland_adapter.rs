@@ -1,5 +1,6 @@
 use std::{convert::TryInto, num::NonZeroU32, rc::Rc};
 
+use i_slint_backend_winit::winit::window::WindowId;
 use slint::{
     platform::{PointerEventButton, WindowEvent},
     Rgb8Pixel,
@@ -23,10 +24,13 @@ use smithay_client_toolkit::{
         wlr_layer::{LayerShellHandler, LayerSurface, LayerSurfaceConfigure},
         WaylandSurface,
     },
-    shm::{slot::SlotPool, Shm, ShmHandler},
+    shm::{
+        slot::{Buffer, SlotPool},
+        Shm, ShmHandler,
+    },
 };
 
-use crate::slint_adapter::SpellWinAdapter;
+use crate::{slint_adapter::SpellWinAdapter, HEIGHT, WIDTH};
 use smithay_client_toolkit::{
     compositor::CompositorState,
     reexports::client::globals::registry_queue_init,
@@ -35,7 +39,8 @@ use smithay_client_toolkit::{
 
 pub struct SpellWin {
     pub window: Rc<SpellWinAdapter>,
-    pub slint_buffer: Option<Vec<Rgb8Pixel>>,
+    pub currently_displayed_buffer: [Rgb8Pixel; WIDTH * HEIGHT],
+    pub work_buffer: [Rgb8Pixel; WIDTH * HEIGHT],
     pub registry_state: RegistryState,
     pub seat_state: SeatState,
     pub output_state: OutputState,
@@ -49,54 +54,51 @@ pub struct SpellWin {
 }
 
 impl SpellWin {
-    fn new(
-        window: Rc<SpellWinAdapter>,
-        slint_buffer: Option<Vec<Rgb8Pixel>>,
-        registry_state: RegistryState,
-        seat_state: SeatState,
-        output_state: OutputState,
-        shm: Shm,
-        pool: SlotPool,
-        layer: LayerSurface,
-        keyboard_focus: bool,
-        pointer: Option<wl_pointer::WlPointer>,
-        exit: bool,
-        first_configure: bool,
-    ) -> Self {
-        SpellWin {
-            window,
-            slint_buffer,
-            registry_state,
-            seat_state,
-            output_state,
-            shm,
-            pool,
-            layer,
-            keyboard_focus,
-            pointer,
-            exit,
-            first_configure,
-        }
-    }
+    // fn new(
+    //     window: Rc<SpellWinAdapter>,
+    //     // slint_buffer: &'b mut [Rgb8Pixel],
+    //     currently_displayed_buffer: &'static mut [Rgb8Pixel],
+    //     work_buffer: &'static mut [Rgb8Pixel],
+    //     registry_state: RegistryState,
+    //     seat_state: SeatState,
+    //     output_state: OutputState,
+    //     shm: Shm,
+    //     pool: SlotPool,
+    //     layer: LayerSurface,
+    //     keyboard_focus: bool,
+    //     pointer: Option<wl_pointer::WlPointer>,
+    //     exit: bool,
+    //     first_configure: bool,
+    // ) -> Self {
+    //     SpellWin {
+    //         window,
+    //         // slint_buffer,
+    //         currently_displayed_buffer,
+    //         work_buffer,
+    //         registry_state,
+    //         seat_state,
+    //         output_state,
+    //         shm,
+    //         pool,
+    //         layer,
+    //         keyboard_focus,
+    //         pointer,
+    //         exit,
+    //         first_configure,
+    //     }
+    // }
 
-    pub fn invoke_spell<'a>(
+    pub fn invoke_spell(
         name: &str,
-        width: u32,
-        height: u32,
-        buffer1: &'a mut [Rgb8Pixel],
-        buffer2: &'a mut [Rgb8Pixel],
+        buffer1: [Rgb8Pixel; WIDTH * HEIGHT],
+        buffer2: [Rgb8Pixel; WIDTH * HEIGHT],
         anchor: Anchor,
         layer_type: Layer,
         window: Rc<SpellWinAdapter>,
-    ) -> (
-        Self,
-        &'a mut [Rgb8Pixel],
-        &'a mut [Rgb8Pixel],
-        EventQueue<SpellWin>,
-    ) {
+    ) -> (Self, EventQueue<SpellWin>) {
         //configure wayland to use these bufferes.
-        let currently_displayed_buffer: &mut [_] = buffer1;
-        let work_buffer: &mut [_] = buffer2;
+        // let currently_displayed_buffer: &mut [_] = buffer1;
+        // let work_buffer: &mut [_] = buffer2;
 
         // Initialisation of wayland components.
         let conn = Connection::connect_to_env().unwrap();
@@ -112,41 +114,45 @@ impl SpellWin {
         let layer = layer_shell.create_layer_surface(&qh, surface, layer_type, Some(name), None);
         layer.set_anchor(anchor);
         // layer.set_keyboard_interactivity(KeyboardInteractivity::OnDemand);
-        layer.set_size(width, height);
+        layer.set_size(window.size.width, window.size.height);
         layer.commit();
-        let pool =
-            SlotPool::new((width * height * 4) as usize, &shm).expect("Failed to create pool");
+        let pool = SlotPool::new((window.size.width * window.size.height * 4) as usize, &shm)
+            .expect("Failed to create pool");
 
         (
-            SpellWin::new(
-                // (width, height),
+            SpellWin {
                 window,
-                None,
-                RegistryState::new(&globals),
-                SeatState::new(&globals, &qh),
-                OutputState::new(&globals, &qh),
+                currently_displayed_buffer: buffer1,
+                work_buffer: buffer2,
+                registry_state: RegistryState::new(&globals),
+                seat_state: SeatState::new(&globals, &qh),
+                output_state: OutputState::new(&globals, &qh),
                 shm,
                 pool,
                 layer,
-                false,
-                None,
-                false,
-                true,
-            ),
-            work_buffer,
-            currently_displayed_buffer,
+                keyboard_focus: false,
+                pointer: None,
+                exit: false,
+                first_configure: true,
+            },
+            // work_buffer,
+            // currently_displayed_buffer,
             event_queue,
         )
     }
 
-    pub fn set_buffer(&mut self, buffer: Vec<Rgb8Pixel>) {
-        self.slint_buffer = Some(buffer);
-    }
+    // pub fn set_buffer(&mut self, buffer: Vec<Rgb8Pixel>) {
+    //     self.slint_buffer = buffer;
+    // }
 
     fn converter(&mut self, qh: &QueueHandle<Self>) {
         let width = self.window.size.width;
         let height = self.window.size.height;
         let stride = self.window.size.width as i32 * 4;
+        // let mut buffer = [Rgb8Pixel; (width * height) as usize];
+        self.window.draw_if_needed(|renderer| {
+            renderer.render(&mut self.work_buffer, self.window.size.width as usize);
+        });
         let (buffer, canvas) = self
             .pool
             .create_buffer(
@@ -163,9 +169,9 @@ impl SpellWin {
                 .enumerate()
                 .for_each(|(index, chunk)| {
                     let a: u8 = 0xFF;
-                    let r = self.slint_buffer.as_ref().unwrap()[index].r;
-                    let g = self.slint_buffer.as_ref().unwrap()[index].g;
-                    let b = self.slint_buffer.as_ref().unwrap()[index].b;
+                    let r = self.work_buffer[index].r;
+                    let g = self.work_buffer[index].g;
+                    let b = self.work_buffer[index].b;
                     let color: u32 =
                         ((a as u32) << 24) | ((r as u32) << 16) | ((g as u32) << 8) | (b as u32);
 
@@ -173,6 +179,12 @@ impl SpellWin {
                     *array = color.to_le_bytes();
                 });
         }
+        let wb = self.work_buffer;
+        let cdb = self.currently_displayed_buffer;
+        self.currently_displayed_buffer = wb;
+        self.work_buffer = cdb;
+
+        // core::mem::swap::<&mut [_]>(&mut self.work_buffer, &mut self.currently_displayed_buffer);
 
         // Damage the entire window
         self.layer
@@ -266,6 +278,8 @@ impl CompositorHandler for SpellWin {
         // Not needed for this example.
     }
 
+    // FIND frame also uses a double buffer method so find if you can sync it width
+    // the Swapped buffers of slint because that also used double buffer architecture.
     fn frame(
         &mut self,
         _conn: &Connection,
@@ -273,6 +287,8 @@ impl CompositorHandler for SpellWin {
         _surface: &wl_surface::WlSurface,
         _time: u32,
     ) {
+        // let buffer = self.slint_buffer.clone().unwrap();
+        // self.window.update_buffer(buffer);
         self.converter(qh);
         // println!("Next draws called");
     }
@@ -284,6 +300,7 @@ impl CompositorHandler for SpellWin {
         _surface: &wl_surface::WlSurface,
         _output: &wl_output::WlOutput,
     ) {
+        println!("Surface Entered");
         // Not needed for this example.
     }
 
@@ -308,10 +325,10 @@ impl LayerShellHandler for SpellWin {
         _conn: &Connection,
         qh: &QueueHandle<Self>,
         _layer: &LayerSurface,
-        configure: LayerSurfaceConfigure,
+        _configure: LayerSurfaceConfigure,
         _serial: u32,
     ) {
-        // THis error
+        // FIND I don't think this check is required as the values are set from the starting.
         // self.window.size.width = NonZeroU32::new(configure.new_size.0).map_or(256, NonZeroU32::get);
         // self.window.size.height =
         //     NonZeroU32::new(configure.new_size.1).map_or(256, NonZeroU32::get);

@@ -1,3 +1,4 @@
+use std::cell::Cell;
 use std::rc::Rc;
 
 use slint::{
@@ -8,24 +9,49 @@ use slint::{
         },
         Platform, WindowAdapter,
     },
-    PhysicalSize, Window,
+    PhysicalSize, Rgb8Pixel, Window,
 };
 
 pub struct SpellWinAdapter {
     pub window: Window,
     pub rendered: SoftwareRenderer,
     pub size: PhysicalSize, //I am not adding any more properties for now and not puttinting it in a
+    // pub currently_displayed_buffer: &'a mut [Rgb8Pixel],
+    // pub work_buffer: &'a mut [Rgb8Pixel],
+    pub needs_redraw: Cell<bool>,
 }
 
 impl SpellWinAdapter {
-    pub fn new(width: u32, height: u32) -> Rc<Self> {
+    pub fn new(
+        width: u32,
+        height: u32,
+        // buffer1: &'static mut [Rgb8Pixel],
+        // buffer2: &'static mut [Rgb8Pixel], /* buffer: Vec<Rgb8Pixel>*/
+    ) -> Rc<Self> {
         Rc::<SpellWinAdapter>::new_cyclic(|adapter| SpellWinAdapter {
             window: Window::new(adapter.clone()),
             rendered: SoftwareRenderer::new_with_repaint_buffer_type(
                 RepaintBufferType::SwappedBuffers,
             ),
             size: PhysicalSize { width, height },
+            needs_redraw: Default::default(),
+            // currently_displayed_buffer: buffer1,
+            // work_buffer: buffer2,
         })
+    }
+
+    // pub fn update_buffer(&mut self, mut work_buffer: Vec<Rgb8Pixel>) -> Vec<Rgb8Pixel> {
+    //     self.rendered
+    //         .render(&mut work_buffer, self.size.width as usize);
+    //     return work_buffer;
+    // }
+    pub fn draw_if_needed(&self, render_callback: impl FnOnce(&SoftwareRenderer)) -> bool {
+        if self.needs_redraw.replace(false) {
+            render_callback(&self.rendered);
+            true
+        } else {
+            false
+        }
     }
 }
 
@@ -44,6 +70,10 @@ impl WindowAdapter for SpellWinAdapter {
 
     fn renderer(&self) -> &dyn slint::platform::Renderer {
         &self.rendered
+    }
+
+    fn request_redraw(&self) {
+        self.needs_redraw.set(true);
     }
 }
 
