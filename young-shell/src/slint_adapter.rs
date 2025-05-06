@@ -1,4 +1,4 @@
-use std::rc::Rc;
+use std::{cell::Cell, rc::Rc};
 
 use slint::{
     platform::{
@@ -15,6 +15,7 @@ pub struct SpellWinAdapter {
     pub window: Window,
     pub rendered: SoftwareRenderer,
     pub size: PhysicalSize, //I am not adding any more properties for now and not puttinting it in a
+    pub needs_redraw: Cell<bool>,
 }
 
 impl SpellWinAdapter {
@@ -25,7 +26,18 @@ impl SpellWinAdapter {
                 RepaintBufferType::SwappedBuffers,
             ),
             size: PhysicalSize { width, height },
+            needs_redraw: Default::default(),
         })
+    }
+
+    pub fn draw_if_needed(&self, render_callback: impl FnOnce(&SoftwareRenderer)) -> bool {
+        if self.needs_redraw.replace(false) {
+            println!("In render.");
+            render_callback(&self.rendered);
+            true
+        } else {
+            false
+        }
     }
 }
 
@@ -44,6 +56,10 @@ impl WindowAdapter for SpellWinAdapter {
 
     fn renderer(&self) -> &dyn slint::platform::Renderer {
         &self.rendered
+    }
+
+    fn request_redraw(&self) {
+        self.needs_redraw.set(true);
     }
 }
 

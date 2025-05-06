@@ -1,18 +1,58 @@
 import { Button, VerticalBox } from "std-widgets.slint";
+import { Styles } from "styles.slint";
 
+import { MyButton } from "MyButton.slint";
 export component AppWindow inherits Window {
-    in-out property <int> counter: 42;
-    callback request-increase-value();
-    VerticalBox {
-        Text {
-            text: "Counter: \{root.counter}";
-        }
+    // width: 300px;
+    // height: 300px;
+    property <int> count:0;
 
-        Button {
-            text: "Increase value";
-            clicked => {
-                root.request-increase-value();
+    HorizontalLayout {
+        for i in 5: Image {
+            width: root.width / 5;
+            source: @image-url("install.svg");
+            colorize: white;
+        }
+    }
+
+    HorizontalLayout {
+        for i in 5: Image {
+            width: count > i ? root.width / 5 : 0;
+            source: @image-url("install.svg");
+            opacity: count > i ? 1 : 0;
+            animate opacity, width { duration: 500ms; }
+        }
+    }
+
+    Text {
+        text: "Rate my app";
+        y: Styles.margin;
+        font-size: 30px;
+    }
+
+    MyButton {
+        y: root.height - self.height - Styles.margin;
+        label: "Hello World! " + count;
+        clicked => {
+            if count < 5 {
+                count += 1;
+            } else {
+                count = 0;
             }
         }
     }
+    // in-out property <int> counter: 42;
+    // callback request-increase-value();
+    // VerticalBox {
+    //     Text {
+    //         text: "Counter: \{root.counter}";
+    //     }
+    //
+    //     Button {
+    //         text: "Increase value";
+    //         clicked => {
+    //             root.request-increase-value();
+    //         }
+    //     }
+    // }
 }

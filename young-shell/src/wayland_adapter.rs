@@ -1,4 +1,4 @@
-use std::{convert::TryInto, num::NonZeroU32, rc::Rc};
+use std::{convert::TryInto, rc::Rc};
 
 use slint::{
     platform::{PointerEventButton, WindowEvent},
@@ -16,7 +16,9 @@ use smithay_client_toolkit::{
     registry::{ProvidesRegistryState, RegistryState},
     registry_handlers,
     seat::{
-        pointer::{PointerEvent, PointerEventKind, PointerHandler},
+        pointer::{
+            cursor_shape::CursorShapeManager, PointerEvent, PointerEventKind, PointerHandler,
+        },
         Capability, SeatHandler, SeatState,
     },
     shell::{
@@ -42,7 +44,8 @@ pub struct SpellWin {
     pub shm: Shm,
     pub pool: SlotPool,
     pub layer: LayerSurface,
-    pub keyboard_focus: bool,
+    pub cursor_shape: CursorShapeManager,
+    pub _keyboard_focus: bool,
     pub pointer: Option<wl_pointer::WlPointer>,
     pub exit: bool,
     pub first_configure: bool,
@@ -58,7 +61,8 @@ impl SpellWin {
         shm: Shm,
         pool: SlotPool,
         layer: LayerSurface,
-        keyboard_focus: bool,
+        cursor_shape: CursorShapeManager,
+        _keyboard_focus: bool,
         pointer: Option<wl_pointer::WlPointer>,
         exit: bool,
         first_configure: bool,
@@ -72,7 +76,8 @@ impl SpellWin {
             shm,
             pool,
             layer,
-            keyboard_focus,
+            cursor_shape,
+            _keyboard_focus,
             pointer,
             exit,
             first_configure,
@@ -107,6 +112,8 @@ impl SpellWin {
             CompositorState::bind(&globals, &qh).expect("wl_compositor is not available");
         let layer_shell = LayerShell::bind(&globals, &qh).expect("layer shell is not available");
         let shm = Shm::bind(&globals, &qh).expect("wl_shm is not available");
+        let cursor_manager =
+            CursorShapeManager::bind(&globals, &qh).expect("cursor shape is not available");
         let surface = compositor.create_surface(&qh);
 
         let layer = layer_shell.create_layer_surface(&qh, surface, layer_type, Some(name), None);
@@ -128,6 +135,7 @@ impl SpellWin {
                 shm,
                 pool,
                 layer,
+                cursor_manager,
                 false,
                 None,
                 false,
@@ -308,7 +316,7 @@ impl LayerShellHandler for SpellWin {
         _conn: &Connection,
         qh: &QueueHandle<Self>,
         _layer: &LayerSurface,
-        configure: LayerSurfaceConfigure,
+        _configure: LayerSurfaceConfigure,
         _serial: u32,
     ) {
         // THis error
