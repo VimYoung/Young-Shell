@@ -1,4 +1,4 @@
-use std::{convert::TryInto, rc::Rc};
+use std::{cell::Cell, convert::TryInto, rc::Rc};
 
 use slint::{
     platform::{PointerEventButton, WindowEvent},
@@ -49,6 +49,7 @@ pub struct SpellWin {
     pub pointer: Option<wl_pointer::WlPointer>,
     pub exit: bool,
     pub first_configure: bool,
+    pub render_again: Cell<bool>,
 }
 
 impl SpellWin {
@@ -66,6 +67,7 @@ impl SpellWin {
         pointer: Option<wl_pointer::WlPointer>,
         exit: bool,
         first_configure: bool,
+        render_again: Cell<bool>,
     ) -> Self {
         SpellWin {
             window,
@@ -81,6 +83,7 @@ impl SpellWin {
             pointer,
             exit,
             first_configure,
+            render_again,
         }
     }
 
@@ -140,6 +143,7 @@ impl SpellWin {
                 None,
                 false,
                 true,
+                Cell::new(true),
             ),
             work_buffer,
             currently_displayed_buffer,
@@ -281,7 +285,9 @@ impl CompositorHandler for SpellWin {
         _surface: &wl_surface::WlSurface,
         _time: u32,
     ) {
+        // println!("Frame is called");
         self.converter(qh);
+        self.render_again.set(true);
         // println!("Next draws called");
     }
 
@@ -328,6 +334,7 @@ impl LayerShellHandler for SpellWin {
         if self.first_configure {
             self.first_configure = false;
             self.converter(qh);
+            self.render_again.set(true);
             println!("First draw called");
         }
     }

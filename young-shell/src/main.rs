@@ -1,4 +1,4 @@
-use std::{env, error::Error};
+use std::{cell::Cell, env, error::Error};
 
 use slint::Rgb8Pixel;
 use smithay_client_toolkit::shell::wlr_layer::{Anchor, Layer};
@@ -59,12 +59,15 @@ fn main() -> Result<(), Box<dyn Error>> {
         // needs to be picked by the compositer/windowing system and then
         // displayed accordingly.
         // println!("Running the loop");
-        window_adapter.draw_if_needed(|renderer| {
-            println!("Entered renderer");
-            renderer.render(work_buffer, width as usize);
-            waywindow.set_buffer(work_buffer.to_vec());
-        });
+        if waywindow.render_again.replace(false) {
+            window_adapter.draw_if_needed(|renderer| {
+                // println!("Rendering");
+                renderer.render(work_buffer, width as usize);
+                waywindow.set_buffer(work_buffer.to_vec());
+            });
 
+            core::mem::swap::<&mut [_]>(&mut work_buffer, &mut currently_displayed_buffer);
+        }
         if waywindow.first_configure {
             event_queue.roundtrip(&mut waywindow).unwrap();
         } else {
@@ -72,8 +75,6 @@ fn main() -> Result<(), Box<dyn Error>> {
             event_queue.dispatch_pending(&mut waywindow).unwrap();
             event_queue.blocking_dispatch(&mut waywindow).unwrap();
         }
-
-        core::mem::swap::<&mut [_]>(&mut work_buffer, &mut currently_displayed_buffer);
     }
 }
 
