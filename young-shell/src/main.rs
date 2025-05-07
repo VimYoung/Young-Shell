@@ -1,11 +1,9 @@
-use std::{cell::Cell, env, error::Error};
+use std::{env, error::Error};
 
 use slint::Rgb8Pixel;
-use smithay_client_toolkit::shell::wlr_layer::{Anchor, Layer};
 
-mod slint_adapter;
-mod wayland_adapter;
-use crate::{
+use spell::{
+    layer_properties::{LayerAnchor, LayerType},
     slint_adapter::{SlintLayerShell, SpellWinAdapter},
     wayland_adapter::SpellWin,
 };
@@ -26,8 +24,8 @@ fn main() -> Result<(), Box<dyn Error>> {
             height,
             &mut buffer1,
             &mut buffer2,
-            Anchor::BOTTOM,
-            Layer::Top,
+            LayerAnchor::BOTTOM,
+            LayerType::Top,
             window_adapter.clone(),
         );
 
@@ -92,3 +90,5 @@ fn get_spell_ingredients(width: u32, height: u32) -> (Vec<Rgb8Pixel>, Vec<Rgb8Pi
 // TODO Lookup child creation in wayland, how can it be utilised.
 // TODO Lookup popup in wayland to see if that helps in anything.
 // TODO cursor shape management needs to be done.
+// TODO Making the Background transparent doesn't bring the contents of layer below it.
+// This needs to be fixed

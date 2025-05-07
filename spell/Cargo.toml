@@ -1,9 +1,0 @@
-[package]
-name = "spell"
-version = "0.1.0"
-edition = "2024"
-
-[dependencies]
-raw-window-handle = "0.6.2"
-slint = "1.10.0"
-smithay-client-toolkit = "0.19.2"

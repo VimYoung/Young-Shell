@@ -1377,9 +1377,9 @@ dependencies = [
 
 [[package]]
 name = "env_logger"
-version = "0.11.7"
+version = "0.11.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c3716d7a920fb4fac5d84e9d4bce8ceb321e9414b4409da61b07b75c1e3d0697"
+checksum = "13c863f0904021b108aa8b2f55046443e6b1ebde8fd4a15c399893aae4fa069f"
 dependencies = [
  "anstream",
  "anstyle",
@@ -1788,12 +1788,6 @@ dependencies = [
  "pkg-config",
  "system-deps",
 ]
-
-[[package]]
-name = "generativity"
-version = "1.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5881e4c3c2433fe4905bb19cfd2b5d49d4248274862b68c27c33d9ba4e13f9ec"
 
 [[package]]
 name = "generic-array"
@@ -2718,9 +2712,9 @@ checksum = "d75a2a4b1b190afb6f5425f10f6a8f959d2ea0b9c2b1d79553551850539e4674"
 
 [[package]]
 name = "jiff"
-version = "0.2.4"
+version = "0.2.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d699bc6dfc879fb1bf9bdff0d4c56f0884fc6f0d0eb0fba397a6d00cd9a6b85e"
+checksum = "f02000660d30638906021176af16b17498bd0d12813dbfe7b276d8bc7f3c0806"
 dependencies = [
  "jiff-static",
  "log",
@@ -2731,9 +2725,9 @@ dependencies = [
 
 [[package]]
 name = "jiff-static"
-version = "0.2.4"
+version = "0.2.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8d16e75759ee0aa64c57a56acbf43916987b20c77373cb7e808979e02b93c9f9"
+checksum = "f3c30758ddd7188629c6713fc45d1188af4f44c90582311d0c8d8c9907f60c48"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -4440,29 +4434,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "slint-interpreter"
-version = "1.10.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "54b074a425dc4c278c182e74b12aa8e1270bba5966301324194ae38c1e9de74c"
-dependencies = [
- "derive_more",
- "generativity",
- "i-slint-backend-qt",
- "i-slint-backend-selector",
- "i-slint-backend-winit",
- "i-slint-common",
- "i-slint-compiler",
- "i-slint-core",
- "itertools 0.14.0",
- "lyon_path",
- "once_cell",
- "smol_str 0.3.2",
- "unicode-segmentation",
- "vtable",
- "web-sys",
-]
-
-[[package]]
 name = "slint-macros"
 version = "1.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4582,7 +4553,7 @@ dependencies = [
 name = "spell"
 version = "0.1.0"
 dependencies = [
- "raw-window-handle",
+ "env_logger",
  "slint",
  "smithay-client-toolkit",
 ]
@@ -5985,13 +5956,9 @@ dependencies = [
 name = "young-shell"
 version = "0.1.0"
 dependencies = [
- "env_logger",
- "i-slint-backend-winit",
- "raw-window-handle",
  "slint",
  "slint-build",
- "slint-interpreter",
- "smithay-client-toolkit",
+ "spell",
 ]
 
 [[package]]
