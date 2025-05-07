@@ -27,6 +27,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             LayerAnchor::BOTTOM,
             LayerType::Top,
             window_adapter.clone(),
+            false,
         );
 
     let platform_setting = slint::platform::set_platform(Box::new(SlintLayerShell {

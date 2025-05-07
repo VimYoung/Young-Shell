@@ -13,12 +13,15 @@ It, supprots rust as the backend, so as though there are not many batteries incl
 in the framework itself, everything can be brought to life from the dark arts of
 rust.
 
-### Installation.
+### Installation
+
 You can use Spell by adding it to your project and finding more about it in the docs
 (todo!, add URL).
+
 ```
 cargo add Spell
 ```
+
 Look at quickstart for getting your first widget displaced.
 I haven't still included any batteries in spell specific to desktop shell creation,
 yet examples of various utilities could soon be found inside Young-Shell (like battery,
@@ -27,6 +30,7 @@ yourself. Pull up a few crates and start coding. Maybe pull a PR if you have imp
 any common function that can be converted into a battery/utility.
 
 ### Why Slint ??
+
 If you are cross the question of why not use any other gtk based widget system,
 the next best doubt would be why Slint?
 
@@ -34,10 +38,12 @@ Slint because it is a simple yet powerful declarative language that is extremely
 easy to learn (you can even get a sense of it in just 10 mins here). Secondly, unlike
 other good UI kits, it just has awesome integration for rust. A competibility that
 is hard to find.
+
 ```
 ```
 
 ### Inspiration
+
 Just as I was thinking for a good enough system in **rust**, I simply couldn't find
 any. Astal's official bindings were not ready and there was no other alternative.
 I tried abstracting gtk myself for a crate but couldn't get a heck of it. Gtk is
@@ -46,10 +52,9 @@ full fledged apps. It was like taking a fly done with a bomb. So, I settled for 
 a UI library(Slint) and only the code I need(rust). I found a exact same project
 but it is not completed and maintained. So, I went out to cast the SPELL myself.
 
-
 ## Young Shell
 
-For the sake of easy for creating my own system of widgets along with providing 
+For the sake of easy for creating my own system of widgets along with providing
 it as an open source service to use, I created spell along with the young shell.
 As, the name says, this shell is a prof of concept that spell is pretty good in
 doing its job.
