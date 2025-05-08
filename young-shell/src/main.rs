@@ -1,8 +1,7 @@
 use std::{env, error::Error};
 
-use slint::Rgb8Pixel;
-
 use spell::{
+    cast_spell, get_spell_ingredients,
     layer_properties::{LayerAnchor, LayerType},
     slint_adapter::{SlintLayerShell, SpellWinAdapter},
     wayland_adapter::SpellWin,
@@ -17,18 +16,17 @@ fn main() -> Result<(), Box<dyn Error>> {
     let window_adapter = SpellWinAdapter::new(width, height);
     let (mut buffer1, mut buffer2) = get_spell_ingredients(width, height);
 
-    let (mut waywindow, mut work_buffer, mut currently_displayed_buffer, mut event_queue) =
-        SpellWin::invoke_spell(
-            "counter widget",
-            width,
-            height,
-            &mut buffer1,
-            &mut buffer2,
-            LayerAnchor::BOTTOM,
-            LayerType::Top,
-            window_adapter.clone(),
-            false,
-        );
+    let (waywindow, work_buffer, currently_displayed_buffer, event_queue) = SpellWin::invoke_spell(
+        "counter widget",
+        width,
+        height,
+        &mut buffer1,
+        &mut buffer2,
+        LayerAnchor::BOTTOM,
+        LayerType::Top,
+        window_adapter.clone(),
+        false,
+    );
 
     let platform_setting = slint::platform::set_platform(Box::new(SlintLayerShell {
         window_adapter: window_adapter.clone(),
@@ -37,9 +35,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     if let Err(error) = platform_setting {
         panic!("{error}");
     }
-    let _ui = AppWindow::new().unwrap_or_else(|err| {
-        panic!("{err}");
-    });
+    let ui = AppWindow::new()?;
 
     //Slint Managing Inputs;
     // ui.on_request_increase_value({
@@ -51,36 +47,13 @@ fn main() -> Result<(), Box<dyn Error>> {
     // });
     //
     // println!("Casting the Spell");
-
-    loop {
-        slint::platform::update_timers_and_animations();
-        // Following line does the updates to the buffer. Now those updates
-        // needs to be picked by the compositer/windowing system and then
-        // displayed accordingly.
-        // println!("Running the loop");
-        if waywindow.render_again.replace(false) {
-            window_adapter.draw_if_needed(|renderer| {
-                // println!("Rendering");
-                renderer.render(work_buffer, width as usize);
-                waywindow.set_buffer(work_buffer.to_vec());
-            });
-
-            core::mem::swap::<&mut [_]>(&mut work_buffer, &mut currently_displayed_buffer);
-        }
-        if waywindow.first_configure {
-            event_queue.roundtrip(&mut waywindow).unwrap();
-        } else {
-            event_queue.flush().unwrap();
-            event_queue.dispatch_pending(&mut waywindow).unwrap();
-            event_queue.blocking_dispatch(&mut waywindow).unwrap();
-        }
-    }
-}
-
-fn get_spell_ingredients(width: u32, height: u32) -> (Vec<Rgb8Pixel>, Vec<Rgb8Pixel>) {
-    (
-        vec![Rgb8Pixel::new(0, 0, 0); width as usize * height as usize],
-        vec![Rgb8Pixel::new(0, 0, 0); width as usize * height as usize],
+    cast_spell(
+        waywindow,
+        window_adapter,
+        event_queue,
+        work_buffer,
+        currently_displayed_buffer,
+        width,
     )
 }
 // TODO the animations are jerky, you know the reason but you have to find a solution.
