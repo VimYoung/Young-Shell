@@ -1,0 +1,46 @@
+import { Spinner, Slider} from "std-widgets.slint";
+import { Styles} from "styles.slint";
+export component SystemInfo {
+    property <int> progress: 30;
+    in property <string> info-name;
+    VerticalLayout {
+        alignment: LayoutAlignment.stretch;
+        spacing: Styles.padding;
+        Text {
+            text: info-name;
+            horizontal-alignment: TextHorizontalAlignment.center;
+        }
+
+        Spinner {
+            min-height: 80px;
+            progress: progress;
+        }
+    }
+}
+
+export component GeneralSlider {
+    property <bool> enable: true;
+    property <int> value: 50;
+    in property <image> icon: @image-url("../assets/icons/volume.svg");
+    in property <image> icon-closed: @image-url("../assets/icons/mute.svg");
+
+    HorizontalLayout {
+        spacing: Styles.padding;
+        Rectangle {
+            Image {
+                colorize: black;
+                source: enable ? icon : icon-closed;
+            }
+        }
+
+        Slider {
+            enabled: enable;
+            value: value;
+            orientation: horizontal;
+            changed(value) => {
+            }
+            released(value) => {
+            }
+        }
+    }
+}

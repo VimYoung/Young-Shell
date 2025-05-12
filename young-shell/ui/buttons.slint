@@ -1,0 +1,58 @@
+import { Styles } from "styles.slint";
+export component MyButton {
+    // width: mytext.width + (Styles.margin * 2);
+    // height: mytext.height + (Styles.margin * 2);
+    in property <string> label;
+    callback clicked();
+    Rectangle {
+        background: Styles.fun-gradient;
+        // border-radius: 7px;
+        mytext := Text {
+            text: label;
+            font-size: 30px;
+            font-weight: 800;
+        }
+
+        TouchArea {
+            clicked => {
+                root.clicked();
+            }
+        }
+    }
+}
+
+export component PowerMenuButton {
+    in property <string> icon;
+    in property <string> label;
+    width: 30px;
+    height: 40px;
+    Rectangle {
+        background: lightblue;
+        border-radius: 10px;
+        Text {
+            text: icon;
+        }
+    }
+}
+
+export component MenuButton {
+    in property <string> icon;
+    callback clicked();
+    // width: menu.width - (root.width );
+    width: 50px;
+    height: 50px;
+    Rectangle {
+        border-radius: 20px;
+        background: #AEEEEE;
+        Text {
+            text: icon;
+            font-size: 15px;
+        }
+
+        TouchArea {
+            clicked => {
+                root.clicked();
+            }
+        }
+    }
+}

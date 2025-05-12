@@ -1,60 +1,170 @@
-import { Button, VerticalBox } from "std-widgets.slint";
+import { Button, VerticalBox, Palette, Slider, Spinner } from "std-widgets.slint";
 import { Styles } from "styles.slint";
+import { Mpris} from "mpris.slint";
 
-import { MyButton } from "MyButton.slint";
-export component AppWindow inherits Window {
-    // width: 300px;
-    // height: 300px;
-    // background: transparent;
+import { MyButton, PowerMenuButton, MenuButton } from "buttons.slint";
+import { GeneralSlider, SystemInfo} from "menu.slint";
+export component Menu inherits Window {
+    background: transparent;
+    width: 376px;
+    height: 576px;
+    default-font-family: "Urbanist-Regular";
+
     property <int> count:0;
-    // resize-border-width: 10px;
+    mainrec := Rectangle {
+        background: #001F3E;
+        border-radius: 10px;
+        padding: Styles.padding;
+        clip: true;
 
-    HorizontalLayout {
-        for i in 5: Image {
-            width: root.width / 5;
-            source: @image-url("install.svg");
-            colorize: white;
+        power-menu := Rectangle {
+            x: 0px;
+            background: #003466;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            width: 50px;
+
+            VerticalLayout {
+                max-width: power-menu.width;
+                height: mainrec.height;
+                x: 0px;
+                alignment: LayoutAlignment.stretch;
+                padding: Styles.padding;
+
+                Rectangle {
+                    x: 0px;
+                    border-radius: 20px;
+
+                    Image {
+                        x: 0px;
+                        y: 0px;
+                        width: 30px;
+                        height: 40px;
+                        source: @image-url("../assets/logo_dark.png");
+                    }
+                }
+
+                VerticalLayout {
+                    alignment: LayoutAlignment.end;
+                    spacing: Styles.padding;
+                    for i in 5: PowerMenuButton {
+                        icon: "i";
+                    }
+                }
+            }
         }
-    }
 
-    HorizontalLayout {
-        for i in 5: Image {
-            width: count > i ? root.width / 5 : 0;
-            source: @image-url("install.svg");
-            opacity: count > i ? 1 : 0;
-            animate opacity, width { duration: 500ms; }
-        }
-    }
+        // This path is somehow not rendering with custom platform, but rendering
+        // with normal settings, this needs to be checked.
+        // Path {
+        //     // x: 25px;
+        //     // y: 0px;
+        //     // width: 100px;
+        //     // height: 100px;
+        //     stroke: red;
+        //     stroke-width: 5px;
+        //
+        //     MoveTo {
+        //         x: 25;
+        //         y: 0;
+        //     }
+        //
+        //     LineTo {
+        //         x: 25;
+        //         y: 100;
+        //     }
+        // }
 
-    Text {
-        text: "Rate my app";
-        y: Styles.margin;
-        font-size: 30px;
-    }
+        menu := VerticalLayout {
+            x: 50px;
+            y: 0px;
+            width: root.width - 50px;
+            padding: Styles.padding;
+            alignment: LayoutAlignment.start;
+            spacing: Styles.padding;
 
-    MyButton {
-        y: root.height - self.height - Styles.margin;
-        label: "Hello World! " + count;
-        clicked => {
-            if count < 5 {
-                count += 1;
-            } else {
-                count = 0;
+            Text {
+                text: "Hello Moto!";
+                font-weight: 600;
+                font-size: 30px;
+            }
+        //
+        // Image {
+        //     source: @image-url("../assets/line.png");
+        //     colorize: black;
+        //     width: 100px;
+        //   }
+
+            Rectangle {
+                HorizontalLayout {
+                    VerticalLayout {
+                        Text {
+                            text: "07: 37 PM ";
+                            font-size: 25px;
+                        }
+
+                        Text {
+                            text: "Sunday, 11th May";
+                            font-size: 20px;
+                        }
+                    }
+
+                    Rectangle {
+                        background: #015B96;
+                        border-radius: 15px;
+                        max-width: 35px;
+                        Text {
+                            padding: Styles.padding;
+                            text: " > ";
+                            font-size: 15px;
+                        }
+
+                        TouchArea {
+                            clicked => {
+                            }
+                        }
+                    }
+                }
+            }
+
+            Rectangle {
+                background: #015B96;
+                border-radius: 15px;
+                HorizontalLayout {
+                    alignment: LayoutAlignment.space-around;
+                    padding: Styles.padding;
+                    // spacing: 10px;
+                    for i in 5: MenuButton {
+                        icon: "m";
+                    }
+                }
+            }
+
+            mpris := Mpris { }
+
+            Rectangle {
+                background: #015B96;
+                border-radius: 10px;
+                VerticalLayout {
+                    padding: Styles.padding;
+                    spacing: Styles.padding - 5px;
+                    GeneralSlider { }
+
+                    GeneralSlider { }
+
+                    GeneralSlider { }
+                }
+            }
+
+            HorizontalLayout {
+                SystemInfo {
+                    info-name: "G";
+                }
+
+                SystemInfo {
+                    info-name: "H";
+                }
             }
         }
     }
-    // in-out property <int> counter: 42;
-    // callback request-increase-value();
-    // VerticalBox {
-    //     Text {
-    //         text: "Counter: \{root.counter}";
-    //     }
-    //
-    //     Button {
-    //         text: "Increase value";
-    //         clicked => {
-    //             root.request-increase-value();
-    //         }
-    //     }
-    // }
 }
