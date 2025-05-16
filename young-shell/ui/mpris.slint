@@ -1,4 +1,5 @@
 import { Styles} from "styles.slint";
+import { GeneralButton } from "buttons.slint";
 export component Mpris {
     Rectangle {
         background: #6EACDA;
@@ -8,10 +9,15 @@ export component Mpris {
         HorizontalLayout {
             alignment: LayoutAlignment.stretch;
             padding: Styles.padding;
+            spacing: 15px;
 
             Image {
                 source: @image-url("../assets/nomusic.png");
                 max-height: 80px;
+                TouchArea {
+                    clicked => {
+                    }
+                }
             }
 
             VerticalLayout {
@@ -40,45 +46,34 @@ export component Mpris {
                 HorizontalLayout {
                     spacing: 10px;
                     alignment: LayoutAlignment.space-between;
-
-                    Rectangle {
-                        padding: Styles.padding;
-                        width: 10px;
-                        border-radius: 15px;
-                        background: #015B96;
-                        Text {
-                            text: "<";
-                        }
+                    GeneralButton {
+                        button-width: 30px;
+                        icon: @image-url("../assets/mpris/skip-back.svg");
+                        button-rad: 10px;
                     }
 
-                    Rectangle {
-                        padding: Styles.padding;
-                        width: 10px;
-                        border-radius: 15px;
-                        background: #015B96;
-                        Text {
-                            text: ">";
-                        }
+                    GeneralButton {
+                        button-width: 30px;
+                        icon: @image-url("../assets/mpris/replay-10-line.svg");
+                        button-rad: 10px;
                     }
 
-                    Rectangle {
-                        padding: Styles.padding;
-                        width: 10px;
-                        border-radius: 15px;
-                        background: #015B96;
-                        Text {
-                            text: "<";
-                        }
+                    GeneralButton {
+                        button-width: 30px;
+                        icon: @image-url("../assets/mpris/play.svg");
+                        button-rad: 10px;
                     }
 
-                    Rectangle {
-                        padding: Styles.padding;
-                        width: 10px;
-                        border-radius: 15px;
-                        background: #015B96;
-                        Text {
-                            text: "<";
-                        }
+                    GeneralButton {
+                        button-width: 30px;
+                        icon: @image-url("../assets/mpris/forward-10-line.svg");
+                        button-rad: 10px;
+                    }
+
+                    GeneralButton {
+                        button-width: 30px;
+                        icon: @image-url("../assets/mpris/skip-forward.svg");
+                        button-rad: 10px;
                     }
                 }
             }

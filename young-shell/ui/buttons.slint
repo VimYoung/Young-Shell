@@ -1,42 +1,49 @@
 import { Styles } from "styles.slint";
-export component MyButton {
-    // width: mytext.width + (Styles.margin * 2);
-    // height: mytext.height + (Styles.margin * 2);
+export component PowerMenuButton inherits Rectangle {
+    in property <image> icon;
+    in property <image> icon-open;
     in property <string> label;
+    in property <bool> is-open: false;
+    in property <length> button-width: 30px;
+    in property <bool> is-special: false;
     callback clicked();
-    Rectangle {
-        background: Styles.fun-gradient;
-        // border-radius: 7px;
-        mytext := Text {
-            text: label;
-            font-size: 30px;
-            font-weight: 800;
+
+    width: button-width;
+    height: 40px;
+    background: lightblue;
+    border-radius: 10px;
+
+    HorizontalLayout {
+        padding: Styles.padding - 3px;
+        width: root.width;
+        alignment: LayoutAlignment.start;
+        spacing: Styles.padding;
+
+        Image {
+            source: is-special ? (is-open ? icon-open : icon) : icon;
+            width: is-special ? root.width - 13px : 17px;
+            // height: is-special ? root.height - 10px : root.height - 17px;
         }
 
-        TouchArea {
-            clicked => {
-                root.clicked();
-            }
+        label-text := Text {
+            text: label;
+            font-size: 23px;
+            opacity: is-open ? 1 : 0;
+            vertical-alignment: TextVerticalAlignment.center;
+
+            animate opacity { delay: is-open ? -200ms : 200ms; }
         }
     }
-}
 
-export component PowerMenuButton {
-    in property <string> icon;
-    in property <string> label;
-    width: 30px;
-    height: 40px;
-    Rectangle {
-        background: lightblue;
-        border-radius: 10px;
-        Text {
-            text: icon;
+    TouchArea {
+        clicked => {
+            root.clicked();
         }
     }
 }
 
 export component MenuButton {
-    in property <string> icon;
+    in property <image> icon;
     callback clicked();
     // width: menu.width - (root.width );
     width: 50px;
@@ -44,15 +51,36 @@ export component MenuButton {
     Rectangle {
         border-radius: 20px;
         background: #AEEEEE;
-        Text {
-            text: icon;
-            font-size: 15px;
+        Image {
+            width: root.width - 28px;
+            source: icon;
         }
 
         TouchArea {
             clicked => {
                 root.clicked();
             }
+        }
+    }
+}
+
+export component GeneralButton inherits Rectangle {
+    in property <image> icon: @image-url("../assets/icons/chevron-right.svg");
+    in property <length> button-width: 35px;
+    in property <length> button-rad: 15px;
+    background: #015B96;
+    border-radius: button-rad;
+    width: button-width;
+    min-height: 30px;
+    Image {
+        padding: Styles.padding;
+        width: 20px;
+        source: icon;
+        colorize: white;
+    }
+
+    TouchArea {
+        clicked => {
         }
     }
 }

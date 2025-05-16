@@ -2,27 +2,124 @@ import { Button, VerticalBox, Palette, Slider, Spinner } from "std-widgets.slint
 import { Styles } from "styles.slint";
 import { Mpris} from "mpris.slint";
 
-import { MyButton, PowerMenuButton, MenuButton } from "buttons.slint";
+import { PowerMenuButton, MenuButton, GeneralButton} from "buttons.slint";
 import { GeneralSlider, SystemInfo} from "menu.slint";
+
 export component Menu inherits Window {
     background: transparent;
     width: 376px;
     height: 576px;
     default-font-family: "Urbanist-Regular";
 
-    property <int> count:0;
+    property <bool> is-power-menu-open: false;
+
     mainrec := Rectangle {
         background: #001F3E;
         border-radius: 10px;
-        padding: Styles.padding;
         clip: true;
+
+        menu := VerticalLayout {
+            x: 50px;
+            y: 0px;
+            width: root.width - 50px;
+            padding: Styles.padding;
+            alignment: LayoutAlignment.start;
+            spacing: Styles.padding;
+
+            Text {
+                text: "Hello Ramayen !";
+                font-size: 30px;
+                font-family: "Urbanist-Bold";
+            }
+        //
+        // Image {
+        //     source: @image-url("../assets/line.png");
+        //     colorize: black;
+        //     width: 100px;
+        //   }
+
+            Rectangle {
+                HorizontalLayout {
+                    VerticalLayout {
+                        Text {
+                            text: "07: 37: 46 PM ";
+                            font-size: 25px;
+                        }
+
+                        Text {
+                            text: "Sunday, 11th May";
+                            font-size: 20px;
+                        }
+                    }
+
+                    GeneralButton { }
+                }
+            }
+
+            Rectangle {
+                background: #015B96;
+                border-radius: 15px;
+                HorizontalLayout {
+                    alignment: LayoutAlignment.space-around;
+                    padding: Styles.padding;
+                    // spacing: 10px;
+                    MenuButton {
+                        icon: @image-url("../assets/icons/light-bulb.svg");
+                    }
+
+                    MenuButton {
+                        icon: @image-url("../assets/icons/zen-on.svg");
+                    }
+
+                    MenuButton {
+                        icon: @image-url("../assets/icons/font-question.svg");
+                    }
+
+                    MenuButton {
+                        icon: @image-url("../assets/icons/wifi.svg");
+                    }
+
+                    MenuButton {
+                        icon: @image-url("../assets/icons/bluetooth.svg");
+                    }
+                }
+            }
+
+            mpris := Mpris { }
+
+            Rectangle {
+                background: #015B96;
+                border-radius: 10px;
+                VerticalLayout {
+                    padding: Styles.padding;
+                    spacing: Styles.padding;
+                    GeneralSlider { }
+
+                    GeneralSlider { }
+
+                    GeneralSlider { }
+                }
+            }
+
+            HorizontalLayout {
+                SystemInfo {
+                    info-name: "CPU Usage";
+                }
+
+                SystemInfo {
+                    info-name: "Temp Usage";
+                }
+            }
+        }
 
         power-menu := Rectangle {
             x: 0px;
             background: #003466;
             border-top-left-radius: 10px;
             border-bottom-left-radius: 10px;
-            width: 50px;
+            width: is-power-menu-open ? 200px : 50px;
+
+            animate width { duration: 200ms; }
 
             VerticalLayout {
                 max-width: power-menu.width;
@@ -47,122 +144,78 @@ export component Menu inherits Window {
                 VerticalLayout {
                     alignment: LayoutAlignment.end;
                     spacing: Styles.padding;
-                    for i in 5: PowerMenuButton {
-                        icon: "i";
-                    }
-                }
-            }
-        }
+                    PowerMenuButton {
+                        icon: @image-url("../assets/icons/power.svg");
 
-        // This path is somehow not rendering with custom platform, but rendering
-        // with normal settings, this needs to be checked.
-        // Path {
-        //     // x: 25px;
-        //     // y: 0px;
-        //     // width: 100px;
-        //     // height: 100px;
-        //     stroke: red;
-        //     stroke-width: 5px;
-        //
-        //     MoveTo {
-        //         x: 25;
-        //         y: 0;
-        //     }
-        //
-        //     LineTo {
-        //         x: 25;
-        //         y: 100;
-        //     }
-        // }
-
-        menu := VerticalLayout {
-            x: 50px;
-            y: 0px;
-            width: root.width - 50px;
-            padding: Styles.padding;
-            alignment: LayoutAlignment.start;
-            spacing: Styles.padding;
-
-            Text {
-                text: "Hello Moto!";
-                font-weight: 600;
-                font-size: 30px;
-            }
-        //
-        // Image {
-        //     source: @image-url("../assets/line.png");
-        //     colorize: black;
-        //     width: 100px;
-        //   }
-
-            Rectangle {
-                HorizontalLayout {
-                    VerticalLayout {
-                        Text {
-                            text: "07: 37 PM ";
-                            font-size: 25px;
-                        }
-
-                        Text {
-                            text: "Sunday, 11th May";
-                            font-size: 20px;
-                        }
-                    }
-
-                    Rectangle {
-                        background: #015B96;
-                        border-radius: 15px;
-                        max-width: 35px;
-                        Text {
-                            padding: Styles.padding;
-                            text: " > ";
-                            font-size: 15px;
-                        }
-
-                        TouchArea {
-                            clicked => {
+                        is-open: is-power-menu-open;
+                        button-width: power-menu.width - 20px;
+                        label: "Shutdown";
+                        clicked => {
+                            if is-power-menu-open {
+                                is-power-menu-open = false;
+                            } else {
+                                is-power-menu-open = true;
                             }
                         }
                     }
-                }
-            }
 
-            Rectangle {
-                background: #015B96;
-                border-radius: 15px;
-                HorizontalLayout {
-                    alignment: LayoutAlignment.space-around;
-                    padding: Styles.padding;
-                    // spacing: 10px;
-                    for i in 5: MenuButton {
-                        icon: "m";
+                    PowerMenuButton {
+                        icon: @image-url("../assets/icons/suspend.svg");
+
+                        is-open: is-power-menu-open;
+                        button-width: power-menu.width - 20px;
+                        label: "Suspend";
+                        clicked => {
+                            if is-power-menu-open {
+                                is-power-menu-open = false;
+                            } else {
+                                is-power-menu-open = true;
+                            }
+                        }
                     }
-                }
-            }
 
-            mpris := Mpris { }
+                    PowerMenuButton {
+                        icon: @image-url("../assets/icons/lock.svg");
+                        is-open: is-power-menu-open;
+                        button-width: power-menu.width - 20px;
+                        label: "Lock Screen";
+                        clicked => {
+                            if is-power-menu-open {
+                                is-power-menu-open = false;
+                            } else {
+                                is-power-menu-open = true;
+                            }
+                        }
+                    }
 
-            Rectangle {
-                background: #015B96;
-                border-radius: 10px;
-                VerticalLayout {
-                    padding: Styles.padding;
-                    spacing: Styles.padding - 5px;
-                    GeneralSlider { }
+                    PowerMenuButton {
+                        icon: @image-url("../assets/icons/log-out.svg");
+                        is-open: is-power-menu-open;
+                        button-width: power-menu.width - 20px;
+                        label: "Log Out";
+                        clicked => {
+                            if is-power-menu-open {
+                                is-power-menu-open = false;
+                            } else {
+                                is-power-menu-open = true;
+                            }
+                        }
+                    }
 
-                    GeneralSlider { }
-
-                    GeneralSlider { }
-                }
-            }
-
-            HorizontalLayout {
-                SystemInfo {
-                    info-name: "G";
-                }
-
-                SystemInfo {
-                    info-name: "H";
+                    PowerMenuButton {
+                        icon: @image-url("../assets/icons/chevron-right.svg");
+                        icon-open: @image-url("../assets/icons/chevron-left.svg");
+                        is-open: is-power-menu-open;
+                        button-width: power-menu.width - 20px;
+                        is-special: true;
+                        clicked => {
+                            if is-power-menu-open {
+                                is-power-menu-open = false;
+                            } else {
+                                is-power-menu-open = true;
+                            }
+                        }
+                    }
                 }
             }
         }
