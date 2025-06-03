@@ -2,9 +2,9 @@ use std::{env, error::Error};
 
 use spell::{
     cast_spell, get_spell_ingredients,
-    layer_properties::{LayerAnchor, LayerType},
+    layer_properties::{LayerAnchor, LayerType, WindowConf},
     slint_adapter::{SpellLayerShell, SpellWinAdapter},
-    wayland_adapter::{SpellWin, WindowConf},
+    wayland_adapter::SpellWin,
 };
 
 slint::include_modules!();
@@ -15,7 +15,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let width: u32 = 376; //1366;
     let height: u32 = 576; //768;
     let window_adapter = SpellWinAdapter::new(width, height);
-    let (mut buffer1, mut buffer2) = get_spell_ingredients(width, height);
+    let work_buffer = get_spell_ingredients(width, height);
     let window_conf = WindowConf::new(
         width,
         height,
@@ -26,11 +26,11 @@ fn main() -> Result<(), Box<dyn Error>> {
         false,
     );
 
-    let (waywindow, work_buffer, currently_displayed_buffer, event_queue) =
-        SpellWin::invoke_spell("counter widget", &mut buffer1, &mut buffer2, window_conf);
+    let (waywindow, event_queue) = SpellWin::invoke_spell("counter-widget", window_conf);
 
     let platform_setting = slint::platform::set_platform(Box::new(SpellLayerShell {
-        window_adapter: window_adapter.clone(),
+        window_adapter: window_adapter,
+        time_since_start: std::time::Instant::now(),
     }));
 
     if let Err(error) = platform_setting {
@@ -48,14 +48,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     // });
     //
     // println!("Casting the Spell");
-    cast_spell(
-        waywindow,
-        window_adapter,
-        event_queue,
-        work_buffer,
-        currently_displayed_buffer,
-        width,
-    )
+    cast_spell( waywindow, event_queue, work_buffer)
 }
 // TODO the animations are jerky, you know the reason but you have to find a solution.
 // TODO the cursor doesn't change from pointer to hand when clicking buttons, so the

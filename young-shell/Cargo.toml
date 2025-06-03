@@ -4,11 +4,8 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-slint = { version = "1.8.0", features = [
-  "raw-window-handle-06",
-  "renderer-software",
-] }
-spell = { path = "../../spell/" }
+slint = { version = "1.8.0", features = ["renderer-software"] }
+spell = { path = "../../Spell/" }
 
 [build-dependencies]
 slint-build = "1.8.0"
