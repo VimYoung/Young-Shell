@@ -5,14 +5,17 @@ import { Mpris} from "mpris.slint";
 import { PowerMenuButton, MenuButton, GeneralButton} from "buttons.slint";
 import { GeneralSlider, SystemInfo} from "menu.slint";
 
+struct State {
+    is-power-menu-open: bool}
+
 export component Menu inherits Window {
-    // background: transparent;
+    background: transparent;
     width: 376px;
     height: 576px;
     default-font-family: "Urbanist-Regular";
+    in property <State> state: { is-power-menu-open: false };
 
-    property <bool> is-power-menu-open: false;
-
+    property <bool> is-power-menu-open: state.is-power-menu-open;
     mainrec := Rectangle {
         property <brush> border_brush: #001F3E.transparentize(0.6);
         background: #001F3E;

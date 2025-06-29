@@ -1,15 +1,39 @@
-use std::{cell::RefCell, env, error::Error, rc::Rc};
+use std::{any::Any, cell::RefCell, env, error::Error, rc::Rc};
 
+use slint::ComponentHandle;
 use spell::{
-    cast_spell, get_spell_ingredients,
-    layer_properties::{LayerAnchor, LayerType, WindowConf},
+    cast_spell,
+    layer_properties::{DataType, ForeignController, LayerAnchor, LayerType, WindowConf},
     shared_context::SharedCore,
-    skia_adapter::SpellSkiaWinAdapter,
-    slint_adapter::SpellLayerShell,
+    slint_adapter::{SpellLayerShell, SpellSkiaWinAdapter},
     wayland_adapter::SpellWin,
 };
-
 slint::include_modules!();
+
+impl ForeignController for State {
+    fn get_type(&self, key: &str) -> DataType {
+        match key {
+            "is-power-menu-open" => DataType::Boolean(self.is_power_menu_open),
+            _ => DataType::Panic,
+        }
+    }
+
+    fn change_val(&mut self, key: &str, val: DataType) {
+        match key {
+            "is-power-menu-open" => {
+                if let DataType::Boolean(value) = val {
+                    self.is_power_menu_open = value;
+                }
+            }
+            _ => {}
+        }
+    }
+
+    fn as_any(&self) -> &dyn Any {
+        self
+    }
+}
+
 fn main() -> Result<(), Box<dyn Error>> {
     // env::set_var("WAYLAND_DEBUG", "1");
     env::set_var("RUST_BACKTRACE", "1");
@@ -33,17 +57,16 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let (waywindow, event_queue) = SpellWin::invoke_spell("counter-widget", window_conf);
 
-    let platform_setting = slint::platform::set_platform(Box::new(SpellLayerShell {
+    let _ = slint::platform::set_platform(Box::new(SpellLayerShell {
         window_adapter,
         time_since_start: std::time::Instant::now(),
     }));
     println!("platform for slint is set");
-    if let Err(error) = platform_setting {
-        panic!("{error}");
-    }
-    let _ui = Menu::new()?;
+    let ui = Menu::new().unwrap();
+    let state = Box::new(ui.get_state());
     println!("ui's new window created");
 
+    let ui_handle = ui.as_weak().unwrap();
     //Slint Managing Inputs;
     // ui.on_request_increase_value({
     //     let ui_handle = ui.as_weak();
@@ -57,8 +80,14 @@ fn main() -> Result<(), Box<dyn Error>> {
     // ui.run()?;
     // Ok(())
     println!("spell is caseted");
-    cast_spell(waywindow, event_queue)
+    cast_spell(waywindow, event_queue, state, &mut |state_value| {
+        let controller_val = state_value.read().unwrap();
+        let inner = controller_val.as_ref();
+        let val = inner.as_any().downcast_ref::<State>().unwrap().clone();
+        ui_handle.set_state(val);
+    })
 }
+
 // TODO the animations are jerky, you know the reason but you have to find a solution.
 // TODO the cursor doesn't change from pointer to hand when clicking buttons, so the
 // cursor needs to do that.
@@ -67,7 +96,5 @@ fn main() -> Result<(), Box<dyn Error>> {
 // TODO Lookup child creation in wayland, how can it be utilised.
 // TODO Lookup popup in wayland to see if that helps in anything.
 // TODO cursor shape management needs to be done.
-// TODO Making the Background transparent doesn't bring the contents of layer below it.
-// This needs to be fixed
 // TODO there is some off by one error happeneing if either of width and height is not
 // a multiple of 4.
