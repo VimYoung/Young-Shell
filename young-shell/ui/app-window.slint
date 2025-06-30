@@ -5,8 +5,13 @@ import { Mpris} from "mpris.slint";
 import { PowerMenuButton, MenuButton, GeneralButton} from "buttons.slint";
 import { GeneralSlider, SystemInfo} from "menu.slint";
 
+export enum Cards {hearts, diamonds, spade, yellow }
+
 struct State {
-    is-power-menu-open: bool}
+    is-power-menu-open: bool,
+    brush-type: brush,
+    string-type: string,
+    cards-type: Cards}
 
 export component Menu inherits Window {
     background: transparent;

@@ -25,6 +25,8 @@ impl ForeignController for State {
                     self.is_power_menu_open = value;
                 }
             }
+            "string-type" => self.string_type = "hello".into(),
+            "enumsss" => println!("{:?}", self.cards_type),
             _ => {}
         }
     }
@@ -42,7 +44,6 @@ fn main() -> Result<(), Box<dyn Error>> {
     let height: u32 = 576; //768;
     let core = Rc::new(RefCell::new(SharedCore::new(width, height)));
     let window_adapter = SpellSkiaWinAdapter::new(core.clone(), width, height);
-    // let work_buffer = get_spell_ingredients(width, height);
     let window_conf = WindowConf::new(
         width,
         height,
