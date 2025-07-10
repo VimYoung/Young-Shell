@@ -13,6 +13,19 @@ struct State {
     string-type: string,
     cards-type: Cards}
 
+export component TopBar inherits Window {
+    callback request-hide();
+    Text {
+        text: "Hello";
+    }
+
+    TouchArea {
+        clicked => {
+            root.request-hide();
+        }
+    }
+}
+
 export component Menu inherits Window {
     background: transparent;
     width: 376px;

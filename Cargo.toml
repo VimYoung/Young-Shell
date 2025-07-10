@@ -1,6 +1,15 @@
-[workspace]
-resolver = "2"
-members = ["young-shell"]
+[package]
+name = "young-shell"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+slint = { version = "1.8.0", features = ["renderer-software"] }
+spell = { path = "../Spell/spell/" }
+tracing-subscriber = { version = "0.3.19", features = ["std"] }
+
+[build-dependencies]
+slint-build = "1.8.0"
 
 [patch.crates-io]
 slint = { git = "https://github.com/slint-ui/slint" }
