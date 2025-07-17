@@ -13,6 +13,23 @@ struct State {
     string-type: string,
     cards-type: Cards}
 
+export component AppWindow inherits Window {
+    in-out property <int> counter: 42;
+    callback request-increase-value();
+    VerticalBox {
+        Text {
+            text: "Counter: \{root.counter}";
+        }
+
+        Button {
+            text: "Increase value";
+            clicked => {
+                root.request-increase-value();
+            }
+        }
+    }
+}
+
 export component TopBar inherits Window {
     callback request-hide();
     Text {
@@ -152,14 +169,16 @@ export component Menu inherits Window {
 
                 Rectangle {
                     x: 0px;
-                    border-radius: 20px;
-
-                    Image {
-                        x: 0px;
-                        y: 0px;
-                        width: 30px;
-                        height: 40px;
-                        source: @image-url("../assets/logo_dark.png");
+                    Rectangle {
+                        clip: true;
+                        border-radius: 10px;
+                        Image {
+                            x: 0px;
+                            y: 0px;
+                            width: 30px;
+                            height: 40px;
+                            source: @image-url("../assets/logo_dark.png");
+                        }
                     }
                 }
 

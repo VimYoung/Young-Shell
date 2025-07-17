@@ -1,11 +1,15 @@
-use std::{any::Any, cell::RefCell, env, error::Error, rc::Rc, sync::mpsc};
+use std::{
+    any::Any,
+    env,
+    error::Error,
+    sync::mpsc,
+    sync::{Arc, RwLock},
+};
 
 use slint::ComponentHandle;
 use spell::{
     cast_spell,
     layer_properties::{DataType, ForeignController, LayerAnchor, LayerType, WindowConf},
-    shared_context::SharedCore,
-    slint_adapter::{SpellLayerShell, SpellSkiaWinAdapter},
     wayland_adapter::SpellWin,
     Handle,
 };
@@ -36,7 +40,6 @@ impl ForeignController for State {
         self
     }
 }
-
 fn main() -> Result<(), Box<dyn Error>> {
     // Initialize the subscriber.
     // let subscriber = tracing_subscriber::FmtSubscriber::new();
@@ -45,7 +48,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     // Dimentions for the widget size
     // let width: u32 = 376; //1366;
     // let height: u32 = 576; //768;
-    let (tx, rx) = mpsc::channel::<Handle>();
+    let (_tx, rx) = mpsc::channel::<Handle>();
     let window_conf = WindowConf::new(
         376,
         576,
@@ -56,15 +59,20 @@ fn main() -> Result<(), Box<dyn Error>> {
     );
     let (waywindow, event_queue) = SpellWin::invoke_spell("counter-widget", window_conf);
 
-    let ui = Menu::new().unwrap();
     let bar = TopBar::new().unwrap();
+    let ui = Menu::new().unwrap();
     let state = Box::new(ui.get_state());
 
     let ui_handle = ui.as_weak().unwrap();
-    let tx_clone = tx.clone();
-    bar.on_request_hide(move || {
-        tx_clone.send(Handle::HideWindow).unwrap();
-    });
+
+    let val = bar.show();
+    if let Err(err_val) = val {
+        println!("{err_val}");
+    }
+    // let tx_clone = tx.clone();
+    // bar.on_request_hide(move || {
+    //     tx_clone.send(Handle::HideWindow).unwrap();
+    // });
     //Slint Managing Inputs;
     // ui.on_request_increase_value({
     //     let ui_handle = ui.as_weak();
@@ -77,12 +85,20 @@ fn main() -> Result<(), Box<dyn Error>> {
     // println!("Casting the Spell");
     // ui.run()?;
     // Ok(())
-    cast_spell(waywindow, event_queue, rx, state, &mut |state_value| {
-        let controller_val = state_value.read().unwrap();
-        let inner = controller_val.as_ref();
-        let val = inner.as_any().downcast_ref::<State>().unwrap().clone();
-        ui_handle.set_state(val);
-    })
+    cast_spell(
+        waywindow,
+        event_queue,
+        rx,
+        Some(Arc::new(RwLock::new(state))),
+        Some(
+            |state_value: Arc<RwLock<Box<dyn ForeignController + 'static>>>| {
+                let controller_val = state_value.read().unwrap();
+                let inner = controller_val.as_ref();
+                let val = inner.as_any().downcast_ref::<State>().unwrap().clone();
+                ui_handle.set_state(val);
+            },
+        ),
+    )
 }
 
 // TODO the animations are jerky, you know the reason but you have to find a solution.
