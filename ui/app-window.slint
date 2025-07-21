@@ -1,8 +1,8 @@
-import { Button, VerticalBox, Palette, Slider, Spinner } from "std-widgets.slint";
+import { Button, VerticalBox, Palette, Slider, Spinner, HorizontalBox, TabWidget, LineEdit, ScrollView } from "std-widgets.slint";
 import { Styles } from "styles.slint";
 import { Mpris} from "mpris.slint";
 
-import { PowerMenuButton, MenuButton, GeneralButton} from "buttons.slint";
+import { PowerMenuButton, MenuButton, GeneralButton, SearchButton} from "buttons.slint";
 import { GeneralSlider, SystemInfo} from "menu.slint";
 
 export enum Cards {hearts, diamonds, spade, yellow }
@@ -31,29 +31,130 @@ export component AppWindow inherits Window {
 }
 
 export component TopBar inherits Window {
-    callback request-hide();
-    Text {
-        text: "Hello";
+    callback request-menu-toggle();
+    in-out property <bool> is_search_on: false;
+    height: 35px;
+    width: 1366px;
+    background: Styles.dark-background;
+    Rectangle {
+        x: 5px;
+        width: 20px;
+        Image {
+            width: 18px;
+            source: @image-url("../assets/icons/fedora.svg");
+            colorize: white;
+        }
+
+        TouchArea {
+            clicked => {
+                root.request-menu-toggle();
+                if is_search_on {
+                    is_search_on = false;
+                } else {
+                    is_search_on = true;
+                }
+            }
+        }
     }
 
-    TouchArea {
-        clicked => {
-            root.request-hide();
+    Rectangle {
+        x: 30px;
+        y: is_search_on ? 0px : -30px;
+        width: 495px;
+        background: Styles.dark-background;
+        // border-radius: 10px;
+        // clip: true;
+        // background: pink;
+        LineEdit {
+            width: parent.width;
+            height: 25px;
+            x: 5px;
+            placeholder-text: "Search Apps..";
         }
+
+        animate y {
+            easing: ease-in-out-back;
+            duration: 500ms;
+        }
+    }
+
+    Rectangle {
+        x: 535px;
+        y: is_search_on ? 0px : -32px;
+        width: root.width - 600px;
+        // opacity: is_search_on ? 100 : 0;
+        ScrollView {
+            width: parent.width;
+            viewport-width: 800px;
+            HorizontalLayout {
+                padding: 2px;
+                spacing: 5px;
+                alignment: LayoutAlignment.stretch;
+                SearchButton {
+                    place_no: 1;
+                    text_value: "Apps";
+                }
+
+                SearchButton {
+                    place_no: 2;
+                    text_value: "Clipboard";
+                }
+
+                SearchButton {
+                    place_no: 3;
+                    text_value: "Wifi";
+                }
+
+                SearchButton {
+                    place_no: 4;
+                    text_value: "Bluetooth";
+                }
+
+                SearchButton {
+                    place_no: 4;
+                    text_value: "Walls";
+                }
+
+                SearchButton {
+                    place_no: 4;
+                    text_value: "Color Picker";
+                }
+
+                SearchButton {
+                    place_no: 4;
+                    text_value: "Emojis";
+                }
+            }
+        }
+
+        animate y {
+            easing: ease-out-back;
+            // delay: 210ms;
+            duration: 500ms;
+        }
+    }
+
+    Text {
+        x: is_search_on ? root.width - 57px : 683px;
+        horizontal-alignment: TextHorizontalAlignment.center;
+        vertical-alignment: TextVerticalAlignment.center;
+        text: "04:16 PM";
+        color: Styles.font-color-light;
+        animate x { duration: 200ms; }
     }
 }
 
 export component Menu inherits Window {
-    background: transparent;
     width: 376px;
     height: 576px;
+    background: transparent;
     default-font-family: "Urbanist-Regular";
     in property <State> state: { is-power-menu-open: false };
+    callback request-hide();
 
     property <bool> is-power-menu-open: state.is-power-menu-open;
     mainrec := Rectangle {
-        property <brush> border_brush: #001F3E.transparentize(0.6);
-        background: #001F3E;
+        background: Styles.dark-background;
         border-radius: 10px;
         clip: true;
 
@@ -67,6 +168,7 @@ export component Menu inherits Window {
 
             Text {
                 text: "Hello Ramayen !";
+                color: Styles.font-color-light;
                 font-size: 30px;
                 font-family: "Urbanist-Bold";
             }
@@ -82,11 +184,13 @@ export component Menu inherits Window {
                     VerticalLayout {
                         Text {
                             text: "07: 37: 46 PM ";
+                            color: Styles.font-color-light;
                             font-size: 25px;
                         }
 
                         Text {
                             text: "Sunday, 11th May";
+                            color: Styles.font-color-light;
                             font-size: 20px;
                         }
                     }
@@ -96,8 +200,10 @@ export component Menu inherits Window {
             }
 
             Rectangle {
-                background: #015B96;
+                background: Styles.base-background;
                 border-radius: 15px;
+                border-width: 2px;
+                border-color: Styles.border-color;
                 HorizontalLayout {
                     alignment: LayoutAlignment.space-around;
                     padding: Styles.padding;
@@ -127,8 +233,10 @@ export component Menu inherits Window {
             mpris := Mpris { }
 
             Rectangle {
-                background: #015B96;
+                background: Styles.base-background;
                 border-radius: 10px;
+                border-width: 2px;
+                border-color: Styles.border-color;
                 VerticalLayout {
                     padding: Styles.padding;
                     spacing: Styles.padding;
@@ -153,7 +261,7 @@ export component Menu inherits Window {
 
         power-menu := Rectangle {
             x: 0px;
-            background: #003466;
+            background: Styles.base-background;
             border-top-left-radius: 10px;
             border-bottom-left-radius: 10px;
             width: is-power-menu-open ? 200px : 50px;
@@ -260,5 +368,114 @@ export component Menu inherits Window {
                 }
             }
         }
+    }
+}
+
+export component HideWin inherits Window {
+    callback request-hide();
+    Text {
+        horizontal-alignment: TextHorizontalAlignment.center;
+        vertical-alignment: TextVerticalAlignment.center;
+        text: "Hello";
+    }
+
+    TouchArea {
+        clicked => {
+            root.request-hide();
+        }
+    }
+}
+
+export component ScrollEx inherits Window {
+    height: 35px;
+    width: 1366px;
+    background: Styles.dark-background;
+    Rectangle {
+        x: 5px;
+        width: 20px;
+        Image {
+            width: 18px;
+            source: @image-url("../assets/icons/fedora.svg");
+            colorize: white;
+        }
+    }
+
+    Rectangle {
+        x: 30px;
+        y: 0px;
+        width: 495px;
+        background: Styles.dark-background;
+        // border-radius: 10px;
+        // clip: true;
+        // background: pink;
+        LineEdit {
+            width: parent.width;
+            height: 25px;
+            x: 5px;
+            placeholder-text: "Search Apps..";
+        }
+
+        animate y {
+            easing: ease-in-out-back;
+            duration: 500ms;
+        }
+    }
+
+    Rectangle {
+        x: 535px;
+        y: 0px;
+        width: root.width - 600px;
+        // opacity: is_search_on ? 100 : 0;
+        ScrollView {
+            width: parent.width;
+            viewport-width: 800px;
+            HorizontalLayout {
+                padding: 2px;
+                spacing: 5px;
+                alignment: LayoutAlignment.stretch;
+                SearchButton {
+                    place_no: 1;
+                    text_value: "Apps";
+                }
+
+                SearchButton {
+                    place_no: 2;
+                    text_value: "Clipboard";
+                }
+
+                SearchButton {
+                    place_no: 3;
+                    text_value: "Wifi";
+                }
+
+                SearchButton {
+                    place_no: 4;
+                    text_value: "Bluetooth";
+                }
+
+                SearchButton {
+                    place_no: 4;
+                    text_value: "Walls";
+                }
+
+                SearchButton {
+                    place_no: 4;
+                    text_value: "Color Picker";
+                }
+
+                SearchButton {
+                    place_no: 4;
+                    text_value: "Emojis";
+                }
+            }
+        }
+    }
+
+    Text {
+        x: 683px;
+        horizontal-alignment: TextHorizontalAlignment.center;
+        vertical-alignment: TextVerticalAlignment.center;
+        text: "04:16 PM";
+        color: Styles.font-color-light;
     }
 }

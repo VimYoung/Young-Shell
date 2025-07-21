@@ -6,6 +6,7 @@ edition = "2021"
 [dependencies]
 slint = { version = "1.8.0", features = ["renderer-software"] }
 spell = { path = "../Spell/spell/" }
+sysinfo = "0.36.1"
 tracing-subscriber = { version = "0.3.19", features = ["std"] }
 
 [build-dependencies]

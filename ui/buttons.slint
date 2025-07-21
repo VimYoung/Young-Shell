@@ -10,7 +10,7 @@ export component PowerMenuButton inherits Rectangle {
 
     width: button-width;
     height: 40px;
-    background: lightblue;
+    background: Styles.light-blue;
     border-radius: 10px;
 
     HorizontalLayout {
@@ -22,11 +22,15 @@ export component PowerMenuButton inherits Rectangle {
         Image {
             source: is-special ? (is-open ? icon-open : icon) : icon;
             width: is-special ? root.width - 13px : 17px;
+            colorize: Styles.font-color-dark;
             // height: is-special ? root.height - 10px : root.height - 17px;
         }
 
         label-text := Text {
             text: label;
+            color: Styles.font-color-dark;
+            font-family: "Urbanist-Bold";
+            font-weight: 500;
             font-size: 23px;
             opacity: is-open ? 1 : 0;
             vertical-alignment: TextVerticalAlignment.center;
@@ -80,6 +84,24 @@ export component GeneralButton inherits Rectangle {
 
     TouchArea {
         clicked => {
+        }
+    }
+}
+
+export component SearchButton inherits Window {
+    in property <int> place_no;
+    in property <string> text_value: "Unknown";
+    Rectangle {
+        y: root.y;
+        border-radius: 10px;
+        border-width: 2px;
+        min-width: 150px;
+        height: 27px;
+        border-color: Styles.border-color;
+        background: Styles.base-background;
+        Text {
+            text: text_value;
+            color: Styles.font-color-light;
         }
     }
 }

@@ -6,7 +6,7 @@ use spell::{
     layer_properties::{LayerAnchor, LayerType, WindowConf},
     slint_adapter::{SpellMultiLayerShell, SpellMultiWinHandler},
     wayland_adapter::SpellWin,
-    Handle,
+    Handle
 };
 slint::include_modules!();
 fn main() -> Result<(), Box<dyn Error>> {
@@ -16,7 +16,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             "top-bar",
             WindowConf::new(
                 1366,
-                35,
+                30,
                 (Some(LayerAnchor::TOP), None),
                 (0, 0, 0, 0),
                 LayerType::Top,
@@ -49,10 +49,10 @@ fn main() -> Result<(), Box<dyn Error>> {
     let menu = Menu::new().unwrap();
     // let state = Box::new(ui.get_state());
     let bar_tx_clone = bar_tx.clone();
-    bar.on_request_menu_toggle(move || {
+    bar.on_request_menu_hide(move || {
         bar_tx_clone.send(Handle::ToggleWindow).unwrap();
     });
-    bar.invoke_request_menu_toggle();
+    bar.invoke_request_menu_hide();
 
     let value = SpellWin::conjure_spells(windows_handler);
 
