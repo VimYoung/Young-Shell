@@ -12,30 +12,37 @@ export component PowerMenuButton inherits Rectangle {
     height: 40px;
     background: Styles.light-blue;
     border-radius: 10px;
+    clip: true;
 
-    HorizontalLayout {
-        padding: Styles.padding - 3px;
-        width: root.width;
-        alignment: LayoutAlignment.start;
-        spacing: Styles.padding;
+    // HorizontalLayout {
+    //     padding: Styles.padding - 3px;
+    //     width: root.width;
+    //     alignment: LayoutAlignment.start;
+    //     spacing: Styles.padding;
 
+    label-text := Text {
+        text: label;
+        color: Styles.font-color-dark;
+        font-family: "Urbanist-Bold";
+        font-weight: 500;
+        font-size: 23px;
+        x: is-open ? 34px : -180px;
+        vertical-alignment: TextVerticalAlignment.center;
+
+        animate x { duration: 200ms; }
+        // }
+    }
+
+    Rectangle {
+        background: Styles.light-blue;
+        x: 0px;
+        width: is-special ? root.width : 30px;
         Image {
+            x: is-special ? (is-open ? 75px : 5px) : 5px;
+            width: 20px;
             source: is-special ? (is-open ? icon-open : icon) : icon;
-            width: is-special ? root.width - 13px : 17px;
             colorize: Styles.font-color-dark;
-            // height: is-special ? root.height - 10px : root.height - 17px;
-        }
-
-        label-text := Text {
-            text: label;
-            color: Styles.font-color-dark;
-            font-family: "Urbanist-Bold";
-            font-weight: 500;
-            font-size: 23px;
-            opacity: is-open ? 1 : 0;
-            vertical-alignment: TextVerticalAlignment.center;
-
-            animate opacity { delay: is-open ? -200ms : 200ms; }
+            animate x { duration: 200ms; }
         }
     }
 
@@ -95,7 +102,7 @@ export component SearchButton inherits Window {
         y: root.y;
         border-radius: 10px;
         border-width: 2px;
-        min-width: 150px;
+        // min-width: 150px;
         height: 27px;
         border-color: Styles.border-color;
         background: Styles.base-background;

@@ -41,7 +41,7 @@ export component TopBar inherits Window {
         width: 20px;
         Image {
             width: 18px;
-            source: @image-url("../assets/icons/fedora.svg");
+            source: @image-url("../assets/icons/artixlinux.svg");
             colorize: white;
         }
 
@@ -83,53 +83,48 @@ export component TopBar inherits Window {
         y: is_search_on ? 0px : -32px;
         width: root.width - 600px;
         // opacity: is_search_on ? 100 : 0;
-        ScrollView {
-            width: parent.width;
-            viewport-width: 800px;
             HorizontalLayout {
-                padding: 2px;
-                spacing: 5px;
-                alignment: LayoutAlignment.stretch;
-                SearchButton {
-                    place_no: 1;
-                    text_value: "Apps";
-                }
+            padding: 2px;
+            spacing: 5px;
+            alignment: LayoutAlignment.stretch;
+            SearchButton {
+                place_no: 1;
+                text_value: "Apps";
+            }
 
-                SearchButton {
-                    place_no: 2;
-                    text_value: "Clipboard";
-                }
+            SearchButton {
+                place_no: 2;
+                text_value: "Clipboard";
+            }
 
-                SearchButton {
-                    place_no: 3;
-                    text_value: "Wifi";
-                }
+            SearchButton {
+                place_no: 3;
+                text_value: "Wifi";
+            }
 
-                SearchButton {
-                    place_no: 4;
-                    text_value: "Bluetooth";
-                }
+            SearchButton {
+                place_no: 4;
+                text_value: "Bluetooth";
+            }
 
-                SearchButton {
-                    place_no: 4;
-                    text_value: "Walls";
-                }
+            SearchButton {
+                place_no: 4;
+                text_value: "Walls";
+            }
 
-                SearchButton {
-                    place_no: 4;
-                    text_value: "Color Picker";
-                }
+            SearchButton {
+                place_no: 4;
+                text_value: "Color Picker";
+            }
 
-                SearchButton {
-                    place_no: 4;
-                    text_value: "Emojis";
-                }
+            SearchButton {
+                place_no: 4;
+                text_value: "Emojis";
             }
         }
 
         animate y {
             easing: ease-out-back;
-            // delay: 210ms;
             duration: 500ms;
         }
     }
@@ -140,6 +135,7 @@ export component TopBar inherits Window {
         vertical-alignment: TextVerticalAlignment.center;
         text: "04:16 PM";
         color: Styles.font-color-light;
+        font-size: 20px;
         animate x { duration: 200ms; }
     }
 }
@@ -172,12 +168,6 @@ export component Menu inherits Window {
                 font-size: 30px;
                 font-family: "Urbanist-Bold";
             }
-        //
-        // Image {
-        //     source: @image-url("../assets/line.png");
-        //     colorize: black;
-        //     width: 100px;
-        //   }
 
             Rectangle {
                 HorizontalLayout {
@@ -277,16 +267,18 @@ export component Menu inherits Window {
 
                 Rectangle {
                     x: 0px;
-                    Rectangle {
-                        clip: true;
-                        border-radius: 10px;
-                        Image {
-                            x: 0px;
-                            y: 0px;
-                            width: 30px;
-                            height: 40px;
-                            source: @image-url("../assets/logo_dark.png");
-                        }
+                    height: 40px;
+                    width: 30px;
+                    clip: true;
+                    border-radius: 8px;
+                    border-width: 4px;
+                    border-color: Styles.border-color;
+                    Image {
+                        x: 0px;
+                        y: 0px;
+                        width: 30px;
+                        height: 40px;
+                        source: @image-url("../assets/logo_dark.png");
                     }
                 }
 
@@ -395,7 +387,7 @@ export component ScrollEx inherits Window {
         width: 20px;
         Image {
             width: 18px;
-            source: @image-url("../assets/icons/fedora.svg");
+            source: @image-url("../assets/icons/artixlinux.svg");
             colorize: white;
         }
     }
@@ -472,7 +464,7 @@ export component ScrollEx inherits Window {
     }
 
     Text {
-        x: 683px;
+        x: root.width - 57px;
         horizontal-alignment: TextHorizontalAlignment.center;
         vertical-alignment: TextVerticalAlignment.center;
         text: "04:16 PM";

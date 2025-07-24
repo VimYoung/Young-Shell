@@ -4240,6 +4240,8 @@ version = "0.1.0"
 dependencies = [
  "bytemuck",
  "env_logger",
+ "event-listener",
+ "futures-util",
  "i-slint-core",
  "i-slint-renderer-skia",
  "slint",

@@ -9,7 +9,9 @@ use std::{
 use slint::ComponentHandle;
 use spell::{
     cast_spell,
-    layer_properties::{DataType, ForeignController, LayerAnchor, LayerType, WindowConf},
+    layer_properties::{
+        BoardType, DataType, ForeignController, LayerAnchor, LayerType, WindowConf,
+    },
     wayland_adapter::SpellWin,
     Handle,
 };
@@ -44,7 +46,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     // Initialize the subscriber.
     // let subscriber = tracing_subscriber::FmtSubscriber::new();
     // tracing::subscriber::set_global_default(subscriber)?; // env::set_var("WAYLAND_DEBUG", "1");
-    env::set_var("RUST_BACKTRACE", "1");
+    env::set_var("RUST_BACKTRACE", "full");
     // Dimentions for the widget size
     // let width: u32 = 376; //1366;
     // let height: u32 = 576; //768;
@@ -55,6 +57,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         (Some(LayerAnchor::TOP), Some(LayerAnchor::LEFT)),
         (5, 0, 0, 10),
         LayerType::Top,
+        BoardType::None,
         false,
     );
     let (waywindow, event_queue) = SpellWin::invoke_spell("counter-widget", window_conf);

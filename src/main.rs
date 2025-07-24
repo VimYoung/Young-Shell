@@ -1,9 +1,11 @@
-use std::{error::Error, sync::mpsc};
+use std::{
+    error::Error,
+    sync::{mpsc, Arc, RwLock},
+};
 
-use slint::ComponentHandle;
 use spell::{
     enchant_spells,
-    layer_properties::{LayerAnchor, LayerType, WindowConf},
+    layer_properties::{BoardType, ForeignController, LayerAnchor, LayerType, WindowConf},
     slint_adapter::{SpellMultiLayerShell, SpellMultiWinHandler},
     wayland_adapter::SpellWin,
     Handle,
@@ -20,6 +22,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                 (Some(LayerAnchor::TOP), None),
                 (0, 0, 0, 0),
                 LayerType::Top,
+                BoardType::OnDemand,
                 true,
             ),
         ),
@@ -31,6 +34,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                 (Some(LayerAnchor::TOP), Some(LayerAnchor::LEFT)),
                 (5, 0, 0, 10),
                 LayerType::Top,
+                BoardType::None,
                 false,
             ),
         ),
@@ -68,7 +72,12 @@ fn main() -> Result<(), Box<dyn Error>> {
     //     println!("{err_val}");
     // }
     // cast_spell(waywindow, event_queue, rx, None, None)
-    enchant_spells(value, vec![None, Some(bar_rx)])
+    enchant_spells::<Box<dyn FnMut(Arc<RwLock<Box<dyn ForeignController>>>)>>(
+        value,
+        vec![None, Some(bar_rx)],
+        vec![None, None],
+        vec![None, None],
+    )
 }
 
 // TODO the animations are jerky, you know the reason but you have to find a solution.
