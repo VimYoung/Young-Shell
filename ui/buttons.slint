@@ -95,20 +95,38 @@ export component GeneralButton inherits Rectangle {
     }
 }
 
-export component SearchButton inherits Window {
-    in property <int> place_no;
-    in property <string> text_value: "Unknown";
-    Rectangle {
-        y: root.y;
-        border-radius: 10px;
-        border-width: 2px;
+export component SearchButton inherits Rectangle {
+    in-out property <int> place_no;
+    in-out property <string> text_value: "Unknown";
+    in property <bool> is-selected;
+    callback on-clicked();
+    y: root.y;
+    border-radius: 10px;
+    border-width: is-selected ? 3px : 2px;
         // min-width: 150px;
         height: 27px;
-        border-color: Styles.border-color;
-        background: Styles.base-background;
-        Text {
-            text: text_value;
-            color: Styles.font-color-light;
+    border-color: is-selected ? pink : Styles.border-color;
+    background: is-selected ? Styles.pink-background : Styles.base-background;
+    Text {
+        x: 7px;
+        y: 10px;
+        horizontal-alignment: TextHorizontalAlignment.left;
+        vertical-alignment: TextVerticalAlignment.bottom;
+        text: place_no;
+        font-size: 10px;
+        color: is-selected ? pink : Styles.font-color-light;
+    }
+
+    Text {
+        text: text_value;
+        color: is-selected ? pink : Styles.font-color-light;
+    }
+
+    animate border-width, border-color, background { duration: 150ms; }
+
+    TouchArea {
+        clicked => {
+            root.on-clicked();
         }
     }
 }

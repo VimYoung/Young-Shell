@@ -33,6 +33,10 @@ export component AppWindow inherits Window {
 export component TopBar inherits Window {
     callback request-menu-toggle();
     in-out property <bool> is_search_on: false;
+    property <int> which-selected: 1;
+    // pure function selected-value(x: int) {
+    //     self.which-selected = x;
+    // }
     height: 35px;
     width: 1366px;
     background: Styles.dark-background;
@@ -84,42 +88,70 @@ export component TopBar inherits Window {
         width: root.width - 600px;
         // opacity: is_search_on ? 100 : 0;
             HorizontalLayout {
-            padding: 2px;
+            padding: 4px;
             spacing: 5px;
             alignment: LayoutAlignment.stretch;
-            SearchButton {
+            apps := SearchButton {
+                is-selected: which-selected == 1 ? true : false;
                 place_no: 1;
                 text_value: "Apps";
+                on-clicked => {
+                    which-selected = 1;
+                }
             }
 
-            SearchButton {
+            clipboard := SearchButton {
+                is-selected: which-selected == 2 ? true : false;
                 place_no: 2;
                 text_value: "Clipboard";
+                on-clicked => {
+                    which-selected = 2;
+                }
             }
 
-            SearchButton {
+            wifi := SearchButton {
+                is-selected: which-selected == 3 ? true : false;
                 place_no: 3;
                 text_value: "Wifi";
+                on-clicked => {
+                    which-selected = 3;
+                }
             }
 
-            SearchButton {
+            blue := SearchButton {
+                is-selected: which-selected == 4 ? true : false;
                 place_no: 4;
                 text_value: "Bluetooth";
+                on-clicked => {
+                    which-selected = 4;
+                }
             }
 
-            SearchButton {
-                place_no: 4;
+            walls := SearchButton {
+                is-selected: which-selected == 5 ? true : false;
+                place_no: 5;
                 text_value: "Walls";
+                on-clicked => {
+                    which-selected = 5;
+                }
             }
 
-            SearchButton {
-                place_no: 4;
+            picker := SearchButton {
+                is-selected: which-selected == 6 ? true : false;
+                place_no: 6;
                 text_value: "Color Picker";
+                on-clicked => {
+                    which-selected = 6;
+                }
             }
 
-            SearchButton {
-                place_no: 4;
+            emojis := SearchButton {
+                is-selected: which-selected == 7 ? true : false;
+                place_no: 7;
                 text_value: "Emojis";
+                on-clicked => {
+                    which-selected = 7;
+                }
             }
         }
 
@@ -145,10 +177,10 @@ export component Menu inherits Window {
     height: 576px;
     background: transparent;
     default-font-family: "Urbanist-Regular";
-    in property <State> state: { is-power-menu-open: false };
+    in-out property <State> state: { is-power-menu-open: false };
     callback request-hide();
 
-    property <bool> is-power-menu-open: state.is-power-menu-open;
+    // property <bool> is-power-menu-open: state.is-power-menu-open;
     mainrec := Rectangle {
         background: Styles.dark-background;
         border-radius: 10px;
@@ -254,7 +286,7 @@ export component Menu inherits Window {
             background: Styles.base-background;
             border-top-left-radius: 10px;
             border-bottom-left-radius: 10px;
-            width: is-power-menu-open ? 200px : 50px;
+            width: state.is-power-menu-open ? 200px : 50px;
 
             animate width { duration: 200ms; }
 
@@ -288,14 +320,14 @@ export component Menu inherits Window {
                     PowerMenuButton {
                         icon: @image-url("../assets/icons/power.svg");
 
-                        is-open: is-power-menu-open;
+                        is-open: state.is-power-menu-open;
                         button-width: power-menu.width - 20px;
                         label: "Shutdown";
                         clicked => {
-                            if is-power-menu-open {
-                                is-power-menu-open = false;
+                            if state.is-power-menu-open {
+                                state = { is-power-menu-open: false };
                             } else {
-                                is-power-menu-open = true;
+                                state.is-power-menu-open = true;
                             }
                         }
                     }
@@ -303,42 +335,42 @@ export component Menu inherits Window {
                     PowerMenuButton {
                         icon: @image-url("../assets/icons/suspend.svg");
 
-                        is-open: is-power-menu-open;
+                        is-open: state.is-power-menu-open;
                         button-width: power-menu.width - 20px;
                         label: "Suspend";
                         clicked => {
-                            if is-power-menu-open {
-                                is-power-menu-open = false;
+                            if state.is-power-menu-open {
+                                state.is-power-menu-open = false;
                             } else {
-                                is-power-menu-open = true;
+                                state.is-power-menu-open = true;
                             }
                         }
                     }
 
                     PowerMenuButton {
                         icon: @image-url("../assets/icons/lock.svg");
-                        is-open: is-power-menu-open;
+                        is-open: state.is-power-menu-open;
                         button-width: power-menu.width - 20px;
                         label: "Lock Screen";
                         clicked => {
-                            if is-power-menu-open {
-                                is-power-menu-open = false;
+                            if state.is-power-menu-open {
+                                state.is-power-menu-open = false;
                             } else {
-                                is-power-menu-open = true;
+                                state.is-power-menu-open = true;
                             }
                         }
                     }
 
                     PowerMenuButton {
                         icon: @image-url("../assets/icons/log-out.svg");
-                        is-open: is-power-menu-open;
+                        is-open: state.is-power-menu-open;
                         button-width: power-menu.width - 20px;
                         label: "Log Out";
                         clicked => {
-                            if is-power-menu-open {
-                                is-power-menu-open = false;
+                            if state.is-power-menu-open {
+                                state.is-power-menu-open = false;
                             } else {
-                                is-power-menu-open = true;
+                                state.is-power-menu-open = true;
                             }
                         }
                     }
@@ -346,14 +378,14 @@ export component Menu inherits Window {
                     PowerMenuButton {
                         icon: @image-url("../assets/icons/chevron-right.svg");
                         icon-open: @image-url("../assets/icons/chevron-left.svg");
-                        is-open: is-power-menu-open;
+                        is-open: state.is-power-menu-open;
                         button-width: power-menu.width - 20px;
                         is-special: true;
                         clicked => {
-                            if is-power-menu-open {
-                                is-power-menu-open = false;
+                            if state.is-power-menu-open {
+                                state.is-power-menu-open = false;
                             } else {
-                                is-power-menu-open = true;
+                                state.is-power-menu-open = true;
                             }
                         }
                     }

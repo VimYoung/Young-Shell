@@ -1,18 +1,49 @@
 use std::{
+    any::Any,
     error::Error,
     sync::{mpsc, Arc, RwLock},
 };
 
 use spell::{
     enchant_spells,
-    layer_properties::{BoardType, ForeignController, LayerAnchor, LayerType, WindowConf},
+    layer_properties::{
+        BoardType, DataType, ForeignController, LayerAnchor, LayerType, WindowConf,
+    },
     slint_adapter::{SpellMultiLayerShell, SpellMultiWinHandler},
     wayland_adapter::SpellWin,
     Handle,
 };
 slint::include_modules!();
+
+impl ForeignController for State {
+    fn get_type(&self, key: &str) -> DataType {
+        match key {
+            "is-power-menu-open" => DataType::Boolean(self.is_power_menu_open),
+            _ => DataType::Panic,
+        }
+    }
+
+    fn change_val(&mut self, key: &str, val: DataType) {
+        match key {
+            "is-power-menu-open" => {
+                if let DataType::Boolean(value) = val {
+                    self.is_power_menu_open = value;
+                }
+            }
+            "string-type" => self.string_type = "hello".into(),
+            "enumsss" => println!("{:?}", self.cards_type),
+            _ => {}
+        }
+    }
+
+    fn as_any(&self) -> &dyn Any {
+        self
+    }
+}
 fn main() -> Result<(), Box<dyn Error>> {
+    let (menu_tx, menu_rx) = mpsc::channel::<Handle>();
     let (bar_tx, bar_rx) = mpsc::channel::<Handle>();
+    let mut is_menu_open = true;
     let windows_handler = SpellMultiWinHandler::new(vec![
         (
             "top-bar",
@@ -22,7 +53,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                 (Some(LayerAnchor::TOP), None),
                 (0, 0, 0, 0),
                 LayerType::Top,
-                BoardType::OnDemand,
+                BoardType::None,
                 true,
             ),
         ),
@@ -51,10 +82,20 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let bar = TopBar::new().unwrap();
     let menu = Menu::new().unwrap();
+    let state = Box::new(menu.get_state());
     // let state = Box::new(ui.get_state());
+    let menu_tx_clone = menu_tx.clone();
     let bar_tx_clone = bar_tx.clone();
+    let ui_handle = menu.as_weak().unwrap();
     bar.on_request_menu_toggle(move || {
-        bar_tx_clone.send(Handle::ToggleWindow).unwrap();
+        menu_tx_clone.send(Handle::ToggleWindow).unwrap();
+        if is_menu_open {
+            is_menu_open = false;
+            bar_tx_clone.send(Handle::RemoveKeyboardFocus).unwrap()
+        } else {
+            is_menu_open = true;
+            bar_tx_clone.send(Handle::GrabKeyboardFocus).unwrap();
+        }
     });
     bar.invoke_request_menu_toggle();
 
@@ -74,9 +115,20 @@ fn main() -> Result<(), Box<dyn Error>> {
     // cast_spell(waywindow, event_queue, rx, None, None)
     enchant_spells::<Box<dyn FnMut(Arc<RwLock<Box<dyn ForeignController>>>)>>(
         value,
-        vec![None, Some(bar_rx)],
-        vec![None, None],
-        vec![None, None],
+        vec![Some(bar_rx), Some(menu_rx)],
+        vec![None, Some(Arc::new(RwLock::new(state)))],
+        vec![
+            None,
+            Some(Box::new(
+                |state_value: Arc<RwLock<Box<dyn ForeignController + 'static>>>| {
+                    println!("Entered in the callback");
+                    let controller_val = state_value.read().unwrap();
+                    let inner = controller_val.as_ref();
+                    let val = inner.as_any().downcast_ref::<State>().unwrap();
+                    ui_handle.set_state(val.clone());
+                },
+            )),
+        ],
     )
 }
 
