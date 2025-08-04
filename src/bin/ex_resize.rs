@@ -15,27 +15,30 @@ use spell_framework::{
 slint::include_modules!();
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let (_tx, rx) = mpsc::channel::<Handle>();
+    let (tx, rx) = mpsc::channel::<Handle>();
     let window_conf = WindowConf::new(
-        1366,
-        35,
-        (Some(LayerAnchor::TOP), None),
+        376,
+        576,
+        (Some(LayerAnchor::TOP), Some(LayerAnchor::LEFT)),
         (5, 0, 0, 10),
         LayerType::Top,
         BoardType::None,
-        true,
+        false,
     );
     let (waywindow, event_queue) =
-        SpellWin::invoke_spell("counter-widget", window_conf, (0, 0, 1366, 35));
+        SpellWin::invoke_spell("counter-widget", window_conf, (0, 0, 356, 546));
 
-    let ui = ScrollEx::new().unwrap();
-    // ui.on_request_increase_value({
-    //     let ui_handle = ui.as_weak();
-    //     move || {
-    //         let ui = ui_handle.unwrap();
-    //         ui.set_counter(ui.get_counter() + 1);
-    //     }
-    // });
+    let ui = Resize::new().unwrap();
+    let mut small_size: bool = true;
+    ui.on_request_increase_value(move || {
+        if small_size {
+            tx.send(Handle::Resize(0, 0, 376, 576)).unwrap();
+            small_size = false;
+        } else {
+            small_size = true;
+            tx.send(Handle::Resize(0, 0, 356, 546)).unwrap();
+        }
+    });
     cast_spell::<Box<dyn FnMut(Arc<RwLock<Box<dyn ForeignController>>>)>>(
         waywindow,
         event_queue,

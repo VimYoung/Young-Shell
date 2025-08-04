@@ -6,9 +6,9 @@ use std::{
 };
 
 use slint::ComponentHandle;
-use spell::{
+use spell_framework::{
     cast_spell,
-    layer_properties::{ForeignController, LayerAnchor, LayerType, WindowConf},
+    layer_properties::{BoardType, ForeignController, LayerAnchor, LayerType, WindowConf},
     wayland_adapter::SpellWin,
     Handle,
 };
@@ -22,9 +22,11 @@ fn main() -> Result<(), Box<dyn Error>> {
         (Some(LayerAnchor::TOP), Some(LayerAnchor::LEFT)),
         (5, 0, 0, 10),
         LayerType::Top,
+        BoardType::None,
         false,
     );
-    let (waywindow, event_queue) = SpellWin::invoke_spell("counter-widget", window_conf);
+    let (waywindow, event_queue) =
+        SpellWin::invoke_spell("counter-widget", window_conf, (0, 0, 376, 576));
 
     let ui = AppWindow::new().unwrap();
     ui.on_request_increase_value({
