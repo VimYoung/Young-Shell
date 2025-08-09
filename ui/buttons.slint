@@ -95,6 +95,41 @@ export component GeneralButton inherits Rectangle {
     }
 }
 
+export component AppDisplayButton inherits Rectangle {
+    callback open_app();
+    in property <image> image_path: @image-url("/home/ramayen/assets/app_images/.icons/logseq.png");
+    in property <string> app_name: "Discord";
+    height: 50px;
+    border-width: 2px;
+    border-radius: 15px;
+    background: sensor.has-hover ? Styles.base-background : Styles.dark-background;
+    border-color: Styles.border-color;
+    HorizontalLayout {
+        spacing: 20px;
+        alignment: LayoutAlignment.start;
+        padding: 9px;
+        Image {
+            y: 5px;
+            height: 35px;
+            width: 35px;
+            source: image_path;
+        }
+
+        Text {
+            vertical-alignment: TextVerticalAlignment.center;
+            color: Styles.font-color-light;
+            text: app_name;
+            font-size: 25px;
+        }
+    }
+
+    sensor := TouchArea {
+        clicked => {
+            root.open_app()
+        }
+    }
+}
+
 export component SearchButton inherits Rectangle {
     in-out property <int> place_no;
     in-out property <string> text_value: "Unknown";

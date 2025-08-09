@@ -7,7 +7,7 @@ use std::{
 };
 
 use slint::ComponentHandle;
-use spell::{
+use spell_framework::{
     cast_spell,
     layer_properties::{
         BoardType, DataType, ForeignController, LayerAnchor, LayerType, WindowConf,
@@ -75,7 +75,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     cast_spell(
         waywindow,
         event_queue,
-        rx,
+        Some(rx),
         Some(Arc::new(RwLock::new(state))),
         Some(
             |state_value: Arc<RwLock<Box<dyn ForeignController + 'static>>>| {

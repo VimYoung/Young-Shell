@@ -1,9 +1,14 @@
 import { Button, VerticalBox, Palette, Slider, Spinner, HorizontalBox, TabWidget, LineEdit, ScrollView } from "std-widgets.slint";
 import { Styles } from "styles.slint";
 import { Mpris} from "mpris.slint";
-
-import { PowerMenuButton, MenuButton, GeneralButton, SearchButton} from "buttons.slint";
+import { PowerMenuButton, MenuButton, GeneralButton, SearchButton, AppDisplayButton} from "buttons.slint";
 import { GeneralSlider, SystemInfo} from "menu.slint";
+
+struct AppLineData {
+    image: image,
+    name: string,
+    action: string,
+}
 
 export enum Cards {hearts, diamonds, spade, yellow }
 
@@ -47,15 +52,86 @@ export component Resize inherits Window {
     }
 }
 
+export component TextIssue inherits Window {
+    in-out property <bool> is_search_on: true;
+    width: 495px;
+    height: 40px;
+    Rectangle {
+        width: 20px;
+        height: 20px;
+        x: 2px;
+        background: red;
+        TouchArea {
+            clicked => {
+                if is_search_on {
+                    is_search_on = false;
+                    entryarea.clear-focus();
+                } else {
+                    is_search_on = true;
+                    entryarea.focus();
+                }
+            }
+        }
+    }
+
+    Rectangle {
+        x: 30px;
+        // Comment the below line to see the error.
+        y: is_search_on ? 0px : -42px;
+        entryarea := LineEdit {
+            y: 5px;
+            width: parent.width;
+            height: 25px;
+        }
+
+        animate y { duration: 500ms; }
+    }
+}
+
 export component TopBar inherits Window {
     callback request-menu-toggle();
     callback walls_window_called();
+    callback open-app(string);
+    callback query-applications(string);
     in-out property <bool> is_search_on: false;
     in-out property <bool> walls_open: false;
+    in property <[AppLineData]> app_lines: [
+        // {
+        //     name: "Disocrd",
+        //     image: @image-url("/home/ramayen/assets/app_images/.icons/logseq.png")
+        // },
+        // {
+        //     name: "Disocrd",
+        //     image: @image-url("/home/ramayen/assets/app_images/.icons/logseq.png")
+        // }
+    ];
     property <int> which-selected: 1;
     background: transparent;
-    height: 350px;
+    height: 610px;
     width: 1366px;
+
+    Rectangle {
+        x: 0px;
+        y: 34px;
+        height: 10px;
+        background: transparent;
+        Path {
+            x: 0px;
+            commands: "M 7 8 L 7 3 L 12 3 C 9 4 8 5 7 8";
+            stroke: black;
+            fill: black;
+            width: 10px;
+        }
+
+        Path {
+            x: 1356px;
+            commands: "M 7 3 L 12 3 L 12 8 C 11 5 10 4 7 3";
+            stroke: black;
+            fill: black;
+            width: 10px;
+        }
+    }
+
     Rectangle {
         clip: true;
         x: 0px;
@@ -66,14 +142,25 @@ export component TopBar inherits Window {
         animate height { duration: 200ms; }
 
         Rectangle {
+            out property <bool> click_event: false;
             height: 350px - 35px;
             width: 1366px;
             y: walls_open ? 35px : 0px;
-            background: black;
+            background: click_event ? pink : black;
             Text {
                 color: Styles.font-color-light;
                 text: "Walls will come";
                 font-size: 150px;
+            }
+
+            TouchArea {
+                clicked => {
+                    if click_event {
+                        click_event = false;
+                    } else {
+                        click_event = true;
+                    }
+                }
             }
 
             animate y { duration: 200ms; }
@@ -101,8 +188,13 @@ export component TopBar inherits Window {
                         which-selected = 1;
                         if is_search_on {
                             is_search_on = false;
+                            entryarea.focus();
                         } else {
                             is_search_on = true;
+                            // entryarea.focus();
+                            entryarea.clear-focus();
+                            entryarea.select-all();
+                            // entryarea.clear-selection();
                         }
                     }
                 }
@@ -115,15 +207,15 @@ export component TopBar inherits Window {
                 width: 495px;
                 height: 35px;
                 background: Styles.dark-background;
-              // border-radius: 10px;
-              // clip: true;
-              // background: pink;
-                LineEdit {
+                entryarea := LineEdit {
                     y: 5px;
                     width: parent.width;
                     height: 25px;
                     x: 5px;
                     placeholder-text: "Search Apps..";
+                    accepted(text) => {
+                        root.query_applications(text)
+                    }
                 }
 
                 animate y {
@@ -182,12 +274,13 @@ export component TopBar inherits Window {
                         place_no: 5;
                         text_value: "Walls";
                         on-clicked => {
-                            which-selected = 5;
                             root.walls_window_called();
                             if walls_open {
                                 walls_open = false;
+                                which-selected = 1;
                             } else {
                                 walls_open = true;
+                                which-selected = 5;
                             }
                         }
                     }
@@ -229,7 +322,78 @@ export component TopBar inherits Window {
             }
         }
     }
+
+    Rectangle {
+        // y: 40px;
+        y: is_search_on ? (walls_open ? -600px : 40px) : -600px;
+        x: 30px;
+        background: Styles.dark-background;
+        width: 424px;
+        height: 566px;
+        border-radius: 10px;
+        // opacity: is_search_on ? (walls_open ? 0 : 100) : 0;
+
+        animate y { duration: 200ms; }
+
+        ScrollView {
+            x: 0px;
+            width: 424px;
+            viewport-width: 424px;
+            VerticalLayout {
+                padding: 10px;
+                spacing: 10px;
+                for line[i] in app_lines: AppDisplayButton {
+                    image_path: line.image;
+                    app_name: line.name;
+                    open_app => {
+                        is_search_on = false;
+                        root.open-app(line.action)
+                    }
+                    // image_path: @image-url(line.image);
+                }
+            }
+        }
+    }
 }
+
+// export component AppDisplay inherits Window {
+//     callback open-app(string);
+//     width: 424px;
+//     height: 576px;
+//     background: transparent;
+//     in property <[AppLineData]> app_lines: [
+//         {
+//             name: "Disocrd",
+//             image: @image-url("/home/ramayen/assets/app_images/.icons/logseq.png")
+//         },
+//         {
+//             name: "Disocrd",
+//             image: @image-url("/home/ramayen/assets/app_images/.icons/logseq.png")
+//         }
+//     ];
+//     Rectangle {
+//         clip: true;
+//         border-radius: 10px;
+//         background: Styles.dark-background;
+//         ScrollView {
+//             x: 0px;
+//             width: 424px;
+//             viewport-width: 424px;
+//             VerticalLayout {
+//                 padding: 10px;
+//                 spacing: 10px;
+//                 for line[i] in app_lines: AppDisplayButton {
+//                     image_path: line.image;
+//                     app_name: line.name;
+//                     open_app => {
+//                         root.open-app(line.action)
+//                     }
+//                     // image_path: @image-url(line.image);
+//                 }
+//             }
+//         }
+//     }
+// }
 
 export component Menu inherits Window {
     width: 376px;
@@ -560,5 +724,26 @@ export component ScrollEx inherits Window {
         vertical-alignment: TextVerticalAlignment.center;
         text: "04:16 PM";
         color: Styles.font-color-light;
+    }
+}
+
+export component InputEx inherits Window {
+    background: transparent;
+    Rectangle {
+        clip: true;
+        x: 30px;
+        width: 495px;
+        height: 35px;
+        background: Styles.dark-background;
+              // border-radius: 10px;
+              // clip: true;
+              // background: pink;
+                entryarea := LineEdit {
+            y: 5px;
+            width: parent.width;
+            height: 25px;
+            x: 5px;
+            placeholder-text: "Search Apps..";
+        }
     }
 }

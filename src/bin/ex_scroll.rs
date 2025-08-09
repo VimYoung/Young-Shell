@@ -5,7 +5,6 @@ use std::{
     sync::{Arc, RwLock},
 };
 
-use slint::ComponentHandle;
 use spell_framework::{
     cast_spell,
     layer_properties::{BoardType, ForeignController, LayerAnchor, LayerType, WindowConf},
@@ -25,8 +24,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         BoardType::None,
         true,
     );
-    let (waywindow, event_queue) =
-        SpellWin::invoke_spell("counter-widget", window_conf, (0, 0, 1366, 35));
+    let (waywindow, event_queue) = SpellWin::invoke_spell("counter-widget", window_conf);
 
     let ui = ScrollEx::new().unwrap();
     // ui.on_request_increase_value({
@@ -39,7 +37,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     cast_spell::<Box<dyn FnMut(Arc<RwLock<Box<dyn ForeignController>>>)>>(
         waywindow,
         event_queue,
-        rx,
+        Some(rx),
         None,
         None,
     )
