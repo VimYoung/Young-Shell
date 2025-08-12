@@ -1,5 +1,6 @@
 use std::{
     any::Any,
+    env,
     error::Error,
     path::{Path, PathBuf},
     process::Command,
@@ -16,6 +17,7 @@ use spell_framework::{
     slint_adapter::{SpellMultiLayerShell, SpellMultiWinHandler},
     vault::AppSelector,
     wayland_adapter::SpellWin,
+    Handle,
 };
 slint::include_modules!();
 use slint::{ComponentHandle, Image, Model};
@@ -46,8 +48,7 @@ impl ForeignController for State {
     }
 }
 fn main() -> Result<(), Box<dyn Error>> {
-    // let (menu_tx, menu_rx) = mpsc::channel::<Handle>();
-    // let (bar_tx, bar_rx) = mpsc::channel::<Handle>();
+    // env::set_var("RUST_BACKTRACE", "full");
     let windows_handler = SpellMultiWinHandler::new(vec![
         (
             "top-bar",
@@ -76,18 +77,22 @@ fn main() -> Result<(), Box<dyn Error>> {
     ]);
     // let width: u32 = 376; //1366;
     // let height: u32 = 576; //768;
-slint::platform::set_platform(Box::new(SpellMultiLayerShell {
+    slint::platform::set_platform(Box::new(SpellMultiLayerShell {
         window_manager: windows_handler.clone(),
     }))
     .unwrap();
-    let windows = SpellWin::conjure_spells(windows_handler);
     let bar = TopBar::new().unwrap();
     let menu = Menu::new().unwrap();
+    let mut windows = SpellWin::conjure_spells(windows_handler);
+    let [ref mut way_bar, ref mut way_menu] = windows[..] else {
+        panic!("Error getting wayland handles");
+    };
+    let bar_tx = way_bar.get_handler();
+    let menu_tx = way_menu.get_handler();
     let state = Box::new(menu.get_state());
     let ui_handle = menu.as_weak().unwrap();
 
     let app_selector = AppSelector::default();
-    // let mut tiles: Vec<AppLineData> = bar.get_app_lines().iter().collect();
     let app_data_slint: Vec<AppLineData> = app_selector
         .get_primary()
         .map(|value| {
@@ -134,23 +139,19 @@ slint::platform::set_platform(Box::new(SpellMultiLayerShell {
     });
 
     let bar_tx_another = bar_tx.clone();
+    let bar_tx_clone = bar_tx.clone();
     bar.on_request_menu_toggle({
         let bar_handle = bar.as_weak().unwrap();
         move || {
-            // app_display_tx_clone.send(Handle::ToggleWindow).unwrap();
             if bar_handle.get_is_search_on() {
                 bar_handle.set_is_search_on(true);
                 bar_tx_another.send(Handle::RemoveKeyboardFocus).unwrap();
-                // bar_tx_clone_another.send(Handle::GrabKeyboardFocus).unwrap();
-
                 bar_tx_clone
                     .send(Handle::SubtractInputRegion(0, 35, 1366, 575))
                     .unwrap();
             } else {
                 bar_handle.set_is_search_on(false);
                 bar_tx_another.send(Handle::GrabKeyboardFocus).unwrap();
-
-                // bar_tx_clone_another.send(Handle::RemoveKeyboardFocus).unwrap();
                 bar_tx_clone
                     .send(Handle::AddInputRegion(0, 35, 1366, 575))
                     .unwrap();
@@ -169,12 +170,10 @@ slint::platform::set_platform(Box::new(SpellMultiLayerShell {
                 bar_tx_clone_a
                     .send(Handle::AddInputRegion(0, 35, 1366, 315))
                     .unwrap();
-                // bar_tx_clone.send(Handle::Resize(0, 0, 1366, 350)).unwrap();
             } else {
                 bar_tx_clone_a
                     .send(Handle::SubtractInputRegion(0, 35, 1366, 315))
                     .unwrap();
-                // bar_tx_clone.send(Handle::Resize(0, 0, 1366, 35)).unwrap();
             }
         }
     });
@@ -212,8 +211,7 @@ slint::platform::set_platform(Box::new(SpellMultiLayerShell {
     menu_tx.send(Handle::ToggleWindow).unwrap();
 
     enchant_spells::<Box<dyn FnMut(Arc<RwLock<Box<dyn ForeignController>>>)>>(
-        value,
-        vec![Some(bar_rx), Some(menu_rx)],
+        windows,
         vec![None, Some(Arc::new(RwLock::new(state)))],
         vec![
             None,

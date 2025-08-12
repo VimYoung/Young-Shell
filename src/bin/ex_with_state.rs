@@ -50,7 +50,6 @@ fn main() -> Result<(), Box<dyn Error>> {
     // Dimentions for the widget size
     // let width: u32 = 376; //1366;
     // let height: u32 = 576; //768;
-    let (_tx, rx) = mpsc::channel::<Handle>();
     let window_conf = WindowConf::new(
         376,
         576,
@@ -60,7 +59,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         BoardType::None,
         false,
     );
-    let (waywindow, event_queue) = SpellWin::invoke_spell("counter-widget", window_conf);
+    let waywindow = SpellWin::invoke_spell("counter-widget", window_conf);
 
     let bar = TopBar::new().unwrap();
     let ui = Menu::new().unwrap();
@@ -74,8 +73,6 @@ fn main() -> Result<(), Box<dyn Error>> {
     }
     cast_spell(
         waywindow,
-        event_queue,
-        Some(rx),
         Some(Arc::new(RwLock::new(state))),
         Some(
             |state_value: Arc<RwLock<Box<dyn ForeignController + 'static>>>| {

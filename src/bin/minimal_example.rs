@@ -10,12 +10,10 @@ use spell_framework::{
     cast_spell,
     layer_properties::{BoardType, ForeignController, LayerAnchor, LayerType, WindowConf},
     wayland_adapter::SpellWin,
-    Handle,
 };
 slint::include_modules!();
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let (_tx, rx) = mpsc::channel::<Handle>();
     let window_conf = WindowConf::new(
         376,
         576,
@@ -25,8 +23,8 @@ fn main() -> Result<(), Box<dyn Error>> {
         BoardType::None,
         false,
     );
-    let (waywindow, event_queue) = SpellWin::invoke_spell("counter-widget", window_conf);
 
+    let waywindow = SpellWin::invoke_spell("counter-widget", window_conf);
     let ui = AppWindow::new().unwrap();
     ui.on_request_increase_value({
         let ui_handle = ui.as_weak();
@@ -35,11 +33,5 @@ fn main() -> Result<(), Box<dyn Error>> {
             ui.set_counter(ui.get_counter() + 1);
         }
     });
-    cast_spell::<Box<dyn FnMut(Arc<RwLock<Box<dyn ForeignController>>>)>>(
-        waywindow,
-        event_queue,
-        Some(rx),
-        None,
-        None,
-    )
+    cast_spell::<Box<dyn FnMut(Arc<RwLock<Box<dyn ForeignController>>>)>>(waywindow, None, None)
 }
