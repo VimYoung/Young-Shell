@@ -99,6 +99,7 @@ export component AppDisplayButton inherits Rectangle {
     callback open_app();
     in property <image> image_path: @image-url("/home/ramayen/assets/app_images/.icons/logseq.png");
     in property <string> app_name: "Discord";
+    in property <bool> is_app_selected: false;
     height: 50px;
     border-width: 2px;
     border-radius: 15px;
@@ -139,7 +140,7 @@ export component SearchButton inherits Rectangle {
     border-width: 2px;
     height: 27px;
     border-color: is-selected ? pink : Styles.border-color;
-    background: is-selected ? Styles.pink-background : Styles.base-background;
+    background: is-selected ? (sensor.has-hover ? Styles.pink-background-dark : Styles.pink-background) : (sensor.has-hover ? Styles.base-background : Styles.dark-background);
     Text {
         x: 7px;
         y: 10px;
@@ -158,7 +159,7 @@ export component SearchButton inherits Rectangle {
 
     animate border-width, border-color, background { duration: 150ms; }
 
-    TouchArea {
+    sensor := TouchArea {
         clicked => {
             root.on-clicked();
         }

@@ -1,5 +1,7 @@
-import { Spinner, Slider} from "std-widgets.slint";
+import { Spinner, Slider, ScrollView} from "std-widgets.slint";
 import { Styles} from "styles.slint";
+import { AppDisplayButton } from "buttons.slint";
+import { AppLineData } from "data_structures.slint";
 export component SystemInfo {
     property <int> progress: 30;
     in property <string> info-name;
@@ -42,5 +44,112 @@ export component GeneralSlider {
             released(value) => {
             }
         }
+    }
+}
+
+export component AppViewer inherits Rectangle {
+    in property <bool> walls_open;
+    in-out property <bool> is_search_on;
+    in property <[AppLineData]> app_lines;
+    in property <int> is_app_selected: 1;
+    in property <int> current_window: 1;
+    in property <int> left_window: current_window + 1;
+    in property <int> right_window: current_window - 1;
+    callback open-app(string);
+    y: is_search_on ? (walls_open ? -600px : 40px) : -600px;
+    x: 30px;
+    background: Styles.dark-background;
+    width: 424px;
+    height: 566px;
+    clip: true;
+    border-radius: 10px;
+    animate y { duration: 200ms; }
+    Rectangle {
+        background: Styles.dark-background;
+        x: current_window == 1 ? 0px : (current_window > 1 ? - 424px : 424px);
+        ScrollView {
+            x: 0px;
+            width: 424px;
+            viewport-width: 424px;
+            VerticalLayout {
+                padding: 10px;
+                spacing: 10px;
+                for line[i] in app_lines: AppDisplayButton {
+                    is_app_selected: i == is_app_selected;
+                    image_path: line.image;
+                    app_name: line.name;
+                    open_app => {
+                        is_search_on = false;
+                        root.open-app(line.action)
+                    }
+                }
+            }
+        }
+    }
+
+    Rectangle {
+        background: Styles.dark-background;
+        x: current_window == 2 ? 0px : (current_window > 2 ? - 424px : 424px);
+        Text {
+            text: " Here ClipBoard will come";
+            color: Styles.font-color-light;
+        }
+
+        animate x { duration: 200ms; }
+    }
+
+    Rectangle {
+        background: Styles.dark-background;
+        x: current_window == 3 ? 0px : (current_window > 3 ? - 424px : 424px);
+        Text {
+            text: " Here Wifi will come";
+            color: Styles.font-color-light;
+        }
+
+        animate x { duration: 200ms; }
+    }
+
+    Rectangle {
+        background: Styles.dark-background;
+        x: current_window == 4 ? 0px : (current_window > 4 ? - 424px : 424px);
+        Text {
+            text: " Here Bluwtooth will come";
+            color: Styles.font-color-light;
+        }
+
+        animate x { duration: 200ms; }
+    }
+
+    Rectangle {
+        background: Styles.dark-background;
+        x: current_window == 5 ? 0px : (current_window > 5 ? - 424px : 424px);
+        Text {
+            text: " Here Walls will come";
+            color: Styles.font-color-light;
+        }
+
+        animate x { duration: 200ms; }
+    }
+
+    Rectangle {
+        background: Styles.dark-background;
+        x: current_window == 6 ? 0px : (current_window > 6 ? - 424px : 424px);
+        Text {
+            text: " Here Color Picker will come";
+            color: Styles.font-color-light;
+        }
+
+        animate x { duration: 200ms; }
+    }
+
+    Rectangle {
+        background: Styles.dark-background;
+        x: current_window == 7 ? 0px : (current_window > 7 ? - 424px : 424px);
+        Text {
+            text: " Here Emoji will come";
+            color: Styles.font-color-light;
+        }
+
+        animate x { duration: 200ms; }
     }
 }

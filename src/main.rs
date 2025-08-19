@@ -181,8 +181,9 @@ fn main() -> Result<(), Box<dyn Error>> {
     bar.on_query_applications({
         let bar_handle = bar.as_weak().unwrap();
         move |query_value| {
-            let app_data_slint: Vec<AppLineData> = app_selector
-                .query_primary(query_value.as_ref(), 15)
+            let app_data_native = app_selector.query_primary(query_value.as_ref(), 15);
+            // println!("{:#?}", app_data_native);
+            let app_data_slint: Vec<AppLineData> = app_data_native
                 .iter()
                 .map(|value| {
                     let mut imag_path_val = String::new();
@@ -207,6 +208,11 @@ fn main() -> Result<(), Box<dyn Error>> {
             bar_handle.set_app_lines(vac_model.clone().into());
         }
     });
+
+    // bar.on_search_line_key_released({
+    //     let bar_handle = bar.as_weak().unwrap();
+    //     |key_event| EventResult::acepted
+    // });
     // app_display_tx.send(Handle::ToggleWindow).unwrap();
     menu_tx.send(Handle::ToggleWindow).unwrap();
 
