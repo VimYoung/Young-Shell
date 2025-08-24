@@ -8,10 +8,9 @@ use spell_framework::{
 slint::include_modules!();
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let (mut lock, event_loop, event_queue, handle) = SpellLock::invoke_lock_spell();
+    let (mut lock, event_loop, event_queue) = SpellLock::invoke_lock_spell();
     let lock_ui = LockScreen::new().unwrap();
     let looop_handle = event_loop.handle().clone();
-    SpellSlintLock::build(&mut lock, handle);
     lock_ui.on_check_pass({
         let lock_handle = lock_ui.as_weak();
         move |string_val| {
@@ -31,6 +30,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
     });
 
+    eprintln!("Ran till here");
     run_lock(lock, event_loop, event_queue)
     // cast_spell::<Box<dyn FnMut(Arc<RwLock<Box<dyn ForeignController>>>)>>(waywindow, None, None)
 }

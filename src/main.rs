@@ -49,7 +49,7 @@ impl ForeignController for State {
 }
 fn main() -> Result<(), Box<dyn Error>> {
     // env::set_var("RUST_BACKTRACE", "full");
-    let windows_handler = SpellMultiWinHandler::new(vec![
+    let mut windows = SpellMultiWinHandler::conjure_spells(vec![
         (
             "top-bar",
             WindowConf::new(
@@ -77,13 +77,8 @@ fn main() -> Result<(), Box<dyn Error>> {
     ]);
     // let width: u32 = 376; //1366;
     // let height: u32 = 576; //768;
-    slint::platform::set_platform(Box::new(SpellMultiLayerShell {
-        window_manager: windows_handler.clone(),
-    }))
-    .unwrap();
     let bar = TopBar::new().unwrap();
     let menu = Menu::new().unwrap();
-    let mut windows = SpellWin::conjure_spells(windows_handler);
     let [ref mut way_bar, ref mut way_menu] = windows[..] else {
         panic!("Error getting wayland handles");
     };
