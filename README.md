@@ -4,7 +4,9 @@
 > WIP shell made using [Spell](https://github.com/VimYoung/Spell).
 
 <!-- ![](https://raw.githubusercontent.com/VimYoung/Young-Shell/main/assets/bar.mp4) -->
-![](./assets/bar.mp4)
+https://github.com/user-attachments/assets/1645453a-a1c3-4aa6-9216-dde3bea4ed82
+
+
 
 ## Features (TODO organise or remove this section.)
 
