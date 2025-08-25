@@ -4,9 +4,9 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-slint = { version = "1.8.0", features = ["renderer-software"] }
-# spell-framework = { path = "../Spell/spell-framework/" }
-spell-framework = { version = "0.1.4", git = "https://github.com/VimYoung/Spell/" }
+slint = { version = "1.12.1", features = ["renderer-software"] }
+spell-framework = { path = "../Spell/spell-framework/" }
+# spell-framework = { version = "0.1.4", git = "https://github.com/VimYoung/Spell/" }
 sysinfo = "0.37.0"
 
 [build-dependencies]
@@ -17,4 +17,3 @@ slint = { git = "https://github.com/slint-ui/slint" }
 slint-build = { git = "https://github.com/slint-ui/slint" }
 i-slint-core = { git = "https://github.com/slint-ui/slint" }
 i-slint-renderer-skia = { git = "https://github.com/slint-ui/slint" }
-pam-sys = { path = "../pam-sys/" }
