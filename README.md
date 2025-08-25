@@ -3,6 +3,7 @@
 > [!IMPORTANT]
 > WIP shell made using [Spell](https://github.com/VimYoung/Spell).
 
+<!-- ![](https://raw.githubusercontent.com/VimYoung/Young-Shell/main/assets/bar.mp4) -->
 ![](./assets/bar.mp4)
 
 ## Features (TODO organise or remove this section.)
