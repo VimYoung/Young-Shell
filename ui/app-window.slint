@@ -1,9 +1,19 @@
+import "../fonts/Orbitron-Regular.ttf";
+import "../fonts/DS-DIGII.ttf";
+import "../fonts/SourceCodePro-VariableFont_wght.ttf";
+import "../fonts/CascadiaCode-VariableFont_wght.ttf";
 import { Button, VerticalBox, Palette, Slider, Spinner, HorizontalBox, TabWidget, LineEdit, ScrollView } from "std-widgets.slint";
 import { Styles } from "styles.slint";
 import { Mpris} from "mpris.slint";
-import { PowerMenuButton, MenuButton, GeneralButton, SearchButton, AppDisplayButton} from "buttons.slint";
+import { PowerMenuButton, MenuButton, GeneralButton, SearchButton, AppDisplayButton, WorkspaceButton, BarButton} from "buttons.slint";
 import { GeneralSlider, SystemInfo, AppViewer} from "menu.slint";
 import { AppLineData, Cards, State, SearchButtonData } from "data_structures.slint";
+
+global Rice {
+    // pure function fvdv(event: KeyEvent) -> EventResult {
+    // }
+    pure callback call_pavucontrol();
+}
 
 export component TopBar inherits Window {
     callback request-menu-toggle();
@@ -11,6 +21,7 @@ export component TopBar inherits Window {
     callback open-app(string);
     callback query-applications(string);
     in-out property <bool> is_search_on: false;
+    in-out property <string> time_var: "dhcs";
     in-out property <bool> walls_open: false;
     in property <[AppLineData]> app_lines: [];
     in property <[SearchButtonData]> topbar_buttons: [
@@ -22,6 +33,10 @@ export component TopBar inherits Window {
         { text_val: "Color Picker", place_no: 6 },
         { text_val: "Emjois", place_no: 7 }
     ];
+
+    in property <[length]> positions: [27px, 114px, 195px, 168px, 141px, 54px, 27px];
+    in property <[length]> width-bar: [80px, 20px, 20px, 20px, 80px, 20px, 20px];
+    in property <[string]> bar-text: ["M", "", "H", "", "", "", ""];
     property <int> which-selected: 1;
     background: transparent;
     height: 610px;
@@ -29,11 +44,11 @@ export component TopBar inherits Window {
 
     Rectangle {
         x: 0px;
-        y: 34px;
+        y: 29px;
         height: 10px;
         background: transparent;
         Path {
-            x: 0px;
+            x: 7px;
             commands: "M 7 8 L 7 3 L 12 3 C 9 4 8 5 7 8";
             stroke: black;
             fill: black;
@@ -53,16 +68,16 @@ export component TopBar inherits Window {
         clip: true;
         x: 0px;
         y: 0px;
-        height: walls_open ? 350px : 35px;
+        height: walls_open ? 350px : 30px;
         width: 1366px;
         background: Styles.dark-background;
         animate height { duration: 200ms; }
 
         Rectangle {
             out property <bool> click_event: false;
-            height: 350px - 35px;
+            height: 350px - 30px;
             width: 1366px;
-            y: walls_open ? 35px : 0px;
+            y: walls_open ? 30px : 0px;
             background: click_event ? blue : black;
             Text {
                 color: Styles.font-color-light;
@@ -87,10 +102,12 @@ export component TopBar inherits Window {
             clip: true;
             y: 0px;
             background: black;
-            height: 35px;
+            height: 30px;
+
             Rectangle {
                 x: 5px;
                 width: 20px;
+                background: Styles.dark-background;
                 Image {
                     y: 7px;
                     width: 18px;
@@ -105,12 +122,11 @@ export component TopBar inherits Window {
                         which-selected = 1;
                         if is_search_on {
                             is_search_on = false;
-                            entryarea.focus();
+                            entryarea.clear-focus();
                         } else {
                             is_search_on = true;
-                            // entryarea.focus();
-                            entryarea.clear-focus();
-                            entryarea.select-all();
+                            entryarea.focus();
+                            // entryarea.select-all();
                         }
                     }
                 }
@@ -121,14 +137,14 @@ export component TopBar inherits Window {
                 x: 30px;
                 y: is_search_on ? 0px : -42px;
                 width: 495px;
-                height: 35px;
+                height: 30px;
                 background: Styles.dark-background;
                 entryarea := LineEdit {
                     y: 5px;
-                    width: parent.width;
-                    height: 25px;
+                    width: parent.width - 10px;
+                    height: 20px;
                     x: 5px;
-                    placeholder-text: "Search in " + topbar_buttons[which-selected].text_val + "...";
+                    placeholder-text: "Search in " + topbar_buttons[which-selected - 1].text_val + "...";
                     edited(text) => {
                         root.query_applications(text)
                     }
@@ -278,15 +294,38 @@ export component TopBar inherits Window {
                 }
             }
 
-            Text {
-                x: is_search_on ? root.width - 57px : 683px;
-                y: 3px;
-                horizontal-alignment: TextHorizontalAlignment.center;
-                vertical-alignment: TextVerticalAlignment.center;
-                text: "04:16 PM";
-                color: Styles.font-color-light;
-                font-size: 20px;
-                animate x, y { duration: 200ms; }
+            for width[i] in width-bar: BarButton {
+                position: i == 0 || i == 1 ? (positions[i]) : parent.width - positions[i];
+                is_search_on: is_search_on;
+                button-width: width;
+                display_text: bar-text[i];
+                on_clicked => {
+                    if i == 0 {
+                        Rice.call_pavucontrol();
+                    }
+                }
+            }
+
+            Rectangle {
+                background: clock.has-hover ? Styles.base-background : Styles.dark-background;
+                x: is_search_on ? root.width - 65px : 635px;
+                y: -5px;
+                width: 100px;
+                border-radius: self.height / 2;
+                Text {
+                    y: 3px;
+                    horizontal-alignment: TextHorizontalAlignment.center;
+                    vertical-alignment: TextVerticalAlignment.center;
+                    text: time_var;
+                    color: Styles.font-color-light;
+                    font-size: 20px;
+                }
+
+                animate x { duration: 200ms; }
+                clock := TouchArea {
+                    clicked => {
+                    }
+                }
             }
         }
     }
@@ -297,6 +336,7 @@ export component TopBar inherits Window {
         app_lines: app_lines;
         current_window: which-selected;
         open-app(action) => {
+            is_search_on = false;
             root.open-app(action)
         }
     }
@@ -579,7 +619,6 @@ export component ScrollEx inherits Window {
         x: 535px;
         y: 0px;
         width: root.width - 600px;
-        // opacity: is_search_on ? 100 : 0;
         ScrollView {
             width: parent.width;
             viewport-width: 800px;
@@ -642,10 +681,7 @@ export component InputEx inherits Window {
         width: 495px;
         height: 35px;
         background: Styles.dark-background;
-              // border-radius: 10px;
-              // clip: true;
-              // background: pink;
-                entryarea := LineEdit {
+        entryarea := LineEdit {
             y: 5px;
             width: parent.width;
             height: 25px;
@@ -691,47 +727,8 @@ export component Resize inherits Window {
     }
 }
 
-export component TextIssue inherits Window {
-    in-out property <bool> is_search_on: true;
-    width: 495px;
-    height: 40px;
-    Rectangle {
-        width: 20px;
-        height: 20px;
-        x: 2px;
-        background: red;
-        TouchArea {
-            clicked => {
-                if is_search_on {
-                    is_search_on = false;
-                    entryarea.clear-focus();
-                } else {
-                    is_search_on = true;
-                    entryarea.focus();
-                }
-            }
-        }
-    }
-
-    Rectangle {
-        x: 30px;
-        // Comment the below line to see the error.
-        y: is_search_on ? 0px : -42px;
-        entryarea := LineEdit {
-            y: 5px;
-            width: parent.width;
-            height: 25px;
-        }
-
-        animate y { duration: 500ms; }
-    }
-}
-
 export component LockScreen inherits Window {
-    // width: 1366px;
-    // height: 768px;
-    // forward-focus: pass_area;
-    // property <bool> is_lock_activated: false;
+    in-out property <bool> is_lock_activated: false;
     in-out property <bool> lock_error: false;
     callback check-pass(string);
     Rectangle {
@@ -739,20 +736,20 @@ export component LockScreen inherits Window {
             source: @image-url("../../../../assets/wallpapers/city lights/wallpaperflare.com_wallpaper(5).jpg");
         }
 
-        // TouchArea {
-        //     clicked => {
-        //         if is_lock_activated {
-        //             is_lock_activated = false;
-        //         } else {
-        //             is_lock_activated = true;
-        //         }
-        //     }
-        // }
+        TouchArea {
+            clicked => {
+                if is_lock_activated {
+                    is_lock_activated = false;
+                } else {
+                    is_lock_activated = true;
+                }
+            }
+        }
     }
 
     Rectangle {
-        // x: is_lock_activated ? root.width - 350px : root.width;
-        x: root.width - 350px;
+        x: is_lock_activated ? root.width - 350px : root.width;
+        // x: root.width - 350px;
         // opacity: is_lock_activated ? 100 : 0;
         width: 350px;
         Image {
@@ -760,19 +757,46 @@ export component LockScreen inherits Window {
         }
 
         Rectangle {
+
             Text {
-                y: 290px;
+                x: 50px;
+                y: 220px;
+                vertical-alignment: TextVerticalAlignment.center;
+                horizontal-alignment: TextHorizontalAlignment.center;
+                color: Styles.font-color-light;
+                font-size: 75px;
+                font-family: "Source Code Pro";
+                // font-family: "DS DIGI Orbitron-Regular";
+                text: "08:45";
+            }
+
+            Text {
+                x: 275px;
+                y: 258px;
                 vertical-alignment: TextVerticalAlignment.center;
                 horizontal-alignment: TextHorizontalAlignment.center;
                 color: Styles.font-color-light;
                 font-size: 35px;
+                font-family: "Source Code Pro";
+                text: "AM";
+            }
+
+            Text {
+                y: 310px;
+                vertical-alignment: TextVerticalAlignment.center;
+                horizontal-alignment: TextHorizontalAlignment.center;
+                color: Styles.font-color-light;
+                font-size: 35px;
+                font-family: "Source Code Pro";
                 text: "Welcome Back!";
             }
 
             LineEdit {
-                height: 30px;
+                input-type: password;
+                height: 37px;
+                width: 260px;
                 font-size: 20px;
-                placeholder-text: "Enter Password";
+                placeholder-text: " Enter Password";
                 accepted(text) => {
                     root.check-pass(text);
                 }
@@ -782,14 +806,70 @@ export component LockScreen inherits Window {
             }
 
             Text {
-                text: "Incorrect Error";
+                y: 410px;
+                font-size: 25px;
+                font-family: "Source Code Pro";
+                text: "Incorrect Password";
                 opacity: lock_error ? 100 : 0;
+            }
+
+            Text {
+                y: parent.height - 50px;
+                font-size: 20px;
+                color: pink;
+                font-weight: 60;
+                font-family: "Orbitron Variable";
+                text: "Entering Terra Incognita Space !!";
             }
         }
 
-        // animate x {
-        //     duration: 200ms;
-        //     easing: ease-in-quad;
-        // }
+        animate x {
+            delay: 200ms;
+            duration: 500ms;
+            easing: ease-in-out-quad;
+        }
+    }
+}
+
+export component Workspaces inherits Window {
+    in-out property <[bool]> is-filled: [false, false, false, false, false, false, false, false, false, false];
+    in-out property <[bool]> is-active: [false, false, false, false, false, false, false, false, false, false];
+    callback refresh-workspaces();
+    callback refresh-vol();
+    callback refresh-info();
+    callback change_called(int);
+    width: 9px;
+    x: 0px;
+    height: 738px;
+    background: black;
+
+    Timer {
+        interval: 300ms;
+        triggered => {
+            refresh-workspaces();
+            refresh-vol();
+        }
+    }
+
+    Timer {
+        interval: 3s;
+        triggered => {
+            refresh-info();
+        }
+    }
+
+    VerticalLayout {
+        x: 0px;
+        alignment: LayoutAlignment.space-around;
+        height: 765px;
+        spacing: 4px;
+        for i in 10: WorkspaceButton {
+            sugg_int: (parent.height - 20px) / 10;
+            is_filled: is-filled[i];
+            is-active: is-active[i];
+            change_called => {
+                change_called(i)
+            }
+        }
     }
 }

@@ -33,5 +33,9 @@ fn main() -> Result<(), Box<dyn Error>> {
             ui.set_counter(ui.get_counter() + 1);
         }
     });
-    cast_spell::<Box<dyn FnMut(Arc<RwLock<Box<dyn ForeignController>>>)>>(waywindow, None, None)
+    cast_spell(
+        waywindow,
+        None,
+        None::<fn(Arc<RwLock<Box<dyn ForeignController>>>)>,
+    )
 }

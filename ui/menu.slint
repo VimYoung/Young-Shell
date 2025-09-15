@@ -1,7 +1,14 @@
 import { Spinner, Slider, ScrollView} from "std-widgets.slint";
 import { Styles} from "styles.slint";
-import { AppDisplayButton } from "buttons.slint";
-import { AppLineData } from "data_structures.slint";
+import { AppDisplayButton, WifiButton } from "buttons.slint";
+import { AppLineData, WifiLineData } from "data_structures.slint";
+
+export global TimedEvents {
+    pure callback get_am_pm() -> string;
+    pure callback get_time() -> string;
+    pure callback refresh_clipboard();
+}
+
 export component SystemInfo {
     property <int> progress: 30;
     in property <string> info-name;
@@ -51,11 +58,13 @@ export component AppViewer inherits Rectangle {
     in property <bool> walls_open;
     in-out property <bool> is_search_on;
     in property <[AppLineData]> app_lines;
+    in property <[WifiLineData]> wifi_lines: [{ name: "sdcsd", strength: 2, is-known:false }];
     in property <int> is_app_selected: 1;
     in property <int> current_window: 1;
     in property <int> left_window: current_window + 1;
     in property <int> right_window: current_window - 1;
     callback open-app(string);
+    callback fetch-connections();
     y: is_search_on ? (walls_open ? -600px : 40px) : -600px;
     x: 30px;
     background: Styles.dark-background;
@@ -69,7 +78,7 @@ export component AppViewer inherits Rectangle {
         x: current_window == 1 ? 0px : (current_window > 1 ? - 424px : 424px);
         ScrollView {
             x: 0px;
-            width: 424px;
+            max-width: 424px;
             viewport-width: 424px;
             VerticalLayout {
                 padding: 10px;
@@ -79,12 +88,13 @@ export component AppViewer inherits Rectangle {
                     image_path: line.image;
                     app_name: line.name;
                     open_app => {
-                        is_search_on = false;
                         root.open-app(line.action)
                     }
                 }
             }
         }
+
+        animate x { duration: 200ms; }
     }
 
     Rectangle {
@@ -101,9 +111,18 @@ export component AppViewer inherits Rectangle {
     Rectangle {
         background: Styles.dark-background;
         x: current_window == 3 ? 0px : (current_window > 3 ? - 424px : 424px);
-        Text {
-            text: " Here Wifi will come";
-            color: Styles.font-color-light;
+        ScrollView {
+            x: 0px;
+            width: 424px;
+            viewport-width: 424px;
+            VerticalLayout {
+                padding: 10px;
+                spacing: 10px;
+                for line[i] in wifi_lines: WifiButton {
+                    name: line.name;
+                    strength: line.strength;
+                }
+            }
         }
 
         animate x { duration: 200ms; }
@@ -153,3 +172,40 @@ export component AppViewer inherits Rectangle {
         animate x { duration: 200ms; }
     }
 }
+
+// export component TextIssue inherits Window {
+//     in-out property <bool> is_search_on: true;
+//     width: 495px;
+//     height: 40px;
+//     Rectangle {
+//         width: 20px;
+//         height: 20px;
+//         x: 2px;
+//         background: red;
+//         TouchArea {
+//             clicked => {
+//                 if is_search_on {
+//                     is_search_on = false;
+//                     entryarea.clear-focus();
+//                 } else {
+//                     is_search_on = true;
+//                     entryarea.focus();
+//                 }
+//             }
+//         }
+//     }
+//
+//     Rectangle {
+//         x: 30px;
+//         // Comment the below line to see the error.
+//         y: is_search_on ? 0px : -42px;
+//         entryarea := LineEdit {
+//             y: 5px;
+//             width: parent.width;
+//             height: 25px;
+//         }
+//
+//         animate y { duration: 500ms; }
+//     }
+// }
+//

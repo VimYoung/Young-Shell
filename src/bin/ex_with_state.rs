@@ -13,7 +13,6 @@ use spell_framework::{
         BoardType, DataType, ForeignController, LayerAnchor, LayerType, WindowConf,
     },
     wayland_adapter::SpellWin,
-    Handle,
 };
 slint::include_modules!();
 
@@ -43,9 +42,6 @@ impl ForeignController for State {
     }
 }
 fn main() -> Result<(), Box<dyn Error>> {
-    // Initialize the subscriber.
-    // let subscriber = tracing_subscriber::FmtSubscriber::new();
-    // tracing::subscriber::set_global_default(subscriber)?; // env::set_var("WAYLAND_DEBUG", "1");
     env::set_var("RUST_BACKTRACE", "full");
     // Dimentions for the widget size
     // let width: u32 = 376; //1366;
@@ -59,13 +55,13 @@ fn main() -> Result<(), Box<dyn Error>> {
         BoardType::None,
         false,
     );
-    let waywindow = SpellWin::invoke_spell("counter-widget", window_conf);
+    let waywindow = SpellWin::invoke_spell("menu", window_conf);
 
     let bar = TopBar::new().unwrap();
     let ui = Menu::new().unwrap();
     let state = Box::new(ui.get_state());
 
-    let ui_handle = ui.as_weak().unwrap();
+    let ui_clone = ui.as_weak().clone();
 
     let val = bar.show();
     if let Err(err_val) = val {
@@ -74,14 +70,14 @@ fn main() -> Result<(), Box<dyn Error>> {
     cast_spell(
         waywindow,
         Some(Arc::new(RwLock::new(state))),
-        Some(
-            |state_value: Arc<RwLock<Box<dyn ForeignController + 'static>>>| {
+        Some(Box::new(
+            move |state_value: Arc<RwLock<Box<dyn ForeignController>>>| {
                 let controller_val = state_value.read().unwrap();
                 let inner = controller_val.as_ref();
                 let val = inner.as_any().downcast_ref::<State>().unwrap().clone();
-                ui_handle.set_state(val);
+                ui_clone.unwrap().set_state(val);
             },
-        ),
+        )),
     )
 }
 

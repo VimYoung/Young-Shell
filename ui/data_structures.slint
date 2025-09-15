@@ -4,9 +4,17 @@ export struct AppLineData {
     action: string,
 }
 
+export struct WifiLineData {
+    name: string,
+    strength: int,
+    is-known: bool,
+    is-connected: bool,
+}
+
 export struct SearchButtonData {
     text_val: string,
-    place_no: int}
+    place_no: int,
+}
 
 export enum Cards {hearts, diamonds, spade, yellow }
 
@@ -14,5 +22,7 @@ export struct State {
     is-power-menu-open: bool,
     brush-type: brush,
     string-type: string,
-    cards-type: Cards}
+    cards-type: Cards,
+}
+
 

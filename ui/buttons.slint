@@ -131,6 +131,43 @@ export component AppDisplayButton inherits Rectangle {
     }
 }
 
+export component WifiButton inherits Rectangle {
+    in-out property <string> name;
+    in-out property <int> strength;
+    callback connect();
+    height: 50px;
+    // width: 390px;
+    x: 0px;
+    border-width: 2px;
+    border-radius: 15px;
+    background: sensor.has-hover ? Styles.base-background : Styles.dark-background;
+    border-color: Styles.border-color;
+    HorizontalLayout {
+        spacing: 20px;
+        alignment: LayoutAlignment.start;
+        padding: 9px;
+        Text {
+            vertical-alignment: TextVerticalAlignment.center;
+            color: Styles.font-color-light;
+            text: strength;
+            font-size: 25px;
+        }
+
+        Text {
+            vertical-alignment: TextVerticalAlignment.center;
+            color: Styles.font-color-light;
+            text: name;
+            font-size: 25px;
+        }
+    }
+
+    sensor := TouchArea {
+        clicked => {
+            root.connect()
+        }
+    }
+}
+
 export component SearchButton inherits Rectangle {
     in-out property <int> place_no;
     in-out property <string> text_value: "Unknown";
@@ -138,12 +175,12 @@ export component SearchButton inherits Rectangle {
     callback on-clicked();
     border-radius: 10px;
     border-width: 2px;
-    height: 27px;
-    border-color: is-selected ? pink : Styles.border-color;
-    background: is-selected ? (sensor.has-hover ? Styles.pink-background-dark : Styles.pink-background) : (sensor.has-hover ? Styles.base-background : Styles.dark-background);
+    height: 23px;
+    border-color: is-selected ? Styles.pink-border : Styles.border-color;
+    background: is-selected ? (sensor.has-hover ? Styles.pink-background-dark : Styles.pink-background) : (sensor.has-hover ? Styles.hover-background : Styles.dark-background);
     Text {
-        x: 7px;
-        y: 10px;
+        x: 8px;
+        y: 7px;
         horizontal-alignment: TextHorizontalAlignment.left;
         vertical-alignment: TextVerticalAlignment.bottom;
         text: place_no;
@@ -162,6 +199,50 @@ export component SearchButton inherits Rectangle {
     sensor := TouchArea {
         clicked => {
             root.on-clicked();
+        }
+    }
+}
+
+export component WorkspaceButton inherits Rectangle {
+    in-out property <length> sugg_int;
+    in-out property <bool> is-active: false;
+    in-out property <bool> is-filled: false;
+    callback change_called();
+    width: 5px;
+    height: sugg_int;
+    border-radius: self.width / 2;
+    // background: is-active ? (sensor.has-hover ? Styles.pink : Styles.pink-background) : (sensor.has-hover ? Styles.light-blue : (is-filled ? Styles.hover-background : Styles.base-background));
+    background: sensor.has-hover ? Styles.light-blue : (is-active ? Styles.pink : (is-filled ? Styles.hover-background : Styles.base-background));
+    sensor := TouchArea {
+        clicked => {
+            change_called();
+        }
+    }
+
+    animate background { duration: 200ms; }
+}
+
+export component BarButton inherits Rectangle {
+    in-out property <length> position;
+    in-out property <length> button-width;
+    in-out property <bool> is_search_on;
+    in-out property <string> display_text;
+    callback on_clicked();
+    x: position;
+    y: is_search_on ? 30px : 5px;
+    height: 20px;
+    width: button-width;
+    border-radius: 8px;
+    background: Styles.base-background;
+    animate y { duration: 200ms; }
+    Text {
+        text: display_text;
+        font-size: 10px;
+    }
+
+    sensor := TouchArea {
+        clicked => {
+            on_clicked();
         }
     }
 }
