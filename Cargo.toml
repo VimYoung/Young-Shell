@@ -9,6 +9,7 @@ slint = { version = "1.13.0", features = ["renderer-software"] }
 spell-framework = { path = "../Spell/spell-framework/" }
 # spell-framework = { version = "0.1.4", git = "https://github.com/VimYoung/Spell/" }
 sysinfo = "0.37.0"
+tracing-subscriber = { version = "0.3.20", features = ["std"] }
 
 [build-dependencies]
 slint-build = "1.13.0"

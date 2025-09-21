@@ -1,8 +1,6 @@
 use std::{
     any::Any,
-    env,
     error::Error,
-    sync::mpsc,
     sync::{Arc, RwLock},
 };
 
@@ -42,7 +40,7 @@ impl ForeignController for State {
     }
 }
 fn main() -> Result<(), Box<dyn Error>> {
-    env::set_var("RUST_BACKTRACE", "full");
+    std::env::set_var("RUST_BACKTRACE", "full");
     // Dimentions for the widget size
     // let width: u32 = 376; //1366;
     // let height: u32 = 576; //768;

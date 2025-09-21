@@ -7,12 +7,11 @@ import { Styles } from "styles.slint";
 import { Mpris} from "mpris.slint";
 import { PowerMenuButton, MenuButton, GeneralButton, SearchButton, AppDisplayButton, WorkspaceButton, BarButton} from "buttons.slint";
 import { GeneralSlider, SystemInfo, AppViewer} from "menu.slint";
-import { AppLineData, Cards, State, SearchButtonData } from "data_structures.slint";
+import { AppLineData, Cards, State, SearchButtonData, BarState } from "data_structures.slint";
 
-global Rice {
-    // pure function fvdv(event: KeyEvent) -> EventResult {
-    // }
+export global Rice {
     pure callback call_pavucontrol();
+    pure callback get_volume() -> string;
 }
 
 export component TopBar inherits Window {
@@ -20,7 +19,8 @@ export component TopBar inherits Window {
     callback walls_window_called();
     callback open-app(string);
     callback query-applications(string);
-    in-out property <bool> is_search_on: false;
+    // in-out property <bool> is_search_on: false;
+    in-out property <BarState> state: { is_search_on: false };
     in-out property <string> time_var: "dhcs";
     in-out property <bool> walls_open: false;
     in property <[AppLineData]> app_lines: [];
@@ -36,7 +36,7 @@ export component TopBar inherits Window {
 
     in property <[length]> positions: [27px, 114px, 195px, 168px, 141px, 54px, 27px];
     in property <[length]> width-bar: [80px, 20px, 20px, 20px, 80px, 20px, 20px];
-    in property <[string]> bar-text: ["M", "", "H", "", "", "", ""];
+    in property <[string]> bar-text: [Rice.get_volume(), "", "H", "", "", "", ""];
     property <int> which-selected: 1;
     background: transparent;
     height: 610px;
@@ -120,11 +120,11 @@ export component TopBar inherits Window {
                         root.request-menu-toggle();
                         walls_open = false;
                         which-selected = 1;
-                        if is_search_on {
-                            is_search_on = false;
+                        if state.is_search_on {
+                            state.is_search_on = false;
                             entryarea.clear-focus();
                         } else {
-                            is_search_on = true;
+                            state.is_search_on = true;
                             entryarea.focus();
                             // entryarea.select-all();
                         }
@@ -135,7 +135,7 @@ export component TopBar inherits Window {
             Rectangle {
                 clip: true;
                 x: 30px;
-                y: is_search_on ? 0px : -42px;
+                y: state.is_search_on ? 0px : -42px;
                 width: 495px;
                 height: 30px;
                 background: Styles.dark-background;
@@ -153,11 +153,11 @@ export component TopBar inherits Window {
                             root.request-menu-toggle();
                             walls_open = false;
                             which-selected = 1;
-                            if is_search_on {
-                                is_search_on = false;
+                            if state.is_search_on {
+                                state.is_search_on = false;
                                 entryarea.focus();
                             } else {
-                                is_search_on = true;
+                                state.is_search_on = true;
                                 entryarea.clear-focus();
                                 entryarea.select-all();
                             }
@@ -256,7 +256,7 @@ export component TopBar inherits Window {
 
             Rectangle {
                 x: 535px;
-                y: is_search_on ? 0px : -32px;
+                y: state.is_search_on ? 0px : -32px;
                 width: root.width - 600px;
                 HorizontalLayout {
                     padding: 4px;
@@ -296,7 +296,7 @@ export component TopBar inherits Window {
 
             for width[i] in width-bar: BarButton {
                 position: i == 0 || i == 1 ? (positions[i]) : parent.width - positions[i];
-                is_search_on: is_search_on;
+                is_search_on: state.is_search_on;
                 button-width: width;
                 display_text: bar-text[i];
                 on_clicked => {
@@ -308,7 +308,7 @@ export component TopBar inherits Window {
 
             Rectangle {
                 background: clock.has-hover ? Styles.base-background : Styles.dark-background;
-                x: is_search_on ? root.width - 65px : 635px;
+                x: state.is_search_on ? root.width - 65px : 635px;
                 y: -5px;
                 width: 100px;
                 border-radius: self.height / 2;
@@ -332,11 +332,11 @@ export component TopBar inherits Window {
 
     AppViewer {
         walls_open: walls_open;
-        is_search_on: is_search_on;
+        is_search_on: state.is_search_on;
         app_lines: app_lines;
         current_window: which-selected;
         open-app(action) => {
-            is_search_on = false;
+            state.is_search_on = false;
             root.open-app(action)
         }
     }
