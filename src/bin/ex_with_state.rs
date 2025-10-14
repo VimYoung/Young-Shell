@@ -7,10 +7,9 @@ use std::{
 use slint::ComponentHandle;
 use spell_framework::{
     cast_spell,
-    layer_properties::{
-        BoardType, DataType, ForeignController, LayerAnchor, LayerType, WindowConf,
-    },
+    layer_properties::{BoardType, DataType, LayerAnchor, LayerType, WindowConf},
     wayland_adapter::SpellWin,
+    ForeignController,
 };
 slint::include_modules!();
 
@@ -51,13 +50,13 @@ fn main() -> Result<(), Box<dyn Error>> {
         (5, 0, 0, 10),
         LayerType::Top,
         BoardType::None,
-        false,
+        None,
     );
     let waywindow = SpellWin::invoke_spell("menu", window_conf);
 
     let bar = TopBar::new().unwrap();
     let ui = Menu::new().unwrap();
-    let state = Box::new(ui.get_state());
+    let state = ui.get_state();
 
     let ui_clone = ui.as_weak().clone();
 
@@ -68,14 +67,15 @@ fn main() -> Result<(), Box<dyn Error>> {
     cast_spell(
         waywindow,
         Some(Arc::new(RwLock::new(state))),
-        Some(Box::new(
-            move |state_value: Arc<RwLock<Box<dyn ForeignController>>>| {
-                let controller_val = state_value.read().unwrap();
-                let inner = controller_val.as_ref();
-                let val = inner.as_any().downcast_ref::<State>().unwrap().clone();
-                ui_clone.unwrap().set_state(val);
-            },
-        )),
+        Some(Box::new(move |state_value| {
+            let controller_val = state_value.read().unwrap();
+            let val = controller_val
+                .as_any()
+                .downcast_ref::<State>()
+                .unwrap()
+                .clone();
+            ui_clone.unwrap().set_state(val);
+        })),
     )
 }
 

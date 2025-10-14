@@ -1,6 +1,6 @@
 import { Spinner, Slider, ScrollView} from "std-widgets.slint";
 import { Styles} from "styles.slint";
-import { AppDisplayButton, WifiButton } from "buttons.slint";
+import { AppDisplayButton, WifiButton, WifiButtonConnected, ClipButton, BlueButton, BlueButtonConnected } from "buttons.slint";
 import { AppLineData, WifiLineData } from "data_structures.slint";
 
 export global TimedEvents {
@@ -58,7 +58,49 @@ export component AppViewer inherits Rectangle {
     in property <bool> walls_open;
     in-out property <bool> is_search_on;
     in property <[AppLineData]> app_lines;
-    in property <[WifiLineData]> wifi_lines: [{ name: "sdcsd", strength: 2, is-known:false }];
+    in property <[WifiLineData]> blue_lines: [
+        { name: "Hello friends", strength: 2, is-known:false },
+        { name: "Bluetooth 1", strength: 2, is-known:false },
+        { name: "Bluetooth 2", strength: 2, is-known:false },
+        { name: "Bluetooth 1", strength: 2, is-known:false },
+        { name: "Bluetooth 3", strength: 2, is-known:false },
+        { name: "Bluetooth 4", strength: 2, is-known:false },
+        { name: "Bluetooth 5", strength: 2, is-known:false },
+        { name: "Bluetooth 6", strength: 2, is-known:false },
+        { name: "Bluetooth 7", strength: 2, is-known:false },
+        { name: "Bluetooth 8", strength: 2, is-known:false },
+        { name: "Bluetooth 9", strength: 2, is-known:false },
+        { name: "Bluetooth: 10", strength: 2, is-known:false },
+        { name: "Bluetooth 11", strength: 2, is-known:false }
+    ];
+    in property <[WifiLineData]> wifi_lines: [
+        { name: "sdcsd", strength: 2, is-known:false },
+        { name: "Network 1", strength: 2, is-known:false },
+        { name: "Network 2", strength: 2, is-known:false },
+        { name: "Network 1", strength: 2, is-known:false },
+        { name: "Network 3", strength: 2, is-known:false },
+        { name: "Network 4", strength: 2, is-known:false },
+        { name: "Network 5", strength: 2, is-known:false },
+        { name: "Network 6", strength: 2, is-known:false },
+        { name: "Network 7", strength: 2, is-known:false },
+        { name: "Network 8", strength: 2, is-known:false },
+        { name: "Network 9", strength: 2, is-known:false },
+        { name: "Network: 10", strength: 2, is-known:false },
+        { name: "Network 11", strength: 2, is-known:false }
+    ];
+    in property <[string]> clipboard_texts: [
+        "sdcsd",
+        "sdkkjsvcd",
+        "sdkkjsvcd",
+        "sdkkjsvcd",
+        "sdkkjsvcd",
+        "sdkkjsvcd",
+        "sdkkjsvcd",
+        "sdkkjsvcd",
+        "sdkkjsvcd",
+        "sdkkjsvcd",
+        "sdkkjsvcd"
+    ];
     in property <int> is_app_selected: 1;
     in property <int> current_window: 1;
     in property <int> left_window: current_window + 1;
@@ -73,9 +115,11 @@ export component AppViewer inherits Rectangle {
     clip: true;
     border-radius: 10px;
     animate y { duration: 200ms; }
+
     Rectangle {
         background: Styles.dark-background;
         x: current_window == 1 ? 0px : (current_window > 1 ? - 424px : 424px);
+
         ScrollView {
             x: 0px;
             max-width: 424px;
@@ -100,27 +144,19 @@ export component AppViewer inherits Rectangle {
     Rectangle {
         background: Styles.dark-background;
         x: current_window == 2 ? 0px : (current_window > 2 ? - 424px : 424px);
-        Text {
-            text: " Here ClipBoard will come";
-            color: Styles.font-color-light;
-        }
 
-        animate x { duration: 200ms; }
-    }
-
-    Rectangle {
-        background: Styles.dark-background;
-        x: current_window == 3 ? 0px : (current_window > 3 ? - 424px : 424px);
         ScrollView {
             x: 0px;
-            width: 424px;
+            max-width: 424px;
             viewport-width: 424px;
             VerticalLayout {
                 padding: 10px;
                 spacing: 10px;
-                for line[i] in wifi_lines: WifiButton {
-                    name: line.name;
-                    strength: line.strength;
+                for clip[i] in clipboard_texts: ClipButton {
+                    name: clip;
+                    strength: i;
+                    copy => {
+                    }
                 }
             }
         }
@@ -130,10 +166,87 @@ export component AppViewer inherits Rectangle {
 
     Rectangle {
         background: Styles.dark-background;
+        x: current_window == 3 ? 0px : (current_window > 3 ? - 424px : 424px);
+
+        connected := WifiButtonConnected {
+            y: 10px;
+            width: parent.width - 20px;
+            x: 10px;
+            name: wifi_lines[0].name;
+            strength: wifi_lines[0].strength;
+        }
+
+        Path {
+            y: connected.width-expanded ? 120px : 70px;
+            commands: "M 34 23 C 34 23 34 22 34 22 L 85 22 C 86 23 86 22 85 23 C 34 23 34 23 34 23";
+            width: parent.width - 20px;
+            height: 5px;
+            fill: Styles.border-color;
+            animate y { duration: 200ms; }
+        }
+
+        ScrollView {
+            x: 0px;
+            y: connected.width-expanded ? 130px : 80px;
+            width: 424px;
+            viewport-width: 424px;
+            height: connected.width-expanded ? parent.height - 130px : parent.height - 90px;
+            // viewport-height: connected.width-expanded ? parent.height - 130px : parent.height - 90px;
+            VerticalLayout {
+                padding: 10px;
+                spacing: 10px;
+                for line[i] in wifi_lines: WifiButton {
+                    name: line.name;
+                    // strength: line.strength;
+                    strength: i + 1;
+                }
+            }
+
+            animate y { duration: 200ms; }
+        }
+
+        animate x, width { duration: 200ms; }
+    }
+
+    Rectangle {
+        background: Styles.dark-background;
         x: current_window == 4 ? 0px : (current_window > 4 ? - 424px : 424px);
-        Text {
-            text: " Here Bluwtooth will come";
-            color: Styles.font-color-light;
+
+        blue_connected := BlueButtonConnected {
+            y: 10px;
+            width: parent.width - 20px;
+            x: 10px;
+            name: wifi_lines[0].name;
+            strength: wifi_lines[0].strength;
+        }
+
+        Path {
+            y: connected.width-expanded ? 120px : 70px;
+            commands: "M 34 23 C 34 23 34 22 34 22 L 85 22 C 86 23 86 22 85 23 C 34 23 34 23 34 23";
+            width: parent.width - 20px;
+            height: 5px;
+            fill: Styles.border-color;
+            animate y { duration: 200ms; }
+        }
+
+        ScrollView {
+            x: 0px;
+            y: connected.width-expanded ? 130px : 80px;
+            width: 424px;
+            viewport-width: 424px;
+            height: connected.width-expanded ? parent.height - 130px : parent.height - 90px;
+            // viewport-height: connected.width-expanded ? parent.height - 130px : parent.height - 90px;
+            VerticalLayout {
+                padding: 10px;
+                spacing: 10px;
+                for line[i] in blue_lines: BlueButton {
+                    name: line.name;
+                    // strength: line.strength;
+                    strength: i + 1;
+                }
+            }
+
+            animate y { duration: 200ms; }
         }
 
         animate x { duration: 200ms; }

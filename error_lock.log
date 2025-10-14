@@ -1,0 +1,6 @@
+xkbcommon: ERROR: couldn't find a Compose file for locale "en_IN" (mapped to "en_IN.ISO8859-1")
+Ran till here
+
+thread 'main' panicked at /home/ramayen/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/parley-0.5.0/src/builder.rs:169:22:
+byte index 1 is not a char boundary; it is inside '●' (bytes 0..3) of `●`
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace

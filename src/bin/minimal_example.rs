@@ -8,7 +8,7 @@ use std::{
 use slint::ComponentHandle;
 use spell_framework::{
     cast_spell,
-    layer_properties::{BoardType, ForeignController, LayerAnchor, LayerType, WindowConf},
+    layer_properties::{BoardType, LayerAnchor, LayerType, WindowConf},
     wayland_adapter::SpellWin,
 };
 slint::include_modules!();
@@ -33,9 +33,5 @@ fn main() -> Result<(), Box<dyn Error>> {
             ui.set_counter(ui.get_counter() + 1);
         }
     });
-    cast_spell(
-        waywindow,
-        None,
-        None::<fn(Arc<RwLock<Box<dyn ForeignController>>>)>,
-    )
+    cast_spell(waywindow, None, None)
 }

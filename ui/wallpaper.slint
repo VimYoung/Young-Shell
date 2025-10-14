@@ -1,0 +1,100 @@
+
+import { Styles } from "styles.slint";
+import { ScrollView, TextEdit, VerticalBox } from "std-widgets.slint";
+export component WallpaperManager inherits Rectangle {
+    in-out property <bool> walls_open;
+    in-out property <[image]> walls_paths;
+    in-out property <[image]> walls_light_paths;
+    out property <bool> dark-selected: true;
+    callback switch-wallpapers(image);
+    height: 350px - 30px;
+    width: 1366px;
+    y: walls_open ? 30px : 0px;
+    background: Styles.dark-background;
+    Rectangle {
+        width: 30px;
+        x: 10px;
+        height: parent.height - 20px;
+        VerticalLayout {
+            Rectangle {
+                background: dark-selected ? blue : pink;
+            }
+
+            Rectangle {
+                background: dark-selected ? pink : blue;
+            }
+        }
+
+        TouchArea {
+            clicked => {
+                if dark-selected {
+                    dark-selected = false;
+                } else {
+                    dark-selected = true;
+                }
+            }
+        }
+    }
+
+    dark-scroll := ScrollView {
+        x: 50px;
+        width: parent.width - 50px;
+        y: dark-selected ? 0px : parent.width;
+        HorizontalLayout {
+            height: parent.height - 20px;
+            spacing: 10px;
+            for path in walls_paths: Rectangle {
+                border-radius: 10px;
+                clip: true;
+                width: 400px;
+                background: blue;
+                border-width: 2px;
+                border-color: Styles.border-color;
+                Image {
+                    height: parent.height;
+                    source: path;
+                }
+
+                TouchArea {
+                    clicked => {
+                        switch-wallpapers(path);
+                    }
+                }
+            }
+        }
+
+        animate y { duration: 200ms; }
+    }
+
+    light-scroll := ScrollView {
+        x: 50px;
+        y: dark-selected ? -350px : 0px;
+        width: parent.width - 50px;
+        HorizontalLayout {
+            height: parent.height - 20px;
+            spacing: 10px;
+            for path in walls_light_paths: Rectangle {
+                border-radius: 10px;
+                clip: true;
+                width: 400px;
+                background: pink;
+                border-width: 2px;
+                border-color: Styles.border-color;
+                Image {
+                    height: parent.height;
+                    source: path;
+                }
+
+                TouchArea {
+                    clicked => {
+                        switch-wallpapers(path);
+                    }
+                }
+            }
+        }
+
+        animate y { duration: 200ms; }
+    }
+
+    animate y { duration: 200ms; }
+}

@@ -1,4 +1,5 @@
 import { Styles } from "styles.slint";
+import { Button, LineEdit } from "std-widgets.slint";
 export component PowerMenuButton inherits Rectangle {
     in property <image> icon;
     in property <image> icon-open;
@@ -101,8 +102,8 @@ export component AppDisplayButton inherits Rectangle {
     in property <string> app_name: "Discord";
     in property <bool> is_app_selected: false;
     height: 50px;
-    border-width: 2px;
-    border-radius: 15px;
+    border-width: 1px;
+    border-radius: 10px;
     background: sensor.has-hover ? Styles.base-background : Styles.dark-background;
     border-color: Styles.border-color;
     HorizontalLayout {
@@ -124,6 +125,7 @@ export component AppDisplayButton inherits Rectangle {
         }
     }
 
+    animate background { duration: 100ms; }
     sensor := TouchArea {
         clicked => {
             root.open_app()
@@ -134,36 +136,439 @@ export component AppDisplayButton inherits Rectangle {
 export component WifiButton inherits Rectangle {
     in-out property <string> name;
     in-out property <int> strength;
+    in-out property <bool> width-expanded: false;
+    in-out property <bool> connect-win-open: true;
     callback connect();
-    height: 50px;
-    // width: 390px;
     x: 0px;
-    border-width: 2px;
-    border-radius: 15px;
+    border-radius: 10px;
+    height: width-expanded ? 100px : 50px;
     background: sensor.has-hover ? Styles.base-background : Styles.dark-background;
     border-color: Styles.border-color;
-    HorizontalLayout {
-        spacing: 20px;
-        alignment: LayoutAlignment.start;
-        padding: 9px;
+    border-width: 1px;
+    clip: true;
+    animate height, background { duration: 200ms; }
+    sensor := TouchArea {
+        clicked => {
+            if width-expanded {
+                width-expanded = false;
+            } else {
+                width-expanded = true;
+                connect-win-open = false;
+            }
+        }
+    }
+
+    Rectangle {
+        height: 50px;
+        y: 0px;
         Text {
+            x: 10px;
             vertical-alignment: TextVerticalAlignment.center;
             color: Styles.font-color-light;
             text: strength;
-            font-size: 25px;
+            font-size: 20px;
+        }
+
+        Path {
+            x: 30px;
+            width: 10px;
+            commands: "M 66 23 C 67 22 66 22 67 23 L 67 48 C 67 49 66 49 66 48 C 66 30 66 30 66 23";
+            height: parent.height - 15px;
+            fill: white;
         }
 
         Text {
-            vertical-alignment: TextVerticalAlignment.center;
+            x: 45px;
             color: Styles.font-color-light;
             text: name;
             font-size: 25px;
         }
+
+        Rectangle {
+            width: 75px;
+            height: parent.height - 20px;
+            border-color: inner.has-hover ? Styles.light-blue : Styles.light-blue-b;
+            border-width: inner.has-hover ? 1px : 2px;
+            border-radius: 10px;
+            x: root.width - 90px;
+            Text {
+                text: "Connect";
+                font-size: 15px;
+                font-weight: inner.has-hover ? 500 : 800;
+                color: inner.has-hover ? Styles.light-blue : Styles.light-blue-a;
+            }
+
+            inner := TouchArea {
+                clicked => {
+                    if width-expanded {
+                        width-expanded = false;
+                        connect-win-open = false;
+                    } else {
+                        width-expanded = true;
+                        connect-win-open = true;
+                    }
+                    root.connect();
+                }
+            }
+        }
+
+        Rectangle {
+            width: 75px;
+            height: parent.height - 20px;
+            border-width: 1px;
+            border-radius: 10px;
+            x: root.width - 175px;
+            border-color: inner_sec.has-hover ? Styles.light-blue : Styles.pink-border;
+            background: inner_sec.has-hover ? Styles.hover-background : Styles.dark-background;
+            Text {
+                text: "Delete";
+                font-size: 15px;
+                font-weight: 500;
+                color: inner_sec.has-hover ? Styles.light-blue : Styles.pink-border;
+            }
+
+            inner_sec := TouchArea {
+                clicked => {
+                }
+            }
+        }
     }
 
+    Rectangle {
+        y: 50px;
+        height: 50px;
+        width: root.width - 20px;
+        Text {
+            text: "Network Information will come here";
+            font-size: 15px;
+        }
+    }
+
+    Rectangle {
+        y: connect-win-open ? 50px : 100px;
+        height: 50px;
+        width: root.width - 20px;
+        LineEdit {
+            width: parent.width;
+            input-type: password;
+            placeholder-text: "Enter Password";
+        }
+    }
+}
+
+export component WifiButtonConnected inherits Rectangle {
+    in-out property <string> name;
+    in-out property <int> strength;
+    in-out property <bool> width-expanded: false;
+    in-out property <bool> connect-win-open: true;
+    callback disconnect();
+    x: 0px;
+    border-radius: 10px;
+    height: width-expanded ? 100px : 50px;
+    background: sensor.has-hover ? Styles.base-background : Styles.dark-background;
+    border-color: Styles.border-color;
+    border-width: 1px;
+    clip: true;
+    animate height, background { duration: 200ms; }
     sensor := TouchArea {
         clicked => {
-            root.connect()
+            if width-expanded {
+                width-expanded = false;
+            } else {
+                width-expanded = true;
+                connect-win-open = false;
+            }
+        }
+    }
+
+    Rectangle {
+        height: 50px;
+        y: 0px;
+
+        Text {
+            x: 10px;
+            color: Styles.font-color-light;
+            text: name;
+            font-size: 25px;
+        }
+
+        Rectangle {
+            width: 85px;
+            height: parent.height - 20px;
+            border-width: 2px;
+            border-radius: 10px;
+            x: root.width - 100px;
+            border-color: inner.has-hover ? Styles.light-blue : Styles.pink-border;
+            background: inner.has-hover ? Styles.hover-background : Styles.dark-background;
+            Text {
+                text: "Disconnect";
+                font-size: 15px;
+                color: inner.has-hover ? Styles.light-blue : pink;
+            }
+
+            inner := TouchArea {
+                clicked => {
+                    root.disconnect();
+                }
+            }
+        }
+    }
+
+    Rectangle {
+        y: 50px;
+        height: 50px;
+        width: root.width - 20px;
+        Text {
+            text: "Network Information will come here";
+            font-size: 15px;
+        }
+    }
+}
+
+export component BlueButtonConnected inherits Rectangle {
+    in-out property <string> name;
+    in-out property <int> strength;
+    in-out property <bool> width-expanded: false;
+    in-out property <bool> connect-win-open: true;
+    callback disconnect();
+    x: 0px;
+    border-radius: 10px;
+    height: width-expanded ? 100px : 50px;
+    background: sensor.has-hover ? Styles.base-background : Styles.dark-background;
+    border-color: Styles.border-color;
+    border-width: 1px;
+    clip: true;
+    animate height, background { duration: 200ms; }
+    sensor := TouchArea {
+        clicked => {
+            if width-expanded {
+                width-expanded = false;
+            } else {
+                width-expanded = true;
+                connect-win-open = false;
+            }
+        }
+    }
+
+    Rectangle {
+        height: 50px;
+        y: 0px;
+
+        Text {
+            x: 10px;
+            color: Styles.font-color-light;
+            text: name;
+            font-size: 25px;
+        }
+
+        Rectangle {
+            width: 85px;
+            height: parent.height - 20px;
+            border-width: 2px;
+            border-radius: 10px;
+            x: root.width - 100px;
+            border-color: inner.has-hover ? Styles.light-blue : Styles.pink-border;
+            background: inner.has-hover ? Styles.hover-background : Styles.dark-background;
+            Text {
+                text: "Disconnect";
+                font-size: 15px;
+                color: inner.has-hover ? Styles.light-blue : pink;
+            }
+
+            inner := TouchArea {
+                clicked => {
+                    root.disconnect();
+                }
+            }
+        }
+    }
+
+    Rectangle {
+        y: 50px;
+        height: 50px;
+        width: root.width - 20px;
+        Text {
+            text: "Network Information will come here";
+            font-size: 15px;
+        }
+    }
+}
+
+export component  BlueButton inherits Rectangle {
+    in-out property <string> name;
+    in-out property <int> strength;
+    in-out property <bool> width-expanded: false;
+    in-out property <bool> connect-win-open: true;
+    callback connect();
+    x: 0px;
+    border-radius: 10px;
+    height: width-expanded ? 100px : 50px;
+    background: sensor.has-hover ? Styles.base-background : Styles.dark-background;
+    border-color: Styles.border-color;
+    border-width: 1px;
+    clip: true;
+    animate height, background { duration: 200ms; }
+    sensor := TouchArea {
+        clicked => {
+            if width-expanded {
+                width-expanded = false;
+            } else {
+                width-expanded = true;
+                connect-win-open = false;
+            }
+        }
+    }
+
+    Rectangle {
+        height: 50px;
+        y: 0px;
+        Text {
+            x: 10px;
+            vertical-alignment: TextVerticalAlignment.center;
+            color: Styles.font-color-light;
+            text: strength;
+            font-size: 20px;
+        }
+
+        Path {
+            x: 30px;
+            width: 10px;
+            commands: "M 66 23 C 67 22 66 22 67 23 L 67 48 C 67 49 66 49 66 48 C 66 30 66 30 66 23";
+            height: parent.height - 15px;
+            fill: white;
+        }
+
+        Text {
+            x: 45px;
+            color: Styles.font-color-light;
+            text: name;
+            font-size: 25px;
+        }
+
+        Rectangle {
+            width: 75px;
+            height: parent.height - 20px;
+            border-color: inner.has-hover ? Styles.light-blue : Styles.light-blue-b;
+            border-width: inner.has-hover ? 1px : 2px;
+            border-radius: 10px;
+            x: root.width - 90px;
+            Text {
+                text: "Connect";
+                font-size: 15px;
+                font-weight: inner.has-hover ? 500 : 800;
+                color: inner.has-hover ? Styles.light-blue : Styles.light-blue-a;
+            }
+
+            inner := TouchArea {
+                clicked => {
+                    if width-expanded {
+                        width-expanded = false;
+                        connect-win-open = false;
+                    } else {
+                        width-expanded = true;
+                        connect-win-open = true;
+                    }
+                    root.connect();
+                }
+            }
+        }
+
+        Rectangle {
+            width: 75px;
+            height: parent.height - 20px;
+            border-width: 1px;
+            border-radius: 10px;
+            x: root.width - 175px;
+            border-color: inner_sec.has-hover ? Styles.light-blue : Styles.pink-border;
+            background: inner_sec.has-hover ? Styles.hover-background : Styles.dark-background;
+            Text {
+                text: "Delete";
+                font-size: 15px;
+                font-weight: 500;
+                color: inner_sec.has-hover ? Styles.light-blue : Styles.pink-border;
+            }
+
+            inner_sec := TouchArea {
+                clicked => {
+                }
+            }
+        }
+    }
+
+    Rectangle {
+        y: 50px;
+        height: 50px;
+        width: root.width - 20px;
+        Text {
+            text: "Network Information will come here";
+            font-size: 15px;
+        }
+    }
+
+    Rectangle {
+        y: connect-win-open ? 50px : 100px;
+        height: 50px;
+        width: root.width - 20px;
+        LineEdit {
+            width: parent.width;
+            input-type: password;
+            placeholder-text: "Enter Password";
+        }
+    }
+}
+export component ClipButton inherits Rectangle {
+    in-out property <string> name;
+    in-out property <int> strength;
+    callback copy();
+    x: 0px;
+    border-radius: 10px;
+    height: 50px;
+    background: sensor.has-hover ? Styles.base-background : Styles.dark-background;
+    border-color: Styles.border-color;
+    border-width: 1px;
+    clip: true;
+    animate background { duration: 100ms; }
+    animate height { duration: 200ms; }
+    sensor := TouchArea {
+        clicked => {
+            copy();
+        }
+
+        Rectangle {
+            height: 50px;
+            y: 0px;
+            Text {
+                x: 10px;
+                vertical-alignment: TextVerticalAlignment.center;
+                color: Styles.font-color-light;
+                text: strength;
+                font-size: 20px;
+            }
+
+            Path {
+                x: 30px;
+                width: 10px;
+                commands: "M 66 23 C 67 22 66 22 67 23 L 67 48 C 67 49 66 49 66 48 C 66 30 66 30 66 23";
+                height: parent.height - 15px;
+                fill: white;
+            }
+
+            Text {
+                x: 45px;
+                color: Styles.font-color-light;
+                text: name;
+                font-size: 25px;
+            }
+        }
+
+        Rectangle {
+            y: 50px;
+            height: 50px;
+            width: root.width - 20px;
+            Text {
+                text: "Network Information will come here";
+                font-size: 15px;
+            }
         }
     }
 }

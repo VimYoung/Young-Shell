@@ -11,7 +11,7 @@ use std::{
 use slint::ComponentHandle;
 use spell_framework::{
     cast_spell,
-    layer_properties::{BoardType, ForeignController, LayerAnchor, LayerType, WindowConf},
+    layer_properties::{BoardType, LayerAnchor, LayerType, WindowConf},
     wayland_adapter::SpellWin,
 };
 slint::include_modules!();
@@ -24,7 +24,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         (0, 0, 0, 0),
         LayerType::Top,
         BoardType::None,
-        true,
+        Some(7),
     );
 
     let way_work = SpellWin::invoke_spell("workspace", window_conf);
@@ -83,21 +83,69 @@ fn main() -> Result<(), Box<dyn Error>> {
                     Err(_) => todo!(),
                 }
             });
+        } else {
+            let workspace_n = workspace.as_weak().unwrap();
+            workspace.on_refresh_workspaces(move || {
+                let workspaces: String = String::from_utf8(
+                    Command::new("niri")
+                        .arg("msg")
+                        .arg("workspaces")
+                        .output()
+                        .unwrap()
+                        .stdout,
+                )
+                .unwrap();
+                let mut values = workspaces.split('\n');
+                values.next_back();
+                values.next_back();
+                let mut v = vec![false; 10];
+                // println!("{:?}", values);
+                for value in values.skip(1) {
+                    // println!("fdvdsfdfs: {}", value);
+                    let val_bytes = value.trim().as_bytes();
+                    if val_bytes.len() > 1 {
+                        let no_str =
+                            String::from_utf8(vec![val_bytes[val_bytes.len() - 1]]).unwrap();
+                        let curr_active_num: i32 = no_str.parse().unwrap();
+                        if curr_active_num > 0 && curr_active_num < 11 {
+                            let mut v_a = vec![false; 10];
+                            if (1..=10).contains(&curr_active_num) {
+                                v_a[curr_active_num as usize - 1] = true;
+                            }
+                            workspace_n.set_is_active(Rc::new(slint::VecModel::from(v_a)).into());
+                        }
+                    }
+                    let current_active_num: i32 =
+                        String::from_utf8(vec![val_bytes[val_bytes.len() - 1]])
+                            .unwrap()
+                            .parse()
+                            .unwrap();
+                    if current_active_num > 0 && current_active_num < 11 {
+                        v[current_active_num as usize - 1] = true;
+                    }
+                }
+                workspace_n.set_is_filled(Rc::new(slint::VecModel::from(v)).into());
+            });
         }
     }
 
     workspace.on_change_called(move |mut val| {
         val += 1;
         let val_str: String = val.to_string();
-        let _ = Command::new("hyprctl")
-            .arg("dispatch")
-            .arg("workspace")
-            .arg(&val_str)
-            .output();
+        if env::var("NIRI_SOCKET").is_ok() {
+            let _ = Command::new("niri")
+                .arg("msg")
+                .arg("action")
+                .arg("focus-workspace")
+                .arg(&val_str)
+                .output();
+        } else {
+            let _ = Command::new("hyprctl")
+                .arg("dispatch")
+                .arg("workspace")
+                .arg(&val_str)
+                .output();
+        }
     });
-    cast_spell(
-        way_work,
-        None,
-        None::<fn(Arc<RwLock<Box<dyn ForeignController>>>)>,
-    )
+    cast_spell(way_work, None, None)
 }

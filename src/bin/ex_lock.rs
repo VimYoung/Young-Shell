@@ -5,8 +5,8 @@ use std::{
     sync::{Arc, RwLock},
 };
 
-use slint::ComponentHandle;
-use spell_framework::{layer_properties::ForeignController, wayland_adapter::SpellLock};
+use slint::{platform::PlatformError, ComponentHandle};
+use spell_framework::{wayland_adapter::SpellLock, ForeignController};
 slint::include_modules!();
 
 fn main() -> Result<(), Box<dyn Error>> {
@@ -32,11 +32,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
     });
     lock_ui.set_is_lock_activated(true);
+    // lock_ui.run()
 
-    eprintln!("Ran till here");
-    cast_spell(
-        lock,
-        None,
-        None::<fn(Arc<RwLock<Box<dyn ForeignController>>>)>,
-    )
+    cast_spell(lock, None, None)
 }

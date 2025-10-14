@@ -5,6 +5,7 @@ import "../fonts/CascadiaCode-VariableFont_wght.ttf";
 import { Button, VerticalBox, Palette, Slider, Spinner, HorizontalBox, TabWidget, LineEdit, ScrollView } from "std-widgets.slint";
 import { Styles } from "styles.slint";
 import { Mpris} from "mpris.slint";
+import { WallpaperManager} from "wallpaper.slint";
 import { PowerMenuButton, MenuButton, GeneralButton, SearchButton, AppDisplayButton, WorkspaceButton, BarButton} from "buttons.slint";
 import { GeneralSlider, SystemInfo, AppViewer} from "menu.slint";
 import { AppLineData, Cards, State, SearchButtonData, BarState } from "data_structures.slint";
@@ -19,10 +20,13 @@ export component TopBar inherits Window {
     callback walls_window_called();
     callback open-app(string);
     callback query-applications(string);
+    callback set-wallpaper(image);
     // in-out property <bool> is_search_on: false;
     in-out property <BarState> state: { is_search_on: false };
-    in-out property <string> time_var: "dhcs";
+    in-out property <string> time_var: "04:32 AM";
     in-out property <bool> walls_open: false;
+    in property <[image]> walls_paths;
+    in property <[image]> walls_light_paths;
     in property <[AppLineData]> app_lines: [];
     in property <[SearchButtonData]> topbar_buttons: [
         { text_val: "Apps", place_no: 1 },
@@ -73,29 +77,13 @@ export component TopBar inherits Window {
         background: Styles.dark-background;
         animate height { duration: 200ms; }
 
-        Rectangle {
-            out property <bool> click_event: false;
-            height: 350px - 30px;
-            width: 1366px;
-            y: walls_open ? 30px : 0px;
-            background: click_event ? blue : black;
-            Text {
-                color: Styles.font-color-light;
-                text: "Walls will come";
-                font-size: 150px;
+        WallpaperManager {
+            walls_open: walls_open;
+            walls_paths: walls_paths;
+            walls_light_paths: walls_light_paths;
+            switch-wallpapers(path) => {
+                set-wallpaper(path);
             }
-
-            TouchArea {
-                clicked => {
-                    if click_event {
-                        click_event = false;
-                    } else {
-                        click_event = true;
-                    }
-                }
-            }
-
-            animate y { duration: 200ms; }
         }
 
         Rectangle {
@@ -117,6 +105,7 @@ export component TopBar inherits Window {
 
                 TouchArea {
                     clicked => {
+                        debug("Bar menu is opened or closed");
                         root.request-menu-toggle();
                         walls_open = false;
                         which-selected = 1;
@@ -220,9 +209,8 @@ export component TopBar inherits Window {
                             } else {
                                 walls_open = true;
                                 which-selected = 5;
-                                root.walls_window_called();
+                                // root.walls_window_called();
                             }
-                            which-selected = 5;
                             root.walls_window_called();
                             walls_open = true;
                             accept;
@@ -552,6 +540,7 @@ export component Menu inherits Window {
                         button-width: power-menu.width - 20px;
                         is-special: true;
                         clicked => {
+                            debug("Bar menu is opened or closed");
                             if state.is-power-menu-open {
                                 state.is-power-menu-open = false;
                             } else {
@@ -838,7 +827,7 @@ export component Workspaces inherits Window {
     callback refresh-vol();
     callback refresh-info();
     callback change_called(int);
-    width: 9px;
+    width: 10px;
     x: 0px;
     height: 738px;
     background: black;
