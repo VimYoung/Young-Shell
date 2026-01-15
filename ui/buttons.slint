@@ -1,5 +1,6 @@
 import { Styles } from "styles.slint";
 import { Button, LineEdit } from "std-widgets.slint";
+
 export component PowerMenuButton inherits Rectangle {
     in property <image> icon;
     in property <image> icon-open;
@@ -14,12 +15,6 @@ export component PowerMenuButton inherits Rectangle {
     background: Styles.light-blue;
     border-radius: 10px;
     clip: true;
-
-    // HorizontalLayout {
-    //     padding: Styles.padding - 3px;
-    //     width: root.width;
-    //     alignment: LayoutAlignment.start;
-    //     spacing: Styles.padding;
 
     label-text := Text {
         text: label;
@@ -101,28 +96,40 @@ export component AppDisplayButton inherits Rectangle {
     in property <image> image_path: @image-url("/home/ramayen/assets/app_images/.icons/logseq.png");
     in property <string> app_name: "Discord";
     in property <bool> is_app_selected: false;
-    height: 50px;
-    border-width: 1px;
-    border-radius: 10px;
-    background: sensor.has-hover ? Styles.base-background : Styles.dark-background;
-    border-color: Styles.border-color;
+    height: 45px;
+    // border-width: 1px;
+    // border-radius: 10px;
+    background: sensor.has-hover || is_app_selected ? Styles.base-background : Styles.dark-background;
+    // border-color: Styles.border-color;
     HorizontalLayout {
-        spacing: 20px;
+        height: 40px;
+        spacing: 7px;
         alignment: LayoutAlignment.start;
-        padding: 9px;
+        padding-top: 5px;
+        padding-left: 5px;
         Image {
-            y: 5px;
-            height: 35px;
-            width: 35px;
+            y: 0px;
+            height: 27px;
+            width: 27px;
             source: image_path;
         }
 
         Text {
-            vertical-alignment: TextVerticalAlignment.center;
+            y: 5px;
+            height: 28px;
             color: Styles.font-color-light;
             text: app_name;
-            font-size: 25px;
+            font-size: 18px;
         }
+    }
+
+    Rectangle {
+        y: 38px;
+        width: sensor.has-hover ? parent.width - 14px : 0px;
+        x: sensor.has-hover ? 7px : parent.width / 2;
+        height: 2px;
+        background: pink;
+        animate x, width { duration: 200ms; }
     }
 
     animate background { duration: 100ms; }
@@ -394,7 +401,7 @@ export component BlueButtonConnected inherits Rectangle {
     }
 }
 
-export component  BlueButton inherits Rectangle {
+export component BlueButton inherits Rectangle {
     in-out property <string> name;
     in-out property <int> strength;
     in-out property <bool> width-expanded: false;
@@ -516,6 +523,7 @@ export component  BlueButton inherits Rectangle {
         }
     }
 }
+
 export component ClipButton inherits Rectangle {
     in-out property <string> name;
     in-out property <int> strength;

@@ -21,7 +21,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         (5, 0, 0, 10),
         LayerType::Top,
         BoardType::None,
-        false,
+        None,
     );
 
     let waywindow = SpellWin::invoke_spell("counter-widget", window_conf);

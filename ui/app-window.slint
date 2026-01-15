@@ -21,9 +21,9 @@ export component TopBar inherits Window {
     callback open-app(string);
     callback query-applications(string);
     callback set-wallpaper(image);
+    in-out property <string> time_var: "04:34 PM";
     // in-out property <bool> is_search_on: false;
     in-out property <BarState> state: { is_search_on: false };
-    in-out property <string> time_var: "04:32 AM";
     in-out property <bool> walls_open: false;
     in property <[image]> walls_paths;
     in property <[image]> walls_light_paths;
@@ -40,8 +40,9 @@ export component TopBar inherits Window {
 
     in property <[length]> positions: [27px, 114px, 195px, 168px, 141px, 54px, 27px];
     in property <[length]> width-bar: [80px, 20px, 20px, 20px, 80px, 20px, 20px];
-    in property <[string]> bar-text: [Rice.get_volume(), "", "H", "", "", "", ""];
+    in property <[string]> bar-text: [Rice.get_volume(), "", "h", "", "", "", ""];
     property <int> which-selected: 1;
+    property <int> app_selected_no: 1;
     background: transparent;
     height: 610px;
     width: 1366px;
@@ -172,6 +173,12 @@ export component TopBar inherits Window {
                                     walls_open = false;
                                 }
                             }
+                            accept;
+                        } else if event.text == Key.UpArrow {
+                            app_selected_no -= 1;
+                            accept;
+                        } else if event.text == Key.DownArrow {
+                            app_selected_no += 1;
                             accept;
                         } else if event.text == "1" {
                             walls_open = false;
@@ -319,10 +326,13 @@ export component TopBar inherits Window {
     }
 
     AppViewer {
+        border-width: 2px;
+        border-color: Styles.border-color;
         walls_open: walls_open;
         is_search_on: state.is_search_on;
         app_lines: app_lines;
         current_window: which-selected;
+        is_app_selected: app_selected_no;
         open-app(action) => {
             state.is_search_on = false;
             root.open-app(action)
@@ -720,6 +730,25 @@ export component LockScreen inherits Window {
     in-out property <bool> is_lock_activated: false;
     in-out property <bool> lock_error: false;
     callback check-pass(string);
+    callback request_time();
+    in-out property <string> time_var: "04:34";
+    in-out property <string> time_ampm: "AP";
+    Timer {
+        interval: 200ms;
+        running: true;
+        triggered => {
+            request_time();
+        }
+    }
+
+    Timer {
+        interval: 2s;
+        running: lock_error;
+        triggered => {
+            lock_error = false;
+        }
+    }
+
     Rectangle {
         Image {
             source: @image-url("../../../../assets/wallpapers/city lights/wallpaperflare.com_wallpaper(5).jpg");
@@ -756,7 +785,7 @@ export component LockScreen inherits Window {
                 font-size: 75px;
                 font-family: "Source Code Pro";
                 // font-family: "DS DIGI Orbitron-Regular";
-                text: "08:45";
+                text: time_var;
             }
 
             Text {
@@ -767,7 +796,7 @@ export component LockScreen inherits Window {
                 color: Styles.font-color-light;
                 font-size: 35px;
                 font-family: "Source Code Pro";
-                text: "AM";
+                text: time_ampm;
             }
 
             Text {
@@ -780,7 +809,7 @@ export component LockScreen inherits Window {
                 text: "Welcome Back!";
             }
 
-            LineEdit {
+            input := LineEdit {
                 input-type: password;
                 height: 37px;
                 width: 260px;
@@ -788,6 +817,7 @@ export component LockScreen inherits Window {
                 placeholder-text: " Enter Password";
                 accepted(text) => {
                     root.check-pass(text);
+                    self.text = "";
                 }
                 init => {
                     self.focus();

@@ -69,6 +69,7 @@ impl ForeignController for BarState {
         self
     }
 }
+
 pub fn configure_bar(bar: TopBar, bar_tx: WinHandle) {
     let app_selector = AppSelector::default();
     let app_data_slint: Vec<AppLineData> = app_selector
@@ -168,6 +169,26 @@ pub fn configure_bar(bar: TopBar, bar_tx: WinHandle) {
         }
     });
 
+    // bar.on_request_time(|| {
+    //     let output = Command::new("date")
+    //         .args(["+%I:%M"])
+    //         .output()
+    //         .expect("failed to execute process");
+    //
+    //     let am_pm = String::from_utf8(
+    //         Command::new("date")
+    //             .args(["+%p"])
+    //             .output()
+    //             .expect("couldn't run")
+    //             .stdout,
+    //     )
+    //     .unwrap();
+    //     let mut time = String::from_utf8(output.stdout).unwrap();
+    //     time = format!("{} {}", time.trim(), am_pm.trim());
+    //     // println!("/{}/", time);
+    //     bar_n.set_time_var(time.into());
+    // });
+    //
     let bar_handle = bar.as_weak().unwrap();
     let dark_wall_dir = Path::new("/home/ramayen/assets/wallpapers/");
     let light_wall_dir = Path::new("/home/ramayen/assets/light_walls/");

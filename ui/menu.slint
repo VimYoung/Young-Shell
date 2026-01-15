@@ -120,13 +120,20 @@ export component AppViewer inherits Rectangle {
         background: Styles.dark-background;
         x: current_window == 1 ? 0px : (current_window > 1 ? - 424px : 424px);
 
+        Rectangle {
+            border-width: 2px;
+            width: parent.width;
+            border-color: pink;
+            height: 45px;
+        }
+
         ScrollView {
             x: 0px;
             max-width: 424px;
             viewport-width: 424px;
             VerticalLayout {
                 padding: 10px;
-                spacing: 10px;
+                spacing: 7px;
                 for line[i] in app_lines: AppDisplayButton {
                     is_app_selected: i == is_app_selected;
                     image_path: line.image;

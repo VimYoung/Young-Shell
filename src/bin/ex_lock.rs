@@ -1,12 +1,8 @@
 use spell_framework::cast_spell;
-use std::{
-    env,
-    error::Error,
-    sync::{Arc, RwLock},
-};
+use std::{env, error::Error, process::Command};
 
-use slint::{platform::PlatformError, ComponentHandle};
-use spell_framework::{wayland_adapter::SpellLock, ForeignController};
+use slint::ComponentHandle;
+use spell_framework::wayland_adapter::SpellLock;
 slint::include_modules!();
 
 fn main() -> Result<(), Box<dyn Error>> {
@@ -32,6 +28,30 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
     });
     lock_ui.set_is_lock_activated(true);
+
+    lock_ui.on_request_time({
+        let lock_copy = lock_ui.as_weak().unwrap();
+        move || {
+            let output = Command::new("date")
+                .args(["+%I:%M"])
+                .output()
+                .expect("failed to execute process");
+
+            let am_pm = String::from_utf8(
+                Command::new("date")
+                    .args(["+%p"])
+                    .output()
+                    .expect("couldn't run")
+                    .stdout,
+            )
+            .unwrap();
+            let time = String::from_utf8(output.stdout).unwrap();
+            // time = format!("{} {}", time.trim(), am_pm.trim());
+            // println!("/{}/", time);
+            lock_copy.set_time_var(time.into());
+            lock_copy.set_time_ampm(am_pm.trim().into());
+        }
+    });
     // lock_ui.run()
 
     cast_spell(lock, None, None)

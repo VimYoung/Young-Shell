@@ -43,7 +43,7 @@ export component WallpaperManager inherits Rectangle {
         HorizontalLayout {
             height: parent.height - 20px;
             spacing: 10px;
-            for path in walls_paths: Rectangle {
+            for path[i] in walls_paths: Rectangle {
                 border-radius: 10px;
                 clip: true;
                 width: 400px;
@@ -51,11 +51,25 @@ export component WallpaperManager inherits Rectangle {
                 border-width: 2px;
                 border-color: Styles.border-color;
                 Image {
-                    height: parent.height;
+                    height: sensor.has-hover ? parent.height + 12px : parent.height;
                     source: path;
+                    animate height { duration: 200ms; }
                 }
 
-                TouchArea {
+                Rectangle {
+                    width: parent.width;
+                    height: parent.height;
+                    background: sensor.has-hover ? @linear-gradient(0deg, black 0%, transparent 40%, transparent 80%, black 100%) : transparent;
+                    Text {
+                        y: parent.height - 18px;
+                        x: 10px;
+                        text: "Image path";
+                        color: sensor.has-hover ? white : transparent;
+                        animate color { duration: 200ms; }
+                    }
+                }
+
+                sensor := TouchArea {
                     clicked => {
                         switch-wallpapers(path);
                     }
