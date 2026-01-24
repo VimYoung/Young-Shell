@@ -1,7 +1,7 @@
-use spell_framework::cast_spell;
+use spell_framework::{cast_spell, };
 use std::{env, error::Error, process::Command};
 
-use slint::ComponentHandle;
+use slint::{ComponentHandle, SharedString};
 use spell_framework::wayland_adapter::SpellLock;
 slint::include_modules!();
 
@@ -12,10 +12,11 @@ fn main() -> Result<(), Box<dyn Error>> {
     let looop_handle = lock.get_handler();
     lock_ui.on_check_pass({
         let lock_handle = lock_ui.as_weak();
+        let looop_han = looop_handle.clone();
         move |string_val| {
             let lock_handle_a = lock_handle.clone().unwrap();
             let lock_handle_b = lock_handle.clone().unwrap();
-            looop_handle.unlock(
+            looop_han.unlock(
                 None,
                 string_val.to_string(),
                 Box::new(move || {
@@ -27,6 +28,20 @@ fn main() -> Result<(), Box<dyn Error>> {
             );
         }
     });
+
+    println!("Hello");
+    lock_ui.on_verify_fingerprint({
+        let lock_handle = lock_ui.as_weak();
+        let loop_handle = looop_handle.clone();
+        move || {
+            println!("inside the function");
+            let loock_handle = lock_handle.clone().unwrap();
+            loop_handle.verify_fingerprint(Box::new(move || {
+                loock_handle.set_finger_verification_response(SharedString::from("Failed"));
+            }));
+        }
+    });
+
     lock_ui.set_is_lock_activated(true);
 
     lock_ui.on_request_time({

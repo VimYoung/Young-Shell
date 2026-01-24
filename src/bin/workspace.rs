@@ -19,7 +19,7 @@ slint::include_modules!();
 fn main() -> Result<(), Box<dyn Error>> {
     let window_conf = WindowConf::new(
         7,
-        768,
+        830,
         (Some(LayerAnchor::LEFT), Some(LayerAnchor::TOP)),
         (0, 0, 0, 0),
         LayerType::Top,

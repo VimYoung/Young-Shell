@@ -82,8 +82,10 @@ pub fn configure_bar(bar: TopBar, bar_tx: WinHandle) {
                 imag_path_val = "/home/ramayen/assets/kitty.png".to_string();
             }
             AppLineData {
-                image: Image::load_from_path(Path::new(&imag_path_val))
-                    .expect("Error loading image"),
+                image: Image::load_from_path(Path::new(&imag_path_val)).unwrap_or(
+                    Image::load_from_path(Path::new(&"/home/ramayen/assets/kitty.png".to_string()))
+                        .unwrap(),
+                ),
                 name: value.name.clone().into(),
                 action: value
                     .exec_comm

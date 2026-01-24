@@ -2,13 +2,37 @@ import "../fonts/Orbitron-Regular.ttf";
 import "../fonts/DS-DIGII.ttf";
 import "../fonts/SourceCodePro-VariableFont_wght.ttf";
 import "../fonts/CascadiaCode-VariableFont_wght.ttf";
-import { Button, VerticalBox, Palette, Slider, Spinner, HorizontalBox, TabWidget, LineEdit, ScrollView } from "std-widgets.slint";
+import {
+    Button,
+    VerticalBox,
+    Palette,
+    Slider,
+    Spinner,
+    HorizontalBox,
+    TabWidget,
+    LineEdit,
+    ScrollView,
+} from "std-widgets.slint";
 import { Styles } from "styles.slint";
-import { Mpris} from "mpris.slint";
-import { WallpaperManager} from "wallpaper.slint";
-import { PowerMenuButton, MenuButton, GeneralButton, SearchButton, AppDisplayButton, WorkspaceButton, BarButton} from "buttons.slint";
-import { GeneralSlider, SystemInfo, AppViewer} from "menu.slint";
-import { AppLineData, Cards, State, SearchButtonData, BarState } from "data_structures.slint";
+import { Mpris } from "mpris.slint";
+import { WallpaperManager } from "wallpaper.slint";
+import {
+    PowerMenuButton,
+    MenuButton,
+    GeneralButton,
+    SearchButton,
+    AppDisplayButton,
+    WorkspaceButton,
+    BarButton,
+} from "buttons.slint";
+import { GeneralSlider, SystemInfo, AppViewer } from "menu.slint";
+import {
+    AppLineData,
+    Cards,
+    State,
+    SearchButtonData,
+    BarState,
+} from "data_structures.slint";
 
 export global Rice {
     pure callback call_pavucontrol();
@@ -22,7 +46,6 @@ export component TopBar inherits Window {
     callback query-applications(string);
     callback set-wallpaper(image);
     in-out property <string> time_var: "04:34 PM";
-    // in-out property <bool> is_search_on: false;
     in-out property <BarState> state: { is_search_on: false };
     in-out property <bool> walls_open: false;
     in property <[image]> walls_paths;
@@ -731,8 +754,35 @@ export component LockScreen inherits Window {
     in-out property <bool> lock_error: false;
     callback check-pass(string);
     callback request_time();
+    callback verify_fingerprint();
     in-out property <string> time_var: "04:34";
     in-out property <string> time_ampm: "AP";
+    in-out property <string> finger_verification_response;
+    in-out property <bool> finger_again: true;
+    in-out property <int> no_of_attempts: 0 ;
+
+    Timer {
+        interval: 2s;
+        running: finger_again;
+        triggered => {
+            finger_again=false;
+            verify_fingerprint();
+        }
+    }
+
+    Timer {
+    interval: 1s;
+    running: true;
+    triggered => {
+        if no_of_attempts < 3 && !finger_again{
+            no_of_attempts += 1;
+            finger_again = true;
+        } else {
+            self.stop();
+        }
+    }
+    }
+
     Timer {
         interval: 200ms;
         running: true;
@@ -750,8 +800,11 @@ export component LockScreen inherits Window {
     }
 
     Rectangle {
+        width: parent.width;
         Image {
+            width: parent.width;
             source: @image-url("../../../../assets/wallpapers/city lights/wallpaperflare.com_wallpaper(5).jpg");
+            image-fit: cover;
         }
 
         TouchArea {
@@ -766,12 +819,14 @@ export component LockScreen inherits Window {
     }
 
     Rectangle {
+        height: parent.height;
         x: is_lock_activated ? root.width - 350px : root.width;
         // x: root.width - 350px;
         // opacity: is_lock_activated ? 100 : 0;
         width: 350px;
         Image {
-            source: @image-url("../../../../Downloads/frosted glass_2.jpg");
+            height: parent.height;
+            source: @image-url("../assets/frosted_glass_2.jpeg");
         }
 
         Rectangle {
@@ -833,6 +888,14 @@ export component LockScreen inherits Window {
             }
 
             Text {
+                y: 410px;
+                font-size: 25px;
+                font-family: "Source Code Pro";
+                text: finger_verification_response;
+                opacity: !finger_again ? 100 : 0;
+            }
+
+            Text {
                 y: parent.height - 50px;
                 font-size: 20px;
                 color: pink;
@@ -857,10 +920,10 @@ export component Workspaces inherits Window {
     callback refresh-vol();
     callback refresh-info();
     callback change_called(int);
-    width: 10px;
+    width: 7px;
     x: 0px;
-    height: 738px;
-    background: black;
+    height: 830px;
+    background: blue;
 
     Timer {
         interval: 300ms;
@@ -878,12 +941,12 @@ export component Workspaces inherits Window {
     }
 
     VerticalLayout {
-        x: 0px;
-        alignment: LayoutAlignment.space-around;
-        height: 765px;
+        y: 0px;
+        alignment: LayoutAlignment.space-evenly;
+        height: parent.height;
         spacing: 4px;
         for i in 10: WorkspaceButton {
-            sugg_int: (parent.height - 20px) / 10;
+            sugg_int: (parent.height / 10) - 4px;
             is_filled: is-filled[i];
             is-active: is-active[i];
             change_called => {
