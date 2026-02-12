@@ -1,23 +1,23 @@
 use std::{env, path::Path, process::Command, rc::Rc, thread};
 
-use crate::{AppLineData, BarState, TopBar};
+use crate::{AppLineData, BarState, TopBarSpell};
 use slint::{ComponentHandle, Image};
 use spell_framework::{vault::AppSelector, wayland_adapter::WinHandle};
 
-pub fn configure_bar(bar: TopBar, bar_tx: WinHandle) {
+pub fn configure_bar(bar: &mut TopBarSpell, bar_tx: WinHandle) {
     let app_selector = AppSelector::default();
     let app_data_slint: Vec<AppLineData> = app_selector
         .get_primary()
         .map(|value| {
-            let imag_path_val: String;
-            if let Some(val) = value.image_path.clone() {
-                imag_path_val = val;
+            let imag_path_val = if let Some(val) = value.image_path.clone() {
+                val
             } else {
-                imag_path_val = "/home/ramayen/assets/kitty.png".to_string();
-            }
+                "/home/ramayen/assets/kitty.png".to_string()
+            };
             AppLineData {
-                image: Image::load_from_path(Path::new(&imag_path_val))
-                    .expect("Error loading image"),
+                image: Image::load_from_path(Path::new(&imag_path_val)).unwrap_or(
+                    Image::load_from_path(Path::new("/home/ramayen/assets/kitty.png")).unwrap(),
+                ),
                 name: value.name.clone().into(),
                 action: value
                     .exec_comm
@@ -98,8 +98,10 @@ pub fn configure_bar(bar: TopBar, bar_tx: WinHandle) {
                         imag_path_val = "/home/ramayen/assets/kitty.png".to_string();
                     }
                     AppLineData {
-                        image: Image::load_from_path(Path::new(&imag_path_val))
-                            .expect("Error loading image"),
+                        image: Image::load_from_path(Path::new(&imag_path_val)).unwrap_or(
+                            Image::load_from_path(Path::new("/home/ramayen/assets/kitty.png"))
+                                .unwrap(),
+                        ),
                         name: value.name.clone().into(),
                         action: value
                             .exec_comm
@@ -168,6 +170,7 @@ pub fn configure_bar(bar: TopBar, bar_tx: WinHandle) {
             }
         }
     }
+    println!("For loops set");
 
     let dark_walls_slint: Rc<slint::VecModel<Image>> = Rc::new(slint::VecModel::from(dark_walls));
     bar_handle.set_walls_paths(dark_walls_slint.into());
@@ -175,17 +178,16 @@ pub fn configure_bar(bar: TopBar, bar_tx: WinHandle) {
     let light_walls_slint: Rc<slint::VecModel<Image>> = Rc::new(slint::VecModel::from(light_walls));
     bar_handle.set_walls_light_paths(light_walls_slint.into());
 
-    bar.on_walls_window_called({ move || {} });
+    // bar.on_walls_window_called({ move || {} });
 
     bar.on_set_wallpaper(|img_path| {
         let img_path_str = img_path.path().unwrap().as_os_str().to_str().unwrap();
         println!("Image path : {}", img_path_str);
-        let comm: String;
-        if env::var("NIRI_SOCKET").is_ok() {
-            comm = String::from("swww img ") + "\"" + img_path_str + "\"";
+        let comm: String = if env::var("NIRI_SOCKET").is_ok() {
+            String::from("swww img ") + "\"" + img_path_str + "\""
         } else {
-            comm = String::from("papermizer ") + img_path_str;
-        }
+            String::from("papermizer ") + img_path_str
+        };
         println!("The command is :{}", comm);
         // let final_comm = Command::new(&sh).arg(c).arg(&comm);
         let mut final_comm = Command::new("sh");

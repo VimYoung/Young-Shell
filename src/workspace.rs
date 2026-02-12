@@ -6,10 +6,10 @@ use std::{
     rc::Rc,
 };
 
-use crate::Workspaces;
+use crate::WorkspacesSpell;
 use slint::ComponentHandle;
 
-pub fn configure_workpaces(workspace: Workspaces) {
+pub fn configure_workpaces(workspace: &mut WorkspacesSpell) {
     let run_dir = env::var("XDG_RUNTIME_DIR");
     let inst_dir = env::var("HYPRLAND_INSTANCE_SIGNATURE");
 

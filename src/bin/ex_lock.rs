@@ -1,4 +1,4 @@
-use spell_framework::{cast_spell, };
+use spell_framework::cast_spell;
 use std::{env, error::Error, process::Command};
 
 use slint::{ComponentHandle, SharedString};
@@ -69,5 +69,5 @@ fn main() -> Result<(), Box<dyn Error>> {
     });
     // lock_ui.run()
 
-    cast_spell(lock, None, None)
+    cast_spell!(lock: lock)
 }

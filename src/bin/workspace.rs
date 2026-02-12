@@ -5,16 +5,15 @@ use std::{
     os::unix::net::UnixStream,
     process::Command,
     rc::Rc,
-    sync::{Arc, RwLock},
 };
 
 use slint::ComponentHandle;
 use spell_framework::{
     cast_spell,
     layer_properties::{BoardType, LayerAnchor, LayerType, WindowConf},
-    wayland_adapter::SpellWin,
 };
 slint::include_modules!();
+spell_framework::generate_widgets![Workspaces];
 
 fn main() -> Result<(), Box<dyn Error>> {
     let window_conf = WindowConf::new(
@@ -27,8 +26,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         Some(7),
     );
 
-    let way_work = SpellWin::invoke_spell("workspace", window_conf);
-    let workspace = Workspaces::new().unwrap();
+    let workspace = WorkspacesSpell::invoke_spell("workspace", window_conf);
 
     let run_dir = env::var("XDG_RUNTIME_DIR");
     let inst_dir = env::var("HYPRLAND_INSTANCE_SIGNATURE");
@@ -147,5 +145,5 @@ fn main() -> Result<(), Box<dyn Error>> {
                 .output();
         }
     });
-    cast_spell(way_work, None, None)
+    cast_spell!(workspace)
 }

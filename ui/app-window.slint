@@ -68,7 +68,7 @@ export component TopBar inherits Window {
     property <int> app_selected_no: 1;
     background: transparent;
     height: 610px;
-    width: 1366px;
+    width: 1536px;
 
     Rectangle {
         x: 0px;
@@ -84,7 +84,7 @@ export component TopBar inherits Window {
         }
 
         Path {
-            x: 1356px;
+            x: 1538px;
             commands: "M 7 3 L 12 3 L 12 8 C 11 5 10 4 7 3";
             stroke: black;
             fill: black;
@@ -97,7 +97,7 @@ export component TopBar inherits Window {
         x: 0px;
         y: 0px;
         height: walls_open ? 350px : 30px;
-        width: 1366px;
+        width: parent.width;
         background: Styles.dark-background;
         animate height { duration: 200ms; }
 
@@ -326,7 +326,7 @@ export component TopBar inherits Window {
 
             Rectangle {
                 background: clock.has-hover ? Styles.base-background : Styles.dark-background;
-                x: state.is_search_on ? root.width - 65px : 635px;
+                x: state.is_search_on ? root.width - 65px : root.width / 2;
                 y: -5px;
                 width: 100px;
                 border-radius: self.height / 2;
@@ -716,7 +716,7 @@ export component InputEx inherits Window {
 export component AppWindow inherits Window {
     in-out property <int> counter: 42;
     callback request-increase-value();
-    width: 276px;
+    width: 376px;
     height: 576px;
     VerticalBox {
         Text {
@@ -759,28 +759,28 @@ export component LockScreen inherits Window {
     in-out property <string> time_ampm: "AP";
     in-out property <string> finger_verification_response;
     in-out property <bool> finger_again: true;
-    in-out property <int> no_of_attempts: 0 ;
+    in-out property <int> no_of_attempts: 0;
 
     Timer {
         interval: 2s;
         running: finger_again;
         triggered => {
-            finger_again=false;
+            finger_again = false;
             verify_fingerprint();
         }
     }
 
     Timer {
-    interval: 1s;
-    running: true;
-    triggered => {
-        if no_of_attempts < 3 && !finger_again{
-            no_of_attempts += 1;
-            finger_again = true;
-        } else {
-            self.stop();
+        interval: 1s;
+        running: true;
+        triggered => {
+            if no_of_attempts < 3 && !finger_again {
+                no_of_attempts += 1;
+                finger_again = true;
+            } else {
+                self.stop();
+            }
         }
-    }
     }
 
     Timer {
@@ -923,7 +923,7 @@ export component Workspaces inherits Window {
     width: 7px;
     x: 0px;
     height: 830px;
-    background: blue;
+    background: Styles.dark-background;
 
     Timer {
         interval: 300ms;
