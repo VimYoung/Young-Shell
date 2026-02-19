@@ -115,69 +115,70 @@ pub fn configure_bar(bar: &mut TopBarSpell, bar_tx: WinHandle) {
             bar_handle.set_app_lines(vac_model.clone().into());
         }
     });
-
-    let bar_handle = bar.as_weak().unwrap();
-    let dark_wall_dir = Path::new("/home/ramayen/assets/wallpapers/");
-    let light_wall_dir = Path::new("/home/ramayen/assets/light_walls/");
-    let mut light_walls: Vec<Image> = Vec::new();
-    let mut dark_walls: Vec<Image> = Vec::new();
-
-    for inner_path in light_wall_dir.read_dir().expect("Couldn't read").flatten() {
-        if inner_path.path().is_file()
-            && (inner_path.path().extension().unwrap() == "png"
-                || inner_path.path().extension().unwrap() == "jpg"
-                || inner_path.path().extension().unwrap() == "jpeg")
-        {
-            light_walls.push(Image::load_from_path(&inner_path.path()).unwrap());
-        } else if inner_path.path().is_dir() {
-            for wall in inner_path
-                .path()
-                .read_dir()
-                .expect("Couldn't read")
-                .flatten()
-            {
-                if wall.path().is_file()
-                    && (wall.path().extension().unwrap() == "png"
-                        || wall.path().extension().unwrap() == "jpg"
-                        || wall.path().extension().unwrap() == "jpeg")
-                {
-                    light_walls.push(Image::load_from_path(&wall.path()).unwrap());
-                }
-            }
-        }
-    }
-    for inner_path in dark_wall_dir.read_dir().expect("Couldn't read").flatten() {
-        if inner_path.path().is_file()
-            && (inner_path.path().extension().unwrap() == "png"
-                || inner_path.path().extension().unwrap() == "jpg"
-                || inner_path.path().extension().unwrap() == "jpeg")
-        {
-            dark_walls.push(Image::load_from_path(&inner_path.path()).unwrap());
-        } else if inner_path.path().is_dir() {
-            for wall in inner_path
-                .path()
-                .read_dir()
-                .expect("Couldn't read")
-                .flatten()
-            {
-                if wall.path().is_file()
-                    && (wall.path().extension().unwrap() == "png"
-                        || wall.path().extension().unwrap() == "jpg"
-                        || wall.path().extension().unwrap() == "jpeg")
-                {
-                    dark_walls.push(Image::load_from_path(&wall.path()).unwrap());
-                }
-            }
-        }
-    }
-    println!("For loops set");
-
-    let dark_walls_slint: Rc<slint::VecModel<Image>> = Rc::new(slint::VecModel::from(dark_walls));
-    bar_handle.set_walls_paths(dark_walls_slint.into());
-
-    let light_walls_slint: Rc<slint::VecModel<Image>> = Rc::new(slint::VecModel::from(light_walls));
-    bar_handle.set_walls_light_paths(light_walls_slint.into());
-
+    // Commented for the sake of faster compilation
+    //
+    // let bar_handle = bar.as_weak().unwrap();
+    // let dark_wall_dir = Path::new("/home/ramayen/assets/wallpapers/");
+    // let light_wall_dir = Path::new("/home/ramayen/assets/light_walls/");
+    // let mut light_walls: Vec<Image> = Vec::new();
+    // let mut dark_walls: Vec<Image> = Vec::new();
+    //
+    // for inner_path in light_wall_dir.read_dir().expect("Couldn't read").flatten() {
+    //     if inner_path.path().is_file()
+    //         && (inner_path.path().extension().unwrap() == "png"
+    //             || inner_path.path().extension().unwrap() == "jpg"
+    //             || inner_path.path().extension().unwrap() == "jpeg")
+    //     {
+    //         light_walls.push(Image::load_from_path(&inner_path.path()).unwrap());
+    //     } else if inner_path.path().is_dir() {
+    //         for wall in inner_path
+    //             .path()
+    //             .read_dir()
+    //             .expect("Couldn't read")
+    //             .flatten()
+    //         {
+    //             if wall.path().is_file()
+    //                 && (wall.path().extension().unwrap() == "png"
+    //                     || wall.path().extension().unwrap() == "jpg"
+    //                     || wall.path().extension().unwrap() == "jpeg")
+    //             {
+    //                 light_walls.push(Image::load_from_path(&wall.path()).unwrap());
+    //             }
+    //         }
+    //     }
+    // }
+    // for inner_path in dark_wall_dir.read_dir().expect("Couldn't read").flatten() {
+    //     if inner_path.path().is_file()
+    //         && (inner_path.path().extension().unwrap() == "png"
+    //             || inner_path.path().extension().unwrap() == "jpg"
+    //             || inner_path.path().extension().unwrap() == "jpeg")
+    //     {
+    //         dark_walls.push(Image::load_from_path(&inner_path.path()).unwrap());
+    //     } else if inner_path.path().is_dir() {
+    //         for wall in inner_path
+    //             .path()
+    //             .read_dir()
+    //             .expect("Couldn't read")
+    //             .flatten()
+    //         {
+    //             if wall.path().is_file()
+    //                 && (wall.path().extension().unwrap() == "png"
+    //                     || wall.path().extension().unwrap() == "jpg"
+    //                     || wall.path().extension().unwrap() == "jpeg")
+    //             {
+    //                 dark_walls.push(Image::load_from_path(&wall.path()).unwrap());
+    //             }
+    //         }
+    //     }
+    // }
+    // println!("For loops set");
+    //
+    // let dark_walls_slint: Rc<slint::VecModel<Image>> = Rc::new(slint::VecModel::from(dark_walls));
+    // bar_handle.set_walls_paths(dark_walls_slint.into());
+    //
+    // let light_walls_slint: Rc<slint::VecModel<Image>> = Rc::new(slint::VecModel::from(light_walls));
+    // bar_handle.set_walls_light_paths(light_walls_slint.into());
+    //
     // bar.on_walls_window_called({ move || {} });
 
     bar.on_set_wallpaper(|img_path| {

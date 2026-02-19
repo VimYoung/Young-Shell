@@ -1,0 +1,49 @@
+import { UAppTheme } from "../app-theme.slint";
+
+import { ButtonInterface } from "button-interface.slint";
+import { UText } from "text.slint";
+
+
+export component ULink inherits ButtonInterface {
+	// Accessability properties
+	accessible-role: button;
+    accessible-label: self.text;
+    accessible-description: @tr("A link that opens an URL or window when clicked");
+    accessible-action-default => {
+        self.clicked()
+    }
+	// Regular properties
+    in-out property <string> text <=> link-text.text;
+	// Using this horizontal layout to limit the width of the underline to the text's width.
+    HorizontalLayout {
+        alignment: start;
+        VerticalLayout {
+            alignment: center;
+            spacing: -1px;
+            link-text := UText {
+                color: UAppTheme.primary.base;
+                font-size: UAppTheme.font-size-base;
+            }
+
+            underline := Rectangle {
+                height: UAppTheme.border-width-base;
+                background: UAppTheme.primary.base;
+            }
+        }
+    }
+
+    states [
+        focus when root.has-focus: {
+            border-width: UAppTheme.focus-border-width;
+            border-color: UAppTheme.focus-color;
+        }
+        active when root.pressed: {
+            link-text.color: UAppTheme.primary.active;
+            underline.visible: false;
+        }
+        hover when root.has-hover: {
+            link-text.color: UAppTheme.primary.hover;
+            underline.visible: false;
+        }
+    ]
+}

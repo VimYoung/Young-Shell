@@ -13,6 +13,7 @@ import {
     LineEdit,
     ScrollView,
 } from "std-widgets.slint";
+import { UButton } from "@sleek-ui/widgets.slint";
 import { Styles } from "styles.slint";
 import { Mpris } from "mpris.slint";
 import { WallpaperManager } from "wallpaper.slint";
@@ -695,46 +696,11 @@ export component ScrollEx inherits Window {
     }
 }
 
-export component InputEx inherits Window {
-    background: transparent;
-    Rectangle {
-        clip: true;
-        x: 30px;
-        width: 495px;
-        height: 35px;
-        background: Styles.dark-background;
-        entryarea := LineEdit {
-            y: 5px;
-            width: parent.width;
-            height: 25px;
-            x: 5px;
-            placeholder-text: "Search Apps..";
-        }
-    }
-}
-
 export component AppWindow inherits Window {
     in-out property <int> counter: 42;
     callback request-increase-value();
     width: 376px;
     height: 576px;
-    VerticalBox {
-        Text {
-            text: "Counter: \{root.counter}";
-        }
-
-        Button {
-            text: "Increase value";
-            clicked => {
-                root.request-increase-value();
-            }
-        }
-    }
-}
-
-export component Resize inherits Window {
-    in-out property <int> counter: 42;
-    callback request-increase-value();
     VerticalBox {
         Text {
             text: "Counter: \{root.counter}";

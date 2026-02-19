@@ -1,0 +1,87 @@
+import { UText } from "text.slint";
+import { UCenter } from "../layouts/center.slint";
+import { UAppTheme } from "../app-theme.slint";
+
+
+enum TooltipPosition {
+	top,
+	bottom,
+	left,
+	right
+}
+
+export component UTooltip {
+	// Regular properties
+    in-out property <string> text;
+    in-out property <TooltipPosition> position: top;
+    in-out property <duration> delay: 250ms;
+    in-out property <bool> user_is_hovering: false;
+    in-out property <length> inner-x;
+    in-out property <length> inner-y;
+    in-out property <length> inner-width;
+    in-out property <length> inner-height;
+    in-out property <length> tooltip-max-width: 150px * UAppTheme.scale-factor;
+    in-out property <length> tooltip-max-height;
+    property <bool> has_waited: false;
+    z: 100;
+    x: compute-x-position();
+    y: compute-y-position();
+    changed user_is_hovering => {
+        if !user_is_hovering && has_waited {
+            has_waited = false;
+        }
+    }
+    content := Rectangle {
+        z: 100;
+        Rectangle {
+            z: 100;
+            background: UAppTheme.bg-inverse;
+            border-radius: UAppTheme.radius-base;
+            opacity: has_waited ? 1 : 0;
+            HorizontalLayout {
+                padding: UAppTheme.padding-base;
+                UText {
+                    opacity: has_waited ? 1 : 0;
+                    text: text;
+                    color: UAppTheme.inverse-text;
+                    font-size: UAppTheme.font-size-small;
+                    wrap: word-wrap;
+                    max-width: tooltip-max-width;
+                    max-height: tooltip-max-height;
+                    animate opacity { duration: UAppTheme.animation-duration; }
+                }
+            }
+
+            animate opacity { duration: UAppTheme.animation-duration; }
+        }
+    }
+
+    Timer {
+        running: parent.user_is_hovering;
+        interval: delay;
+        triggered => {
+            has_waited = true;
+        }
+    }
+
+    function compute-x-position() -> length {
+        if (position == TooltipPosition.top || position == TooltipPosition.bottom) {
+            return inner-x - (content.width / 2 - inner-width / 2);
+        } else if (position == TooltipPosition.left) {
+            return inner-x - content.width - UAppTheme.spacing-base;
+        } else if (position == TooltipPosition.right) {
+            return inner-x + inner-width + UAppTheme.spacing-base;
+        }
+        return inner-x;
+    }
+    function compute-y-position() -> length {
+        if (position == TooltipPosition.top) {
+            return inner-y - content.height - UAppTheme.spacing-base;
+        } else if (position == TooltipPosition.bottom) {
+            return inner-y + inner-height + UAppTheme.spacing-base;
+        } else if (position == TooltipPosition.left || position == TooltipPosition.right) {
+            return inner-y - (content.height / 2 - inner-height / 2);
+        }
+        return inner-y;
+    }
+}

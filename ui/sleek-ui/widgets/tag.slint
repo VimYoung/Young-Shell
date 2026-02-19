@@ -1,0 +1,72 @@
+import { UAppTheme } from "../app-theme.slint";
+
+import { UIcon } from "icon.slint";
+import { UText } from "text.slint";
+import { IconTextPlacement } from "../structs/icon-placement.slint";
+
+
+export enum UTagVariant {
+	info,
+	success,
+	warning,
+	danger,
+}
+
+export component UTag inherits Rectangle {
+	// Accessability properties
+	accessible-role: AccessibleRole.text;
+    accessible-label: self.text;
+	// Regular properties
+    in-out property <UTagVariant> variant: info;
+    in-out property <color> text-color;
+    in-out property <color> background-color;
+    in-out property <string> text <=> badge-text.text;
+    in-out property <image> icon;
+    in-out property <bool> colorize-icon: true;
+    in-out property <IconTextPlacement> icon-placement: hidden;
+    background: background-color;
+    border-radius: UAppTheme.radius-base;
+    HorizontalLayout {
+        spacing: UAppTheme.spacing-small;
+        padding-top: UAppTheme.padding-vertical / 1.5;
+        padding-bottom: UAppTheme.padding-vertical / 1.5;
+        padding-left: UAppTheme.padding-horizontal / 1.5;
+        padding-right: UAppTheme.padding-horizontal / 1.5;
+        if icon-placement == IconTextPlacement.start: UIcon {
+            source: icon;
+            size: UAppTheme.font-size-base;
+            colorize-icon: colorize-icon;
+            color: text-color;
+        }
+        badge-text := UText {
+            font-size: UAppTheme.font-size-small;
+            color: text-color;
+        }
+
+        if icon-placement == IconTextPlacement.end: UIcon {
+            source: icon;
+            size: UAppTheme.font-size-base;
+            colorize-icon: colorize-icon;
+            color: text-color;
+        }
+    }
+
+    states [
+        info when variant == UTagVariant.info: {
+            background: UAppTheme.primary.selected;
+            text-color: UAppTheme.primary.base;
+        }
+        success when variant == UTagVariant.success: {
+            background: UAppTheme.success.selected;
+            text-color: UAppTheme.success.base;
+        }
+        warning when variant == UTagVariant.warning: {
+            background: UAppTheme.warning.selected;
+            text-color: UAppTheme.warning.base;
+        }
+        danger when variant == UTagVariant.danger: {
+            background: UAppTheme.danger.selected;
+            text-color: UAppTheme.danger.base;
+        }
+    ]
+}

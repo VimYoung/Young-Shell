@@ -14,7 +14,7 @@ slint::include_modules!();
 spell_framework::generate_widgets![TopBar, Menu, Workspaces];
 
 fn main() -> Result<(), Box<dyn Error>> {
-    // std::env::set_var("RUST_BACKTRACE", "1");
+    std::env::set_var("RUST_BACKTRACE", "1");
     let mut bar = TopBarSpell::invoke_spell(
         "top-bar",
         WindowConf::new(
@@ -98,7 +98,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     //     // bar.global::<Rice>().invoke_get_volume();
     //     m._walls_window_called();
     // });
-    cast_spell!(windows: [bar, menu, workspace])
+    cast_spell!(windows: [menu, bar, workspace])
 }
 
 impl IpcController for TopBar {
