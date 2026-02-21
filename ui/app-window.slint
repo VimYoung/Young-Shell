@@ -13,7 +13,17 @@ import {
     LineEdit,
     ScrollView,
 } from "std-widgets.slint";
-import { UButton } from "@sleek-ui/widgets.slint";
+import {
+    UButton,
+    UDivider,
+    UCenter,
+    UButton,
+    UIconButton,
+    UText,
+    UIcon,
+    UCard,
+} from "@sleek/widgets.slint";
+import { UAppTheme } from "@sleek/app-theme.slint";
 import { Styles } from "styles.slint";
 import { Mpris } from "mpris.slint";
 import { WallpaperManager } from "wallpaper.slint";
@@ -26,7 +36,7 @@ import {
     WorkspaceButton,
     BarButton,
 } from "buttons.slint";
-import { GeneralSlider, SystemInfo, AppViewer } from "menu.slint";
+import { GeneralSlider, SystemInfo, AppViewer, GeneralCard } from "menu.slint";
 import {
     AppLineData,
     Cards,
@@ -34,6 +44,197 @@ import {
     SearchButtonData,
     BarState,
 } from "data_structures.slint";
+import { UTitle } from "@sleek/widgets/title.slint";
+import { UCode } from "@sleek/widgets/code.slint";
+import { USwitch } from "@sleek/widgets/switch.slint";
+
+export global MenuState {
+    callback power-menu() -> bool;
+    callback set-power-menu(bool);
+}
+
+export global MainState {
+    pure callback get_time() -> string;
+    pure callback is-light-theme() -> bool;
+}
+
+export component Menu inherits Window {
+    width: 376px;
+    height: 576px;
+    background: transparent;
+    public function set_dark_theme() {
+        Palette.color-scheme = ColorScheme.dark;
+    }
+    public function set_light_theme() {
+        Palette.color-scheme = ColorScheme.light;
+    }
+    Rectangle {
+        clip: true;
+        border-radius: UAppTheme.radius-medium;
+
+        menu := Rectangle {
+            width: parent.width - 50px;
+            height: parent.height;
+            background: UAppTheme.bg-container;
+            x: 50px;
+            y: 0px;
+            VerticalLayout {
+                padding: UAppTheme.padding-medium;
+                spacing: UAppTheme.spacing-big;
+                VerticalLayout {
+                    UTitle {
+                        text: "Hi Ramayen !";
+                        vertical-alignment: TextVerticalAlignment.top;
+                        height: 55px;
+                    }
+
+                    UDivider {
+                        width: parent.width - 2 * UAppTheme.padding-medium;
+                        height: 7px;
+                        border-color: UAppTheme.bg-inverse;
+                    }
+                }
+
+                Rectangle {
+                    height: 80px;
+                    HorizontalLayout {
+                        alignment: stretch;
+                        padding: UAppTheme.padding-medium;
+                        VerticalLayout {
+                            spacing: UAppTheme.spacing-base;
+                            alignment: start;
+                            UText {
+                                text: "Some Texr";
+                                font-size: UAppTheme.font-size-bigger;
+                            }
+
+                            UText {
+                                text: "Some Tex";
+                                font-size: UAppTheme.font-size-bigger;
+                            }
+                        }
+
+                        UButton {
+                            width: 40px;
+                            icon: @image-url("../assets/sleek/outlined/caret-right.svg");
+                            icon-placement: start;
+                        }
+                    }
+                }
+
+                UCard {
+                    height: 90px;
+                    HorizontalLayout {
+                        padding: UAppTheme.padding-medium;
+                        spacing: UAppTheme.spacing-medium;
+                        alignment: space-between;
+                        GeneralCard {
+                            switch: MainState.is_light_theme();
+                            icon-on: @image-url("../assets/sleek/filled/bulb.svg");
+                            icon-off: @image-url("../assets/sleek/outlined/bulb.svg");
+                            on-open => {
+                                root.set_dark_theme();
+                            }
+                            on-close => {
+                                root.set_light_theme();
+                            }
+                        }
+
+                        GeneralCard {
+                            switch: false;
+                            icon-on: @image-url("../assets/sleek/outlined/fullscreen.svg");
+                            icon-off: @image-url("../assets/sleek/outlined/fullscreen-exit.svg");
+                        }
+
+                        GeneralCard {
+                            switch: true;
+                            icon-on: @image-url("../assets/sleek/outlined/zhihu.svg");
+                            icon-off: @image-url("../assets/sleek/filled/zhihu-square.svg");
+                        }
+
+                        GeneralCard {
+                            switch: true;
+                            icon-on: @image-url("../assets/sleek/filled/wifi-signal-3.svg");
+                            icon-off: @image-url("../assets/sleek/filled/wifi-slash.svg");
+                        }
+
+                        GeneralCard {
+                            switch: false;
+                            icon-on: @image-url("../assets/sleek/filled/bluetooth-on.svg");
+                            icon-off: @image-url("../assets/sleek/filled/bluetooth-off.svg");
+                        }
+                    }
+                }
+            }
+        }
+
+        power-menu := Rectangle {
+            x: 0px;
+            background: UAppTheme.bg-inverse;
+            width: 50px;
+            Rectangle {
+                clip: true;
+                border-radius: UAppTheme.radius-round;
+                Image {
+                    y: UAppTheme.padding-medium;
+                    width: parent.width - 2 * UAppTheme.padding-medium;
+                    height: 50px;
+                    source: @image-url("../assets/logo_dark.png");
+                }
+            }
+
+            VerticalLayout {
+                padding: UAppTheme.padding-medium;
+                spacing: UAppTheme.spacing-medium;
+                y: parent.height - (4 * self.width - 3 * UAppTheme.padding-medium);
+                height: 4 * self.width - 3 * UAppTheme.padding-medium;
+                UIconButton {
+                    width: parent.width - (2 * UAppTheme.padding-medium);
+                    height: self.width;
+                    // (parent.height / 10) - (UAppTheme.padding-medium);
+                    variant: primary;
+                    icon: @image-url("../assets/sleek/outlined/poweroff.svg");
+                    clicked => {
+                        root.set_dark_theme();
+                    }
+                }
+
+                UIconButton {
+                    width: parent.width - (2 * UAppTheme.padding-medium);
+                    height: self.width;
+                    // (parent.height / 10) - (UAppTheme.padding-medium);
+                    variant: primary;
+                    icon: @image-url("../assets/sleek/outlined/moon.svg");
+                    clicked => {
+                        root.set_dark_theme();
+                    }
+                }
+
+                UIconButton {
+                    width: parent.width - (2 * UAppTheme.padding-medium);
+                    height: self.width;
+                    // (parent.height / 10) - (UAppTheme.padding-medium);
+                    variant: primary;
+                    icon: @image-url("../assets/sleek/outlined/logout.svg");
+                    clicked => {
+                        root.set_dark_theme();
+                    }
+                }
+
+                UIconButton {
+                    width: parent.width - (2 * UAppTheme.padding-medium);
+                    height: self.width;
+                    // (parent.height / 10) - (UAppTheme.padding-medium);
+                    variant: primary;
+                    icon: @image-url("../assets/sleek/outlined/lock.svg");
+                    clicked => {
+                        root.set_light_theme();
+                    }
+                }
+            }
+        }
+    }
+}
 
 export global Rice {
     pure callback call_pavucontrol();
@@ -46,7 +247,7 @@ export component TopBar inherits Window {
     callback open-app(string);
     callback query-applications(string);
     callback set-wallpaper(image);
-    in-out property <string> time_var: "04:34 PM";
+    in-out property <string> time_var: MainState.get_time();
     in-out property <BarState> state: { is_search_on: false };
     in-out property <bool> walls_open: false;
     in property <[image]> walls_paths;
@@ -360,230 +561,6 @@ export component TopBar inherits Window {
         open-app(action) => {
             state.is_search_on = false;
             root.open-app(action)
-        }
-    }
-}
-
-export component Menu inherits Window {
-    width: 376px;
-    height: 576px;
-    background: transparent;
-    default-font-family: "Urbanist-Regular";
-    in-out property <State> state: { is-power-menu-open: false };
-    callback request-hide();
-
-    // property <bool> is-power-menu-open: state.is-power-menu-open;
-    mainrec := Rectangle {
-        background: Styles.dark-background;
-        border-radius: 10px;
-        clip: true;
-
-        menu := VerticalLayout {
-            x: 50px;
-            y: 0px;
-            width: root.width - 50px;
-            padding: Styles.padding;
-            alignment: LayoutAlignment.start;
-            spacing: Styles.padding;
-
-            Text {
-                text: "Hello Ramayen !";
-                color: Styles.font-color-light;
-                font-size: 30px;
-                font-family: "Urbanist-Bold";
-            }
-
-            Rectangle {
-                HorizontalLayout {
-                    VerticalLayout {
-                        Text {
-                            text: "07: 37: 46 PM ";
-                            color: Styles.font-color-light;
-                            font-size: 25px;
-                        }
-
-                        Text {
-                            text: "Sunday, 11th May";
-                            color: Styles.font-color-light;
-                            font-size: 20px;
-                        }
-                    }
-
-                    GeneralButton { }
-                }
-            }
-
-            Rectangle {
-                background: Styles.base-background;
-                border-radius: 15px;
-                border-width: 2px;
-                border-color: Styles.border-color;
-                HorizontalLayout {
-                    alignment: LayoutAlignment.space-around;
-                    padding: Styles.padding;
-                    // spacing: 10px;
-                    MenuButton {
-                        icon: @image-url("../assets/icons/light-bulb.svg");
-                    }
-
-                    MenuButton {
-                        icon: @image-url("../assets/icons/zen-on.svg");
-                    }
-
-                    MenuButton {
-                        icon: @image-url("../assets/icons/font-question.svg");
-                    }
-
-                    MenuButton {
-                        icon: @image-url("../assets/icons/wifi.svg");
-                    }
-
-                    MenuButton {
-                        icon: @image-url("../assets/icons/bluetooth.svg");
-                    }
-                }
-            }
-
-            mpris := Mpris { }
-
-            Rectangle {
-                background: Styles.base-background;
-                border-radius: 10px;
-                border-width: 2px;
-                border-color: Styles.border-color;
-                VerticalLayout {
-                    padding: Styles.padding;
-                    spacing: Styles.padding;
-                    GeneralSlider { }
-
-                    GeneralSlider { }
-
-                    GeneralSlider { }
-                }
-            }
-
-            HorizontalLayout {
-                SystemInfo {
-                    info-name: "CPU Usage";
-                }
-
-                SystemInfo {
-                    info-name: "Temp Usage";
-                }
-            }
-        }
-
-        power-menu := Rectangle {
-            x: 0px;
-            background: Styles.base-background;
-            border-top-left-radius: 10px;
-            border-bottom-left-radius: 10px;
-            width: state.is-power-menu-open ? 200px : 50px;
-
-            animate width { duration: 200ms; }
-
-            VerticalLayout {
-                max-width: power-menu.width;
-                height: mainrec.height;
-                x: 0px;
-                alignment: LayoutAlignment.stretch;
-                padding: Styles.padding;
-
-                Rectangle {
-                    x: 0px;
-                    height: 40px;
-                    width: 30px;
-                    clip: true;
-                    border-radius: 8px;
-                    border-width: 4px;
-                    border-color: Styles.border-color;
-                    Image {
-                        x: 0px;
-                        y: 0px;
-                        width: 30px;
-                        height: 40px;
-                        source: @image-url("../assets/logo_dark.png");
-                    }
-                }
-
-                VerticalLayout {
-                    alignment: LayoutAlignment.end;
-                    spacing: Styles.padding;
-                    PowerMenuButton {
-                        icon: @image-url("../assets/icons/power.svg");
-
-                        is-open: state.is-power-menu-open;
-                        button-width: power-menu.width - 20px;
-                        label: "Shutdown";
-                        clicked => {
-                            if state.is-power-menu-open {
-                                state = { is-power-menu-open: false };
-                            } else {
-                                state.is-power-menu-open = true;
-                            }
-                        }
-                    }
-
-                    PowerMenuButton {
-                        icon: @image-url("../assets/icons/suspend.svg");
-
-                        is-open: state.is-power-menu-open;
-                        button-width: power-menu.width - 20px;
-                        label: "Suspend";
-                        clicked => {
-                            if state.is-power-menu-open {
-                                state.is-power-menu-open = false;
-                            } else {
-                                state.is-power-menu-open = true;
-                            }
-                        }
-                    }
-
-                    PowerMenuButton {
-                        icon: @image-url("../assets/icons/lock.svg");
-                        is-open: state.is-power-menu-open;
-                        button-width: power-menu.width - 20px;
-                        label: "Lock Screen";
-                        clicked => {
-                            if state.is-power-menu-open {
-                                state.is-power-menu-open = false;
-                            } else {
-                                state.is-power-menu-open = true;
-                            }
-                        }
-                    }
-
-                    PowerMenuButton {
-                        icon: @image-url("../assets/icons/log-out.svg");
-                        is-open: state.is-power-menu-open;
-                        button-width: power-menu.width - 20px;
-                        label: "Log Out";
-                        clicked => {
-                            if state.is-power-menu-open {
-                                state.is-power-menu-open = false;
-                            } else {
-                                state.is-power-menu-open = true;
-                            }
-                        }
-                    }
-
-                    PowerMenuButton {
-                        icon: @image-url("../assets/icons/chevron-right.svg");
-                        icon-open: @image-url("../assets/icons/chevron-left.svg");
-                        is-open: state.is-power-menu-open;
-                        button-width: power-menu.width - 20px;
-                        is-special: true;
-                        clicked => {
-                            debug("Bar menu is opened or closed");
-                            if state.is-power-menu-open {
-                                state.is-power-menu-open = false;
-                            } else {
-                                state.is-power-menu-open = true;
-                            }
-                        }
-                    }
-                }
-            }
         }
     }
 }

@@ -1,12 +1,46 @@
-import { Spinner, Slider, ScrollView} from "std-widgets.slint";
-import { Styles} from "styles.slint";
-import { AppDisplayButton, WifiButton, WifiButtonConnected, ClipButton, BlueButton, BlueButtonConnected } from "buttons.slint";
+import { Spinner, Slider, ScrollView } from "std-widgets.slint";
+import { Styles } from "styles.slint";
+import {
+    AppDisplayButton,
+    WifiButton,
+    WifiButtonConnected,
+    ClipButton,
+    BlueButton,
+    BlueButtonConnected,
+} from "buttons.slint";
 import { AppLineData, WifiLineData } from "data_structures.slint";
+import { UCard, USwitch, UIcon } from "@sleek/widgets.slint";
+import { UCenter } from "@sleek/layouts/center.slint";
+export component GeneralCard inherits UCard {
+    in-out property <bool> switch:false;
+    in property <image> icon-on;
+    in property <image> icon-off;
+    callback on-open();
+    callback on-close();
+    VerticalLayout {
+        icon := UIcon {
+            size: 50px;
+            source: switch ? icon-on : icon-off;
+        }
 
-export global TimedEvents {
-    pure callback get_am_pm() -> string;
-    pure callback get_time() -> string;
-    pure callback refresh_clipboard();
+        UCenter {
+            USwitch {
+                checked: switch;
+            }
+        }
+    }
+
+    TouchArea {
+        clicked => {
+            if switch {
+                switch = false;
+                root.on-open();
+            } else {
+                switch = true;
+                root.on-close();
+            }
+        }
+    }
 }
 
 export component SystemInfo {
