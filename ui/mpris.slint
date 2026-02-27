@@ -1,87 +1,126 @@
-import { Styles} from "styles.slint";
+import { Styles } from "styles.slint";
 import { GeneralButton } from "buttons.slint";
-export component Mpris {
-    Rectangle {
-        // background: #6EACDA;
-        background: Styles.base-background;
-        border-radius: 15px;
-        border-width: 2px;
-        border-color: Styles.border-color;
-        min-height: 110px;
+import { UAppTheme } from "@sleek/app-theme.slint";
+import { UText, UIconButton, UTitle } from "@sleek/widgets.slint";
+import { UDefaultStyle } from "@sleek/styling/default-style.slint";
+import { HorizontalBox, VerticalBox } from "std-widgets.slint";
+import { ULinearProgress } from "@sleek/widgets/linear-progress.slint";
+import { UButton } from "@sleek/widgets/button/button.slint";
+import { UCenter } from "@sleek/layouts/center.slint";
 
+export global MprisState {
+    in-out property <string> title: "NoTitle";
+    in-out property <string> artist;
+    in-out property <string> album;
+    in-out property <image> song-poster: @image-url("../assets/nomusic.png");
+    in-out property <image> song-poster-blur: @image-url("../assets/nomusic-blur.png");
+    in-out property <percent> progress;
+    in-out property <bool> first-run: true;
+    pure callback refresh-mpris();
+    pure callback forward();
+    pure callback backward();
+    pure callback prev-track();
+    pure callback next-track();
+    pure callback play-pause();
+}
+
+export component Mpris inherits Rectangle {
+    border-radius: UAppTheme.radius-medium;
+    height: 110px;
+    clip: true;
+    Timer {
+        running: true;
+        interval: 1s;
+        triggered => {
+            MprisState.refresh-mpris();
+        }
+    }
+
+    Image {
+        height: parent.height;
+        image-fit: fill;
+        source: MprisState.song-poster-blur;
+    }
+
+    VerticalLayout {
+        spacing: UAppTheme.spacing-medium;
+        padding: UAppTheme.padding-medium;
         HorizontalLayout {
-            alignment: LayoutAlignment.stretch;
-            padding: Styles.padding;
-            spacing: 15px;
-
-            Image {
-                source: @image-url("../assets/nomusic.png");
-                max-height: 80px;
-                TouchArea {
-                    clicked => {
-                    }
+            spacing: UAppTheme.spacing-big;
+            alignment: start;
+            Rectangle {
+                clip: true;
+                border-radius: UAppTheme.radius-large;
+                width: root.height - 30px - 2 * UAppTheme.spacing-medium;
+                Image {
+                    width: root.height - 30px - 2 * UAppTheme.spacing-medium;
+                    image-fit: cover;
+                    source: MprisState.song-poster;
                 }
             }
 
             VerticalLayout {
-                Text {
-                    font-size: 25px;
-                    text: "Song Name";
-                    color: Styles.font-color-light;
-                    TouchArea {
-                        clicked => {
+                width: 225px;
+                spacing: UAppTheme.spacing-medium;
+                UTitle {
+                    level: 4;
+                    // width: parent.width;
+                    overflow: elide;
+                    text: MprisState.title;
+                    horizontal-alignment: center;
+                }
+
+                HorizontalLayout {
+                    UCenter {
+                        UText {
+                            width: 90px;
+                            overflow: elide;
+                            text: MprisState.artist;
                         }
                     }
-                }
 
-                HorizontalLayout {
-                    spacing: 10px;
-                    Text {
-                        font-size: 15px;
-                        color: Styles.font-color-light;
-                        text: "Artist Name";
-                    }
-
-                    Text {
-                        color: Styles.font-color-light;
-                        font-size: 15px;
-                        text: "Artist Name";
+                    UText {
+                        width: 90px;
+                        overflow: elide;
+                        text: MprisState.album;
                     }
                 }
+            }
+        }
 
-                HorizontalLayout {
-                    spacing: 10px;
-                    alignment: LayoutAlignment.space-between;
-                    GeneralButton {
-                        button-width: 30px;
-                        icon: @image-url("../assets/mpris/skip-back.svg");
-                        button-rad: 10px;
-                    }
+        HorizontalLayout {
+            alignment: space-between;
+            spacing: UAppTheme.spacing-medium;
+            UIconButton {
+                variant: primary;
+                icon: @image-url("../assets/sleek/filled/step-backward.svg");
+            }
 
-                    GeneralButton {
-                        button-width: 30px;
-                        icon: @image-url("../assets/mpris/replay-10-line.svg");
-                        button-rad: 10px;
-                    }
+            UIconButton {
+                icon: @image-url("../assets/sleek/outlined/left.svg");
+            }
 
-                    GeneralButton {
-                        button-width: 30px;
-                        icon: @image-url("../assets/mpris/play.svg");
-                        button-rad: 10px;
-                    }
+            UIconButton {
+                icon: @image-url("../assets/sleek/filled/pause-circle.svg");
+            }
 
-                    GeneralButton {
-                        button-width: 30px;
-                        icon: @image-url("../assets/mpris/forward-10-line.svg");
-                        button-rad: 10px;
-                    }
-
-                    GeneralButton {
-                        button-width: 30px;
-                        icon: @image-url("../assets/mpris/skip-forward.svg");
-                        button-rad: 10px;
-                    }
+            UCenter {
+                ULinearProgress {
+                    width: 120px;
+                    horizontal-stretch: 1;
+                    progress: 40%;
                 }
+            }
+
+            UIconButton {
+                icon: @image-url("../assets/sleek/outlined/right.svg");
+                clicked => {
+                }
+            }
+
+            UIconButton {
+                variant: primary;
+                icon: @image-url("../assets/sleek/filled/step-forward.svg");
             }
         }
     }

@@ -21,7 +21,9 @@ import {
     UIconButton,
     UText,
     UIcon,
+    ULinearProgress,
     UCard,
+    USlider,
 } from "@sleek/widgets.slint";
 import { UAppTheme } from "@sleek/app-theme.slint";
 import { Styles } from "styles.slint";
@@ -47,6 +49,7 @@ import {
 import { UTitle } from "@sleek/widgets/title.slint";
 import { UCode } from "@sleek/widgets/code.slint";
 import { USwitch } from "@sleek/widgets/switch.slint";
+export { MprisState } from "mpris.slint";
 
 export global MenuState {
     callback power-menu() -> bool;
@@ -55,7 +58,13 @@ export global MenuState {
 
 export global MainState {
     pure callback get_time() -> string;
-    pure callback is-light-theme() -> bool;
+    pure public function is-light-theme() -> bool {
+        if Palette.color-scheme == ColorScheme.light {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 export component Menu inherits Window {
@@ -162,6 +171,78 @@ export component Menu inherits Window {
                             switch: false;
                             icon-on: @image-url("../assets/sleek/filled/bluetooth-on.svg");
                             icon-off: @image-url("../assets/sleek/filled/bluetooth-off.svg");
+                        }
+                    }
+                }
+
+                Mpris { }
+
+                UCard {
+                    width: parent.width - 2 * UAppTheme.spacing-medium;
+                    VerticalLayout {
+                        padding: UAppTheme.padding-big;
+                        spacing: UAppTheme.spacing-big;
+                        padding-left: UAppTheme.padding-big;
+                        HorizontalLayout {
+                            spacing: UAppTheme.spacing-bigger;
+                            width: parent.width - 2 * UAppTheme.spacing-big;
+                            height: 20px;
+                            UIcon {
+                                width: 25px;
+                                image-fit: cover;
+                                source: @image-url("../assets/sleek/filled/sound.svg");
+                            }
+
+                            USlider {
+                                width: parent.width - 25px - 2 * UAppTheme.spacing-medium;
+                            }
+                        }
+
+                        HorizontalLayout {
+                            spacing: UAppTheme.spacing-bigger;
+                            width: parent.width - 2 * UAppTheme.spacing-big;
+                            height: 20px;
+                            UIcon {
+                                width: 25px;
+                                image-fit: cover;
+                                source: @image-url("../assets/sleek/filled/sun.svg");
+                            }
+
+                            USlider {
+                                width: parent.width - 25px - 2 * UAppTheme.spacing-medium;
+                            }
+                        }
+
+                        HorizontalLayout {
+                            spacing: UAppTheme.spacing-bigger;
+                            width: parent.width - 2 * UAppTheme.spacing-big;
+                            height: 20px;
+                            UIcon {
+                                width: 25px;
+                                image-fit: cover;
+                                source: @image-url("../assets/sleek/outlined/mic-on.svg");
+                            }
+
+                            USlider {
+                                width: parent.width - 25px - 2 * UAppTheme.spacing-medium;
+                            }
+                        }
+                    }
+                }
+
+                UCard {
+                    width: parent.width - 2 * UAppTheme.padding-medium;
+                    VerticalLayout {
+                        padding: UAppTheme.padding-big;
+                        alignment: space-between;
+                        ULinearProgress {
+                            width: parent.width - 2 * UAppTheme.padding-big;
+                            progress: 50%;
+                        }
+
+                        ULinearProgress {
+                            width: parent.width - 2 * UAppTheme.padding-big;
+                            progress: 50%;
                         }
                     }
                 }

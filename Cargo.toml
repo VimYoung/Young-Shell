@@ -1,10 +1,12 @@
 [package]
 name = "young-shell"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 
 [dependencies]
 anyhow = "1.0.99"
+image = "0.25.9"
+imageproc = "0.26.0"
 slint = { version = "1.14.1", features = ["live-preview", "renderer-software"] }
 spell-framework = { path = "../Spell/spell-framework/" }
 # spell-framework = { version = "0.1.4", git = "https://github.com/VimYoung/Spell/" }
