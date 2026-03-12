@@ -20,12 +20,20 @@ export global MprisState {
     pure callback prev-track();
     pure callback next-track();
     pure callback play-pause();
+    pure callback is-playing() -> bool;
 }
 
 export component Mpris inherits Rectangle {
     border-radius: UAppTheme.radius-medium;
+    property <bool> play: MprisState.is-playing();
+    property <percent> song <=> MprisState.progress;
     height: 110px;
     clip: true;
+
+    changed song => {
+        song-progress.progress = self.song;
+    }
+
     Timer {
         running: true;
         interval: 3s;
@@ -91,21 +99,35 @@ export component Mpris inherits Rectangle {
             spacing: UAppTheme.spacing-medium;
             UIconButton {
                 variant: primary;
+                clicked => {
+                    MprisState.prev-track();
+                }
                 icon: @image-url("../assets/sleek/filled/step-backward.svg");
             }
 
             UIconButton {
+                clicked => {
+                    MprisState.backward();
+                }
                 icon: @image-url("../assets/sleek/outlined/left.svg");
             }
 
             UIconButton {
+                clicked => {
+                    if root.play {
+                        play = false;
+                    } else {
+                        play = true;
+                    }
+                    MprisState.play-pause();
+                }
                 icon: @image-url("../assets/sleek/filled/pause-circle.svg");
             }
 
             Rectangle {
                 width: 120px;
                 horizontal-stretch: 1;
-                ULinearProgress {
+                song-progress := ULinearProgress {
                     width: parent.width;
                     progress: 40%;
                 }
@@ -114,11 +136,15 @@ export component Mpris inherits Rectangle {
             UIconButton {
                 icon: @image-url("../assets/sleek/outlined/right.svg");
                 clicked => {
+                    MprisState.forward();
                 }
             }
 
             UIconButton {
                 variant: primary;
+                clicked => {
+                    MprisState.next-track();
+                }
                 icon: @image-url("../assets/sleek/filled/step-forward.svg");
             }
         }

@@ -1,7 +1,3 @@
-// import "../fonts/Orbitron-Regular.ttf";
-// import "../fonts/DS-DIGII.ttf";
-// import "../fonts/SourceCodePro-VariableFont_wght.ttf";
-// import "../fonts/CascadiaCode-VariableFont_wght.ttf";
 import {
     Button,
     VerticalBox,
@@ -56,6 +52,8 @@ export global MainState {
     in-out property <int> vol;
     in-out property <int> mic;
     in property <int> brightness;
+    in property <percent> cpu;
+    in property <percent> disk;
     pure callback get-time();
     pure callback get-date();
     pure callback get-volume();
@@ -64,6 +62,8 @@ export global MainState {
     pure callback set-mic(int);
     pure callback get-bright();
     pure callback set-bright(int);
+    pure callback get-disk();
+    pure callback get-cpu();
     pure public function is-light-theme() -> bool {
         if Palette.color-scheme == ColorScheme.light {
             return true;
@@ -78,6 +78,17 @@ export component Menu inherits Window {
     property <int> volume <=> MainState.vol;
     property <int> mic <=> MainState.mic;
     property <int> bright <=> MainState.brightness;
+    property <percent> cpu <=> MainState.cpu;
+    property <percent> disk <=> MainState.disk;
+    callback power-action(string);
+
+    changed cpu => {
+        cpu-bar.progress = self.cpu;
+    }
+
+    changed disk => {
+        disk-bar.progress = self.disk;
+    }
     changed mic => {
         mic-slider.value = self.mic;
     }
@@ -105,9 +116,11 @@ export component Menu inherits Window {
             MainState.get-volume();
             MainState.get-mic();
             MainState.get-bright();
+            MainState.get-cpu();
             if first-run {
                 first-run = false;
                 MainState.get-date();
+                MainState.get-disk();
             }
         }
     }
@@ -117,6 +130,7 @@ export component Menu inherits Window {
         interval: 3600s;
         triggered => {
             MainState.get-date();
+            MainState.get-disk();
         }
     }
 
@@ -291,16 +305,38 @@ export component Menu inherits Window {
                 UCard {
                     width: parent.width - 2 * UAppTheme.padding-medium;
                     VerticalLayout {
-                        padding: UAppTheme.padding-big;
+                        padding: UAppTheme.padding-medium;
                         alignment: space-between;
-                        ULinearProgress {
-                            width: parent.width - 2 * UAppTheme.padding-big;
-                            progress: 50%;
+                        HorizontalLayout {
+                            spacing: UAppTheme.spacing-medium;
+                            UIcon {
+                                vertical-alignment: ImageVerticalAlignment.top;
+                                source: @image-url("../assets/sleek/filled/cpu.svg");
+                            }
+
+                            Rectangle {
+                                width: parent.width - 2 * UAppTheme.padding-big;
+                                cpu-bar := ULinearProgress {
+                                    width: parent.width;
+                                    progress: 50%;
+                                }
+                            }
                         }
 
-                        ULinearProgress {
-                            width: parent.width - 2 * UAppTheme.padding-big;
-                            progress: 50%;
+                        HorizontalLayout {
+                            spacing: UAppTheme.spacing-medium;
+                            UIcon {
+                                vertical-alignment: ImageVerticalAlignment.top;
+                                source: @image-url("../assets/sleek/filled/disk.svg");
+                            }
+
+                            Rectangle {
+                                width: parent.width - 2 * UAppTheme.padding-big;
+                                disk-bar := ULinearProgress {
+                                    width: parent.width;
+                                    progress: 50%;
+                                }
+                            }
                         }
                     }
                 }
@@ -335,7 +371,7 @@ export component Menu inherits Window {
                     variant: primary;
                     icon: @image-url("../assets/sleek/outlined/poweroff.svg");
                     clicked => {
-                        root.set_dark_theme();
+                        root.power-action("poweroff");
                     }
                 }
 
@@ -346,7 +382,7 @@ export component Menu inherits Window {
                     variant: primary;
                     icon: @image-url("../assets/sleek/outlined/moon.svg");
                     clicked => {
-                        root.set_dark_theme();
+                        root.power-action("sleep");
                     }
                 }
 
@@ -357,7 +393,7 @@ export component Menu inherits Window {
                     variant: primary;
                     icon: @image-url("../assets/sleek/outlined/logout.svg");
                     clicked => {
-                        root.set_dark_theme();
+                        root.power-action("logout");
                     }
                 }
 
@@ -368,17 +404,12 @@ export component Menu inherits Window {
                     variant: primary;
                     icon: @image-url("../assets/sleek/outlined/lock.svg");
                     clicked => {
-                        root.set_light_theme();
+                        root.power-action("lock");
                     }
                 }
             }
         }
     }
-}
-
-export global Rice {
-    pure callback call_pavucontrol();
-    pure callback get_volume() -> string;
 }
 
 export component TopBar inherits Window {
@@ -716,99 +747,6 @@ export component HideWin inherits Window {
         clicked => {
             root.request-hide();
         }
-    }
-}
-
-export component ScrollEx inherits Window {
-    height: 35px;
-    width: 1366px;
-    background: Styles.dark-background;
-    Rectangle {
-        x: 5px;
-        width: 20px;
-        Image {
-            width: 18px;
-            source: @image-url("../assets/icons/artixlinux.svg");
-            colorize: white;
-        }
-    }
-
-    Rectangle {
-        x: 30px;
-        y: 0px;
-        width: 495px;
-        background: Styles.dark-background;
-        // border-radius: 10px;
-        // clip: true;
-        // background: pink;
-        LineEdit {
-            width: parent.width;
-            height: 25px;
-            x: 5px;
-            placeholder-text: "Search Apps..";
-        }
-
-        animate y {
-            easing: ease-in-out-back;
-            duration: 500ms;
-        }
-    }
-
-    Rectangle {
-        x: 535px;
-        y: 0px;
-        width: root.width - 600px;
-        ScrollView {
-            width: parent.width;
-            viewport-width: 800px;
-            HorizontalLayout {
-                padding: 2px;
-                spacing: 5px;
-                alignment: LayoutAlignment.stretch;
-                SearchButton {
-                    place_no: 1;
-                    text_value: "Apps";
-                }
-
-                SearchButton {
-                    place_no: 2;
-                    text_value: "Clipboard";
-                }
-
-                SearchButton {
-                    place_no: 3;
-                    text_value: "Wifi";
-                }
-
-                SearchButton {
-                    place_no: 4;
-                    text_value: "Bluetooth";
-                }
-
-                SearchButton {
-                    place_no: 4;
-                    text_value: "Walls";
-                }
-
-                SearchButton {
-                    place_no: 4;
-                    text_value: "Color Picker";
-                }
-
-                SearchButton {
-                    place_no: 4;
-                    text_value: "Emojis";
-                }
-            }
-        }
-    }
-
-    Text {
-        x: root.width - 57px;
-        horizontal-alignment: TextHorizontalAlignment.center;
-        vertical-alignment: TextVerticalAlignment.center;
-        text: "04:16 PM";
-        color: Styles.font-color-light;
     }
 }
 
