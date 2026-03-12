@@ -36,7 +36,17 @@ export component UInputNumber inherits Rectangle {
     border-radius: UAppTheme.radius-base;
     border-color: UAppTheme.border;
     background: UAppTheme.bg-elevated;
+    preferred-width: 150px;
     clip: true;
+    init => {
+        if enable-min-max {
+            if value < min-value {
+                value = min-value;
+            } else if value > max-value {
+                value = max-value;
+            }
+        }
+    }
     HorizontalLayout {
         width: root.width;
         HorizontalLayout {
@@ -46,8 +56,8 @@ export component UInputNumber inherits Rectangle {
                 height: UAppTheme.font-size-base + UAppTheme.padding-vertical * 3;
                 clip: true;
                 input := TextInput {
-                    property <length> h-padding: UAppTheme.padding-horizontal / 2 * 2;
-                    property <length> computed_x;
+                    private property <length> h-padding: UAppTheme.padding-horizontal / 2 * 2;
+                    private property <length> computed_x;
                     text: root.value;
                     width: max(parent.width, self.preferred-width);
                     x: min(computed_x, 0px);

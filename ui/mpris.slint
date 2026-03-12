@@ -2,16 +2,14 @@ import { Styles } from "styles.slint";
 import { GeneralButton } from "buttons.slint";
 import { UAppTheme } from "@sleek/app-theme.slint";
 import { UText, UIconButton, UTitle } from "@sleek/widgets.slint";
-import { UDefaultStyle } from "@sleek/styling/default-style.slint";
 import { HorizontalBox, VerticalBox } from "std-widgets.slint";
 import { ULinearProgress } from "@sleek/widgets/linear-progress.slint";
 import { UButton } from "@sleek/widgets/button/button.slint";
-import { UCenter } from "@sleek/layouts/center.slint";
 
 export global MprisState {
     in-out property <string> title: "NoTitle";
-    in-out property <string> artist;
-    in-out property <string> album;
+    in-out property <string> artist: "Unknown";
+    in-out property <string> album: "Unknown";
     in-out property <image> song-poster: @image-url("../assets/nomusic.png");
     in-out property <image> song-poster-blur: @image-url("../assets/nomusic-blur.png");
     in-out property <percent> progress;
@@ -30,7 +28,7 @@ export component Mpris inherits Rectangle {
     clip: true;
     Timer {
         running: true;
-        interval: 1s;
+        interval: 3s;
         triggered => {
             MprisState.refresh-mpris();
         }
@@ -71,12 +69,11 @@ export component Mpris inherits Rectangle {
                 }
 
                 HorizontalLayout {
-                    UCenter {
-                        UText {
-                            width: 90px;
-                            overflow: elide;
-                            text: MprisState.artist;
-                        }
+                    UText {
+                        horizontal-alignment: center;
+                        width: 90px;
+                        overflow: elide;
+                        text: MprisState.artist;
                     }
 
                     UText {
@@ -90,6 +87,7 @@ export component Mpris inherits Rectangle {
 
         HorizontalLayout {
             alignment: space-between;
+            horizontal-stretch: 1;
             spacing: UAppTheme.spacing-medium;
             UIconButton {
                 variant: primary;
@@ -104,10 +102,11 @@ export component Mpris inherits Rectangle {
                 icon: @image-url("../assets/sleek/filled/pause-circle.svg");
             }
 
-            UCenter {
+            Rectangle {
+                width: 120px;
+                horizontal-stretch: 1;
                 ULinearProgress {
-                    width: 120px;
-                    horizontal-stretch: 1;
+                    width: parent.width;
                     progress: 40%;
                 }
             }

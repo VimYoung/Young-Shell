@@ -10,7 +10,6 @@ import {
 } from "buttons.slint";
 import { AppLineData, WifiLineData } from "data_structures.slint";
 import { UCard, USwitch, UIcon } from "@sleek/widgets.slint";
-import { UCenter } from "@sleek/layouts/center.slint";
 export component GeneralCard inherits UCard {
     in-out property <bool> switch:false;
     in property <image> icon-on;
@@ -23,7 +22,7 @@ export component GeneralCard inherits UCard {
             source: switch ? icon-on : icon-off;
         }
 
-        UCenter {
+        Rectangle {
             USwitch {
                 checked: switch;
             }

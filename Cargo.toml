@@ -5,6 +5,7 @@ edition = "2024"
 
 [dependencies]
 anyhow = "1.0.99"
+chrono = "0.4.44"
 image = "0.25.9"
 imageproc = "0.26.0"
 slint = { version = "1.14.1", features = ["live-preview", "renderer-software"] }

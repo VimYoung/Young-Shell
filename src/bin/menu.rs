@@ -1,3 +1,4 @@
+use chrono::Local;
 use image::{imageops::crop_imm, open};
 use imageproc::filter::gaussian_blur_f32;
 use slint::{ComponentHandle, Image, SharedString};
@@ -6,10 +7,10 @@ use spell_framework::{
     layer_properties::{BoardType, LayerAnchor, LayerType, WindowConf},
     vault::mpris::PlayerFinder,
 };
-use std::fs;
 use std::{
     env,
     error::Error,
+    fs,
     path::{Path, PathBuf},
 };
 slint::include_modules!();
@@ -102,15 +103,123 @@ fn main() -> Result<(), Box<dyn Error>> {
             }
         }
     });
+    menu.global::<MainState>().on_get_time({
+        let menu_handle = menu.as_weak();
+        move || {
+            let now = Local::now();
+            let time = now.format("%I:%M %p").to_string();
+            menu_handle
+                .unwrap()
+                .global::<MainState>()
+                .set_time(SharedString::from(time));
+        }
+    });
+
+    menu.global::<MainState>().on_get_date({
+        let menu_handle = menu.as_weak();
+        move || {
+            let now = Local::now();
+            let date = now.format("%A %d, %b").to_string();
+            menu_handle
+                .unwrap()
+                .global::<MainState>()
+                .set_date(SharedString::from(date));
+        }
+    });
+
+    menu.global::<MainState>().on_get_volume({
+        let menu_handle = menu.as_weak();
+        move || {
+            let output = std::process::Command::new("pactl")
+                .args(["get-sink-volume", "@DEFAULT_SINK@"])
+                .output()
+                .unwrap();
+
+            let text = String::from_utf8_lossy(&output.stdout);
+            let vol = text
+                .split_whitespace()
+                .find(|s| s.ends_with('%'))
+                .unwrap()
+                .trim_end_matches('%')
+                .trim();
+            let volume_int = vol.parse::<i32>().unwrap();
+            menu_handle
+                .unwrap()
+                .global::<MainState>()
+                .set_vol(volume_int);
+            // println!("Input text value {}", vol);
+        }
+    });
+
+    menu.global::<MainState>().on_set_volume(move |volume_val| {
+        std::process::Command::new("pactl")
+            .args([
+                "set-sink-volume",
+                "@DEFAULT_SINK@",
+                &format!("{}%", volume_val),
+            ])
+            .status()
+            .unwrap();
+    });
+
+    menu.global::<MainState>().on_get_mic({
+        let menu_handle = menu.as_weak();
+        move || {
+            let output = std::process::Command::new("pactl")
+                .args(["get-source-volume", "@DEFAULT_SOURCE@"])
+                .output()
+                .unwrap();
+
+            let text = String::from_utf8_lossy(&output.stdout);
+            let mic = text
+                .split_whitespace()
+                .find(|s| s.ends_with('%'))
+                .unwrap()
+                .trim_end_matches('%')
+                .trim();
+            let mic_int = mic.parse::<i32>().unwrap();
+            menu_handle.unwrap().global::<MainState>().set_mic(mic_int);
+            // println!("Input text value {}", vol);
+        }
+    });
+
+    menu.global::<MainState>().on_set_mic(move |mic_val| {
+        std::process::Command::new("pactl")
+            .args([
+                "set-source-volume",
+                "@DEFAULT_SOURCE@",
+                &format!("{}%", mic_val),
+            ])
+            .status()
+            .unwrap();
+    });
+
+    menu.global::<MainState>().on_get_bright({
+        let menu_handle = menu.as_weak();
+        move || {
+            let output = std::process::Command::new("sh")
+                .args(["-c", "brightnessctl -m | cut -d, -f4"])
+                .output()
+                .unwrap();
+
+            let text = String::from_utf8_lossy(&output.stdout);
+            let bright = text.trim().trim_end_matches('%');
+            let bright_int = bright.parse::<i32>().unwrap();
+            menu_handle
+                .unwrap()
+                .global::<MainState>()
+                .set_brightness(bright_int);
+        }
+    });
+
+    menu.global::<MainState>().on_set_bright(move |bright_val| {
+        std::process::Command::new("brightnessctl")
+            .args(["set", &format!("{}%", bright_val)])
+            .status()
+            .unwrap();
+    });
+
     menu.invoke_set_dark_theme();
-    // ui.on_request_increase_value({
-    //     let ui_handle = ui.as_weak();
-    //     move || {
-    //         let ui = ui_handle.unwrap();
-    //         ui.set_counter(ui.get_counter() + 1);
-    //     }
-    // });
-    //
     cast_spell!(menu)
 }
 

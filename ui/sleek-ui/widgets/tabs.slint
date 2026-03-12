@@ -1,5 +1,4 @@
 import { UAppTheme } from "../app-theme.slint";
-import { UCenter } from "../layouts/center.slint";
 import { UText } from "text.slint";
 import { UDivider } from "divider.slint";
 import { ButtonInterface } from "button-interface.slint";
@@ -15,8 +14,8 @@ export component UTabs inherits Rectangle {
     in-out property <[string]> tabs;
     in-out property <int> current-index: 0;
     in-out property <TabsAlignmentType> tabs-alignement: start;
-    property <length> underline-x: 0px;
-    property <length> underline-width: 0px;
+    private property <length> underline-x: 0px;
+    private property <length> underline-width: 0px;
     VerticalLayout {
         alignment: start;
         HorizontalLayout {
@@ -29,7 +28,7 @@ export component UTabs inherits Rectangle {
                     underline-width = self.width;
                 }
                 border-color: UAppTheme.focus-color;
-                border-width: self.has-focus ? UAppTheme.focus-border-width : 0px;
+                border-width: self.has-tab-focus ? UAppTheme.focus-border-width : 0px;
                 border-radius: UAppTheme.radius-base;
                 VerticalLayout {
                     HorizontalLayout {
@@ -76,7 +75,7 @@ export component UTabs inherits Rectangle {
 
             Rectangle {
                 width: underline-width;
-                height: 2px * UAppTheme.scale-factor;
+                height: 2px;
                 x: underline-x;
                 background: UAppTheme.primary.base;
                 animate x, width { duration: UAppTheme.animation-duration; }

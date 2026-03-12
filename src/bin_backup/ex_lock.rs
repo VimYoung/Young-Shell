@@ -1,4 +1,4 @@
-use spell_framework::{cast_spell, };
+use spell_framework::cast_spell;
 use std::{env, error::Error, process::Command};
 
 use slint::{ComponentHandle, SharedString};

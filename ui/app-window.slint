@@ -1,7 +1,7 @@
-import "../fonts/Orbitron-Regular.ttf";
-import "../fonts/DS-DIGII.ttf";
-import "../fonts/SourceCodePro-VariableFont_wght.ttf";
-import "../fonts/CascadiaCode-VariableFont_wght.ttf";
+// import "../fonts/Orbitron-Regular.ttf";
+// import "../fonts/DS-DIGII.ttf";
+// import "../fonts/SourceCodePro-VariableFont_wght.ttf";
+// import "../fonts/CascadiaCode-VariableFont_wght.ttf";
 import {
     Button,
     VerticalBox,
@@ -16,7 +16,6 @@ import {
 import {
     UButton,
     UDivider,
-    UCenter,
     UButton,
     UIconButton,
     UText,
@@ -51,13 +50,20 @@ import { UCode } from "@sleek/widgets/code.slint";
 import { USwitch } from "@sleek/widgets/switch.slint";
 export { MprisState } from "mpris.slint";
 
-export global MenuState {
-    callback power-menu() -> bool;
-    callback set-power-menu(bool);
-}
-
 export global MainState {
-    pure callback get_time() -> string;
+    in-out property <string> time;
+    in-out property <string> date;
+    in-out property <int> vol;
+    in-out property <int> mic;
+    in property <int> brightness;
+    pure callback get-time();
+    pure callback get-date();
+    pure callback get-volume();
+    pure callback set-volume(int);
+    pure callback get-mic();
+    pure callback set-mic(int);
+    pure callback get-bright();
+    pure callback set-bright(int);
     pure public function is-light-theme() -> bool {
         if Palette.color-scheme == ColorScheme.light {
             return true;
@@ -68,6 +74,19 @@ export global MainState {
 }
 
 export component Menu inherits Window {
+    out property <bool> first-run: true;
+    property <int> volume <=> MainState.vol;
+    property <int> mic <=> MainState.mic;
+    property <int> bright <=> MainState.brightness;
+    changed mic => {
+        mic-slider.value = self.mic;
+    }
+    changed volume => {
+        vol-slider.value = self.volume;
+    }
+    changed bright => {
+        bright-slider.value = self.bright;
+    }
     width: 376px;
     height: 576px;
     background: transparent;
@@ -77,6 +96,30 @@ export component Menu inherits Window {
     public function set_light_theme() {
         Palette.color-scheme = ColorScheme.light;
     }
+
+    Timer {
+        running: true;
+        interval: 1s;
+        triggered => {
+            MainState.get-time();
+            MainState.get-volume();
+            MainState.get-mic();
+            MainState.get-bright();
+            if first-run {
+                first-run = false;
+                MainState.get-date();
+            }
+        }
+    }
+
+    Timer {
+        running: true;
+        interval: 3600s;
+        triggered => {
+            MainState.get-date();
+        }
+    }
+
     Rectangle {
         clip: true;
         border-radius: UAppTheme.radius-medium;
@@ -100,7 +143,7 @@ export component Menu inherits Window {
                     UDivider {
                         width: parent.width - 2 * UAppTheme.padding-medium;
                         height: 7px;
-                        border-color: UAppTheme.bg-inverse;
+                        border-color: UAppTheme.bg-spotlight;
                     }
                 }
 
@@ -113,12 +156,12 @@ export component Menu inherits Window {
                             spacing: UAppTheme.spacing-base;
                             alignment: start;
                             UText {
-                                text: "Some Texr";
+                                text: MainState.time;
                                 font-size: UAppTheme.font-size-bigger;
                             }
 
                             UText {
-                                text: "Some Tex";
+                                text: MainState.date;
                                 font-size: UAppTheme.font-size-bigger;
                             }
                         }
@@ -193,8 +236,13 @@ export component Menu inherits Window {
                                 source: @image-url("../assets/sleek/filled/sound.svg");
                             }
 
-                            USlider {
+                            vol-slider := USlider {
+                                min-value: 0;
+                                max-value: 120;
                                 width: parent.width - 25px - 2 * UAppTheme.spacing-medium;
+                                released(val) => {
+                                    MainState.set-volume(val);
+                                }
                             }
                         }
 
@@ -208,8 +256,13 @@ export component Menu inherits Window {
                                 source: @image-url("../assets/sleek/filled/sun.svg");
                             }
 
-                            USlider {
+                            bright-slider := USlider {
+                                min-value: 0;
+                                max-value: 100;
                                 width: parent.width - 25px - 2 * UAppTheme.spacing-medium;
+                                released(val) => {
+                                    MainState.set-bright(val);
+                                }
                             }
                         }
 
@@ -223,8 +276,13 @@ export component Menu inherits Window {
                                 source: @image-url("../assets/sleek/outlined/mic-on.svg");
                             }
 
-                            USlider {
+                            mic-slider := USlider {
+                                min-value: 0;
+                                max-value: 120;
                                 width: parent.width - 25px - 2 * UAppTheme.spacing-medium;
+                                released(val) => {
+                                    MainState.set-mic(val);
+                                }
                             }
                         }
                     }
@@ -251,14 +309,15 @@ export component Menu inherits Window {
 
         power-menu := Rectangle {
             x: 0px;
-            background: UAppTheme.bg-inverse;
+            background: UAppTheme.bg-spotlight;
             width: 50px;
             Rectangle {
                 clip: true;
-                border-radius: UAppTheme.radius-round;
+                y: UAppTheme.padding-medium;
+                border-radius: UAppTheme.radius-medium;
+                height: 50px;
+                width: parent.width - 2 * UAppTheme.padding-medium;
                 Image {
-                    y: UAppTheme.padding-medium;
-                    width: parent.width - 2 * UAppTheme.padding-medium;
                     height: 50px;
                     source: @image-url("../assets/logo_dark.png");
                 }
@@ -328,7 +387,6 @@ export component TopBar inherits Window {
     callback open-app(string);
     callback query-applications(string);
     callback set-wallpaper(image);
-    in-out property <string> time_var: MainState.get_time();
     in-out property <BarState> state: { is_search_on: false };
     in-out property <bool> walls_open: false;
     in property <[image]> walls_paths;
@@ -617,7 +675,7 @@ export component TopBar inherits Window {
                     y: 3px;
                     horizontal-alignment: TextHorizontalAlignment.center;
                     vertical-alignment: TextVerticalAlignment.center;
-                    text: time_var;
+                    text: MainState.time;
                     color: Styles.font-color-light;
                     font-size: 20px;
                 }
