@@ -8,8 +8,17 @@ import {
     BlueButton,
     BlueButtonConnected,
 } from "buttons.slint";
-import { AppLineData, WifiLineData } from "data_structures.slint";
-import { UCard, USwitch, UIcon } from "@sleek/widgets.slint";
+import {
+    AppLineData,
+    WifiLineData,
+    SelectedSection,
+} from "data_structures.slint";
+import { UCard, USwitch, UIcon, UTitle } from "@sleek/widgets.slint";
+import { UAppTheme } from "@sleek/app-theme.slint";
+import { UText } from "@sleek/widgets/text.slint";
+import { UScrollView } from "@sleek/widgets/scrollview.slint";
+import { UDarkColors } from "@sleek/colors.slint";
+
 export component GeneralCard inherits UCard {
     in-out property <bool> switch:false;
     in property <image> icon-on;
@@ -42,48 +51,104 @@ export component GeneralCard inherits UCard {
     }
 }
 
-export component SystemInfo {
-    property <int> progress: 30;
-    in property <string> info-name;
-    VerticalLayout {
-        alignment: LayoutAlignment.stretch;
-        spacing: Styles.padding;
-        Text {
-            text: info-name;
-            horizontal-alignment: TextHorizontalAlignment.center;
-        }
+export component OptionSection inherits Rectangle {
+    x: 10px;
+    border-bottom-left-radius: UAppTheme.radius-medium;
+    border-bottom-right-radius: UAppTheme.radius-medium;
+    background: UAppTheme.bg-container;
+    in-out property <SelectedSection> selection;
+    in-out property <[AppLineData]> app_lines;
+    in-out property <[string]> clip_lines;
+    in-out property <int> selected-content: 0;
+    changed selection => {
+        self.selected-content = 0;
+    }
 
-        Spinner {
-            min-height: 80px;
-            progress: progress;
+    callback set-app(int);
+    callback set-clip(int);
+    if selection == SelectedSection.Application: scroll := UScrollView {
+        VerticalLayout {
+            width: parent.width - 10px;
+            x: 0px;
+            padding: UAppTheme.padding-medium;
+            spacing: UAppTheme.spacing-medium;
+            padding-right: scroll.scrollbar-area;
+            for app[i] in app_lines: UCard {
+                border-width: 10px;
+                height: 40px;
+                background: i == selected-content ? (handle.has-hover ? UAppTheme.bg-container : UAppTheme.bg-spotlight) : (handle.has-hover ? UAppTheme.bg-container : UAppTheme.bg-elevated);
+                HorizontalLayout {
+                    padding: UAppTheme.padding-medium;
+                    spacing: UAppTheme.spacing-big;
+                    Rectangle {
+                        width: self.height;
+                        clip: true;
+                        border-radius: UAppTheme.radius-circle;
+                        Image {
+                            width: parent.height;
+                            image-fit: ImageFit.fill;
+                            source: app.image;
+                        }
+                    }
+
+                    UTitle {
+                        level: 4;
+                        vertical-alignment: center;
+                        text: app.name;
+                    }
+                }
+
+                handle := TouchArea {
+                    clicked => {
+                        set-app(i);
+                    }
+                }
+
+                animate background { duration: UAppTheme.animation-duration; }
+            }
         }
     }
-}
 
-export component GeneralSlider {
-    property <bool> enable: true;
-    property <int> value: 50;
-    in property <image> icon: @image-url("../assets/icons/volume.svg");
-    in property <image> icon-closed: @image-url("../assets/icons/mute.svg");
+    if selection == SelectedSection.Clipboard: scroll2 := UScrollView {
+        VerticalLayout {
+            width: parent.width - 10px;
+            x: 0px;
+            padding: UAppTheme.padding-medium;
+            spacing: UAppTheme.spacing-medium;
+            padding-right: scroll2.scrollbar-area;
+            for clip[i] in clip_lines: UCard {
+                border-width: 10px;
+                height: 40px;
+                background: i == selected-content ? (clip-handle.has-hover ? UAppTheme.bg-container : UAppTheme.bg-spotlight) : (clip-handle.has-hover ? UAppTheme.bg-container : UAppTheme.bg-elevated);
+                UTitle {
+                    level: 4;
+                    x: UAppTheme.padding-medium;
+                    width: parent.width - UAppTheme.padding-medium;
+                    height: parent.height;
+                    vertical-alignment: center;
+                    horizontal-alignment: left;
+                    text: clip;
+                }
 
-    HorizontalLayout {
-        spacing: Styles.padding;
-        Rectangle {
-            Image {
-                colorize: Styles.font-color-light;
-                source: enable ? icon : icon-closed;
+                clip-handle := TouchArea {
+                    clicked => {
+                        set-clip(i);
+                    }
+                }
+
+                animate background { duration: UAppTheme.animation-duration; }
             }
         }
+    }
 
-        Slider {
-            enabled: enable;
-            value: 23;
-            orientation: horizontal;
-            changed(value) => {
-            }
-            released(value) => {
-            }
-        }
+    if selection == SelectedSection.Wifi: UText {
+        text: "Wifi selected";
+    }
+    if selection == SelectedSection.Bluetooth: UText {
+        text: "Bluetooth selected";
+    }
+    if selection == SelectedSection.Emoji: UText {
+        text: "Emoji selected";
     }
 }
 

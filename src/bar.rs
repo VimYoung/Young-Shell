@@ -1,6 +1,6 @@
 use std::{env, path::Path, process::Command, rc::Rc, thread};
 
-use crate::{AppLineData, BarState, TopBarSpell};
+use crate::TopBarSpell;
 use slint::{ComponentHandle, Image};
 use spell_framework::{vault::AppSelector, wayland_adapter::WinHandle};
 

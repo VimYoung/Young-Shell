@@ -1,14 +1,30 @@
+
+export enum SelectedSection {
+    Application,
+    Clipboard,
+    Wifi,
+    Bluetooth,
+    WallPaper,
+    Emoji
+}
 export struct AppLineData {
     image: image,
     name: string,
     action: string,
 }
 
+export enum ConnectionStatus {
+    Connected,
+    Known,
+    Unknown,
+    Connecting,
+}
+
 export struct WifiLineData {
     name: string,
     strength: int,
     is-known: bool,
-    is-connected: bool,
+    connection-status: ConnectionStatus,
 }
 
 export struct SearchButtonData {
@@ -29,5 +45,3 @@ export struct State {
     string-type: string,
     cards-type: Cards,
 }
-
-

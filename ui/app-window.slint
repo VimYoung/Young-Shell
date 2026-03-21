@@ -19,10 +19,12 @@ import {
     ULinearProgress,
     UCard,
     USlider,
+    UInput,
 } from "@sleek/widgets.slint";
 import { UAppTheme } from "@sleek/app-theme.slint";
 import { Styles } from "styles.slint";
 import { Mpris } from "mpris.slint";
+import { OptionSection } from "menu.slint";
 import { WallpaperManager } from "wallpaper.slint";
 import {
     PowerMenuButton,
@@ -33,12 +35,13 @@ import {
     WorkspaceButton,
     BarButton,
 } from "buttons.slint";
-import { GeneralSlider, SystemInfo, AppViewer, GeneralCard } from "menu.slint";
+import { AppViewer, GeneralCard } from "menu.slint";
 import {
     AppLineData,
     Cards,
     State,
     SearchButtonData,
+    SelectedSection,
     BarState,
 } from "data_structures.slint";
 import { UTitle } from "@sleek/widgets/title.slint";
@@ -413,324 +416,291 @@ export component Menu inherits Window {
 }
 
 export component TopBar inherits Window {
-    callback request-menu-toggle();
-    callback walls_window_called();
-    callback open-app(string);
+    callback search-toggle(bool);
     callback query-applications(string);
-    callback set-wallpaper(image);
-    in-out property <BarState> state: { is_search_on: false };
-    in-out property <bool> walls_open: false;
-    in property <[image]> walls_paths;
-    in property <[image]> walls_light_paths;
-    in property <[AppLineData]> app_lines: [];
-    in property <[SearchButtonData]> topbar_buttons: [
-        { text_val: "Apps", place_no: 1 },
-        { text_val: "Clipboard", place_no: 2 },
-        { text_val: "Wifi", place_no: 3 },
-        { text_val: "Bluetooth", place_no: 4 },
-        { text_val: "Walls", place_no: 5 },
-        { text_val: "Color Picker", place_no: 6 },
-        { text_val: "Emjois", place_no: 7 }
-    ];
-
-    in property <[length]> positions: [27px, 114px, 195px, 168px, 141px, 54px, 27px];
-    in property <[length]> width-bar: [80px, 20px, 20px, 20px, 80px, 20px, 20px];
-    in property <[string]> bar-text: [Rice.get_volume(), "", "h", "", "", "", ""];
-    property <int> which-selected: 1;
-    property <int> app_selected_no: 1;
+    callback query-clipboard(string);
+    callback open-app(string);
+    callback set-clip(string);
+    property <bool> search-active: true;
+    property <SelectedSection> selected: Application;
+    pure function selected-string(selection: SelectedSection) -> string {
+        if selection == SelectedSection.Application {
+            return "Applications";
+        } else if selection == SelectedSection.Clipboard {
+            return "Clipboard";
+        } else if selection == SelectedSection.Wifi {
+            return "Wifi";
+        } else if selection == SelectedSection.Bluetooth {
+            return "Bluetooth";
+        } else if selection == SelectedSection.WallPaper {
+            return "Wallpapers";
+        } else if selection == SelectedSection.Emoji {
+            return "Emojis";
+        } else {
+            return "";
+        }
+    }
+    function tab-selection(selection: SelectedSection) {
+        if selection == SelectedSection.Application {
+            root.selected = SelectedSection.Clipboard;
+        } else if selection == SelectedSection.Clipboard {
+            root.selected = SelectedSection.Wifi;
+        } else if selection == SelectedSection.Wifi {
+            root.selected = SelectedSection.Bluetooth;
+        } else if selection == SelectedSection.Bluetooth {
+            root.selected = SelectedSection.WallPaper;
+        } else if selection == SelectedSection.WallPaper {
+            root.selected = SelectedSection.Emoji;
+        } else if selection == SelectedSection.Emoji {
+            root.selected = SelectedSection.Application
+        }
+    }
+    function shift-tab-selection(selection: SelectedSection) {
+        if selection == SelectedSection.Application {
+            root.selected = SelectedSection.Emoji;
+        } else if selection == SelectedSection.Clipboard {
+            root.selected = SelectedSection.Application;
+        } else if selection == SelectedSection.Wifi {
+            root.selected = SelectedSection.Clipboard;
+        } else if selection == SelectedSection.Bluetooth {
+            root.selected = SelectedSection.Wifi;
+        } else if selection == SelectedSection.WallPaper {
+            root.selected = SelectedSection.Bluetooth;
+        } else if selection == SelectedSection.Emoji {
+            root.selected = SelectedSection.WallPaper;
+        }
+    }
+    changed search-active => {
+        // Changes the input region in wayland add backs the keyboard compatibility
+        search-toggle(search-active);
+        if root.search-active {
+            search-bar.grab-focus();
+        } else {
+            search-bar.remove-focus();
+            root.selected = SelectedSection.Application;
+        }
+    }
     background: transparent;
-    height: 610px;
     width: 1536px;
+    height: 610px;
+    in-out property <[AppLineData]> app_lines:[
+        {
+            image: @image-url("../assets/logo_dark.png"),
+            name: "Some Name1",
+            action :"Some Action"
+        },
+        {
+            image: @image-url("../assets/logo_dark.png"),
+            name: "Some Name2",
+            action :"Some Action"
+        },
+    ];
+    in-out property <[string]> clip_lines: ["clip1", "clip2"];
 
-    Rectangle {
-        x: 0px;
-        y: 29px;
-        height: 10px;
+    selection-section := Rectangle {
+        width: 435px;
+        height: 450px;
         background: transparent;
+        y: search-active ? 35px : -600px;
+
         Path {
-            x: 7px;
-            commands: "M 7 8 L 7 3 L 12 3 C 9 4 8 5 7 8";
-            stroke: black;
-            fill: black;
+            x: 0px;
+            y: 0px;
+            commands: "M 7 3 L 12 3 L 12 8 C 11 5 10 4 7 3";
+            stroke: UAppTheme.bg-container;
+            fill: UAppTheme.bg-container;
             width: 10px;
+            height: 10px;
+        }
+
+        option-window := OptionSection {
+            width: parent.width - 20px;
+            selection: root.selected;
+            app_lines: root.app_lines;
+            clip_lines: root.clip_lines;
+            set-app(val) => {
+                open-app(app_lines[val].name);
+            }
+            set-clip(val) => {
+                set-clip(clip_lines[val]);
+            }
         }
 
         Path {
-            x: 1538px;
-            commands: "M 7 3 L 12 3 L 12 8 C 11 5 10 4 7 3";
-            stroke: black;
-            fill: black;
+            x: parent.width - 10px;
+            y: 0px;
+            commands: "M 7 8 L 7 3 L 12 3 C 9 4 8 5 7 8";
+            stroke: UAppTheme.bg-container;
+            fill: UAppTheme.bg-container;
             width: 10px;
+            height: 10px;
+        }
+
+        animate y { duration: UAppTheme.animation-duration; }
+    }
+
+    bar-section := Rectangle {
+        height: 35px;
+        y: 0px;
+        clip: true;
+        background: UAppTheme.bg-container;
+        HorizontalLayout {
+            spacing: UAppTheme.spacing-small;
+            padding: UAppTheme.padding-base;
+            Rectangle {
+                width: 28px;
+                UIcon {
+                    source: @image-url("../assets/icons/artixlinux.svg");
+                    image-fit: ImageFit.contain;
+                }
+
+                icon-handle := TouchArea {
+                    mouse-cursor: MouseCursor.pointer;
+                    clicked => {
+                        search-active = !search-active;
+                    }
+                }
+            }
+
+            Rectangle {
+                search-section := Rectangle {
+                    y: search-active ? 0px : -35px;
+                    background: UAppTheme.bg-container;
+                    HorizontalLayout {
+                        spacing: UAppTheme.spacing-medium;
+                        alignment: LayoutAlignment.center;
+                        UButton {
+                            text: "Application";
+                            variant: selected == SelectedSection.Application ? primary : default;
+                            clicked => {
+                                selected = SelectedSection.Application;
+                            }
+                        }
+
+                        UButton {
+                            text: "Clipboard";
+                            variant: selected == SelectedSection.Clipboard ? primary : default;
+                            clicked => {
+                                selected = SelectedSection.Clipboard;
+                            }
+                        }
+
+                        UButton {
+                            text: "Wifi";
+                            variant: selected == SelectedSection.Wifi ? primary : default;
+                            clicked => {
+                                selected = SelectedSection.Wifi;
+                            }
+                        }
+
+                        search-bar := UInput {
+                            width: 300px;
+                            placeholder: "Search " + selected_string(selected) + "...";
+                            accepted => {
+                                if selected == SelectedSection.Application {
+                                    open-app(app_lines[option-window.selected-content].name);
+                                } else if selected == SelectedSection.Clipboard {
+                                    set-clip(clip_lines[option-window.selected-content])
+                                }
+                            }
+                            edited => {
+                                if selected == SelectedSection.Application {
+                                    query-applications(self.text);
+                                } else if selected == SelectedSection.Clipboard {
+                                    query-clipboard(self.text);
+                                }
+                            }
+                            key-pressed(event) => {
+                                if event.text == Key.Tab {
+                                    tab-selection(root.selected);
+                                    accept;
+                                } else if event.text == Key.Backtab {
+                                    shift-tab-selection(root.selected);
+                                    accept;
+                                } else if event.text == Key.DownArrow {
+                                    if option-window.selected-content < app_lines.length - 1 {
+                                        option-window.selected-content += 1;
+                                    }
+                                    accept;
+                                } else if event.text == Key.UpArrow {
+                                    if option-window.selected-content > 0 {
+                                        option-window.selected-content -= 1;
+                                    }
+                                    accept;
+                                } else if event.text == Key.Escape {
+                                    if root.search-active {
+                                        search-active = false;
+                                    } else {
+                                        search-active = true;
+                                    }
+                                    accept;
+                                } else {
+                                    debug(event.modifiers.shift);
+                                    debug(event.text);
+                                    reject;
+                                }
+                            }
+                        }
+
+                        UButton {
+                            text: "Bluetooth";
+                            variant: selected == SelectedSection.Bluetooth ? primary : default;
+                            clicked => {
+                                selected = SelectedSection.Bluetooth;
+                            }
+                        }
+
+                        UButton {
+                            text: "Wallpapers";
+                            variant: selected == SelectedSection.WallPaper ? primary : default;
+                            clicked => {
+                                selected = SelectedSection.WallPaper;
+                            }
+                        }
+
+                        UButton {
+                            text: "Emojis";
+                            variant: selected == SelectedSection.Emoji ? primary : default;
+                            clicked => {
+                                selected = SelectedSection.Emoji;
+                            }
+                        }
+                    }
+
+                    animate y { duration: UAppTheme.animation-duration; }
+                }
+
+                display-section := Rectangle {
+                    y: search-active ? 35px : 0px;
+                    background: UAppTheme.bg-container;
+                    UButton {
+                        text: "Some button";
+                    }
+
+                    animate y { duration: UAppTheme.animation-duration; }
+                }
+            }
         }
     }
 
     Rectangle {
-        clip: true;
-        x: 0px;
-        y: 0px;
-        height: walls_open ? 350px : 30px;
-        width: parent.width;
-        background: Styles.dark-background;
-        animate height { duration: 200ms; }
-
-        WallpaperManager {
-            walls_open: walls_open;
-            walls_paths: walls_paths;
-            walls_light_paths: walls_light_paths;
-            switch-wallpapers(path) => {
-                set-wallpaper(path);
-            }
-        }
-
-        Rectangle {
-            clip: true;
+        y: 35px;
+        height: 10px;
+        Path {
             y: 0px;
-            background: black;
-            height: 30px;
-
-            Rectangle {
-                x: 5px;
-                width: 20px;
-                background: Styles.dark-background;
-                Image {
-                    y: 7px;
-                    width: 18px;
-                    source: @image-url("../assets/icons/artixlinux.svg");
-                    colorize: white;
-                }
-
-                TouchArea {
-                    clicked => {
-                        debug("Bar menu is opened or closed");
-                        root.request-menu-toggle();
-                        walls_open = false;
-                        which-selected = 1;
-                        if state.is_search_on {
-                            state.is_search_on = false;
-                            entryarea.clear-focus();
-                        } else {
-                            state.is_search_on = true;
-                            entryarea.focus();
-                            // entryarea.select-all();
-                        }
-                    }
-                }
-            }
-
-            Rectangle {
-                clip: true;
-                x: 30px;
-                y: state.is_search_on ? 0px : -42px;
-                width: 495px;
-                height: 30px;
-                background: Styles.dark-background;
-                entryarea := LineEdit {
-                    y: 5px;
-                    width: parent.width - 10px;
-                    height: 20px;
-                    x: 5px;
-                    placeholder-text: "Search in " + topbar_buttons[which-selected - 1].text_val + "...";
-                    edited(text) => {
-                        root.query_applications(text)
-                    }
-                    key-pressed(event) => {
-                        if event.text == Key.Escape {
-                            root.request-menu-toggle();
-                            walls_open = false;
-                            which-selected = 1;
-                            if state.is_search_on {
-                                state.is_search_on = false;
-                                entryarea.focus();
-                            } else {
-                                state.is_search_on = true;
-                                entryarea.clear-focus();
-                                entryarea.select-all();
-                            }
-                            accept;
-                        } else if event.text == Key.RightArrow {
-                            if which-selected < 7 {
-                                which-selected += 1;
-                                if which-selected == 5 {
-                                    root.walls_window_called();
-                                    walls_open = true;
-                                } else {
-                                    walls_open = false;
-                                }
-                            }
-                            accept;
-                        } else if event.text == Key.LeftArrow {
-                            if which-selected > 1 {
-                                which-selected -= 1;
-                                if which-selected == 5 {
-                                    root.walls_window_called();
-                                    walls_open = true;
-                                } else {
-                                    walls_open = false;
-                                }
-                            }
-                            accept;
-                        } else if event.text == Key.UpArrow {
-                            app_selected_no -= 1;
-                            accept;
-                        } else if event.text == Key.DownArrow {
-                            app_selected_no += 1;
-                            accept;
-                        } else if event.text == "1" {
-                            walls_open = false;
-                            which-selected = 1;
-                            walls_open = false;
-                            accept;
-                        } else if event.text == "2" {
-                            walls_open = false;
-                            if which-selected == 2 {
-                                which-selected = 1;
-                            } else {
-                                which-selected = 2;
-                            }
-                            accept;
-                        } else if event.text == "3" {
-                            walls_open = false;
-                            if which-selected == 3 {
-                                which-selected = 1;
-                            } else {
-                                which-selected = 3;
-                            }
-                            accept;
-                        } else if event.text == "4" {
-                            walls_open = false;
-                            if which-selected == 4 {
-                                which-selected = 1;
-                            } else {
-                                which-selected = 4;
-                            }
-                            accept;
-                        } else if event.text == "5" {
-                            if which-selected == 5 {
-                                which-selected = 1;
-                                walls_open = false;
-                            } else {
-                                walls_open = true;
-                                which-selected = 5;
-                                // root.walls_window_called();
-                            }
-                            root.walls_window_called();
-                            walls_open = true;
-                            accept;
-                        } else if event.text == "6" {
-                            walls_open = false;
-                            if which-selected == 6 {
-                                which-selected = 1;
-                            } else {
-                                which-selected = 6;
-                            }
-                            accept;
-                        } else if event.text == "7" {
-                            walls_open = false;
-                            if which-selected == 7 {
-                                which-selected = 1;
-                            } else {
-                                which-selected = 7;
-                            }
-                            accept;
-                        } else {
-                            reject;
-                        }
-                    }
-                }
-
-                animate y {
-                    easing: ease-in-out-back;
-                    duration: 500ms;
-                }
-            }
-
-            Rectangle {
-                x: 535px;
-                y: state.is_search_on ? 0px : -32px;
-                width: root.width - 600px;
-                HorizontalLayout {
-                    padding: 4px;
-                    spacing: 5px;
-                    alignment: LayoutAlignment.stretch;
-                    for action_button[i] in topbar_buttons: SearchButton {
-                        is-selected: which-selected == action-button.place_no;
-                        place_no: action-button.place_no;
-                        text_value: action-button.text_val;
-                        on-clicked => {
-                            if action-button.text_val == "Walls" {
-                                root.walls_window_called();
-                                if walls_open {
-                                    walls_open = false;
-                                    which-selected = 1;
-                                } else {
-                                    walls_open = true;
-                                    which-selected = 5;
-                                }
-                            } else {
-                                if which-selected == action-button.place-no {
-                                    which-selected = 1;
-                                } else {
-                                    walls_open = false;
-                                    which-selected = action-button.place-no;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                animate y {
-                    easing: ease-out-back;
-                    duration: 500ms;
-                }
-            }
-
-            for width[i] in width-bar: BarButton {
-                position: i == 0 || i == 1 ? (positions[i]) : parent.width - positions[i];
-                is_search_on: state.is_search_on;
-                button-width: width;
-                display_text: bar-text[i];
-                on_clicked => {
-                    if i == 0 {
-                        Rice.call_pavucontrol();
-                    }
-                }
-            }
-
-            Rectangle {
-                background: clock.has-hover ? Styles.base-background : Styles.dark-background;
-                x: state.is_search_on ? root.width - 65px : root.width / 2;
-                y: -5px;
-                width: 100px;
-                border-radius: self.height / 2;
-                Text {
-                    y: 3px;
-                    horizontal-alignment: TextHorizontalAlignment.center;
-                    vertical-alignment: TextVerticalAlignment.center;
-                    text: MainState.time;
-                    color: Styles.font-color-light;
-                    font-size: 20px;
-                }
-
-                animate x { duration: 200ms; }
-                clock := TouchArea {
-                    clicked => {
-                    }
-                }
-            }
+            x: 0px;
+            commands: "M 7 8 L 7 3 L 12 3 C 9 4 8 5 7 8";
+            stroke: UAppTheme.bg-container;
+            fill: UAppTheme.bg-container;
+            width: 10px;
         }
-    }
 
-    AppViewer {
-        border-width: 2px;
-        border-color: Styles.border-color;
-        walls_open: walls_open;
-        is_search_on: state.is_search_on;
-        app_lines: app_lines;
-        current_window: which-selected;
-        is_app_selected: app_selected_no;
-        open-app(action) => {
-            state.is_search_on = false;
-            root.open-app(action)
+        Path {
+            x: 1525px;
+            commands: "M 7 3 L 12 3 L 12 8 C 11 5 10 4 7 3";
+            stroke: UAppTheme.bg-container;
+            fill: UAppTheme.bg-container;
+            width: 10px;
         }
     }
 }
@@ -841,9 +811,9 @@ export component LockScreen inherits Window {
     Rectangle {
         height: parent.height;
         x: is_lock_activated ? root.width - 350px : root.width;
-        // x: root.width - 350px;
-        // opacity: is_lock_activated ? 100 : 0;
-        width: 350px;
+    // x: root.width - 350px;
+    // opacity: is_lock_activated ? 100 : 0;
+    width: 350px;
         Image {
             height: parent.height;
             source: @image-url("../assets/frosted_glass_2.jpeg");
@@ -859,8 +829,8 @@ export component LockScreen inherits Window {
                 color: Styles.font-color-light;
                 font-size: 75px;
                 font-family: "Source Code Pro";
-                // font-family: "DS DIGI Orbitron-Regular";
-                text: time_var;
+            // font-family: "DS DIGI Orbitron-Regular";
+            text: time_var;
             }
 
             Text {
