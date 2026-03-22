@@ -18,6 +18,7 @@ export component USwitch inherits ButtonInterface {
     border-radius: UAppTheme.radius-round;
     border-width: root.has-tab-focus ? UAppTheme.focus-border-width : 0;
     border-color: root.has-tab-focus ? UAppTheme.focus-color : transparent;
+    callback toggled();
     circle := Rectangle {
         x: checked ? root.height + 2px : 2px;
         width: root.height - 4px;
@@ -29,6 +30,7 @@ export component USwitch inherits ButtonInterface {
 
     clicked => {
         checked = !checked;
+        toggled();
     }
     states [
         disabled when !root.enabled: {

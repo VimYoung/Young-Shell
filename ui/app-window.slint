@@ -38,9 +38,11 @@ import {
 import { AppViewer, GeneralCard } from "menu.slint";
 import {
     AppLineData,
+    ConnectionStatus,
     Cards,
     State,
     SearchButtonData,
+    WifiLineData,
     SelectedSection,
     BarState,
 } from "data_structures.slint";
@@ -422,7 +424,7 @@ export component TopBar inherits Window {
     callback open-app(string);
     callback set-clip(string);
     property <bool> search-active: true;
-    property <SelectedSection> selected: Application;
+    property <SelectedSection> selected: Wifi;
     pure function selected-string(selection: SelectedSection) -> string {
         if selection == SelectedSection.Application {
             return "Applications";
@@ -483,6 +485,7 @@ export component TopBar inherits Window {
     background: transparent;
     width: 1536px;
     height: 610px;
+    in-out property <bool> wifi-on: true;
     in-out property <[AppLineData]> app_lines:[
         {
             image: @image-url("../assets/logo_dark.png"),
@@ -496,6 +499,39 @@ export component TopBar inherits Window {
         },
     ];
     in-out property <[string]> clip_lines: ["clip1", "clip2"];
+    in-out property <[WifiLineData]> wifi_lines: [
+        {
+            name: "Net 1",
+            strength: 90%,
+            connection-status: ConnectionStatus.Connected,
+        },
+        {
+            name: "Net 2",
+            strength: 50%,
+            connection-status: ConnectionStatus.Known,
+        },
+        {
+            name: "Net 3, sdkjsakdslkdaldas",
+            strength: 60%,
+            connection-status: ConnectionStatus.Unknown,
+        },
+        {
+            name: "Net 4",
+            strength: 90%,
+            connection-status: ConnectionStatus.Unknown,
+        },
+        {
+            name: "Net 4",
+            strength: 90%,
+            connection-status: ConnectionStatus.Unknown,
+        },
+        {
+            name: "Net 4",
+            strength: 90%,
+            connection-status: ConnectionStatus.Unknown,
+        },
+    ];
+    in-out property <int> connected-network: 1;
 
     selection-section := Rectangle {
         width: 435px;
@@ -518,11 +554,17 @@ export component TopBar inherits Window {
             selection: root.selected;
             app_lines: root.app_lines;
             clip_lines: root.clip_lines;
+            wifi_lines: root.wifi_lines;
+            wifi-on: wifi-on;
+            connected-network: connected-network;
             set-app(val) => {
                 open-app(app_lines[val].name);
             }
             set-clip(val) => {
                 set-clip(clip_lines[val]);
+            }
+            escape-focus => {
+                search-bar.grab-focus();
             }
         }
 

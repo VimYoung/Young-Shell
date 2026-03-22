@@ -1,4 +1,4 @@
-import { Spinner, Slider, ScrollView } from "std-widgets.slint";
+import { Spinner, Slider, ScrollView, VerticalBox } from "std-widgets.slint";
 import { Styles } from "styles.slint";
 import {
     AppDisplayButton,
@@ -12,12 +12,24 @@ import {
     AppLineData,
     WifiLineData,
     SelectedSection,
+    ConnectionStatus,
 } from "data_structures.slint";
-import { UCard, USwitch, UIcon, UTitle } from "@sleek/widgets.slint";
+import {
+    UCard,
+    USwitch,
+    UIcon,
+    UTitle,
+    UDivider,
+    ULinearProgress,
+    UButton,
+    UIconButton,
+    UInput,
+} from "@sleek/widgets.slint";
 import { UAppTheme } from "@sleek/app-theme.slint";
 import { UText } from "@sleek/widgets/text.slint";
 import { UScrollView } from "@sleek/widgets/scrollview.slint";
 import { UDarkColors } from "@sleek/colors.slint";
+import { UButtonThemes } from "@sleek/widgets/button/theme.slint";
 
 export component GeneralCard inherits UCard {
     in-out property <bool> switch:false;
@@ -51,104 +63,289 @@ export component GeneralCard inherits UCard {
     }
 }
 
+component AppComponent inherits UScrollView {
+    in property <[AppLineData]> app_lines;
+    in property <int> selected-content;
+    callback set-app(int);
+    VerticalLayout {
+        width: parent.width - 10px;
+        x: 0px;
+        padding: UAppTheme.padding-medium;
+        spacing: UAppTheme.spacing-medium;
+        padding-right: parent.scrollbar-area;
+        for app[i] in app_lines: UCard {
+            border-width: 10px;
+            height: 40px;
+            background: i == selected-content ? (handle.has-hover ? UAppTheme.bg-container : UAppTheme.bg-spotlight) : (handle.has-hover ? UAppTheme.bg-container : UAppTheme.bg-elevated);
+            HorizontalLayout {
+                padding: UAppTheme.padding-medium;
+                spacing: UAppTheme.spacing-big;
+                Rectangle {
+                    width: self.height;
+                    clip: true;
+                    border-radius: UAppTheme.radius-circle;
+                    Image {
+                        width: parent.height;
+                        image-fit: ImageFit.fill;
+                        source: app.image;
+                    }
+                }
+
+                UTitle {
+                    level: 4;
+                    vertical-alignment: center;
+                    text: app.name;
+                }
+            }
+
+            handle := TouchArea {
+                clicked => {
+                    set-app(i);
+                }
+            }
+
+            animate background { duration: UAppTheme.animation-duration; }
+        }
+    }
+}
+
+component ClipComponent inherits UScrollView {
+    in property <[string]> clip_lines;
+    in property <int> selected-content;
+    callback set-clip(int);
+    VerticalLayout {
+        width: parent.width - 10px;
+        x: 0px;
+        padding: UAppTheme.padding-medium;
+        spacing: UAppTheme.spacing-medium;
+        padding-right: parent.scrollbar-area;
+        for clip[i] in clip_lines: UCard {
+            border-width: 10px;
+            height: 40px;
+            background: i == selected-content ? (clip-handle.has-hover ? UAppTheme.bg-container : UAppTheme.bg-spotlight) : (clip-handle.has-hover ? UAppTheme.bg-container : UAppTheme.bg-elevated);
+            UTitle {
+                level: 4;
+                x: UAppTheme.padding-medium;
+                width: parent.width - UAppTheme.padding-medium;
+                height: parent.height;
+                vertical-alignment: center;
+                horizontal-alignment: left;
+                text: clip;
+            }
+
+            clip-handle := TouchArea {
+                clicked => {
+                    set-clip(i);
+                }
+            }
+
+            animate background { duration: UAppTheme.animation-duration; }
+        }
+    }
+}
+
 export component OptionSection inherits Rectangle {
     x: 10px;
     border-bottom-left-radius: UAppTheme.radius-medium;
     border-bottom-right-radius: UAppTheme.radius-medium;
     background: UAppTheme.bg-container;
-    in-out property <SelectedSection> selection;
-    in-out property <[AppLineData]> app_lines;
-    in-out property <[string]> clip_lines;
+    in property <SelectedSection> selection;
+    in property <[AppLineData]> app_lines;
+    in property <[string]> clip_lines;
+    in property <[WifiLineData]> wifi_lines;
+    in-out property <bool> wifi-on;
     in-out property <int> selected-content: 0;
+    in-out property <int> connected-network: -1;
+    callback set-app(int);
+    callback set-clip(int);
+    callback connect-with(WifiLineData);
+    callback escape-focus();
     changed selection => {
         self.selected-content = 0;
     }
 
-    callback set-app(int);
-    callback set-clip(int);
-    if selection == SelectedSection.Application: scroll := UScrollView {
-        VerticalLayout {
-            width: parent.width - 10px;
-            x: 0px;
-            padding: UAppTheme.padding-medium;
-            spacing: UAppTheme.spacing-medium;
-            padding-right: scroll.scrollbar-area;
-            for app[i] in app_lines: UCard {
-                border-width: 10px;
-                height: 40px;
-                background: i == selected-content ? (handle.has-hover ? UAppTheme.bg-container : UAppTheme.bg-spotlight) : (handle.has-hover ? UAppTheme.bg-container : UAppTheme.bg-elevated);
-                HorizontalLayout {
-                    padding: UAppTheme.padding-medium;
+    if selection == SelectedSection.Application: AppComponent {
+        app_lines: app_lines;
+        selected-content: selected-content;
+        set-app(val) => {
+            set-app(val)
+        }
+    }
+    if selection == SelectedSection.Clipboard: ClipComponent {
+        clip_lines: clip_lines;
+        selected-content: selected-content;
+        set-clip(val) => {
+            set-clip(val)
+        }
+    }
+
+    if selection == SelectedSection.Wifi: VerticalLayout {
+        padding: UAppTheme.padding-medium;
+        spacing: UAppTheme.spacing-medium;
+        alignment: stretch;
+        UCard {
+            height: 45px;
+            HorizontalLayout {
+                padding: UAppTheme.padding-medium;
+                spacing: UAppTheme.spacing-big;
+                alignment: stretch;
+                if switch.checked && connected-network >= 0: HorizontalLayout {
+                    alignment: stretch;
                     spacing: UAppTheme.spacing-big;
+
                     Rectangle {
-                        width: self.height;
-                        clip: true;
-                        border-radius: UAppTheme.radius-circle;
-                        Image {
-                            width: parent.height;
-                            image-fit: ImageFit.fill;
-                            source: app.image;
+                        width: 20px;
+                        height: parent.height;
+                        ULinearProgress {
+                            height: parent.height;
+                            orientation: vertical;
+                            progress: wifi_lines[connected-network].strength;
                         }
                     }
 
-                    UTitle {
-                        level: 4;
+                    UText {
+                        horizontal-alignment: left;
                         vertical-alignment: center;
-                        text: app.name;
+                        text: wifi_lines[connected-network].name;
+                    }
+
+                    UButton {
+                        width: 115px;
+                        danger: true;
+                        icon: @image-url("../assets/sleek/outlined/delete.svg");
+                        icon-placement: end;
+                        variant: filled;
+                        text: "Disconnect";
                     }
                 }
 
-                handle := TouchArea {
-                    clicked => {
-                        set-app(i);
-                    }
+                if switch.checked && connected-network < 0: UText {
+                    text: "Not Connected";
                 }
 
-                animate background { duration: UAppTheme.animation-duration; }
-            }
-        }
-    }
-
-    if selection == SelectedSection.Clipboard: scroll2 := UScrollView {
-        VerticalLayout {
-            width: parent.width - 10px;
-            x: 0px;
-            padding: UAppTheme.padding-medium;
-            spacing: UAppTheme.spacing-medium;
-            padding-right: scroll2.scrollbar-area;
-            for clip[i] in clip_lines: UCard {
-                border-width: 10px;
-                height: 40px;
-                background: i == selected-content ? (clip-handle.has-hover ? UAppTheme.bg-container : UAppTheme.bg-spotlight) : (clip-handle.has-hover ? UAppTheme.bg-container : UAppTheme.bg-elevated);
-                UTitle {
-                    level: 4;
-                    x: UAppTheme.padding-medium;
-                    width: parent.width - UAppTheme.padding-medium;
-                    height: parent.height;
+                if !switch.checked: UText {
                     vertical-alignment: center;
-                    horizontal-alignment: left;
-                    text: clip;
+                    text: "Wifi Off";
                 }
 
-                clip-handle := TouchArea {
-                    clicked => {
-                        set-clip(i);
+                Rectangle {
+                    width: 45px;
+                    switch := USwitch {
+                        checked: wifi-on;
+                        toggled() => {
+                            root.wifi-on = self.checked;
+                            debug("Value toggled: ", self.checked, root.wifi-on)
+                        }
                     }
                 }
-
-                animate background { duration: UAppTheme.animation-duration; }
             }
         }
-    }
 
-    if selection == SelectedSection.Wifi: UText {
-        text: "Wifi selected";
-    }
-    if selection == SelectedSection.Bluetooth: UText {
-        text: "Bluetooth selected";
-    }
-    if selection == SelectedSection.Emoji: UText {
-        text: "Emoji selected";
+        Rectangle {
+            height: 7px;
+            UDivider {
+                width: parent.width - 4 * UAppTheme.padding-medium;
+            }
+        }
+
+        if !wifi-on:Rectangle {
+            UIcon {
+                width: 200px;
+                height: 200px;
+                image-fit: ImageFit.contain;
+                source: @image-url("../assets/sleek/filled/wifi-slash.svg");
+            }
+        }
+
+        if wifi-on: UScrollView {
+            VerticalLayout {
+                width: parent.width - 5px;
+                x: 0px;
+                spacing: UAppTheme.spacing-medium;
+                for wifi[i] in wifi_lines: UCard {
+                    height: 45px;
+                    property <bool> ask-password: false;
+                    HorizontalLayout {
+                        alignment: stretch;
+                        spacing: UAppTheme.spacing-big;
+                        padding: UAppTheme.padding-medium;
+
+                        Rectangle {
+                            width: 20px;
+                            ULinearProgress {
+                                height: parent.height;
+                                orientation: vertical;
+                                progress: wifi_lines[i].strength;
+                            }
+                        }
+
+                        UText {
+                            horizontal-alignment: left;
+                            vertical-alignment: center;
+                            overflow: elide;
+                            text: wifi.name;
+                        }
+
+                        if wifi.connection-status == ConnectionStatus.Connected: UButton {
+                            variant: filled;
+                            width: 115px;
+                            danger: true;
+                            icon: @image-url("../assets/sleek/outlined/delete.svg");
+                            icon-placement: end;
+                            text: "Disconnect";
+                        }
+
+                        if ask-password: UInput {
+                            width: 170px;
+                            error: wifi.pass-error;
+                            placeholder: "Password ...";
+                            clearable: true;
+                            input-type: password;
+                            key-pressed(event) => {
+                                if event.text == Key.Escape {
+                                    ask-password = false;
+                                    escape-focus();
+                                    accept;
+                                } else {
+                                    reject;
+                                }
+                            }
+                        }
+
+                        if wifi.connection-status == ConnectionStatus.Known || wifi.connection-status == ConnectionStatus.Unknown: UButton {
+                            loading: ask-password;
+                            variant: filled;
+                            width: 100px;
+                            icon: @image-url("../assets/sleek/outlined/link.svg");
+                            icon-placement: end;
+                            text: "Connect";
+                            clicked => {
+                                if wifi.connection-status == ConnectionStatus.Unknown {
+                                    ask-password = true;
+                                } else {
+                                    connect-with(wifi);
+                                }
+                            }
+                        }
+
+                        if wifi_lines[i].connection-status == ConnectionStatus.Known: UIconButton {
+                            variant: filled;
+                            danger: true;
+                            width: self.height;
+                            icon: @image-url("../assets/sleek/outlined/delete.svg");
+                        }
+                    }
+                }
+            }
+        }
+
+        if selection == SelectedSection.Bluetooth: UText {
+            text: "Bluetooth selected";
+        }
+
+        if selection == SelectedSection.Emoji: UText {
+            text: "Emoji selected";
+        }
     }
 }
 
@@ -156,36 +353,36 @@ export component AppViewer inherits Rectangle {
     in property <bool> walls_open;
     in-out property <bool> is_search_on;
     in property <[AppLineData]> app_lines;
-    in property <[WifiLineData]> blue_lines: [
-        { name: "Hello friends", strength: 2, is-known:false },
-        { name: "Bluetooth 1", strength: 2, is-known:false },
-        { name: "Bluetooth 2", strength: 2, is-known:false },
-        { name: "Bluetooth 1", strength: 2, is-known:false },
-        { name: "Bluetooth 3", strength: 2, is-known:false },
-        { name: "Bluetooth 4", strength: 2, is-known:false },
-        { name: "Bluetooth 5", strength: 2, is-known:false },
-        { name: "Bluetooth 6", strength: 2, is-known:false },
-        { name: "Bluetooth 7", strength: 2, is-known:false },
-        { name: "Bluetooth 8", strength: 2, is-known:false },
-        { name: "Bluetooth 9", strength: 2, is-known:false },
-        { name: "Bluetooth: 10", strength: 2, is-known:false },
-        { name: "Bluetooth 11", strength: 2, is-known:false }
-    ];
-    in property <[WifiLineData]> wifi_lines: [
-        { name: "sdcsd", strength: 2, is-known:false },
-        { name: "Network 1", strength: 2, is-known:false },
-        { name: "Network 2", strength: 2, is-known:false },
-        { name: "Network 1", strength: 2, is-known:false },
-        { name: "Network 3", strength: 2, is-known:false },
-        { name: "Network 4", strength: 2, is-known:false },
-        { name: "Network 5", strength: 2, is-known:false },
-        { name: "Network 6", strength: 2, is-known:false },
-        { name: "Network 7", strength: 2, is-known:false },
-        { name: "Network 8", strength: 2, is-known:false },
-        { name: "Network 9", strength: 2, is-known:false },
-        { name: "Network: 10", strength: 2, is-known:false },
-        { name: "Network 11", strength: 2, is-known:false }
-    ];
+    in property <[WifiLineData]> blue_lines; //[
+    //     { name: "Hello friends", strength: 2, is-known:false },
+    //     { name: "Bluetooth 1", strength: 2, is-known:false },
+    //     { name: "Bluetooth 2", strength: 2, is-known:false },
+    //     { name: "Bluetooth 1", strength: 2, is-known:false },
+    //     { name: "Bluetooth 3", strength: 2, is-known:false },
+    //     { name: "Bluetooth 4", strength: 2, is-known:false },
+    //     { name: "Bluetooth 5", strength: 2, is-known:false },
+    //     { name: "Bluetooth 6", strength: 2, is-known:false },
+    //     { name: "Bluetooth 7", strength: 2, is-known:false },
+    //     { name: "Bluetooth 8", strength: 2, is-known:false },
+    //     { name: "Bluetooth 9", strength: 2, is-known:false },
+    //     { name: "Bluetooth: 10", strength: 2, is-known:false },
+    //     { name: "Bluetooth 11", strength: 2, is-known:false }
+    // ];
+    in property <[WifiLineData]> wifi_lines; //[
+    //     { name: "sdcsd", strength: 2, is-known:false },
+    //     { name: "Network 1", strength: 2, is-known:false },
+    //     { name: "Network 2", strength: 2, is-known:false },
+    //     { name: "Network 1", strength: 2, is-known:false },
+    //     { name: "Network 3", strength: 2, is-known:false },
+    //     { name: "Network 4", strength: 2, is-known:false },
+    //     { name: "Network 5", strength: 2, is-known:false },
+    //     { name: "Network 6", strength: 2, is-known:false },
+    //     { name: "Network 7", strength: 2, is-known:false },
+    //     { name: "Network 8", strength: 2, is-known:false },
+    //     { name: "Network 9", strength: 2, is-known:false },
+    //     { name: "Network: 10", strength: 2, is-known:false },
+    //     { name: "Network 11", strength: 2, is-known:false }
+    // ];
     in property <[string]> clipboard_texts: [
         "sdcsd",
         "sdkkjsvcd",
@@ -278,7 +475,7 @@ export component AppViewer inherits Rectangle {
             width: parent.width - 20px;
             x: 10px;
             name: wifi_lines[0].name;
-            strength: wifi_lines[0].strength;
+            // strength: wifi_lines[0].strength;
         }
 
         Path {
@@ -322,7 +519,7 @@ export component AppViewer inherits Rectangle {
             width: parent.width - 20px;
             x: 10px;
             name: wifi_lines[0].name;
-            strength: wifi_lines[0].strength;
+            // strength: wifi_lines[0].strength;
         }
 
         Path {
@@ -391,7 +588,7 @@ export component AppViewer inherits Rectangle {
     }
 }
 
-// export component TextIssue inherits Window {
+    // export component TextIssue inherits Window {
 //     in-out property <bool> is_search_on: true;
 //     width: 495px;
 //     height: 40px;
