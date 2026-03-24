@@ -1,11 +1,12 @@
-use std::{env, error::Error, path::Path, process::Command, rc::Rc, thread};
-
-use slint::{ComponentHandle, Image};
+use chrono::Local;
+use slint::{ComponentHandle, Image, SharedString};
 use spell_framework::vault::AppSelector;
 use spell_framework::{
     cast_spell,
     layer_properties::{BoardType, LayerAnchor, LayerType, WindowConf},
 };
+use std::{env, error::Error, path::Path, process::Command, rc::Rc, thread};
+use sysinfo::{CpuRefreshKind, RefreshKind, System};
 slint::include_modules!();
 spell_framework::generate_widgets![TopBar];
 
@@ -71,13 +72,13 @@ pub fn configure_bar(bar: &mut TopBarSpell, bar_tx: WinHandle) {
             }
         })
         .collect();
-    // println!("App_data_Slint: {:?}", app_data_slint);
     let vac_model = Rc::new(slint::VecModel::from(app_data_slint));
     bar.set_app_lines(vac_model.clone().into());
     bar.on_open_app(|string_val| {
         let command_val: &str;
         let mut args_vec: Vec<&str> = Vec::new();
         let binding = string_val.to_string();
+        println!("Application Running String.: {}", binding);
         if let Some((command, args)) = binding.split_once(' ') {
             command_val = command;
             args_vec = args.split(' ').collect();
@@ -90,9 +91,7 @@ pub fn configure_bar(bar: &mut TopBarSpell, bar_tx: WinHandle) {
                 final_comm.arg(argument);
             });
         }
-        thread::spawn(move || {
-            final_comm.output().unwrap();
-        });
+        final_comm.spawn().unwrap();
         println!("{string_val:?}");
     });
 
@@ -109,6 +108,7 @@ pub fn configure_bar(bar: &mut TopBarSpell, bar_tx: WinHandle) {
             }
         }
     });
+    bar.subtract_input_region(0, 35, 1536, 575);
     // let bar_tx_clone_a = bar_tx.clone();
     // let bar_tx_clone_b = bar_tx.clone();
     // bar_tx_clone_b.subtract_input_region(0, 35, 1366, 576);
@@ -126,7 +126,6 @@ pub fn configure_bar(bar: &mut TopBarSpell, bar_tx: WinHandle) {
         let bar_handle = bar.as_weak().unwrap();
         move |query_value| {
             let app_data_native = app_selector.query_primary(query_value.as_ref(), 15);
-            // println!("{:#?}", app_data_native);
             let app_data_slint: Vec<AppLineData> = app_data_native
                 .iter()
                 .map(|value| {
@@ -234,4 +233,101 @@ pub fn configure_bar(bar: &mut TopBarSpell, bar_tx: WinHandle) {
     //     final_comm.arg("-c").arg(comm);
     //     final_comm.output().unwrap();
     // });
+
+    bar.global::<MainState>().on_get_time({
+        let menu_handle = bar.as_weak();
+        move || {
+            let now = Local::now();
+            let time = now.format("%I:%M %p").to_string();
+            menu_handle
+                .unwrap()
+                .global::<MainState>()
+                .set_time(SharedString::from(time));
+        }
+    });
+
+    bar.global::<MainState>().on_get_volume({
+        let bar_handle = bar.as_weak();
+        move || {
+            let output = std::process::Command::new("pactl")
+                .args(["get-sink-volume", "@DEFAULT_SINK@"])
+                .output()
+                .unwrap();
+
+            let text = String::from_utf8_lossy(&output.stdout);
+            let vol = text
+                .split_whitespace()
+                .find(|s| s.ends_with('%'))
+                .unwrap()
+                .trim_end_matches('%')
+                .trim();
+            let volume_int = vol.parse::<i32>().unwrap();
+            bar_handle
+                .unwrap()
+                .global::<MainState>()
+                .set_vol(volume_int);
+            // println!("Input text value {}", vol);
+        }
+    });
+
+    bar.global::<MainState>().on_set_volume(move |volume_val| {
+        std::process::Command::new("pactl")
+            .args([
+                "set-sink-volume",
+                "@DEFAULT_SINK@",
+                &format!("{}%", volume_val),
+            ])
+            .status()
+            .unwrap();
+    });
+
+    bar.global::<MainState>().on_get_mic({
+        let bar_handle = bar.as_weak();
+        move || {
+            let output = std::process::Command::new("pactl")
+                .args(["get-source-volume", "@DEFAULT_SOURCE@"])
+                .output()
+                .unwrap();
+
+            let text = String::from_utf8_lossy(&output.stdout);
+            let mic = text
+                .split_whitespace()
+                .find(|s| s.ends_with('%'))
+                .unwrap()
+                .trim_end_matches('%')
+                .trim();
+            let mic_int = mic.parse::<i32>().unwrap();
+            bar_handle.unwrap().global::<MainState>().set_mic(mic_int);
+        }
+    });
+
+    bar.global::<MainState>().on_set_mic(move |mic_val| {
+        std::process::Command::new("pactl")
+            .args([
+                "set-source-volume",
+                "@DEFAULT_SOURCE@",
+                &format!("{}%", mic_val),
+            ])
+            .status()
+            .unwrap();
+    });
+
+    let mut s =
+        System::new_with_specifics(RefreshKind::nothing().with_cpu(CpuRefreshKind::everything()));
+
+    // Wait a bit because CPU usage is based on diff.
+    std::thread::sleep(sysinfo::MINIMUM_CPU_UPDATE_INTERVAL);
+    s.refresh_cpu_all();
+    bar.global::<MainState>().on_get_cpu({
+        let bar_handle = bar.as_weak();
+        move || {
+            let mut val: f32 = 0.0;
+            s.refresh_cpu_all();
+            for cpu in s.cpus() {
+                val += cpu.cpu_usage();
+            }
+            let cpu_usage: f32 = val / (s.cpus().len() as f32);
+            bar_handle.unwrap().global::<MainState>().set_cpu(cpu_usage);
+        }
+    });
 }

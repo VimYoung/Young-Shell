@@ -13,6 +13,7 @@ use std::{
     fs,
     path::{Path, PathBuf},
 };
+use sysinfo::{CpuRefreshKind, RefreshKind, System};
 slint::include_modules!();
 spell_framework::generate_widgets![Menu];
 
@@ -38,6 +39,13 @@ fn main() -> Result<(), Box<dyn Error>> {
             None,
         ),
     );
+
+    let mut s =
+        System::new_with_specifics(RefreshKind::nothing().with_cpu(CpuRefreshKind::everything()));
+
+    // Wait a bit because CPU usage is based on diff.
+    std::thread::sleep(sysinfo::MINIMUM_CPU_UPDATE_INTERVAL);
+    s.refresh_cpu_all();
 
     let player_finder = PlayerFinder::new().expect("Couldn't get mpris handler");
     menu.global::<MprisState>().on_refresh_mpris({
@@ -217,6 +225,22 @@ fn main() -> Result<(), Box<dyn Error>> {
             .args(["set", &format!("{}%", bright_val)])
             .status()
             .unwrap();
+    });
+
+    menu.global::<MainState>().on_get_cpu({
+        let menu_handle = menu.as_weak();
+        move || {
+            let mut val: f32 = 0.0;
+            s.refresh_cpu_all();
+            for cpu in s.cpus() {
+                val += cpu.cpu_usage();
+            }
+            let cpu_usage: f32 = val / (s.cpus().len() as f32);
+            menu_handle
+                .unwrap()
+                .global::<MainState>()
+                .set_cpu(cpu_usage);
+        }
     });
 
     menu.invoke_set_dark_theme();

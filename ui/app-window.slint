@@ -24,7 +24,7 @@ import {
 import { UAppTheme } from "@sleek/app-theme.slint";
 import { Styles } from "styles.slint";
 import { Mpris } from "mpris.slint";
-import { OptionSection } from "menu.slint";
+import { OptionSection, DisplayComponent } from "bar.slint";
 import { WallpaperManager } from "wallpaper.slint";
 import {
     PowerMenuButton,
@@ -323,7 +323,7 @@ export component Menu inherits Window {
                                 width: parent.width - 2 * UAppTheme.padding-big;
                                 cpu-bar := ULinearProgress {
                                     width: parent.width;
-                                    progress: 50%;
+                                    progress: MainState.cpu;
                                 }
                             }
                         }
@@ -423,8 +423,8 @@ export component TopBar inherits Window {
     callback query-clipboard(string);
     callback open-app(string);
     callback set-clip(string);
-    property <bool> search-active: true;
-    property <SelectedSection> selected: Wifi;
+    property <bool> search-active: false;
+    property <SelectedSection> selected: Application;
     pure function selected-string(selection: SelectedSection) -> string {
         if selection == SelectedSection.Application {
             return "Applications";
@@ -531,7 +531,34 @@ export component TopBar inherits Window {
             connection-status: ConnectionStatus.Unknown,
         },
     ];
+    in-out property <bool> is-inhibit: false;
     in-out property <int> connected-network: 1;
+    in-out property <bool> run-once: true;
+
+    Timer {
+        running: run-once;
+        interval: 1s;
+        triggered => {
+        // Update bar state with actual conditions.
+        // Cases:
+        // 1. Is headphone connected(callback later if it fails).
+        // 2. State of inhibitor.
+        // 3. State of Wifi and Bluetooth initially.
+            run-once = false;
+            // stop-inhibtor();
+        }
+    }
+
+    Timer {
+        running: true;
+        interval: 1s;
+        triggered => {
+            MainState.get-time();
+            MainState.get-mic();
+            MainState.get-volume();
+            MainState.get-cpu();
+        }
+    }
 
     selection-section := Rectangle {
         width: 435px;
@@ -712,14 +739,24 @@ export component TopBar inherits Window {
                     animate y { duration: UAppTheme.animation-duration; }
                 }
 
-                display-section := Rectangle {
-                    y: search-active ? 35px : 0px;
-                    background: UAppTheme.bg-container;
-                    UButton {
-                        text: "Some button";
+                display-section := DisplayComponent {
+                    time: MainState.time;
+                    vol: MainState.vol;
+                    mic: MainState.mic;
+                    cpu: MainState.cpu;
+                    is-inhibit: is-inhibit;
+                    get-search-active => {
+                        search-active
                     }
-
-                    animate y { duration: UAppTheme.animation-duration; }
+                    toggle-search-active => {
+                        search-active = !search-active;
+                    }
+                    select-wifi => {
+                        selected = SelectedSection.Wifi;
+                    }
+                    select-bluetooth => {
+                        selected = SelectedSection.Bluetooth;
+                    }
                 }
             }
         }

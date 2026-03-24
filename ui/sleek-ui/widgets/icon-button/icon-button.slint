@@ -26,7 +26,7 @@ export component UIconButton inherits ButtonInterface {
 	accessible-role: button;
     accessible-action-default => {
         self.clicked()
-    }	
+    }
 	// Regular properties
     in-out property <UIconButtonVariant> variant: default;
     private property <UIconButtonTheme> theme: {
@@ -52,7 +52,7 @@ export component UIconButton inherits ButtonInterface {
 	// Using a custom size to have the same height as the Button.
 	// When using 16px as the icon's size, there will be a difference
 	// of 1px between the height of the IconButton and the Button.
-	// This is due to the text in the Button that increases the height 
+	// This is due to the text in the Button that increases the height
 	// to 27px (26px for an icon button).
 	// This is a weird thing because the font-size is of 14px in the Button,
 	// which is smaller than the 16px of the icons.
@@ -82,28 +82,30 @@ export component UIconButton inherits ButtonInterface {
         padding-right: UAppTheme.padding-vertical;
         VerticalLayout {
             alignment: center;
-            if !loading: UIcon {
-                size: icon-size;
-                source: icon;
-                colorize: colorize-icon ? get-color(theme.text) : transparent;
-                animate colorize { duration: UAppTheme.animation-duration; }
-                states [
-                    loading when root.loading: {
-                        colorize: transparent;
-                    }
-                    disabled when !root.enabled: {
-                        colorize: colorize-icon ? get-color(theme.text-disabled) : transparent;
-                    }
-                    checked when root.checked: {
-                        colorize: colorize-icon ? get-color(theme.text-checked) : transparent;
-                    }
-                    active when root.pressed: {
-                        colorize: colorize-icon ? get-color(theme.text-active) : transparent;
-                    }
-                    hover when root.has-hover: {
-                        colorize: colorize-icon ? get-color(theme.text-hover) : transparent;
-                    }
-                ]
+            if !loading: Rectangle {
+                UIcon {
+                    size: icon-size;
+                    source: icon;
+                    colorize: colorize-icon ? get-color(theme.text) : transparent;
+                    animate colorize { duration: UAppTheme.animation-duration; }
+                    states [
+                        loading when root.loading: {
+                            colorize: transparent;
+                        }
+                        disabled when !root.enabled: {
+                            colorize: colorize-icon ? get-color(theme.text-disabled) : transparent;
+                        }
+                        checked when root.checked: {
+                            colorize: colorize-icon ? get-color(theme.text-checked) : transparent;
+                        }
+                        active when root.pressed: {
+                            colorize: colorize-icon ? get-color(theme.text-active) : transparent;
+                        }
+                        hover when root.has-hover: {
+                            colorize: colorize-icon ? get-color(theme.text-hover) : transparent;
+                        }
+                    ]
+                }
             }
             if loading: USpinner {
                 size: icon-size;
