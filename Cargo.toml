@@ -8,7 +8,7 @@ anyhow = "1.0.99"
 chrono = "0.4.44"
 image = "0.25.9"
 imageproc = "0.26.0"
-slint = { version = "1.14.1", features = ["live-preview", "renderer-software"] }
+slint = { version = "1.14.1", features = ["live-preview", "renderer-software"], default-features = false}
 spell-framework = { path = "../Spell/spell-framework/" }
 # spell-framework = { version = "0.1.4", git = "https://github.com/VimYoung/Spell/" }
 sysinfo = "0.37.0"

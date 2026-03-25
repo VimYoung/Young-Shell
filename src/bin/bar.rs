@@ -49,7 +49,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 //     }
 // }
 
-pub fn configure_bar(bar: &mut TopBarSpell, bar_tx: WinHandle) {
+fn configure_bar(bar: &mut TopBarSpell, bar_tx: WinHandle) {
     let app_selector = AppSelector::default();
     let app_data_slint: Vec<AppLineData> = app_selector
         .get_primary()
@@ -328,6 +328,33 @@ pub fn configure_bar(bar: &mut TopBarSpell, bar_tx: WinHandle) {
             }
             let cpu_usage: f32 = val / (s.cpus().len() as f32);
             bar_handle.unwrap().global::<MainState>().set_cpu(cpu_usage);
+        }
+    });
+
+    // bar.on_toggle_inhibit(move |val| {
+    //     if val {
+    //         Command::new("vigiland").spawn().unwrap();
+    //     } else {
+    //         Command::new("pkill").arg("vigiland").output().unwrap();
+    //     }
+    // });
+    //
+
+    bar.global::<MainState>().on_get_bright({
+        let bar_handle = bar.as_weak();
+        move || {
+            let output = std::process::Command::new("sh")
+                .args(["-c", "brightnessctl -m | cut -d, -f4"])
+                .output()
+                .unwrap();
+
+            let text = String::from_utf8_lossy(&output.stdout);
+            let bright = text.trim().trim_end_matches('%');
+            let bright_int = bright.parse::<i32>().unwrap();
+            bar_handle
+                .unwrap()
+                .global::<MainState>()
+                .set_brightness(bright_int);
         }
     });
 }

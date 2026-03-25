@@ -24,6 +24,7 @@ import {
     UButton,
     UIconButton,
     UInput,
+    UNotification,
 } from "@sleek/widgets.slint";
 import { UAppTheme } from "@sleek/app-theme.slint";
 import { UText } from "@sleek/widgets/text.slint";
@@ -342,11 +343,15 @@ export component DisplayComponent inherits Rectangle {
     in property <int> vol;
     in property <int> mic;
     in property <percent> cpu;
-    in property <bool> is-inhibit;
+    in property <percent> temp;
+    in property <int> bright;
+    in-out property <bool> is-inhibit;
     pure callback get-search-active() -> bool;
     callback toggle-search-active();
     callback select-wifi();
     callback select-bluetooth();
+    callback toggle-inhibit(bool);
+    callback bright-menu-focus();
     y: get-search-active() ? 35px : 0px;
     background: UAppTheme.bg-container;
 
@@ -412,7 +417,11 @@ export component DisplayComponent inherits Rectangle {
             UIconButton {
                 width: self.height;
                 variant: text;
-                icon: !!is-inhibit ? @image-url("../assets/sleek/outlined/eye.svg") : @image-url("../assets/sleek/outlined/eye-invisible.svg");
+                icon: is-inhibit ? @image-url("../assets/sleek/outlined/eye.svg") : @image-url("../assets/sleek/outlined/eye-invisible.svg");
+                clicked => {
+                    is-inhibit = !is-inhibit;
+                    toggle-inhibit(root.is-inhibit);
+                }
             }
         }
 
@@ -456,31 +465,40 @@ export component DisplayComponent inherits Rectangle {
                             }
                         }
 
-                        UText {
-                            vertical-alignment: center;
-                            text: "50%";
+                        ULinearProgress {
+                            orientation: vertical;
+                            height: parent.height;
+                            progress: temp;
                         }
 
                         Rectangle {
                             height: parent.height;
                             width: self.height;
                             UIcon {
-                                source: @image-url("../assets/sleek/filled/sound.svg");
+                                source: @image-url("../assets/sleek/filled/temp.svg");
                             }
                         }
                     }
                 }
 
-                UIconButton {
+                UCard {
+                    height: parent.height;
                     width: self.height;
-                    variant: text;
-                    icon: @image-url("../assets/sleek/outlined/euro-circle.svg");
+                    UIconButton {
+                        height: parent.height - 5px;
+                        width: self.height;
+                        variant: text;
+                        icon: @image-url("../assets/sleek/filled/circle-25.svg");
+                        clicked => {
+                            bright-menu-focus();
+                        }
+                    }
                 }
 
                 UIconButton {
-                    width: self.height;
+                    width: self.height - 5px;
                     variant: text;
-                    icon: @image-url("../assets/sleek/outlined/like.svg");
+                    icon: @image-url("../assets/sleek/outlined/battery-half.svg");
                 }
 
                 UIconButton {

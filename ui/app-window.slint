@@ -58,7 +58,7 @@ export global MainState {
     in-out property <int> mic;
     in property <int> brightness;
     in property <percent> cpu;
-    in property <percent> disk;
+    in property <percent> temp;
     pure callback get-time();
     pure callback get-date();
     pure callback get-volume();
@@ -67,7 +67,7 @@ export global MainState {
     pure callback set-mic(int);
     pure callback get-bright();
     pure callback set-bright(int);
-    pure callback get-disk();
+    pure callback get-temp();
     pure callback get-cpu();
     pure public function is-light-theme() -> bool {
         if Palette.color-scheme == ColorScheme.light {
@@ -84,15 +84,15 @@ export component Menu inherits Window {
     property <int> mic <=> MainState.mic;
     property <int> bright <=> MainState.brightness;
     property <percent> cpu <=> MainState.cpu;
-    property <percent> disk <=> MainState.disk;
+    property <percent> temp <=> MainState.temp;
     callback power-action(string);
 
     changed cpu => {
         cpu-bar.progress = self.cpu;
     }
 
-    changed disk => {
-        disk-bar.progress = self.disk;
+    changed temp => {
+        temp-bar.progress = self.temp;
     }
     changed mic => {
         mic-slider.value = self.mic;
@@ -125,7 +125,7 @@ export component Menu inherits Window {
             if first-run {
                 first-run = false;
                 MainState.get-date();
-                MainState.get-disk();
+                MainState.get-temp();
             }
         }
     }
@@ -135,7 +135,7 @@ export component Menu inherits Window {
         interval: 3600s;
         triggered => {
             MainState.get-date();
-            MainState.get-disk();
+            MainState.get-temp();
         }
     }
 
@@ -332,12 +332,12 @@ export component Menu inherits Window {
                             spacing: UAppTheme.spacing-medium;
                             UIcon {
                                 vertical-alignment: ImageVerticalAlignment.top;
-                                source: @image-url("../assets/sleek/filled/disk.svg");
+                                source: @image-url("../assets/sleek/filled/cpu.svg");
                             }
 
                             Rectangle {
                                 width: parent.width - 2 * UAppTheme.padding-big;
-                                disk-bar := ULinearProgress {
+                                temp-bar := ULinearProgress {
                                     width: parent.width;
                                     progress: 50%;
                                 }
@@ -418,6 +418,7 @@ export component Menu inherits Window {
 }
 
 export component TopBar inherits Window {
+    callback toggle-inhibit(bool);
     callback search-toggle(bool);
     callback query-applications(string);
     callback query-clipboard(string);
@@ -557,6 +558,8 @@ export component TopBar inherits Window {
             MainState.get-mic();
             MainState.get-volume();
             MainState.get-cpu();
+            MainState.get-temp();
+            MainState.get-bright()
         }
     }
 
@@ -744,6 +747,8 @@ export component TopBar inherits Window {
                     vol: MainState.vol;
                     mic: MainState.mic;
                     cpu: MainState.cpu;
+                    temp: MainState.temp;
+                    bright: MainState.brightness;
                     is-inhibit: is-inhibit;
                     get-search-active => {
                         search-active
@@ -756,6 +761,9 @@ export component TopBar inherits Window {
                     }
                     select-bluetooth => {
                         selected = SelectedSection.Bluetooth;
+                    }
+                    toggle-inhibit(val) => {
+                        toggle-inhibit(val);
                     }
                 }
             }

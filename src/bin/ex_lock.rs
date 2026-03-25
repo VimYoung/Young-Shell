@@ -6,7 +6,7 @@ use spell_framework::wayland_adapter::SpellLock;
 slint::include_modules!();
 
 fn main() -> Result<(), Box<dyn Error>> {
-    env::set_var("SLINT_STYLE", "cosmic-dark");
+    // env::set_var("SLINT_STYLE", "cosmic-dark");
     let lock = SpellLock::invoke_lock_spell();
     let lock_ui = LockScreen::new().unwrap();
     let looop_handle = lock.get_handler();

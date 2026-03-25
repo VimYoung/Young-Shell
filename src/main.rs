@@ -4,9 +4,8 @@ mod workspace;
 use bar::configure_bar;
 use slint::{ComponentHandle, SharedString};
 use spell_framework::{
-    cast_spell,
+    IpcController, cast_spell,
     layer_properties::{BoardType, LayerAnchor, LayerType, WindowConf},
-    IpcController,
 };
 use workspace::configure_workpaces;
 
@@ -101,47 +100,47 @@ fn main() -> Result<(), Box<dyn Error>> {
     cast_spell!(windows: [menu, bar, workspace])
 }
 
-impl IpcController for TopBar {
-    fn get_type(&self, key: &str) -> String {
-        match key {
-            "is-search-on" => self.get_state().is_search_on.to_string(),
-            _ => String::from("Undocumented input"),
-        }
-    }
-    fn change_val(&mut self, key: &str, val: &str) {
-        match key {
-            "is-search-on" => self.set_state(BarState {
-                is_search_on: val.parse::<bool>().unwrap(),
-            }),
-            _ => {}
-        }
-    }
-}
+// impl IpcController for TopBar {
+//     fn get_type(&self, key: &str) -> String {
+//         match key {
+//             "is-search-on" => self.get_state().is_search_on.to_string(),
+//             _ => String::from("Undocumented input"),
+//         }
+//     }
+//     fn change_val(&mut self, key: &str, val: &str) {
+//         match key {
+//             "is-search-on" => self.set_state(BarState {
+//                 is_search_on: val.parse::<bool>().unwrap(),
+//             }),
+//             _ => {}
+//         }
+//     }
+// }
 
-impl IpcController for Menu {
-    fn get_type(&self, key: &str) -> String {
-        match key {
-            "is-power-menu-open" => self.get_state().is_power_menu_open.to_string(),
-            _ => String::from("Undocumented input"),
-        }
-    }
+// impl IpcController for Menu {
+//     fn get_type(&self, key: &str) -> String {
+//         match key {
+//             "is-power-menu-open" => self.get_state().is_power_menu_open.to_string(),
+//             _ => String::from("Undocumented input"),
+//         }
+//     }
 
-    fn change_val(&mut self, key: &str, val: &str) {
-        let mut state = self.get_state();
-        match key {
-            "is-power-menu-open" => {
-                state.is_power_menu_open = val.trim().parse::<bool>().unwrap();
-                self.set_state(state);
-            }
-            "string-type" => {
-                state.string_type = SharedString::from(val);
-                self.set_state(state);
-            }
-            "enumsss" => println!("{:?}", state.cards_type),
-            _ => {}
-        }
-    }
-}
+//     fn change_val(&mut self, key: &str, val: &str) {
+//         let mut state = self.get_state();
+//         match key {
+//             "is-power-menu-open" => {
+//                 state.is_power_menu_open = val.trim().parse::<bool>().unwrap();
+//                 self.set_state(state);
+//             }
+//             "string-type" => {
+//                 state.string_type = SharedString::from(val);
+//                 self.set_state(state);
+//             }
+//             "enumsss" => println!("{:?}", state.cards_type),
+//             _ => {}
+//         }
+//     }
+// }
 // TODO the cursor doesn't change from pointer to hand when clicking buttons, so the
 // cursor needs to do that.
 // TODO Lookup child creation in wayland, how can it be utilised.
