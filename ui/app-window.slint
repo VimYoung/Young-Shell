@@ -424,7 +424,9 @@ export component TopBar inherits Window {
     callback query-clipboard(string);
     callback open-app(string);
     callback set-clip(string);
-    property <bool> search-active: false;
+    pure callback refresh-battery();
+    in-out property <bool> search-active: false;
+    in-out property <string> battery-val: "Unknown";
     property <SelectedSection> selected: Application;
     pure function selected-string(selection: SelectedSection) -> string {
         if selection == SelectedSection.Application {
@@ -559,7 +561,8 @@ export component TopBar inherits Window {
             MainState.get-volume();
             MainState.get-cpu();
             MainState.get-temp();
-            MainState.get-bright()
+            MainState.get-bright();
+            refresh-battery();
         }
     }
 
@@ -588,7 +591,7 @@ export component TopBar inherits Window {
             wifi-on: wifi-on;
             connected-network: connected-network;
             set-app(val) => {
-                open-app(app_lines[val].name);
+                open-app(app_lines[val].action);
             }
             set-clip(val) => {
                 set-clip(clip_lines[val]);
@@ -670,7 +673,8 @@ export component TopBar inherits Window {
                             placeholder: "Search " + selected_string(selected) + "...";
                             accepted => {
                                 if selected == SelectedSection.Application {
-                                    open-app(app_lines[option-window.selected-content].name);
+                                    open-app(app_lines[option-window.selected-content].action);
+                                    search-active = false;
                                 } else if selected == SelectedSection.Clipboard {
                                     set-clip(clip_lines[option-window.selected-content])
                                 }
@@ -700,9 +704,11 @@ export component TopBar inherits Window {
                                     }
                                     accept;
                                 } else if event.text == Key.Escape {
-                                    if root.search-active {
+                                    if search-active {
+                                        search-bar.select-all();
                                         search-active = false;
                                     } else {
+                                        search-bar.select-all();
                                         search-active = true;
                                     }
                                     accept;
@@ -749,6 +755,7 @@ export component TopBar inherits Window {
                     cpu: MainState.cpu;
                     temp: MainState.temp;
                     bright: MainState.brightness;
+                    battery-val: battery-val;
                     is-inhibit: is-inhibit;
                     get-search-active => {
                         search-active

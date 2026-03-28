@@ -345,6 +345,8 @@ export component DisplayComponent inherits Rectangle {
     in property <percent> cpu;
     in property <percent> temp;
     in property <int> bright;
+    in property <string> battery-val;
+    out property <bool> battery-text;
     in-out property <bool> is-inhibit;
     pure callback get-search-active() -> bool;
     callback toggle-search-active();
@@ -357,7 +359,7 @@ export component DisplayComponent inherits Rectangle {
 
     HorizontalLayout {
         padding: UAppTheme.padding-small;
-        alignment: space-between;
+        alignment: LayoutAlignment.space-between;
         HorizontalLayout {
             spacing: UAppTheme.spacing-base;
             UCard {
@@ -495,10 +497,21 @@ export component DisplayComponent inherits Rectangle {
                     }
                 }
 
-                UIconButton {
-                    width: self.height - 5px;
-                    variant: text;
-                    icon: @image-url("../assets/sleek/outlined/battery-half.svg");
+                UCard {
+                    width: battery-text ? 3 * self.height : self.height;
+                    if !battery-text: UIcon {
+                        width: self.height;
+                        image-fit: cover;
+                        source: @image-url("../assets/sleek/outlined/battery-half.svg");
+                    }
+                    if battery-text: UText {
+                        text: battery-val;
+                    }
+                    TouchArea {
+                        clicked => {
+                            battery-text = !battery-text;
+                        }
+                    }
                 }
 
                 UIconButton {

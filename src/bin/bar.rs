@@ -1,5 +1,6 @@
 use chrono::Local;
 use slint::{ComponentHandle, Image, SharedString};
+use spell_framework::IpcController;
 use spell_framework::vault::AppSelector;
 use spell_framework::{
     cast_spell,
@@ -25,32 +26,33 @@ fn main() -> Result<(), Box<dyn Error>> {
     bar.set_exclusive_zone(30);
     let bar_tx = bar.get_handler();
     configure_bar(&mut bar, bar_tx);
-    cast_spell!(bar)
+    cast_spell!(windows: [(bar, ipc)])
 }
-//
-// impl ForeignController for BarState {
-//     fn get_type(&self, key: &str) -> DataType {
-//         match key {
-//             "is-search-on" => DataType::Boolean(self.is_search_on),
-//             _ => DataType::Panic,
-//         }
-//     }
-//
-//     fn change_val(&mut self, key: &str, val: DataType) {
-//         if key == "is-search-on" {
-//             if let DataType::Boolean(value) = val {
-//                 self.is_search_on = value;
-//             }
-//         }
-//     }
-//
-//     fn as_any(&self) -> &dyn Any {
-//         self
-//     }
-// }
+
+impl IpcController for TopBar {
+    fn change_val(&mut self, _key: &str, _val: &str) {}
+
+    fn get_type(&self, _key: &str) -> String {
+        String::from("")
+    }
+
+    fn custom_command(&mut self, command: &str) {
+        match command {
+            "toggle_search" => {
+                if self.get_search_active() {
+                    self.set_search_active(false);
+                } else {
+                    self.set_search_active(true);
+                }
+            }
+            _ => {}
+        }
+    }
+}
 
 fn configure_bar(bar: &mut TopBarSpell, bar_tx: WinHandle) {
     let app_selector = AppSelector::default();
+    // println!("{:#?}", app_selector);
     let app_data_slint: Vec<AppLineData> = app_selector
         .get_primary()
         .map(|value| {
@@ -85,7 +87,8 @@ fn configure_bar(bar: &mut TopBarSpell, bar_tx: WinHandle) {
         } else {
             command_val = &string_val;
         };
-        let mut final_comm = Command::new(command_val);
+        let mut final_comm = Command::new("setsid");
+        final_comm.arg(command_val);
         if !args_vec.is_empty() {
             args_vec.iter().for_each(|argument| {
                 final_comm.arg(argument);
@@ -357,4 +360,23 @@ fn configure_bar(bar: &mut TopBarSpell, bar_tx: WinHandle) {
                 .set_brightness(bright_int);
         }
     });
+
+    bar.on_refresh_battery({
+        let bar_handle = bar.as_weak();
+        move || {
+            let output = std::process::Command::new("sh")
+                .args(["-c", "acpi -b"])
+                .output()
+                .unwrap();
+            let text = String::from_utf8_lossy(&output.stdout);
+            if let Some((before, _)) = text.rsplit_once(':') {
+                let mut vals: Vec<&str> = before.split(", ").collect();
+                vals.remove(0);
+                let output_string = vals.join(" ");
+                bar_handle
+                    .unwrap()
+                    .set_battery_val(SharedString::from(output_string));
+            }
+        }
+    })
 }

@@ -148,7 +148,7 @@ export component AppViewer inherits Rectangle {
                     image_path: line.image;
                     app_name: line.name;
                     open_app => {
-                        root.open-app(line.action)
+                        root.open-app(line.name)
                     }
                 }
             }
