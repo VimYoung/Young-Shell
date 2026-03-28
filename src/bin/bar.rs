@@ -7,7 +7,7 @@ use spell_framework::{
     layer_properties::{BoardType, LayerAnchor, LayerType, WindowConf},
 };
 use std::{env, error::Error, path::Path, process::Command, rc::Rc, thread};
-use sysinfo::{CpuRefreshKind, RefreshKind, System};
+use sysinfo::{Components, CpuRefreshKind, RefreshKind, System};
 slint::include_modules!();
 spell_framework::generate_widgets![TopBar];
 
@@ -378,5 +378,24 @@ fn configure_bar(bar: &mut TopBarSpell, bar_tx: WinHandle) {
                     .set_battery_val(SharedString::from(output_string));
             }
         }
-    })
+    });
+    let mut components = Components::new_with_refreshed_list();
+
+    bar.global::<MainState>().on_get_temp({
+        let bar_handle = bar.as_weak();
+        move || {
+            let mut total: f32 = 0.0;
+            for component in components.iter_mut() {
+                component.refresh();
+                total += component.temperature().unwrap_or_default();
+            }
+            let temp = total / components.len() as f32;
+            bar_handle.unwrap().global::<MainState>().set_temp(temp);
+        }
+    });
+    // bar.on_refresh_temp({
+    //     let bar_handle = bar.as_weak();
+    //     move || {
+    //    }
+    // })
 }

@@ -1,8 +1,9 @@
 use std::error::Error;
 mod bar;
+mod menu;
 mod workspace;
 use bar::configure_bar;
-use slint::{ComponentHandle, SharedString};
+use menu::configure_menu;
 use spell_framework::{
     IpcController, cast_spell,
     layer_properties::{BoardType, LayerAnchor, LayerType, WindowConf},
@@ -13,7 +14,6 @@ slint::include_modules!();
 spell_framework::generate_widgets![TopBar, Menu, Workspaces];
 
 fn main() -> Result<(), Box<dyn Error>> {
-    std::env::set_var("RUST_BACKTRACE", "1");
     let mut bar = TopBarSpell::invoke_spell(
         "top-bar",
         WindowConf::new(
@@ -26,7 +26,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             Some(30),
         ),
     );
-    let menu = MenuSpell::invoke_spell(
+    let mut menu = MenuSpell::invoke_spell(
         "menu",
         WindowConf::new(
             376,
@@ -82,66 +82,30 @@ fn main() -> Result<(), Box<dyn Error>> {
     let bar_tx = bar.get_handler();
     let menu_tx = menu.get_handler();
 
+    configure_menu(&mut menu);
     configure_bar(&mut bar, bar_tx);
     configure_workpaces(&mut workspace);
     menu_tx.toggle();
-    // bar.global::<Rice>().on_get_volume(|| {
-    //     let val = Command::new("sh").arg("-c").arg("pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $SINK + 1 )) | tail -n 1 | sed -e 's,.* \\([0-9][0-9]*\\)%.*,\\1,'").output().unwrap();
-    //     let output_str =  String::from_utf8(val.stderr).unwrap();
-    //     println!("{}",output_str);
-    //     output_str.into()
-    // });
-    //
-    // let m = bar.as_weak().clone();
-    // forge.add_event(Duration::from_secs(1), |_| {
-    //     // bar.global::<Rice>().invoke_get_volume();
-    //     m._walls_window_called();
-    // });
-    cast_spell!(windows: [menu, bar, workspace])
+    cast_spell!(windows: [menu, (bar,ipc), workspace])
 }
 
-// impl IpcController for TopBar {
-//     fn get_type(&self, key: &str) -> String {
-//         match key {
-//             "is-search-on" => self.get_state().is_search_on.to_string(),
-//             _ => String::from("Undocumented input"),
-//         }
-//     }
-//     fn change_val(&mut self, key: &str, val: &str) {
-//         match key {
-//             "is-search-on" => self.set_state(BarState {
-//                 is_search_on: val.parse::<bool>().unwrap(),
-//             }),
-//             _ => {}
-//         }
-//     }
-// }
+impl IpcController for TopBar {
+    fn change_val(&mut self, _key: &str, _val: &str) {}
 
-// impl IpcController for Menu {
-//     fn get_type(&self, key: &str) -> String {
-//         match key {
-//             "is-power-menu-open" => self.get_state().is_power_menu_open.to_string(),
-//             _ => String::from("Undocumented input"),
-//         }
-//     }
+    fn get_type(&self, _key: &str) -> String {
+        String::from("")
+    }
 
-//     fn change_val(&mut self, key: &str, val: &str) {
-//         let mut state = self.get_state();
-//         match key {
-//             "is-power-menu-open" => {
-//                 state.is_power_menu_open = val.trim().parse::<bool>().unwrap();
-//                 self.set_state(state);
-//             }
-//             "string-type" => {
-//                 state.string_type = SharedString::from(val);
-//                 self.set_state(state);
-//             }
-//             "enumsss" => println!("{:?}", state.cards_type),
-//             _ => {}
-//         }
-//     }
-// }
-// TODO the cursor doesn't change from pointer to hand when clicking buttons, so the
-// cursor needs to do that.
-// TODO Lookup child creation in wayland, how can it be utilised.
-// TODO Lookup popup in wayland to see if that helps in anything.
+    fn custom_command(&mut self, command: &str) {
+        match command {
+            "toggle_search" => {
+                if self.get_search_active() {
+                    self.set_search_active(false);
+                } else {
+                    self.set_search_active(true);
+                }
+            }
+            _ => {}
+        }
+    }
+}

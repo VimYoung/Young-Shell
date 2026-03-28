@@ -1,45 +1,17 @@
+use crate::{MainState, MenuSpell, MprisState};
 use chrono::Local;
 use image::{imageops::crop_imm, open};
 use imageproc::filter::gaussian_blur_f32;
 use slint::{ComponentHandle, Image, SharedString};
-use spell_framework::{
-    self, cast_spell,
-    layer_properties::{BoardType, LayerAnchor, LayerType, WindowConf},
-    vault::mpris::PlayerFinder,
-};
+use spell_framework::{self, vault::mpris::PlayerFinder};
 use std::{
-    env,
     error::Error,
     fs,
     path::{Path, PathBuf},
 };
 use sysinfo::{Components, CpuRefreshKind, RefreshKind, System};
-slint::include_modules!();
-spell_framework::generate_widgets![Menu];
 
-fn main() -> Result<(), Box<dyn Error>> {
-    // let window_conf = WindowConf::builder()
-    //     .width(376_u32)
-    //     .height(576_u32)
-    //     .anchor_1(LayerAnchor::TOP)
-    //     .margins(5, 0, 0, 10)
-    //     .layer_type(LayerType::Top)
-    //     .build()
-    //     .unwrap();
-    let menu = MenuSpell::invoke_spell(
-        "menu",
-        // WindowConf::builder()
-        WindowConf::new(
-            376,
-            576,
-            (Some(LayerAnchor::TOP), Some(LayerAnchor::RIGHT)),
-            (5, 0, 0, 10),
-            LayerType::Top,
-            BoardType::None,
-            None,
-        ),
-    );
-
+pub fn configure_menu(menu: &mut MenuSpell) {
     let mut s =
         System::new_with_specifics(RefreshKind::nothing().with_cpu(CpuRefreshKind::everything()));
 
@@ -258,7 +230,6 @@ fn main() -> Result<(), Box<dyn Error>> {
     });
 
     menu.invoke_set_dark_theme();
-    cast_spell!(menu)
 }
 
 pub fn crop_blur_center<P: AsRef<Path>>(

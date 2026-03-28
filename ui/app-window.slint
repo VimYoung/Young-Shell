@@ -122,10 +122,10 @@ export component Menu inherits Window {
             MainState.get-mic();
             MainState.get-bright();
             MainState.get-cpu();
+            MainState.get-temp();
             if first-run {
                 first-run = false;
                 MainState.get-date();
-                MainState.get-temp();
             }
         }
     }
