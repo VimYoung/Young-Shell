@@ -1,2417 +1,975 @@
-warning: unused variable: `width`
-   --> /home/ramayen/Documents/projects/Spell/spell-framework/src/wayland_adapter.rs:341:17
-    |
-341 |             let width: u32 = self.adapter.size.get().width;
-    |                 ^^^^^ help: if this is intentional, prefix it with an underscore: `_width`
-    |
-    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+[32m INFO[0m Setting keyboard capability
+[32m INFO[0m Setting pointer capability
+[32m INFO[0m Win: top-bar layer created successfully.
+[32m INFO[0m Win: menu layer created successfully.
+[32m INFO[0m Win: workspace layer created successfully.
+AppSelector {
+    app_list: [
+        AppData {
+            desktop_file_id: "org.gnome.dspy.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "D-Spy",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=d-spy org.gnome.dspy",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.gnome.dspy.desktop",
+            is_primary: false,
+            image_path: None,
+            name: "D-Spy - New Window",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=d-spy org.gnome.dspy --new-window",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.onlyoffice.desktopeditors.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/var/lib/flatpak/exports/share/icons/hicolor/24x24/apps/org.onlyoffice.desktopeditors.png",
+            ),
+            name: "ONLYOFFICE",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=desktopeditors --file-forwarding org.onlyoffice.desktopeditors @@u  @@",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.onlyoffice.desktopeditors.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/var/lib/flatpak/exports/share/icons/hicolor/24x24/apps/org.onlyoffice.desktopeditors.png",
+            ),
+            name: "ONLYOFFICE - New document",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=desktopeditors org.onlyoffice.desktopeditors --new:word",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.onlyoffice.desktopeditors.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/var/lib/flatpak/exports/share/icons/hicolor/24x24/apps/org.onlyoffice.desktopeditors.png",
+            ),
+            name: "ONLYOFFICE - New spreadsheet",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=desktopeditors org.onlyoffice.desktopeditors --new:cell",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.onlyoffice.desktopeditors.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/var/lib/flatpak/exports/share/icons/hicolor/24x24/apps/org.onlyoffice.desktopeditors.png",
+            ),
+            name: "ONLYOFFICE - New presentation",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=desktopeditors org.onlyoffice.desktopeditors --new:slide",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.onlyoffice.desktopeditors.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/var/lib/flatpak/exports/share/icons/hicolor/24x24/apps/org.onlyoffice.desktopeditors.png",
+            ),
+            name: "ONLYOFFICE - New PDF",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=desktopeditors org.onlyoffice.desktopeditors --new:form",
+            ),
+        },
+        AppData {
+            desktop_file_id: "com.obsproject.Studio.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "OBS Studio",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=obs com.obsproject.Studio",
+            ),
+        },
+        AppData {
+            desktop_file_id: "com.discordapp.Discord.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Discord",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=com.discordapp.Discord --file-forwarding com.discordapp.Discord @@u  @@",
+            ),
+        },
+        AppData {
+            desktop_file_id: "app.zen_browser.zen.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Zen Browser",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=launch-script.sh --file-forwarding app.zen_browser.zen @@u  @@",
+            ),
+        },
+        AppData {
+            desktop_file_id: "app.zen_browser.zen.desktop",
+            is_primary: false,
+            image_path: None,
+            name: "Zen Browser - Open a New Window",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=launch-script.sh --file-forwarding app.zen_browser.zen @@u  @@",
+            ),
+        },
+        AppData {
+            desktop_file_id: "app.zen_browser.zen.desktop",
+            is_primary: false,
+            image_path: None,
+            name: "Zen Browser - Open a New Blank Window",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=launch-script.sh --file-forwarding app.zen_browser.zen --blank-window @@u  @@",
+            ),
+        },
+        AppData {
+            desktop_file_id: "app.zen_browser.zen.desktop",
+            is_primary: false,
+            image_path: None,
+            name: "Zen Browser - Open a New Private Window",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=launch-script.sh --file-forwarding app.zen_browser.zen --private-window @@u  @@",
+            ),
+        },
+        AppData {
+            desktop_file_id: "app.zen_browser.zen.desktop",
+            is_primary: false,
+            image_path: None,
+            name: "Zen Browser - Open the Profile Manager",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=launch-script.sh --file-forwarding app.zen_browser.zen --ProfileManager @@u  @@",
+            ),
+        },
+        AppData {
+            desktop_file_id: "com.visualstudio.code.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Visual Studio Code",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=code --file-forwarding com.visualstudio.code --reuse-window @@  @@",
+            ),
+        },
+        AppData {
+            desktop_file_id: "com.visualstudio.code.desktop",
+            is_primary: false,
+            image_path: None,
+            name: "Visual Studio Code - New Empty Window",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=code --file-forwarding com.visualstudio.code --new-window @@  @@",
+            ),
+        },
+        AppData {
+            desktop_file_id: "it.mijorus.gearlever.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Gear Lever",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=gearlever --file-forwarding it.mijorus.gearlever @@u  @@",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.mozilla.Thunderbird.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Thunderbird",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=thunderbird --file-forwarding org.mozilla.Thunderbird @@u  @@",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.mozilla.Thunderbird.desktop",
+            is_primary: false,
+            image_path: None,
+            name: "Thunderbird - Write New Message",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=thunderbird org.mozilla.Thunderbird -compose",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.mozilla.Thunderbird.desktop",
+            is_primary: false,
+            image_path: None,
+            name: "Thunderbird - Open the Address Book",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=thunderbird org.mozilla.Thunderbird -addressbook",
+            ),
+        },
+        AppData {
+            desktop_file_id: "nvim.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Neovim",
+            exec_comm: Some(
+                "nvim",
+            ),
+        },
+        AppData {
+            desktop_file_id: "btrfs-assistant.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Btrfs Assistant",
+            exec_comm: Some(
+                "btrfs-assistant-launcher",
+            ),
+        },
+        AppData {
+            desktop_file_id: "octopi-cachecleaner.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Octopi CacheCleaner",
+            exec_comm: Some(
+                "/usr/bin/octopi-cachecleaner",
+            ),
+        },
+        AppData {
+            desktop_file_id: "octopi-notifier.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Octopi Notifier",
+            exec_comm: Some(
+                "/usr/bin/octopi-notifier",
+            ),
+        },
+        AppData {
+            desktop_file_id: "octopi-repoeditor.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Octopi Repository Editor",
+            exec_comm: Some(
+                "/usr/bin/octopi-repoeditor",
+            ),
+        },
+        AppData {
+            desktop_file_id: "octopi.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Octopi",
+            exec_comm: Some(
+                "/usr/bin/octopi",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.pulseaudio.pavucontrol.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Volume Control",
+            exec_comm: Some(
+                "pavucontrol",
+            ),
+        },
+        AppData {
+            desktop_file_id: "Alacritty.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Alacritty",
+            exec_comm: Some(
+                "alacritty",
+            ),
+        },
+        AppData {
+            desktop_file_id: "Alacritty.desktop",
+            is_primary: false,
+            image_path: None,
+            name: "Alacritty - New Terminal",
+            exec_comm: Some(
+                "alacritty",
+            ),
+        },
+        AppData {
+            desktop_file_id: "btop.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "btop++",
+            exec_comm: Some(
+                "btop",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.gnome.Meld.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Meld",
+            exec_comm: Some(
+                "meld",
+            ),
+        },
+        AppData {
+            desktop_file_id: "qt5ct.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Qt5 Settings",
+            exec_comm: Some(
+                "qt5ct",
+            ),
+        },
+        AppData {
+            desktop_file_id: "xgps.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/gpsd/icons/gpsd-logo.png",
+            ),
+            name: "xgps",
+            exec_comm: Some(
+                "xgps",
+            ),
+        },
+        AppData {
+            desktop_file_id: "xgpsspeed.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/gpsd/icons/gpsd-logo.png",
+            ),
+            name: "xgpsspeed",
+            exec_comm: Some(
+                "xgpsspeed",
+            ),
+        },
+        AppData {
+            desktop_file_id: "start-tor-browser.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/home/ramayen/tor-browser/Browser/browser/chrome/icons/default/default128.png",
+            ),
+            name: "Tor Browser",
+            exec_comm: Some(
+                "sh -c '/home/ramayen/tor-browser/Browser/start-tor-browser || ([ !  -x /home/ramayen/tor-browser/Browser/start-tor-browser ] && $(dirname $*)/Browser/start-tor-browser)' dummy",
+            ),
+        },
+        AppData {
+            desktop_file_id: "ranger.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "ranger",
+            exec_comm: Some(
+                "ranger",
+            ),
+        },
+        AppData {
+            desktop_file_id: "avahi-discover.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Avahi Zeroconf Browser",
+            exec_comm: Some(
+                "/usr/bin/avahi-discover",
+            ),
+        },
+        AppData {
+            desktop_file_id: "bssh.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Avahi SSH Server Browser",
+            exec_comm: Some(
+                "/usr/bin/bssh",
+            ),
+        },
+        AppData {
+            desktop_file_id: "bvnc.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Avahi VNC Server Browser",
+            exec_comm: Some(
+                "/usr/bin/bvnc",
+            ),
+        },
+        AppData {
+            desktop_file_id: "micro.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Micro",
+            exec_comm: Some(
+                "micro",
+            ),
+        },
+        AppData {
+            desktop_file_id: "kvantummanager.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Kvantum Manager",
+            exec_comm: Some(
+                "kvantummanager",
+            ),
+        },
+        AppData {
+            desktop_file_id: "mpv.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "mpv Media Player",
+            exec_comm: Some(
+                "mpv --player-operation-mode=pseudo-gui --",
+            ),
+        },
+        AppData {
+            desktop_file_id: "deluge.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/24x24/apps/deluge.png",
+            ),
+            name: "Deluge",
+            exec_comm: Some(
+                "deluge-gtk",
+            ),
+        },
+        AppData {
+            desktop_file_id: "transmission-qt.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Transmission (Qt)",
+            exec_comm: Some(
+                "transmission-qt",
+            ),
+        },
+        AppData {
+            desktop_file_id: "transmission-qt.desktop",
+            is_primary: false,
+            image_path: None,
+            name: "Transmission (Qt) - Start Transmission Minimized",
+            exec_comm: Some(
+                "transmission-qt --minimized",
+            ),
+        },
+        AppData {
+            desktop_file_id: "uuctl.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "uuctl",
+            exec_comm: Some(
+                "uuctl",
+            ),
+        },
+        AppData {
+            desktop_file_id: "rofi-theme-selector.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Rofi Theme Selector",
+            exec_comm: Some(
+                "rofi-theme-selector",
+            ),
+        },
+        AppData {
+            desktop_file_id: "rofi.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Rofi",
+            exec_comm: Some(
+                "rofi -show",
+            ),
+        },
+        AppData {
+            desktop_file_id: "com.github.dynobo.normcap.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "NormCap",
+            exec_comm: Some(
+                "normcap",
+            ),
+        },
+        AppData {
+            desktop_file_id: "qv4l2.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/24x24/apps/qv4l2.png",
+            ),
+            name: "Qt V4L2 test Utility",
+            exec_comm: Some(
+                "qv4l2",
+            ),
+        },
+        AppData {
+            desktop_file_id: "qvidcap.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/24x24/apps/qvidcap.png",
+            ),
+            name: "Qt V4L2 video capture utility",
+            exec_comm: Some(
+                "qvidcap",
+            ),
+        },
+        AppData {
+            desktop_file_id: "cachyos-pi.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "CachyOS Package Installer",
+            exec_comm: Some(
+                "/usr/bin/cachyos-pi",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.kde.dolphin.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Dolphin",
+            exec_comm: Some(
+                "dolphin",
+            ),
+        },
+        AppData {
+            desktop_file_id: "firefox.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/24x24/apps/firefox.png",
+            ),
+            name: "Firefox",
+            exec_comm: Some(
+                "/usr/lib/firefox/firefox",
+            ),
+        },
+        AppData {
+            desktop_file_id: "firefox.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/usr/share/icons/hicolor/24x24/apps/firefox.png",
+            ),
+            name: "Firefox - New Window",
+            exec_comm: Some(
+                "/usr/lib/firefox/firefox --new-window",
+            ),
+        },
+        AppData {
+            desktop_file_id: "firefox.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/usr/share/icons/hicolor/24x24/apps/firefox.png",
+            ),
+            name: "Firefox - New Private Window",
+            exec_comm: Some(
+                "/usr/lib/firefox/firefox --private-window",
+            ),
+        },
+        AppData {
+            desktop_file_id: "firefox.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/usr/share/icons/hicolor/24x24/apps/firefox.png",
+            ),
+            name: "Firefox - Open Profile Manager",
+            exec_comm: Some(
+                "/usr/lib/firefox/firefox --ProfileManager",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.kde.kamoso.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Kamoso",
+            exec_comm: Some(
+                "kamoso -qwindowtitle",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.cachyos.scx-manager.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "SchedExt GUI Manager",
+            exec_comm: Some(
+                "scx-manager",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.pwmt.zathura.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Zathura",
+            exec_comm: Some(
+                "zathura",
+            ),
+        },
+        AppData {
+            desktop_file_id: "gimp.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/24x24/apps/gimp.png",
+            ),
+            name: "GNU Image Manipulation Program",
+            exec_comm: Some(
+                "gimp-3.2",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.gnome.Nautilus.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Files",
+            exec_comm: Some(
+                "nautilus --new-window",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.gnome.Nautilus.desktop",
+            is_primary: false,
+            image_path: None,
+            name: "Files - New Window",
+            exec_comm: Some(
+                "nautilus --new-window",
+            ),
+        },
+        AppData {
+            desktop_file_id: "ca.desrt.dconf-editor.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "dconf Editor",
+            exec_comm: Some(
+                "dconf-editor",
+            ),
+        },
+        AppData {
+            desktop_file_id: "brave-browser.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/24x24/apps/brave-desktop.png",
+            ),
+            name: "Brave",
+            exec_comm: Some(
+                "brave",
+            ),
+        },
+        AppData {
+            desktop_file_id: "brave-browser.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/usr/share/icons/hicolor/24x24/apps/brave-desktop.png",
+            ),
+            name: "Brave - New Window",
+            exec_comm: Some(
+                "brave",
+            ),
+        },
+        AppData {
+            desktop_file_id: "brave-browser.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/usr/share/icons/hicolor/24x24/apps/brave-desktop.png",
+            ),
+            name: "Brave - New Incognito Window",
+            exec_comm: Some(
+                "brave --incognito",
+            ),
+        },
+        AppData {
+            desktop_file_id: "cachyos-hello.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "CachyOS Hello",
+            exec_comm: Some(
+                "/usr/bin/cachyos-hello",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.cachyos.KernelManager.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "CachyOS Kernel Manager",
+            exec_comm: Some(
+                "cachyos-kernel-manager",
+            ),
+        },
+        AppData {
+            desktop_file_id: "cmake-gui.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "CMake",
+            exec_comm: Some(
+                "cmake-gui",
+            ),
+        },
+        AppData {
+            desktop_file_id: "kitty.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "kitty",
+            exec_comm: Some(
+                "kitty",
+            ),
+        },
+        AppData {
+            desktop_file_id: "vim.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Vim",
+            exec_comm: Some(
+                "vim",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.gnome.dspy.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "D-Spy",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=d-spy org.gnome.dspy",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.gnome.dspy.desktop",
+            is_primary: false,
+            image_path: None,
+            name: "D-Spy - New Window",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=d-spy org.gnome.dspy --new-window",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.onlyoffice.desktopeditors.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/var/lib/flatpak/exports/share/icons/hicolor/24x24/apps/org.onlyoffice.desktopeditors.png",
+            ),
+            name: "ONLYOFFICE",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=desktopeditors --file-forwarding org.onlyoffice.desktopeditors @@u  @@",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.onlyoffice.desktopeditors.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/var/lib/flatpak/exports/share/icons/hicolor/24x24/apps/org.onlyoffice.desktopeditors.png",
+            ),
+            name: "ONLYOFFICE - New document",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=desktopeditors org.onlyoffice.desktopeditors --new:word",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.onlyoffice.desktopeditors.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/var/lib/flatpak/exports/share/icons/hicolor/24x24/apps/org.onlyoffice.desktopeditors.png",
+            ),
+            name: "ONLYOFFICE - New spreadsheet",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=desktopeditors org.onlyoffice.desktopeditors --new:cell",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.onlyoffice.desktopeditors.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/var/lib/flatpak/exports/share/icons/hicolor/24x24/apps/org.onlyoffice.desktopeditors.png",
+            ),
+            name: "ONLYOFFICE - New presentation",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=desktopeditors org.onlyoffice.desktopeditors --new:slide",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.onlyoffice.desktopeditors.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/var/lib/flatpak/exports/share/icons/hicolor/24x24/apps/org.onlyoffice.desktopeditors.png",
+            ),
+            name: "ONLYOFFICE - New PDF",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=desktopeditors org.onlyoffice.desktopeditors --new:form",
+            ),
+        },
+        AppData {
+            desktop_file_id: "com.obsproject.Studio.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "OBS Studio",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=obs com.obsproject.Studio",
+            ),
+        },
+        AppData {
+            desktop_file_id: "com.discordapp.Discord.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Discord",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=com.discordapp.Discord --file-forwarding com.discordapp.Discord @@u  @@",
+            ),
+        },
+        AppData {
+            desktop_file_id: "app.zen_browser.zen.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Zen Browser",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=launch-script.sh --file-forwarding app.zen_browser.zen @@u  @@",
+            ),
+        },
+        AppData {
+            desktop_file_id: "app.zen_browser.zen.desktop",
+            is_primary: false,
+            image_path: None,
+            name: "Zen Browser - Open a New Window",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=launch-script.sh --file-forwarding app.zen_browser.zen @@u  @@",
+            ),
+        },
+        AppData {
+            desktop_file_id: "app.zen_browser.zen.desktop",
+            is_primary: false,
+            image_path: None,
+            name: "Zen Browser - Open a New Blank Window",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=launch-script.sh --file-forwarding app.zen_browser.zen --blank-window @@u  @@",
+            ),
+        },
+        AppData {
+            desktop_file_id: "app.zen_browser.zen.desktop",
+            is_primary: false,
+            image_path: None,
+            name: "Zen Browser - Open a New Private Window",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=launch-script.sh --file-forwarding app.zen_browser.zen --private-window @@u  @@",
+            ),
+        },
+        AppData {
+            desktop_file_id: "app.zen_browser.zen.desktop",
+            is_primary: false,
+            image_path: None,
+            name: "Zen Browser - Open the Profile Manager",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=launch-script.sh --file-forwarding app.zen_browser.zen --ProfileManager @@u  @@",
+            ),
+        },
+        AppData {
+            desktop_file_id: "com.visualstudio.code.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Visual Studio Code",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=code --file-forwarding com.visualstudio.code --reuse-window @@  @@",
+            ),
+        },
+        AppData {
+            desktop_file_id: "com.visualstudio.code.desktop",
+            is_primary: false,
+            image_path: None,
+            name: "Visual Studio Code - New Empty Window",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=code --file-forwarding com.visualstudio.code --new-window @@  @@",
+            ),
+        },
+        AppData {
+            desktop_file_id: "it.mijorus.gearlever.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Gear Lever",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=gearlever --file-forwarding it.mijorus.gearlever @@u  @@",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.mozilla.Thunderbird.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Thunderbird",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=thunderbird --file-forwarding org.mozilla.Thunderbird @@u  @@",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.mozilla.Thunderbird.desktop",
+            is_primary: false,
+            image_path: None,
+            name: "Thunderbird - Write New Message",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=thunderbird org.mozilla.Thunderbird -compose",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.mozilla.Thunderbird.desktop",
+            is_primary: false,
+            image_path: None,
+            name: "Thunderbird - Open the Address Book",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=thunderbird org.mozilla.Thunderbird -addressbook",
+            ),
+        },
+        AppData {
+            desktop_file_id: "dev.zed.Zed.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/home/ramayen/.local/zed.app/share/icons/hicolor/512x512/apps/zed.png",
+            ),
+            name: "Zed",
+            exec_comm: Some(
+                "/home/ramayen/.local/zed.app/bin/zed",
+            ),
+        },
+        AppData {
+            desktop_file_id: "dev.zed.Zed.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/home/ramayen/.local/zed.app/share/icons/hicolor/512x512/apps/zed.png",
+            ),
+            name: "Zed - Open a new workspace",
+            exec_comm: Some(
+                "/home/ramayen/.local/zed.app/bin/zed --new",
+            ),
+        },
+        AppData {
+            desktop_file_id: "logseq.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/home/ramayen/AppImages/.icons/logseq",
+            ),
+            name: "Logseq",
+            exec_comm: Some(
+                "env DESKTOPINTEGRATION=1 /home/ramayen/AppImages/logseq.appimage",
+            ),
+        },
+        AppData {
+            desktop_file_id: "audacity.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/home/ramayen/AppImages/.icons/audacity",
+            ),
+            name: "Audacity",
+            exec_comm: Some(
+                "env DESKTOPINTEGRATION=1 /home/ramayen/AppImages/audacity.appimage",
+            ),
+        },
+        AppData {
+            desktop_file_id: "synfig_studio.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/home/ramayen/AppImages/.icons/synfig_studio",
+            ),
+            name: "Synfig Studio",
+            exec_comm: Some(
+                "env DESKTOPINTEGRATION=1 /home/ramayen/AppImages/synfig_studio.appimage",
+            ),
+        },
+    ],
+}
+[32m INFO[0m [1mslint-log[0m[2m:[0m Error loading image from /home/ramayen/AppImages/.icons/logseq: No such file or directory (os error 2)
+[32m INFO[0m [1mslint-log[0m[2m:[0m Error loading image from /home/ramayen/AppImages/.icons/audacity: No such file or directory (os error 2)
+[32m INFO[0m [1mslint-log[0m[2m:[0m Error loading image from /home/ramayen/AppImages/.icons/synfig_studio: The image format could not be determined
+[32m INFO[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 575]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Hiding window
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Setting keyboard capability
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Setting pointer capability
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Scale factor changed, compositor msg
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Scale factor changed, invoked from custom trait. 150
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Physical Size: width: 470, height: 720
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Scale factor changed, compositor msg
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Scale factor changed, invoked from custom trait. 150
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Physical Size: width: 1920, height: 763
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Setting keyboard capability
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Setting pointer capability
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Scale factor changed, compositor msg
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Scale factor changed, invoked from custom trait. 150
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Physical Size: width: 13, height: 923
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m t
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m o
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m r
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
 
-warning: unused variable: `height`
-   --> /home/ramayen/Documents/projects/Spell/spell-framework/src/wayland_adapter.rs:342:17
-    |
-342 |             let height: u32 = self.adapter.size.get().he...
-    |                 ^^^^^^ help: if this is intentional, prefix it with an underscore: `_height`
-
-warning: unused variable: `buffer`
-   --> /home/ramayen/Documents/projects/Spell/spell-framework/src/wayland_adapter.rs:361:17
-    |
-361 |             let buffer = &self.buffer;
-    |                 ^^^^^^ help: if this is intentional, prefix it with an underscore: `_buffer`
-
-warning: unused variable: `configure`
-   --> /home/ramayen/Documents/projects/Spell/spell-framework/src/wayland_adapter.rs:764:9
-    |
-764 |         configure: LayerSurfaceConfigure,
-    |         ^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_configure`
-
-warning: field `queue` is never read
-   --> /home/ramayen/Documents/projects/Spell/spell-framework/src/wayland_adapter.rs:107:16
-    |
-102 | pub struct SpellWin {
-    |            -------- field in this struct
-...
-107 |     pub(crate) queue: QueueHandle<SpellWin>,
-    |                ^^^^^
-    |
-    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
-
-warning: `spell-framework` (lib) generated 5 warnings (run `cargo fix --lib -p spell-framework` to apply 4 suggestions)
-warning: static `SLINT_EMBEDDED_RESOURCE_8` is never used
-     --> /home/ramayen/Documents/projects/Young-Shell/target/debug/build/young-shell-18a1e077efcec9f4/out/app-window.rs:61344:13
-      |
-61344 |      static SLINT_EMBEDDED_RESOURCE_8 : & 'static [u8]...
-      |             ^^^^^^^^^^^^^^^^^^^^^^^^^
-      |
-      = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
-
-warning: `young-shell` (bin "ex_mac_spell") generated 1 warning
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.87s
-     Running `target/debug/ex_mac_spell`
-[2364812.747]  -> wl_display#1.get_registry(new id wl_registry#2)
-[2364812.870]  -> wl_display#1.sync(new id wl_callback#3)
-[2364813.401] {Display Queue} wl_display#1.delete_id(3)
-[2364813.437] wl_registry#2.global(1, "wl_compositor", 6)
-[2364813.541] wl_registry#2.global(2, "wl_subcompositor", 1)
-[2364813.558] wl_registry#2.global(3, "xdg_wm_base", 6)
-[2364813.573] wl_registry#2.global(4, "zxdg_decoration_manager_v1", 1)
-[2364813.587] wl_registry#2.global(5, "org_kde_kwin_server_decoration_manager", 1)
-[2364813.602] wl_registry#2.global(6, "zwlr_layer_shell_v1", 5)
-[2364813.617] wl_registry#2.global(7, "ext_session_lock_manager_v1", 1)
-[2364813.631] wl_registry#2.global(8, "wl_shm", 2)
-[2364813.645] wl_registry#2.global(9, "zxdg_output_manager_v1", 3)
-[2364813.660] wl_registry#2.global(10, "wp_fractional_scale_manager_v1", 1)
-[2364813.674] wl_registry#2.global(11, "zwp_tablet_manager_v2", 1)
-[2364813.688] wl_registry#2.global(12, "zwp_pointer_gestures_v1", 3)
-[2364813.702] wl_registry#2.global(13, "zwp_relative_pointer_manager_v1", 1)
-[2364813.721] wl_registry#2.global(14, "zwp_pointer_constraints_v1", 1)
-[2364813.735] wl_registry#2.global(15, "ext_idle_notifier_v1", 2)
-[2364813.749] wl_registry#2.global(16, "zwp_idle_inhibit_manager_v1", 1)
-[2364813.763] wl_registry#2.global(17, "wl_data_device_manager", 3)
-[2364813.777] wl_registry#2.global(18, "zwp_primary_selection_device_manager_v1", 1)
-[2364813.791] wl_registry#2.global(19, "zwlr_data_control_manager_v1", 2)
-[2364813.809] wl_registry#2.global(20, "ext_data_control_manager_v1", 1)
-[2364813.823] wl_registry#2.global(21, "wp_presentation", 2)
-[2364813.837] wl_registry#2.global(22, "wp_security_context_manager_v1", 1)
-[2364813.851] wl_registry#2.global(23, "zwp_text_input_manager_v3", 1)
-[2364813.865] wl_registry#2.global(24, "zwp_input_method_manager_v2", 1)
-[2364813.925] wl_registry#2.global(25, "zwp_keyboard_shortcuts_inhibit_manager_v1", 1)
-[2364813.959] wl_registry#2.global(26, "zwp_virtual_keyboard_manager_v1", 1)
-[2364813.974] wl_registry#2.global(27, "zwlr_virtual_pointer_manager_v1", 2)
-[2364813.987] wl_registry#2.global(28, "zwlr_foreign_toplevel_manager_v1", 3)
-[2364814.002] wl_registry#2.global(29, "ext_workspace_manager_v1", 1)
-[2364814.016] wl_registry#2.global(30, "zwlr_output_manager_v1", 4)
-[2364814.031] wl_registry#2.global(31, "zwlr_screencopy_manager_v1", 3)
-[2364814.047] wl_registry#2.global(32, "wp_viewporter", 1)
-[2364814.062] wl_registry#2.global(33, "zxdg_exporter_v2", 1)
-[2364814.076] wl_registry#2.global(34, "zxdg_importer_v2", 1)
-[2364814.091] wl_registry#2.global(35, "zwlr_gamma_control_manager_v1", 1)
-[2364814.105] wl_registry#2.global(36, "xdg_activation_v1", 1)
-[2364814.119] wl_registry#2.global(37, "mutter_x11_interop", 1)
-[2364814.133] wl_registry#2.global(38, "wl_seat", 9)
-[2364814.163] wl_registry#2.global(39, "wp_cursor_shape_manager_v1", 2)
-[2364814.177] wl_registry#2.global(40, "zwp_linux_dmabuf_v1", 5)
-[2364814.191] wl_registry#2.global(41, "wp_drm_lease_device_v1", 1)
-[2364814.205] wl_registry#2.global(42, "wl_output", 4)
-[2364814.219] wl_callback#3.done(0)
-[2364814.332]  -> wl_registry#2.bind(1, "wl_compositor", 6, new id [unknown]#3)
-[2364814.493]  -> wl_registry#2.bind(6, "zwlr_layer_shell_v1", 4, new id [unknown]#4)
-[2364814.528]  -> wl_registry#2.bind(8, "wl_shm", 1, new id [unknown]#5)
-[2364814.621]  -> wl_shm#5.create_pool(new id wl_shm_pool#6, fd 10, 866304)
-[2364814.708]  -> wl_compositor#3.create_region(new id wl_region#7)
-[2364814.729]  -> wl_compositor#3.create_region(new id wl_region#8)
-[2364814.751]  -> wl_region#7.add(0, 0, 376, 576)
-[2364814.776]  -> wl_registry#2.bind(39, "wp_cursor_shape_manager_v1", 2, new id [unknown]#9)
-[2364814.849]  -> wl_registry#2.bind(10, "wp_fractional_scale_manager_v1", 1, new id [unknown]#10)
-[2364814.917]  -> wl_compositor#3.create_surface(new id wl_surface#11)
-[2364814.941]  -> wl_registry#2.bind(32, "wp_viewporter", 1, new id [unknown]#12)
-[2364814.988]  -> wl_shm_pool#6.create_buffer(new id wl_buffer#13, 0, 376, 576, 1504, 0)
-[2364815.898]  -> wl_registry#2.bind(38, "wl_seat", 9, new id [unknown]#14)
-[2364815.948]  -> wl_registry#2.bind(42, "wl_output", 4, new id [unknown]#15)
-[2364815.991]  -> wl_registry#2.bind(9, "zxdg_output_manager_v1", 3, new id [unknown]#16)
-[2364816.060]  -> zxdg_output_manager_v1#16.get_xdg_output(new id zxdg_output_v1#17, wl_output#15)
-[2364816.192]  -> wl_display#1.sync(new id wl_callback#18)
-[2364816.808] {Display Queue} wl_display#1.delete_id(18)
-[2364816.858] wl_shm#5.format(0)
-[2364816.892] wl_shm#5.format(875709016)
-[2364816.901] wl_shm#5.format(875708993)
-[2364816.909] wl_shm#5.format(1)
-[2364816.917] wl_seat#14.name("seat0")
-[2364816.940] wl_seat#14.capabilities(3)
-[2364816.950] wl_output#15.geometry(0, 0, 310, 170, 0, "Chimei Innolux Corporation", "N140HCA-EAC", 0)
-[2364816.973] wl_output#15.mode(3, 1920, 1080, 60008)
-[2364816.985] wl_output#15.name("eDP-1")
-[2364817.000] wl_output#15.description("Chimei Innolux Corporation - N140HCA-EAC - eDP-1")
-[2364817.010] wl_output#15.scale(2)
-[2364817.020] wl_output#15.done()
-[2364817.028] zxdg_output_v1#17.logical_position(0, 0)
-[2364817.041] zxdg_output_v1#17.logical_size(1536, 864)
-[2364817.050] zxdg_output_v1#17.name("eDP-1")
-[2364817.060] zxdg_output_v1#17.description("Chimei Innolux Corporation - N140HCA-EAC - eDP-1")
-[2364817.069] wl_output#15.done()
-[2364817.089] wl_callback#18.done(0)
-[2364818.036]  -> wl_seat#14.get_keyboard(new id wl_keyboard#18)
-[2364818.178]  -> wl_seat#14.get_pointer(new id wl_pointer#19)
-[2364818.494]  -> zwlr_layer_shell_v1#4.get_layer_surface(new id zwlr_layer_surface_v1#20, wl_surface#11, nil, 2, "counter-widget")
-[2364818.584]  -> wp_fractional_scale_manager_v1#10.get_fractional_scale(new id wp_fractional_scale_v1#21, wl_surface#11)
-[2364818.616]  -> wp_viewporter#12.get_viewport(new id wp_viewport#22, wl_surface#11)
-[2364818.644]  -> zwlr_layer_surface_v1#20.set_size(376, 576)
-[2364818.663]  -> zwlr_layer_surface_v1#20.set_margin(5, 0, 0, 10)
-[2364818.680]  -> zwlr_layer_surface_v1#20.set_keyboard_interactivity(0)
-[2364818.701]  -> wl_surface#11.set_input_region(wl_region#7)
-[2364818.717]  -> zwlr_layer_surface_v1#20.set_anchor(1)
-[2364818.731]  -> wl_surface#11.commit()
-[2364996.689] wl_keyboard#18.keymap(1, fd 12, 34262)
-[2364996.741] wl_keyboard#18.repeat_info(25, 600)
-[2364996.750] wl_surface#11.enter(wl_output#15)
-[2364996.762] wl_surface#11.preferred_buffer_scale(2)
-[2364996.768] wp_fractional_scale_v1#21.preferred_scale(150)
-[2364996.778] zwlr_layer_surface_v1#20.configure(9690, 376, 576)
-[2365000.023]  -> wl_surface#11.damage_buffer(0, 0, 376, 576)
-[2365000.164]  -> wl_surface#11.commit()
-[2365000.201]  -> zwlr_layer_surface_v1#20.ack_configure(9690)
-[2365059.126]  -> wl_surface#11.damage_buffer(0, 0, 376, 576)
-[2365059.240]  -> wl_surface#11.attach(wl_buffer#13, 0, 0)
-[2365059.291]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365059.335]  -> wl_surface#11.commit()
-[2365076.369] {Display Queue} wl_display#1.delete_id(23)
-[2365076.415] wl_callback#23.done(1463408)
-[2365079.921]  -> wl_surface#11.damage_buffer(0, 0, 376, 576)
-[2365079.986]  -> wl_surface#11.attach(wl_buffer#13, 0, 0)
-[2365080.034]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365080.077]  -> wl_surface#11.commit()
-[2365092.756] {Display Queue} wl_display#1.delete_id(23)
-[2365092.822] wl_callback#23.done(1463424)
-[2365093.149]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365093.210]  -> wl_surface#11.commit()
-[2365107.941] {Display Queue} wl_display#1.delete_id(23)
-[2365107.997] wl_callback#23.done(1463439)
-[2365108.421]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365108.503]  -> wl_surface#11.commit()
-[2365124.758] {Display Queue} wl_display#1.delete_id(23)
-[2365124.806] wl_callback#23.done(1463456)
-[2365125.187]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365125.281]  -> wl_surface#11.commit()
-[2365141.115] {Display Queue} wl_display#1.delete_id(23)
-[2365141.182] wl_callback#23.done(1463472)
-[2365141.524]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365141.608]  -> wl_surface#11.commit()
-[2365157.883] {Display Queue} wl_display#1.delete_id(23)
-[2365157.930] wl_callback#23.done(1463489)
-[2365158.316]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365158.403]  -> wl_surface#11.commit()
-[2365174.733] {Display Queue} wl_display#1.delete_id(23)
-[2365174.774] wl_callback#23.done(1463506)
-[2365175.103]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365175.198]  -> wl_surface#11.commit()
-[2365191.246] {Display Queue} wl_display#1.delete_id(23)
-[2365191.345] wl_callback#23.done(1463522)
-[2365191.719]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365191.823]  -> wl_surface#11.commit()
-[2365207.859] {Display Queue} wl_display#1.delete_id(23)
-[2365207.939] wl_callback#23.done(1463539)
-[2365208.324]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365208.391]  -> wl_surface#11.commit()
-[2365224.487] {Display Queue} wl_display#1.delete_id(23)
-[2365224.527] wl_callback#23.done(1463556)
-[2365224.799]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365224.846]  -> wl_surface#11.commit()
-[2365241.268] {Display Queue} wl_display#1.delete_id(23)
-[2365241.309] wl_callback#23.done(1463572)
-[2365241.563]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365241.616]  -> wl_surface#11.commit()
-[2365258.048] {Display Queue} wl_display#1.delete_id(23)
-[2365258.090] wl_callback#23.done(1463589)
-[2365258.408]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365258.462]  -> wl_surface#11.commit()
-[2365274.350] {Display Queue} wl_display#1.delete_id(23)
-[2365274.429] wl_callback#23.done(1463605)
-[2365274.726]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365274.779]  -> wl_surface#11.commit()
-[2365291.605] {Display Queue} wl_display#1.delete_id(23)
-[2365291.679] wl_callback#23.done(1463623)
-[2365291.982]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365292.036]  -> wl_surface#11.commit()
-[2365307.875] {Display Queue} wl_display#1.delete_id(23)
-[2365307.918] wl_callback#23.done(1463639)
-[2365308.195]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365308.253]  -> wl_surface#11.commit()
-[2365324.410] {Display Queue} wl_display#1.delete_id(23)
-[2365324.507] wl_callback#23.done(1463656)
-[2365324.788]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365324.846]  -> wl_surface#11.commit()
-[2365341.733] {Display Queue} wl_display#1.delete_id(23)
-[2365341.779] wl_callback#23.done(1463673)
-[2365342.109]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365342.180]  -> wl_surface#11.commit()
-[2365357.757] {Display Queue} wl_display#1.delete_id(23)
-[2365357.801] wl_callback#23.done(1463689)
-[2365358.100]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365358.171]  -> wl_surface#11.commit()
-[2365375.196] {Display Queue} wl_display#1.delete_id(23)
-[2365375.286] wl_callback#23.done(1463706)
-[2365375.594]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365375.676]  -> wl_surface#11.commit()
-[2365391.200] {Display Queue} wl_display#1.delete_id(23)
-[2365391.263] wl_callback#23.done(1463722)
-[2365391.560]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365391.638]  -> wl_surface#11.commit()
-[2365408.377] {Display Queue} wl_display#1.delete_id(23)
-[2365408.452] wl_callback#23.done(1463739)
-[2365408.820]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365408.917]  -> wl_surface#11.commit()
-[2365424.883] {Display Queue} wl_display#1.delete_id(23)
-[2365424.921] wl_callback#23.done(1463756)
-[2365425.304]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365425.367]  -> wl_surface#11.commit()
-[2365441.096] {Display Queue} wl_display#1.delete_id(23)
-[2365441.168] wl_callback#23.done(1463772)
-[2365441.476]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365441.531]  -> wl_surface#11.commit()
-[2365457.703] {Display Queue} wl_display#1.delete_id(23)
-[2365457.779] wl_callback#23.done(1463789)
-[2365458.082]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365458.153]  -> wl_surface#11.commit()
-[2365474.580] {Display Queue} wl_display#1.delete_id(23)
-[2365474.626] wl_callback#23.done(1463806)
-[2365474.952]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365475.039]  -> wl_surface#11.commit()
-[2365491.197] {Display Queue} wl_display#1.delete_id(23)
-[2365491.261] wl_callback#23.done(1463822)
-[2365491.614]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365491.694]  -> wl_surface#11.commit()
-[2365507.729] {Display Queue} wl_display#1.delete_id(23)
-[2365507.809] wl_callback#23.done(1463839)
-[2365508.135]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365508.245]  -> wl_surface#11.commit()
-[2365524.664] {Display Queue} wl_display#1.delete_id(23)
-[2365524.743] wl_callback#23.done(1463856)
-[2365525.038]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365525.095]  -> wl_surface#11.commit()
-[2365541.355] {Display Queue} wl_display#1.delete_id(23)
-[2365541.403] wl_callback#23.done(1463872)
-[2365541.748]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365541.804]  -> wl_surface#11.commit()
-[2365558.659] {Display Queue} wl_display#1.delete_id(23)
-[2365558.709] wl_callback#23.done(1463890)
-[2365559.058]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365559.164]  -> wl_surface#11.commit()
-[2365574.847] {Display Queue} wl_display#1.delete_id(23)
-[2365574.891] wl_callback#23.done(1463906)
-[2365575.200]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365575.254]  -> wl_surface#11.commit()
-[2365590.826] {Display Queue} wl_display#1.delete_id(23)
-[2365590.895] wl_callback#23.done(1463922)
-[2365591.284]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365591.336]  -> wl_surface#11.commit()
-[2365607.665] {Display Queue} wl_display#1.delete_id(23)
-[2365607.785] wl_callback#23.done(1463939)
-[2365608.177]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365608.295]  -> wl_surface#11.commit()
-[2365624.380] {Display Queue} wl_display#1.delete_id(23)
-[2365624.463] wl_callback#23.done(1463955)
-[2365624.803]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365624.888]  -> wl_surface#11.commit()
-[2365641.528] {Display Queue} wl_display#1.delete_id(23)
-[2365641.570] wl_callback#23.done(1463973)
-[2365641.831]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365641.884]  -> wl_surface#11.commit()
-[2365657.578] {Display Queue} wl_display#1.delete_id(23)
-[2365657.649] wl_callback#23.done(1463989)
-[2365657.984]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365658.064]  -> wl_surface#11.commit()
-[2365674.716] {Display Queue} wl_display#1.delete_id(23)
-[2365674.758] wl_callback#23.done(1464006)
-[2365675.047]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365675.104]  -> wl_surface#11.commit()
-[2365691.162] {Display Queue} wl_display#1.delete_id(23)
-[2365691.219] wl_callback#23.done(1464022)
-[2365691.540]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365691.621]  -> wl_surface#11.commit()
-[2365707.897] {Display Queue} wl_display#1.delete_id(23)
-[2365707.943] wl_callback#23.done(1464039)
-[2365708.262]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365708.349]  -> wl_surface#11.commit()
-[2365724.759] {Display Queue} wl_display#1.delete_id(23)
-[2365724.803] wl_callback#23.done(1464056)
-[2365725.168]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365725.250]  -> wl_surface#11.commit()
-[2365742.071] {Display Queue} wl_display#1.delete_id(23)
-[2365742.116] wl_callback#23.done(1464073)
-[2365742.437]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365742.492]  -> wl_surface#11.commit()
-[2365757.919] {Display Queue} wl_display#1.delete_id(23)
-[2365757.968] wl_callback#23.done(1464089)
-[2365758.270]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365758.326]  -> wl_surface#11.commit()
-[2365774.552] {Display Queue} wl_display#1.delete_id(23)
-[2365774.670] wl_callback#23.done(1464106)
-[2365774.982]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365775.091]  -> wl_surface#11.commit()
-[2365791.436] {Display Queue} wl_display#1.delete_id(23)
-[2365791.478] wl_callback#23.done(1464122)
-[2365791.725]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365791.774]  -> wl_surface#11.commit()
-[2365808.029] {Display Queue} wl_display#1.delete_id(23)
-[2365808.078] wl_callback#23.done(1464139)
-[2365808.432]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365808.525]  -> wl_surface#11.commit()
-[2365825.295] {Display Queue} wl_display#1.delete_id(23)
-[2365825.344] wl_callback#23.done(1464156)
-[2365825.643]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365825.772]  -> wl_surface#11.commit()
-[2365841.125] {Display Queue} wl_display#1.delete_id(23)
-[2365841.233] wl_callback#23.done(1464172)
-[2365841.564]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365841.673]  -> wl_surface#11.commit()
-[2365857.649] {Display Queue} wl_display#1.delete_id(23)
-[2365857.695] wl_callback#23.done(1464189)
-[2365858.100]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365858.200]  -> wl_surface#11.commit()
-[2365874.352] {Display Queue} wl_display#1.delete_id(23)
-[2365874.418] wl_callback#23.done(1464205)
-[2365874.721]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365874.788]  -> wl_surface#11.commit()
-[2365890.528] {Display Queue} wl_display#1.delete_id(23)
-[2365890.588] wl_callback#23.done(1464222)
-[2365890.878]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365890.923]  -> wl_surface#11.commit()
-[2365907.616] {Display Queue} wl_display#1.delete_id(23)
-[2365907.679] wl_callback#23.done(1464239)
-[2365908.069]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365908.183]  -> wl_surface#11.commit()
-[2365924.013] {Display Queue} wl_display#1.delete_id(23)
-[2365924.067] wl_callback#23.done(1464255)
-[2365924.491]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365924.577]  -> wl_surface#11.commit()
-[2365940.639] {Display Queue} wl_display#1.delete_id(23)
-[2365940.701] wl_callback#23.done(1464272)
-[2365940.982]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365941.044]  -> wl_surface#11.commit()
-[2365957.593] {Display Queue} wl_display#1.delete_id(23)
-[2365957.719] wl_callback#23.done(1464289)
-[2365958.126]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365958.226]  -> wl_surface#11.commit()
-[2365974.376] {Display Queue} wl_display#1.delete_id(23)
-[2365974.458] wl_callback#23.done(1464305)
-[2365974.762]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365974.844]  -> wl_surface#11.commit()
-[2365990.831] {Display Queue} wl_display#1.delete_id(23)
-[2365990.877] wl_callback#23.done(1464322)
-[2365991.278]  -> wl_surface#11.frame(new id wl_callback#23)
-[2365991.384]  -> wl_surface#11.commit()
-[2366007.477] {Display Queue} wl_display#1.delete_id(23)
-[2366007.548] wl_callback#23.done(1464339)
-[2366007.969]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366008.066]  -> wl_surface#11.commit()
-[2366025.001] {Display Queue} wl_display#1.delete_id(23)
-[2366025.068] wl_callback#23.done(1464356)
-[2366025.486]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366025.552]  -> wl_surface#11.commit()
-[2366041.098] {Display Queue} wl_display#1.delete_id(23)
-[2366041.152] wl_callback#23.done(1464372)
-[2366041.468]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366041.538]  -> wl_surface#11.commit()
-[2366057.872] {Display Queue} wl_display#1.delete_id(23)
-[2366057.911] wl_callback#23.done(1464389)
-[2366058.390]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366058.499]  -> wl_surface#11.commit()
-[2366074.161] {Display Queue} wl_display#1.delete_id(23)
-[2366074.247] wl_callback#23.done(1464405)
-[2366074.550]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366074.644]  -> wl_surface#11.commit()
-[2366091.926] {Display Queue} wl_display#1.delete_id(23)
-[2366091.970] wl_callback#23.done(1464423)
-[2366092.404]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366092.498]  -> wl_surface#11.commit()
-[2366108.095] {Display Queue} wl_display#1.delete_id(23)
-[2366108.152] wl_callback#23.done(1464439)
-[2366108.539]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366108.639]  -> wl_surface#11.commit()
-[2366124.987] {Display Queue} wl_display#1.delete_id(23)
-[2366125.029] wl_callback#23.done(1464456)
-[2366125.351]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366125.434]  -> wl_surface#11.commit()
-[2366141.588] {Display Queue} wl_display#1.delete_id(23)
-[2366141.634] wl_callback#23.done(1464473)
-[2366141.914]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366141.994]  -> wl_surface#11.commit()
-[2366158.524] {Display Queue} wl_display#1.delete_id(23)
-[2366158.572] wl_callback#23.done(1464490)
-[2366158.963]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366159.071]  -> wl_surface#11.commit()
-[2366175.020] {Display Queue} wl_display#1.delete_id(23)
-[2366175.072] wl_callback#23.done(1464506)
-[2366175.388]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366175.473]  -> wl_surface#11.commit()
-[2366191.367] {Display Queue} wl_display#1.delete_id(23)
-[2366191.421] wl_callback#23.done(1464522)
-[2366191.712]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366191.798]  -> wl_surface#11.commit()
-[2366207.989] {Display Queue} wl_display#1.delete_id(23)
-[2366208.046] wl_callback#23.done(1464539)
-[2366208.389]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366208.474]  -> wl_surface#11.commit()
-[2366224.836] {Display Queue} wl_display#1.delete_id(23)
-[2366224.884] wl_callback#23.done(1464556)
-[2366225.229]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366225.597]  -> wl_surface#11.commit()
-[2366241.458] {Display Queue} wl_display#1.delete_id(23)
-[2366241.532] wl_callback#23.done(1464573)
-[2366241.854]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366241.937]  -> wl_surface#11.commit()
-[2366257.631] {Display Queue} wl_display#1.delete_id(23)
-[2366257.700] wl_callback#23.done(1464589)
-[2366258.040]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366258.122]  -> wl_surface#11.commit()
-[2366274.738] {Display Queue} wl_display#1.delete_id(23)
-[2366274.787] wl_callback#23.done(1464606)
-[2366275.077]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366275.174]  -> wl_surface#11.commit()
-[2366291.004] {Display Queue} wl_display#1.delete_id(23)
-[2366291.050] wl_callback#23.done(1464622)
-[2366291.486]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366291.581]  -> wl_surface#11.commit()
-[2366307.740] {Display Queue} wl_display#1.delete_id(23)
-[2366307.867] wl_callback#23.done(1464639)
-[2366308.294]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366308.586]  -> wl_surface#11.commit()
-[2366324.558] {Display Queue} wl_display#1.delete_id(23)
-[2366324.601] wl_callback#23.done(1464656)
-[2366324.944]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366325.006]  -> wl_surface#11.commit()
-[2366341.365] {Display Queue} wl_display#1.delete_id(23)
-[2366341.416] wl_callback#23.done(1464672)
-[2366341.790]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366341.879]  -> wl_surface#11.commit()
-[2366358.034] {Display Queue} wl_display#1.delete_id(23)
-[2366358.077] wl_callback#23.done(1464689)
-[2366358.474]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366358.563]  -> wl_surface#11.commit()
-[2366374.466] {Display Queue} wl_display#1.delete_id(23)
-[2366374.512] wl_callback#23.done(1464706)
-[2366374.843]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366374.919]  -> wl_surface#11.commit()
-[2366391.306] {Display Queue} wl_display#1.delete_id(23)
-[2366391.353] wl_callback#23.done(1464722)
-[2366391.700]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366391.767]  -> wl_surface#11.commit()
-[2366407.944] {Display Queue} wl_display#1.delete_id(23)
-[2366407.993] wl_callback#23.done(1464739)
-[2366408.357]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366408.443]  -> wl_surface#11.commit()
-[2366424.896] {Display Queue} wl_display#1.delete_id(23)
-[2366424.946] wl_callback#23.done(1464756)
-[2366425.329]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366425.401]  -> wl_surface#11.commit()
-[2366441.585] {Display Queue} wl_display#1.delete_id(23)
-[2366441.622] wl_callback#23.done(1464773)
-[2366441.909]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366441.968]  -> wl_surface#11.commit()
-[2366458.208] {Display Queue} wl_display#1.delete_id(23)
-[2366458.290] wl_callback#23.done(1464789)
-[2366458.586]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366458.663]  -> wl_surface#11.commit()
-[2366474.117] {Display Queue} wl_display#1.delete_id(23)
-[2366474.193] wl_callback#23.done(1464805)
-[2366474.510]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366474.571]  -> wl_surface#11.commit()
-[2366490.718] {Display Queue} wl_display#1.delete_id(23)
-[2366490.780] wl_callback#23.done(1464822)
-[2366491.064]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366491.126]  -> wl_surface#11.commit()
-[2366507.412] {Display Queue} wl_display#1.delete_id(23)
-[2366507.500] wl_callback#23.done(1464838)
-[2366507.806]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366507.888]  -> wl_surface#11.commit()
-[2366523.984] {Display Queue} wl_display#1.delete_id(23)
-[2366524.057] wl_callback#23.done(1464855)
-[2366524.505]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366524.651]  -> wl_surface#11.commit()
-[2366540.771] {Display Queue} wl_display#1.delete_id(23)
-[2366540.814] wl_callback#23.done(1464872)
-[2366541.096]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366541.180]  -> wl_surface#11.commit()
-[2366557.357] {Display Queue} wl_display#1.delete_id(23)
-[2366557.405] wl_callback#23.done(1464888)
-[2366557.716]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366557.805]  -> wl_surface#11.commit()
-[2366573.860] {Display Queue} wl_display#1.delete_id(23)
-[2366573.947] wl_callback#23.done(1464905)
-[2366574.301]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366574.373]  -> wl_surface#11.commit()
-[2366591.036] {Display Queue} wl_display#1.delete_id(23)
-[2366591.110] wl_callback#23.done(1464922)
-[2366591.426]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366591.514]  -> wl_surface#11.commit()
-[2366607.515] {Display Queue} wl_display#1.delete_id(23)
-[2366607.558] wl_callback#23.done(1464939)
-[2366607.886]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366607.973]  -> wl_surface#11.commit()
-[2366624.264] {Display Queue} wl_display#1.delete_id(23)
-[2366624.349] wl_callback#23.done(1464955)
-[2366624.771]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366624.835]  -> wl_surface#11.commit()
-[2366640.794] {Display Queue} wl_display#1.delete_id(23)
-[2366640.864] wl_callback#23.done(1464972)
-[2366641.231]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366641.447]  -> wl_surface#11.commit()
-[2366657.307] {Display Queue} wl_display#1.delete_id(23)
-[2366657.367] wl_callback#23.done(1464989)
-[2366657.698]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366657.755]  -> wl_surface#11.commit()
-[2366674.862] {Display Queue} wl_display#1.delete_id(23)
-[2366674.925] wl_callback#23.done(1465006)
-[2366675.315]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366675.407]  -> wl_surface#11.commit()
-[2366691.490] {Display Queue} wl_display#1.delete_id(23)
-[2366691.530] wl_callback#23.done(1465022)
-[2366691.828]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366691.916]  -> wl_surface#11.commit()
-[2366708.095] {Display Queue} wl_display#1.delete_id(23)
-[2366708.192] wl_callback#23.done(1465039)
-[2366708.550]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366708.611]  -> wl_surface#11.commit()
-[2366724.724] {Display Queue} wl_display#1.delete_id(23)
-[2366724.767] wl_callback#23.done(1465056)
-[2366725.104]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366725.193]  -> wl_surface#11.commit()
-[2366741.128] {Display Queue} wl_display#1.delete_id(23)
-[2366741.193] wl_callback#23.done(1465072)
-[2366741.507]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366741.587]  -> wl_surface#11.commit()
-[2366758.107] {Display Queue} wl_display#1.delete_id(23)
-[2366758.169] wl_callback#23.done(1465089)
-[2366758.555]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366758.643]  -> wl_surface#11.commit()
-[2366774.721] {Display Queue} wl_display#1.delete_id(23)
-[2366774.786] wl_callback#23.done(1465106)
-[2366775.074]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366775.196]  -> wl_surface#11.commit()
-[2366791.291] {Display Queue} wl_display#1.delete_id(23)
-[2366791.381] wl_callback#23.done(1465122)
-[2366791.685]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366791.777]  -> wl_surface#11.commit()
-[2366807.588] {Display Queue} wl_display#1.delete_id(23)
-[2366807.651] wl_callback#23.done(1465139)
-[2366807.921]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366807.977]  -> wl_surface#11.commit()
-[2366824.122] {Display Queue} wl_display#1.delete_id(23)
-[2366824.202] wl_callback#23.done(1465155)
-[2366824.573]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366824.624]  -> wl_surface#11.commit()
-[2366840.863] {Display Queue} wl_display#1.delete_id(23)
-[2366840.909] wl_callback#23.done(1465172)
-[2366841.221]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366841.301]  -> wl_surface#11.commit()
-[2366857.745] {Display Queue} wl_display#1.delete_id(23)
-[2366857.792] wl_callback#23.done(1465189)
-[2366858.197]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366858.285]  -> wl_surface#11.commit()
-[2366874.668] {Display Queue} wl_display#1.delete_id(23)
-[2366874.711] wl_callback#23.done(1465206)
-[2366874.965]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366875.017]  -> wl_surface#11.commit()
-[2366891.247] {Display Queue} wl_display#1.delete_id(23)
-[2366891.338] wl_callback#23.done(1465222)
-[2366891.616]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366891.672]  -> wl_surface#11.commit()
-[2366907.748] {Display Queue} wl_display#1.delete_id(23)
-[2366907.816] wl_callback#23.done(1465239)
-[2366908.092]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366908.162]  -> wl_surface#11.commit()
-[2366924.434] {Display Queue} wl_display#1.delete_id(23)
-[2366924.474] wl_callback#23.done(1465255)
-[2366924.730]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366924.786]  -> wl_surface#11.commit()
-[2366940.975] {Display Queue} wl_display#1.delete_id(23)
-[2366941.046] wl_callback#23.done(1465272)
-[2366941.413]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366941.465]  -> wl_surface#11.commit()
-[2366958.056] {Display Queue} wl_display#1.delete_id(23)
-[2366958.122] wl_callback#23.done(1465289)
-[2366958.517]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366958.607]  -> wl_surface#11.commit()
-[2366974.452] {Display Queue} wl_display#1.delete_id(23)
-[2366974.499] wl_callback#23.done(1465306)
-[2366974.796]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366974.860]  -> wl_surface#11.commit()
-[2366991.017] {Display Queue} wl_display#1.delete_id(23)
-[2366991.081] wl_callback#23.done(1465322)
-[2366991.441]  -> wl_surface#11.frame(new id wl_callback#23)
-[2366991.520]  -> wl_surface#11.commit()
-[2367007.692] {Display Queue} wl_display#1.delete_id(23)
-[2367007.742] wl_callback#23.done(1465339)
-[2367008.040]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367008.095]  -> wl_surface#11.commit()
-[2367024.410] {Display Queue} wl_display#1.delete_id(23)
-[2367024.460] wl_callback#23.done(1465355)
-[2367024.719]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367024.773]  -> wl_surface#11.commit()
-[2367041.179] {Display Queue} wl_display#1.delete_id(23)
-[2367041.222] wl_callback#23.done(1465372)
-[2367041.479]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367041.533]  -> wl_surface#11.commit()
-[2367057.771] {Display Queue} wl_display#1.delete_id(23)
-[2367057.812] wl_callback#23.done(1465389)
-[2367058.061]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367058.114]  -> wl_surface#11.commit()
-[2367074.356] {Display Queue} wl_display#1.delete_id(23)
-[2367074.422] wl_callback#23.done(1465405)
-[2367074.684]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367074.738]  -> wl_surface#11.commit()
-[2367090.733] {Display Queue} wl_display#1.delete_id(23)
-[2367090.798] wl_callback#23.done(1465422)
-[2367091.066]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367091.122]  -> wl_surface#11.commit()
-[2367107.465] {Display Queue} wl_display#1.delete_id(23)
-[2367107.544] wl_callback#23.done(1465439)
-[2367107.837]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367107.915]  -> wl_surface#11.commit()
-[2367124.271] {Display Queue} wl_display#1.delete_id(23)
-[2367124.323] wl_callback#23.done(1465455)
-[2367124.670]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367124.757]  -> wl_surface#11.commit()
-[2367140.670] {Display Queue} wl_display#1.delete_id(23)
-[2367140.747] wl_callback#23.done(1465472)
-[2367141.052]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367141.161]  -> wl_surface#11.commit()
-[2367157.659] {Display Queue} wl_display#1.delete_id(23)
-[2367157.703] wl_callback#23.done(1465489)
-[2367157.990]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367158.044]  -> wl_surface#11.commit()
-[2367174.720] {Display Queue} wl_display#1.delete_id(23)
-[2367174.774] wl_callback#23.done(1465506)
-[2367175.038]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367175.092]  -> wl_surface#11.commit()
-[2367191.777] {Display Queue} wl_display#1.delete_id(23)
-[2367191.814] wl_callback#23.done(1465523)
-[2367192.126]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367192.211]  -> wl_surface#11.commit()
-[2367208.389] {Display Queue} wl_display#1.delete_id(23)
-[2367208.439] wl_callback#23.done(1465539)
-[2367208.779]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367208.844]  -> wl_surface#11.commit()
-[2367224.856] {Display Queue} wl_display#1.delete_id(23)
-[2367224.912] wl_callback#23.done(1465556)
-[2367225.230]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367225.330]  -> wl_surface#11.commit()
-[2367240.854] {Display Queue} wl_display#1.delete_id(23)
-[2367240.895] wl_callback#23.done(1465572)
-[2367241.240]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367241.300]  -> wl_surface#11.commit()
-[2367257.817] {Display Queue} wl_display#1.delete_id(23)
-[2367257.871] wl_callback#23.done(1465589)
-[2367258.215]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367258.281]  -> wl_surface#11.commit()
-[2367274.447] {Display Queue} wl_display#1.delete_id(23)
-[2367274.493] wl_callback#23.done(1465605)
-[2367274.887]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367274.979]  -> wl_surface#11.commit()
-[2367291.104] {Display Queue} wl_display#1.delete_id(23)
-[2367291.169] wl_callback#23.done(1465622)
-[2367291.553]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367291.678]  -> wl_surface#11.commit()
-[2367307.481] {Display Queue} wl_display#1.delete_id(23)
-[2367307.557] wl_callback#23.done(1465639)
-[2367307.945]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367308.006]  -> wl_surface#11.commit()
-[2367324.573] {Display Queue} wl_display#1.delete_id(23)
-[2367324.649] wl_callback#23.done(1465656)
-[2367325.108]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367325.240]  -> wl_surface#11.commit()
-[2367341.189] {Display Queue} wl_display#1.delete_id(23)
-[2367341.274] wl_callback#23.done(1465672)
-[2367341.633]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367341.717]  -> wl_surface#11.commit()
-[2367358.021] {Display Queue} wl_display#1.delete_id(23)
-[2367358.127] wl_callback#23.done(1465689)
-[2367358.414]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367358.525]  -> wl_surface#11.commit()
-[2367374.303] {Display Queue} wl_display#1.delete_id(23)
-[2367374.378] wl_callback#23.done(1465705)
-[2367374.699]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367374.778]  -> wl_surface#11.commit()
-[2367390.690] {Display Queue} wl_display#1.delete_id(23)
-[2367390.769] wl_callback#23.done(1465722)
-[2367391.117]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367391.216]  -> wl_surface#11.commit()
-[2367407.426] {Display Queue} wl_display#1.delete_id(23)
-[2367407.512] wl_callback#23.done(1465738)
-[2367407.809]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367407.890]  -> wl_surface#11.commit()
-[2367425.065] {Display Queue} wl_display#1.delete_id(23)
-[2367425.153] wl_callback#23.done(1465756)
-[2367425.493]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367425.579]  -> wl_surface#11.commit()
-[2367440.914] {Display Queue} wl_display#1.delete_id(23)
-[2367440.962] wl_callback#23.done(1465772)
-[2367441.378]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367441.474]  -> wl_surface#11.commit()
-[2367458.202] {Display Queue} wl_display#1.delete_id(23)
-[2367458.253] wl_callback#23.done(1465789)
-[2367458.576]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367458.657]  -> wl_surface#11.commit()
-[2367475.257] {Display Queue} wl_display#1.delete_id(23)
-[2367475.304] wl_callback#23.done(1465806)
-[2367475.589]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367475.671]  -> wl_surface#11.commit()
-[2367491.635] {Display Queue} wl_display#1.delete_id(23)
-[2367491.686] wl_callback#23.done(1465823)
-[2367492.052]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367492.151]  -> wl_surface#11.commit()
-[2367508.269] {Display Queue} wl_display#1.delete_id(23)
-[2367508.329] wl_callback#23.done(1465839)
-[2367508.648]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367508.731]  -> wl_surface#11.commit()
-[2367524.741] {Display Queue} wl_display#1.delete_id(23)
-[2367524.811] wl_callback#23.done(1465856)
-[2367525.134]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367525.275]  -> wl_surface#11.commit()
-[2367541.418] {Display Queue} wl_display#1.delete_id(23)
-[2367541.535] wl_callback#23.done(1465873)
-[2367541.902]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367541.987]  -> wl_surface#11.commit()
-[2367558.028] {Display Queue} wl_display#1.delete_id(23)
-[2367558.116] wl_callback#23.done(1465889)
-[2367558.448]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367558.519]  -> wl_surface#11.commit()
-[2367574.512] {Display Queue} wl_display#1.delete_id(23)
-[2367574.554] wl_callback#23.done(1465905)
-[2367574.836]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367574.890]  -> wl_surface#11.commit()
-[2367591.120] {Display Queue} wl_display#1.delete_id(23)
-[2367591.221] wl_callback#23.done(1465922)
-[2367591.497]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367591.576]  -> wl_surface#11.commit()
-[2367607.502] {Display Queue} wl_display#1.delete_id(23)
-[2367607.556] wl_callback#23.done(1465939)
-[2367607.828]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367607.880]  -> wl_surface#11.commit()
-[2367624.411] {Display Queue} wl_display#1.delete_id(23)
-[2367624.502] wl_callback#23.done(1465955)
-[2367624.783]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367624.833]  -> wl_surface#11.commit()
-[2367640.917] {Display Queue} wl_display#1.delete_id(23)
-[2367640.974] wl_callback#23.done(1465972)
-[2367641.283]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367641.342]  -> wl_surface#11.commit()
-[2367657.627] {Display Queue} wl_display#1.delete_id(23)
-[2367657.726] wl_callback#23.done(1465989)
-[2367658.095]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367658.171]  -> wl_surface#11.commit()
-[2367674.352] {Display Queue} wl_display#1.delete_id(23)
-[2367674.391] wl_callback#23.done(1466005)
-[2367674.700]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367674.780]  -> wl_surface#11.commit()
-[2367690.531] {Display Queue} wl_display#1.delete_id(23)
-[2367690.608] wl_callback#23.done(1466022)
-[2367691.031]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367691.106]  -> wl_surface#11.commit()
-[2367707.612] {Display Queue} wl_display#1.delete_id(23)
-[2367707.666] wl_callback#23.done(1466039)
-[2367708.081]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367708.180]  -> wl_surface#11.commit()
-[2367724.052] {Display Queue} wl_display#1.delete_id(23)
-[2367724.122] wl_callback#23.done(1466055)
-[2367724.479]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367724.539]  -> wl_surface#11.commit()
-[2367740.700] {Display Queue} wl_display#1.delete_id(23)
-[2367740.751] wl_callback#23.done(1466072)
-[2367741.037]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367741.101]  -> wl_surface#11.commit()
-[2367757.496] {Display Queue} wl_display#1.delete_id(23)
-[2367757.578] wl_callback#23.done(1466089)
-[2367757.910]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367757.995]  -> wl_surface#11.commit()
-[2367774.075] {Display Queue} wl_display#1.delete_id(23)
-[2367774.122] wl_callback#23.done(1466105)
-[2367774.463]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367774.533]  -> wl_surface#11.commit()
-[2367791.093] {Display Queue} wl_display#1.delete_id(23)
-[2367791.192] wl_callback#23.done(1466122)
-[2367791.541]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367791.602]  -> wl_surface#11.commit()
-[2367807.843] {Display Queue} wl_display#1.delete_id(23)
-[2367807.926] wl_callback#23.done(1466139)
-[2367808.226]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367808.312]  -> wl_surface#11.commit()
-[2367824.507] {Display Queue} wl_display#1.delete_id(23)
-[2367824.586] wl_callback#23.done(1466155)
-[2367824.822]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367824.875]  -> wl_surface#11.commit()
-[2367840.826] {Display Queue} wl_display#1.delete_id(23)
-[2367840.878] wl_callback#23.done(1466172)
-[2367841.163]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367841.226]  -> wl_surface#11.commit()
-[2367858.447] {Display Queue} wl_display#1.delete_id(23)
-[2367858.495] wl_callback#23.done(1466190)
-[2367858.783]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367858.865]  -> wl_surface#11.commit()
-[2367874.769] {Display Queue} wl_display#1.delete_id(23)
-[2367874.816] wl_callback#23.done(1466206)
-[2367875.096]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367875.196]  -> wl_surface#11.commit()
-[2367891.559] {Display Queue} wl_display#1.delete_id(23)
-[2367891.613] wl_callback#23.done(1466223)
-[2367891.913]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367891.991]  -> wl_surface#11.commit()
-[2367907.649] {Display Queue} wl_display#1.delete_id(23)
-[2367907.702] wl_callback#23.done(1466239)
-[2367907.997]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367908.077]  -> wl_surface#11.commit()
-[2367924.488] {Display Queue} wl_display#1.delete_id(23)
-[2367924.537] wl_callback#23.done(1466255)
-[2367924.843]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367924.899]  -> wl_surface#11.commit()
-[2367940.949] {Display Queue} wl_display#1.delete_id(23)
-[2367941.001] wl_callback#23.done(1466272)
-[2367941.344]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367941.403]  -> wl_surface#11.commit()
-[2367957.933] {Display Queue} wl_display#1.delete_id(23)
-[2367958.016] wl_callback#23.done(1466289)
-[2367958.287]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367958.340]  -> wl_surface#11.commit()
-[2367974.040] {Display Queue} wl_display#1.delete_id(23)
-[2367974.098] wl_callback#23.done(1466305)
-[2367974.374]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367974.430]  -> wl_surface#11.commit()
-[2367990.626] {Display Queue} wl_display#1.delete_id(23)
-[2367990.684] wl_callback#23.done(1466322)
-[2367991.034]  -> wl_surface#11.frame(new id wl_callback#23)
-[2367991.177]  -> wl_surface#11.commit()
-[2368007.202] {Display Queue} wl_display#1.delete_id(23)
-[2368007.252] wl_callback#23.done(1466338)
-[2368007.670]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368007.769]  -> wl_surface#11.commit()
-[2368023.759] {Display Queue} wl_display#1.delete_id(23)
-[2368023.839] wl_callback#23.done(1466355)
-[2368024.205]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368024.288]  -> wl_surface#11.commit()
-[2368040.748] {Display Queue} wl_display#1.delete_id(23)
-[2368040.821] wl_callback#23.done(1466372)
-[2368041.261]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368041.364]  -> wl_surface#11.commit()
-[2368057.056] {Display Queue} wl_display#1.delete_id(23)
-[2368057.127] wl_callback#23.done(1466388)
-[2368057.518]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368057.615]  -> wl_surface#11.commit()
-[2368074.162] {Display Queue} wl_display#1.delete_id(23)
-[2368074.245] wl_callback#23.done(1466405)
-[2368074.572]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368074.648]  -> wl_surface#11.commit()
-[2368090.975] {Display Queue} wl_display#1.delete_id(23)
-[2368091.020] wl_callback#23.done(1466422)
-[2368091.296]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368091.375]  -> wl_surface#11.commit()
-[2368107.554] {Display Queue} wl_display#1.delete_id(23)
-[2368107.645] wl_callback#23.done(1466439)
-[2368107.916]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368107.965]  -> wl_surface#11.commit()
-[2368124.197] {Display Queue} wl_display#1.delete_id(23)
-[2368124.252] wl_callback#23.done(1466455)
-[2368124.557]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368124.638]  -> wl_surface#11.commit()
-[2368140.945] {Display Queue} wl_display#1.delete_id(23)
-[2368140.989] wl_callback#23.done(1466472)
-[2368141.257]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368141.310]  -> wl_surface#11.commit()
-[2368157.482] {Display Queue} wl_display#1.delete_id(23)
-[2368157.549] wl_callback#23.done(1466489)
-[2368157.843]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368157.893]  -> wl_surface#11.commit()
-[2368174.056] {Display Queue} wl_display#1.delete_id(23)
-[2368174.105] wl_callback#23.done(1466505)
-[2368174.452]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368174.505]  -> wl_surface#11.commit()
-[2368191.064] {Display Queue} wl_display#1.delete_id(23)
-[2368191.115] wl_callback#23.done(1466522)
-[2368191.463]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368191.572]  -> wl_surface#11.commit()
-[2368208.226] {Display Queue} wl_display#1.delete_id(23)
-[2368208.344] wl_callback#23.done(1466539)
-[2368208.602]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368208.656]  -> wl_surface#11.commit()
-[2368224.206] {Display Queue} wl_display#1.delete_id(23)
-[2368224.281] wl_callback#23.done(1466555)
-[2368224.575]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368224.660]  -> wl_surface#11.commit()
-[2368240.984] {Display Queue} wl_display#1.delete_id(23)
-[2368241.029] wl_callback#23.done(1466572)
-[2368241.376]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368241.441]  -> wl_surface#11.commit()
-[2368257.416] {Display Queue} wl_display#1.delete_id(23)
-[2368257.493] wl_callback#23.done(1466588)
-[2368257.804]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368257.862]  -> wl_surface#11.commit()
-[2368274.177] {Display Queue} wl_display#1.delete_id(23)
-[2368274.218] wl_callback#23.done(1466605)
-[2368274.495]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368274.552]  -> wl_surface#11.commit()
-[2368290.500] {Display Queue} wl_display#1.delete_id(23)
-[2368290.564] wl_callback#23.done(1466622)
-[2368290.857]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368290.917]  -> wl_surface#11.commit()
-[2368307.163] {Display Queue} wl_display#1.delete_id(23)
-[2368307.230] wl_callback#23.done(1466638)
-[2368307.550]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368307.640]  -> wl_surface#11.commit()
-[2368323.902] {Display Queue} wl_display#1.delete_id(23)
-[2368323.967] wl_callback#23.done(1466655)
-[2368324.284]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368324.429]  -> wl_surface#11.commit()
-[2368340.568] {Display Queue} wl_display#1.delete_id(23)
-[2368340.646] wl_callback#23.done(1466672)
-[2368340.911]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368341.010]  -> wl_surface#11.commit()
-[2368357.587] {Display Queue} wl_display#1.delete_id(23)
-[2368357.676] wl_callback#23.done(1466689)
-[2368357.975]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368358.036]  -> wl_surface#11.commit()
-[2368373.855] {Display Queue} wl_display#1.delete_id(23)
-[2368373.925] wl_callback#23.done(1466705)
-[2368374.256]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368374.300]  -> wl_surface#11.commit()
-[2368391.071] {Display Queue} wl_display#1.delete_id(23)
-[2368391.118] wl_callback#23.done(1466722)
-[2368391.587]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368391.679]  -> wl_surface#11.commit()
-[2368407.856] {Display Queue} wl_display#1.delete_id(23)
-[2368407.902] wl_callback#23.done(1466739)
-[2368408.316]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368408.412]  -> wl_surface#11.commit()
-[2368424.598] {Display Queue} wl_display#1.delete_id(23)
-[2368424.657] wl_callback#23.done(1466756)
-[2368425.001]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368425.090]  -> wl_surface#11.commit()
-[2368441.106] {Display Queue} wl_display#1.delete_id(23)
-[2368441.207] wl_callback#23.done(1466772)
-[2368441.586]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368441.679]  -> wl_surface#11.commit()
-[2368457.220] {Display Queue} wl_display#1.delete_id(23)
-[2368457.291] wl_callback#23.done(1466788)
-[2368457.670]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368457.768]  -> wl_surface#11.commit()
-[2368474.730] {Display Queue} wl_display#1.delete_id(23)
-[2368474.792] wl_callback#23.done(1466806)
-[2368475.154]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368475.245]  -> wl_surface#11.commit()
-[2368491.007] {Display Queue} wl_display#1.delete_id(23)
-[2368491.049] wl_callback#23.done(1466822)
-[2368491.451]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368491.528]  -> wl_surface#11.commit()
-[2368507.827] {Display Queue} wl_display#1.delete_id(23)
-[2368507.890] wl_callback#23.done(1466839)
-[2368508.350]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368508.441]  -> wl_surface#11.commit()
-[2368524.069] {Display Queue} wl_display#1.delete_id(23)
-[2368524.110] wl_callback#23.done(1466855)
-[2368524.442]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368524.508]  -> wl_surface#11.commit()
-[2368541.176] {Display Queue} wl_display#1.delete_id(23)
-[2368541.311] wl_callback#23.done(1466872)
-[2368541.655]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368541.734]  -> wl_surface#11.commit()
-[2368557.688] {Display Queue} wl_display#1.delete_id(23)
-[2368557.729] wl_callback#23.done(1466889)
-[2368558.016]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368558.070]  -> wl_surface#11.commit()
-[2368574.165] {Display Queue} wl_display#1.delete_id(23)
-[2368574.213] wl_callback#23.done(1466905)
-[2368574.534]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368574.612]  -> wl_surface#11.commit()
-[2368590.638] {Display Queue} wl_display#1.delete_id(23)
-[2368590.702] wl_callback#23.done(1466922)
-[2368590.996]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368591.072]  -> wl_surface#11.commit()
-[2368607.351] {Display Queue} wl_display#1.delete_id(23)
-[2368607.399] wl_callback#23.done(1466938)
-[2368607.675]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368607.755]  -> wl_surface#11.commit()
-[2368623.924] {Display Queue} wl_display#1.delete_id(23)
-[2368624.009] wl_callback#23.done(1466955)
-[2368624.349]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368624.433]  -> wl_surface#11.commit()
-[2368641.125] {Display Queue} wl_display#1.delete_id(23)
-[2368641.189] wl_callback#23.done(1466972)
-[2368641.515]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368641.598]  -> wl_surface#11.commit()
-[2368657.286] {Display Queue} wl_display#1.delete_id(23)
-[2368657.331] wl_callback#23.done(1466988)
-[2368657.600]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368657.653]  -> wl_surface#11.commit()
-[2368674.126] {Display Queue} wl_display#1.delete_id(23)
-[2368674.194] wl_callback#23.done(1467005)
-[2368674.484]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368674.536]  -> wl_surface#11.commit()
-[2368690.791] {Display Queue} wl_display#1.delete_id(23)
-[2368690.826] wl_callback#23.done(1467022)
-[2368691.168]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368691.228]  -> wl_surface#11.commit()
-[2368708.009] {Display Queue} wl_display#1.delete_id(23)
-[2368708.055] wl_callback#23.done(1467039)
-[2368708.529]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368708.674]  -> wl_surface#11.commit()
-[2368724.472] {Display Queue} wl_display#1.delete_id(23)
-[2368724.508] wl_callback#23.done(1467055)
-[2368724.824]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368724.898]  -> wl_surface#11.commit()
-[2368740.957] {Display Queue} wl_display#1.delete_id(23)
-[2368741.010] wl_callback#23.done(1467072)
-[2368741.347]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368741.404]  -> wl_surface#11.commit()
-[2368757.388] {Display Queue} wl_display#1.delete_id(23)
-[2368757.440] wl_callback#23.done(1467088)
-[2368757.808]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368757.892]  -> wl_surface#11.commit()
-[2368773.995] {Display Queue} wl_display#1.delete_id(23)
-[2368774.075] wl_callback#23.done(1467105)
-[2368774.459]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368774.570]  -> wl_surface#11.commit()
-[2368791.155] {Display Queue} wl_display#1.delete_id(23)
-[2368791.244] wl_callback#23.done(1467122)
-[2368791.618]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368791.717]  -> wl_surface#11.commit()
-[2368807.830] {Display Queue} wl_display#1.delete_id(23)
-[2368807.878] wl_callback#23.done(1467139)
-[2368808.339]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368808.447]  -> wl_surface#11.commit()
-[2368824.152] {Display Queue} wl_display#1.delete_id(23)
-[2368824.207] wl_callback#23.done(1467155)
-[2368824.513]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368824.709]  -> wl_surface#11.commit()
-[2368841.432] {Display Queue} wl_display#1.delete_id(23)
-[2368841.515] wl_callback#23.done(1467172)
-[2368841.804]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368841.892]  -> wl_surface#11.commit()
-[2368857.463] {Display Queue} wl_display#1.delete_id(23)
-[2368857.555] wl_callback#23.done(1467189)
-[2368857.834]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368857.914]  -> wl_surface#11.commit()
-[2368874.236] {Display Queue} wl_display#1.delete_id(23)
-[2368874.286] wl_callback#23.done(1467205)
-[2368874.619]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368874.677]  -> wl_surface#11.commit()
-[2368891.271] {Display Queue} wl_display#1.delete_id(23)
-[2368891.324] wl_callback#23.done(1467222)
-[2368891.653]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368891.706]  -> wl_surface#11.commit()
-[2368907.970] {Display Queue} wl_display#1.delete_id(23)
-[2368908.055] wl_callback#23.done(1467239)
-[2368908.422]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368908.513]  -> wl_surface#11.commit()
-[2368923.861] {Display Queue} wl_display#1.delete_id(23)
-[2368923.961] wl_callback#23.done(1467255)
-[2368924.328]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368924.380]  -> wl_surface#11.commit()
-[2368940.571] {Display Queue} wl_display#1.delete_id(23)
-[2368940.688] wl_callback#23.done(1467272)
-[2368940.982]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368941.065]  -> wl_surface#11.commit()
-[2368957.513] {Display Queue} wl_display#1.delete_id(23)
-[2368957.565] wl_callback#23.done(1467289)
-[2368957.863]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368957.948]  -> wl_surface#11.commit()
-[2368974.735] {Display Queue} wl_display#1.delete_id(23)
-[2368974.803] wl_callback#23.done(1467306)
-[2368975.071]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368975.128]  -> wl_surface#11.commit()
-[2368990.764] {Display Queue} wl_display#1.delete_id(23)
-[2368990.821] wl_callback#23.done(1467322)
-[2368991.227]  -> wl_surface#11.frame(new id wl_callback#23)
-[2368991.291]  -> wl_surface#11.commit()
-[2369007.601] {Display Queue} wl_display#1.delete_id(23)
-[2369007.644] wl_callback#23.done(1467339)
-[2369007.993]  -> wl_surface#11.frame(new id wl_callback#23)
-[2369008.117]  -> wl_surface#11.commit()
-[2369024.854] {Display Queue} wl_display#1.delete_id(23)
-[2369024.915] wl_callback#23.done(1467356)
-[2369025.288]  -> wl_surface#11.frame(new id wl_callback#23)
-[2369025.351]  -> wl_surface#11.commit()
-[2369040.433] {Display Queue} wl_display#1.delete_id(23)
-[2369040.506] wl_callback#23.done(1467372)
-[2369040.840]  -> wl_surface#11.frame(new id wl_callback#23)
-[2369040.925]  -> wl_surface#11.commit()
-[2369057.629] {Display Queue} wl_display#1.delete_id(23)
-[2369057.706] wl_callback#23.done(1467389)
-[2369058.027]  -> wl_surface#11.frame(new id wl_callback#23)
-[2369058.083]  -> wl_surface#11.commit()
-[2369074.741] {Display Queue} wl_display#1.delete_id(23)
-[2369074.782] wl_callback#23.done(1467406)
-[2369075.087]  -> wl_surface#11.frame(new id wl_callback#23)
-[2369075.173]  -> wl_surface#11.commit()
-[2369090.721] {Display Queue} wl_display#1.delete_id(23)
-[2369090.759] wl_callback#23.done(1467422)
-[2369091.051]  -> wl_surface#11.frame(new id wl_callback#23)
-[2369091.119]  -> wl_surface#11.commit()
-[2369107.744] {Display Queue} wl_display#1.delete_id(23)
-[2369107.792] wl_callback#23.done(1467439)
-[2369108.048]  -> wl_surface#11.frame(new id wl_callback#23)
-[2369108.098]  -> wl_surface#11.commit()
-[2369124.167] {Display Queue} wl_display#1.delete_id(23)
-[2369124.212] wl_callback#23.done(1467455)
-[2369124.525]  -> wl_surface#11.frame(new id wl_callback#23)
-[2369124.585]  -> wl_surface#11.commit()
-[2369141.238] {Display Queue} wl_display#1.delete_id(23)
-[2369141.287] wl_callback#23.done(1467472)
-[2369141.613]  -> wl_surface#11.frame(new id wl_callback#23)
-[2369141.694]  -> wl_surface#11.commit()
-[2369157.965] {Display Queue} wl_display#1.delete_id(23)
-[2369158.009] wl_callback#23.done(1467489)
-[2369158.320]  -> wl_surface#11.frame(new id wl_callback#23)
-[2369158.373]  -> wl_surface#11.commit()
-[2369174.055] {Display Queue} wl_display#1.delete_id(23)
-[2369174.106] wl_callback#23.done(1467505)
-[2369174.439]  -> wl_surface#11.frame(new id wl_callback#23)
-[2369174.550]  -> wl_surface#11.commit()
-[2369186.777]  -> wl_surface#11.attach(nil, 0, 0)
-[2369191.350] {Display Queue} wl_display#1.delete_id(23)
-[2369191.384] wl_callback#23.done(1467522)
-[2369191.627]  -> wl_surface#11.commit()
-[2369192.205] wl_buffer#13.release()
-[2374860.308]  -> zwlr_layer_surface_v1#20.set_size(376, 576)
-[2374860.370]  -> zwlr_layer_surface_v1#20.set_margin(5, 0, 0, 10)
-[2374860.399]  -> zwlr_layer_surface_v1#20.set_keyboard_interactivity(0)
-[2374860.434]  -> wl_surface#11.set_input_region(wl_region#7)
-[2374860.458]  -> wl_surface#11.set_opaque_region(wl_region#8)
-[2374860.481]  -> zwlr_layer_surface_v1#20.set_anchor(1)
-[2374860.501]  -> wl_surface#11.commit()
-[2374861.032] zwlr_layer_surface_v1#20.configure(9706, 376, 576)
-[2374861.184]  -> zwlr_layer_surface_v1#20.ack_configure(9706)
-[2374861.286]  -> wl_surface#11.damage_buffer(0, 0, 376, 576)
-[2374861.321]  -> wl_surface#11.attach(wl_buffer#13, 0, 0)
-[2374861.367]  -> wl_surface#11.frame(new id wl_callback#23)
-[2374861.416]  -> wl_surface#11.commit()
-[2374876.016] {Display Queue} wl_display#1.delete_id(23)
-[2374876.064] wl_callback#23.done(1473207)
-[2374876.456]  -> wl_surface#11.frame(new id wl_callback#23)
-[2374876.567]  -> wl_surface#11.commit()
-[2374890.270] {Display Queue} wl_display#1.delete_id(23)
-[2374890.354] wl_callback#23.done(1473221)
-[2374890.784]  -> wl_surface#11.frame(new id wl_callback#23)
-[2374890.881]  -> wl_surface#11.commit()
-[2374906.507] {Display Queue} wl_display#1.delete_id(23)
-[2374906.597] wl_callback#23.done(1473238)
-[2374906.945]  -> wl_surface#11.frame(new id wl_callback#23)
-[2374907.034]  -> wl_surface#11.commit()
-[2374923.202] {Display Queue} wl_display#1.delete_id(23)
-[2374923.293] wl_callback#23.done(1473254)
-[2374923.636]  -> wl_surface#11.frame(new id wl_callback#23)
-[2374923.730]  -> wl_surface#11.commit()
-[2374940.818] {Display Queue} wl_display#1.delete_id(23)
-[2374940.880] wl_callback#23.done(1473272)
-[2374941.336]  -> wl_surface#11.frame(new id wl_callback#23)
-[2374941.462]  -> wl_surface#11.commit()
-[2374956.500] {Display Queue} wl_display#1.delete_id(23)
-[2374956.559] wl_callback#23.done(1473288)
-[2374957.019]  -> wl_surface#11.frame(new id wl_callback#23)
-[2374957.103]  -> wl_surface#11.commit()
-[2374973.643] {Display Queue} wl_display#1.delete_id(23)
-[2374973.707] wl_callback#23.done(1473305)
-[2374974.048]  -> wl_surface#11.frame(new id wl_callback#23)
-[2374974.122]  -> wl_surface#11.commit()
-[2374990.245] {Display Queue} wl_display#1.delete_id(23)
-[2374990.288] wl_callback#23.done(1473321)
-[2374990.536]  -> wl_surface#11.frame(new id wl_callback#23)
-[2374990.587]  -> wl_surface#11.commit()
-[2375006.635] {Display Queue} wl_display#1.delete_id(23)
-[2375006.679] wl_callback#23.done(1473338)
-[2375006.955]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375007.042]  -> wl_surface#11.commit()
-[2375023.324] {Display Queue} wl_display#1.delete_id(23)
-[2375023.413] wl_callback#23.done(1473354)
-[2375023.707]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375023.793]  -> wl_surface#11.commit()
-[2375039.949] {Display Queue} wl_display#1.delete_id(23)
-[2375040.014] wl_callback#23.done(1473371)
-[2375040.371]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375040.424]  -> wl_surface#11.commit()
-[2375056.448] {Display Queue} wl_display#1.delete_id(23)
-[2375056.502] wl_callback#23.done(1473388)
-[2375056.859]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375056.938]  -> wl_surface#11.commit()
-[2375073.357] {Display Queue} wl_display#1.delete_id(23)
-[2375073.444] wl_callback#23.done(1473404)
-[2375073.830]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375073.914]  -> wl_surface#11.commit()
-[2375089.861] {Display Queue} wl_display#1.delete_id(23)
-[2375089.912] wl_callback#23.done(1473421)
-[2375090.289]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375090.369]  -> wl_surface#11.commit()
-[2375106.574] {Display Queue} wl_display#1.delete_id(23)
-[2375106.620] wl_callback#23.done(1473438)
-[2375106.919]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375106.999]  -> wl_surface#11.commit()
-[2375123.281] {Display Queue} wl_display#1.delete_id(23)
-[2375123.331] wl_callback#23.done(1473454)
-[2375123.620]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375123.677]  -> wl_surface#11.commit()
-[2375139.837] {Display Queue} wl_display#1.delete_id(23)
-[2375139.904] wl_callback#23.done(1473471)
-[2375140.157]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375140.222]  -> wl_surface#11.commit()
-[2375156.178] {Display Queue} wl_display#1.delete_id(23)
-[2375156.218] wl_callback#23.done(1473487)
-[2375156.497]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375156.556]  -> wl_surface#11.commit()
-[2375173.657] {Display Queue} wl_display#1.delete_id(23)
-[2375173.700] wl_callback#23.done(1473505)
-[2375174.086]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375174.224]  -> wl_surface#11.commit()
-[2375190.497] {Display Queue} wl_display#1.delete_id(23)
-[2375190.537] wl_callback#23.done(1473522)
-[2375190.892]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375190.973]  -> wl_surface#11.commit()
-[2375207.677] {Display Queue} wl_display#1.delete_id(23)
-[2375207.816] wl_callback#23.done(1473539)
-[2375208.362]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375208.542]  -> wl_surface#11.commit()
-[2375224.005] {Display Queue} wl_display#1.delete_id(23)
-[2375224.072] wl_callback#23.done(1473555)
-[2375224.757]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375224.883]  -> wl_surface#11.commit()
-[2375240.856] {Display Queue} wl_display#1.delete_id(23)
-[2375240.912] wl_callback#23.done(1473572)
-[2375241.429]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375241.543]  -> wl_surface#11.commit()
-[2375256.620] {Display Queue} wl_display#1.delete_id(23)
-[2375256.697] wl_callback#23.done(1473588)
-[2375257.032]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375257.117]  -> wl_surface#11.commit()
-[2375273.993] {Display Queue} wl_display#1.delete_id(23)
-[2375274.041] wl_callback#23.done(1473605)
-[2375274.523]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375274.609]  -> wl_surface#11.commit()
-[2375289.819] {Display Queue} wl_display#1.delete_id(23)
-[2375289.919] wl_callback#23.done(1473621)
-[2375290.213]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375290.266]  -> wl_surface#11.commit()
-[2375306.298] {Display Queue} wl_display#1.delete_id(23)
-[2375306.347] wl_callback#23.done(1473637)
-[2375306.641]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375306.696]  -> wl_surface#11.commit()
-[2375323.102] {Display Queue} wl_display#1.delete_id(23)
-[2375323.181] wl_callback#23.done(1473654)
-[2375323.527]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375323.622]  -> wl_surface#11.commit()
-[2375339.742] {Display Queue} wl_display#1.delete_id(23)
-[2375339.787] wl_callback#23.done(1473671)
-[2375340.047]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375340.101]  -> wl_surface#11.commit()
-[2375356.901] {Display Queue} wl_display#1.delete_id(23)
-[2375356.976] wl_callback#23.done(1473688)
-[2375357.249]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375357.334]  -> wl_surface#11.commit()
-[2375373.253] {Display Queue} wl_display#1.delete_id(23)
-[2375373.343] wl_callback#23.done(1473704)
-[2375373.761]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375373.858]  -> wl_surface#11.commit()
-[2375389.930] {Display Queue} wl_display#1.delete_id(23)
-[2375389.977] wl_callback#23.done(1473721)
-[2375390.384]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375390.472]  -> wl_surface#11.commit()
-[2375406.700] {Display Queue} wl_display#1.delete_id(23)
-[2375406.753] wl_callback#23.done(1473738)
-[2375407.058]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375407.168]  -> wl_surface#11.commit()
-[2375423.321] {Display Queue} wl_display#1.delete_id(23)
-[2375423.364] wl_callback#23.done(1473754)
-[2375423.639]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375423.690]  -> wl_surface#11.commit()
-[2375439.799] {Display Queue} wl_display#1.delete_id(23)
-[2375439.844] wl_callback#23.done(1473771)
-[2375440.311]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375440.418]  -> wl_surface#11.commit()
-[2375457.378] {Display Queue} wl_display#1.delete_id(23)
-[2375457.449] wl_callback#23.done(1473788)
-[2375457.814]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375457.885]  -> wl_surface#11.commit()
-[2375473.339] {Display Queue} wl_display#1.delete_id(23)
-[2375473.386] wl_callback#23.done(1473804)
-[2375473.732]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375473.799]  -> wl_surface#11.commit()
-[2375490.932] {Display Queue} wl_display#1.delete_id(23)
-[2375490.988] wl_callback#23.done(1473822)
-[2375491.373]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375491.442]  -> wl_surface#11.commit()
-[2375506.881] {Display Queue} wl_display#1.delete_id(23)
-[2375506.926] wl_callback#23.done(1473838)
-[2375507.341]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375507.465]  -> wl_surface#11.commit()
-[2375523.377] {Display Queue} wl_display#1.delete_id(23)
-[2375523.448] wl_callback#23.done(1473854)
-[2375523.866]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375523.958]  -> wl_surface#11.commit()
-[2375540.168] {Display Queue} wl_display#1.delete_id(23)
-[2375540.214] wl_callback#23.done(1473871)
-[2375540.621]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375540.710]  -> wl_surface#11.commit()
-[2375556.679] {Display Queue} wl_display#1.delete_id(23)
-[2375556.736] wl_callback#23.done(1473888)
-[2375557.231]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375557.342]  -> wl_surface#11.commit()
-[2375573.854] {Display Queue} wl_display#1.delete_id(23)
-[2375573.921] wl_callback#23.done(1473905)
-[2375574.388]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375574.454]  -> wl_surface#11.commit()
-[2375590.883] {Display Queue} wl_display#1.delete_id(23)
-[2375590.940] wl_callback#23.done(1473922)
-[2375591.324]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375591.422]  -> wl_surface#11.commit()
-[2375606.675] {Display Queue} wl_display#1.delete_id(23)
-[2375606.717] wl_callback#23.done(1473938)
-[2375607.063]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375607.124]  -> wl_surface#11.commit()
-[2375623.533] {Display Queue} wl_display#1.delete_id(23)
-[2375623.607] wl_callback#23.done(1473954)
-[2375623.965]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375624.027]  -> wl_surface#11.commit()
-[2375640.236] {Display Queue} wl_display#1.delete_id(23)
-[2375640.298] wl_callback#23.done(1473971)
-[2375640.671]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375640.741]  -> wl_surface#11.commit()
-[2375656.636] {Display Queue} wl_display#1.delete_id(23)
-[2375656.684] wl_callback#23.done(1473988)
-[2375657.048]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375657.119]  -> wl_surface#11.commit()
-[2375673.468] {Display Queue} wl_display#1.delete_id(23)
-[2375673.513] wl_callback#23.done(1474005)
-[2375673.905]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375673.998]  -> wl_surface#11.commit()
-[2375689.939] {Display Queue} wl_display#1.delete_id(23)
-[2375689.995] wl_callback#23.done(1474021)
-[2375690.345]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375690.406]  -> wl_surface#11.commit()
-[2375706.490] {Display Queue} wl_display#1.delete_id(23)
-[2375706.538] wl_callback#23.done(1474038)
-[2375706.899]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375706.989]  -> wl_surface#11.commit()
-[2375723.662] {Display Queue} wl_display#1.delete_id(23)
-[2375723.760] wl_callback#23.done(1474055)
-[2375724.259]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375724.361]  -> wl_surface#11.commit()
-[2375740.065] {Display Queue} wl_display#1.delete_id(23)
-[2375740.171] wl_callback#23.done(1474071)
-[2375740.611]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375740.746]  -> wl_surface#11.commit()
-[2375756.387] {Display Queue} wl_display#1.delete_id(23)
-[2375756.445] wl_callback#23.done(1474087)
-[2375756.841]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375756.939]  -> wl_surface#11.commit()
-[2375773.012] {Display Queue} wl_display#1.delete_id(23)
-[2375773.084] wl_callback#23.done(1474104)
-[2375773.395]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375773.451]  -> wl_surface#11.commit()
-[2375789.881] {Display Queue} wl_display#1.delete_id(23)
-[2375789.937] wl_callback#23.done(1474121)
-[2375790.308]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375790.372]  -> wl_surface#11.commit()
-[2375806.789] {Display Queue} wl_display#1.delete_id(23)
-[2375806.847] wl_callback#23.done(1474138)
-[2375807.225]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375807.294]  -> wl_surface#11.commit()
-[2375823.212] {Display Queue} wl_display#1.delete_id(23)
-[2375823.254] wl_callback#23.done(1474154)
-[2375823.531]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375823.597]  -> wl_surface#11.commit()
-[2375840.969] {Display Queue} wl_display#1.delete_id(23)
-[2375841.028] wl_callback#23.done(1474172)
-[2375841.418]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375841.518]  -> wl_surface#11.commit()
-[2375857.567] {Display Queue} wl_display#1.delete_id(23)
-[2375857.631] wl_callback#23.done(1474189)
-[2375858.008]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375858.104]  -> wl_surface#11.commit()
-[2375873.020] {Display Queue} wl_display#1.delete_id(23)
-[2375873.067] wl_callback#23.done(1474204)
-[2375873.628]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375873.713]  -> wl_surface#11.commit()
-[2375889.664] {Display Queue} wl_display#1.delete_id(23)
-[2375889.708] wl_callback#23.done(1474221)
-[2375890.060]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375890.161]  -> wl_surface#11.commit()
-[2375906.438] {Display Queue} wl_display#1.delete_id(23)
-[2375906.486] wl_callback#23.done(1474237)
-[2375906.899]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375906.989]  -> wl_surface#11.commit()
-[2375922.711] {Display Queue} wl_display#1.delete_id(23)
-[2375922.791] wl_callback#23.done(1474254)
-[2375923.108]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375923.173]  -> wl_surface#11.commit()
-[2375939.514] {Display Queue} wl_display#1.delete_id(23)
-[2375939.555] wl_callback#23.done(1474271)
-[2375939.895]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375939.958]  -> wl_surface#11.commit()
-[2375956.161] {Display Queue} wl_display#1.delete_id(23)
-[2375956.254] wl_callback#23.done(1474287)
-[2375956.651]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375956.757]  -> wl_surface#11.commit()
-[2375973.362] {Display Queue} wl_display#1.delete_id(23)
-[2375973.404] wl_callback#23.done(1474304)
-[2375973.817]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375973.901]  -> wl_surface#11.commit()
-[2375989.818] {Display Queue} wl_display#1.delete_id(23)
-[2375989.871] wl_callback#23.done(1474321)
-[2375990.267]  -> wl_surface#11.frame(new id wl_callback#23)
-[2375990.369]  -> wl_surface#11.commit()
-[2376006.492] {Display Queue} wl_display#1.delete_id(23)
-[2376006.535] wl_callback#23.done(1474338)
-[2376006.919]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376006.989]  -> wl_surface#11.commit()
-[2376023.242] {Display Queue} wl_display#1.delete_id(23)
-[2376023.287] wl_callback#23.done(1474354)
-[2376023.561]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376023.619]  -> wl_surface#11.commit()
-[2376040.352] {Display Queue} wl_display#1.delete_id(23)
-[2376040.402] wl_callback#23.done(1474371)
-[2376040.688]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376040.740]  -> wl_surface#11.commit()
-[2376056.541] {Display Queue} wl_display#1.delete_id(23)
-[2376056.583] wl_callback#23.done(1474388)
-[2376056.838]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376056.891]  -> wl_surface#11.commit()
-[2376073.106] {Display Queue} wl_display#1.delete_id(23)
-[2376073.227] wl_callback#23.done(1474404)
-[2376073.463]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376073.515]  -> wl_surface#11.commit()
-[2376089.900] {Display Queue} wl_display#1.delete_id(23)
-[2376089.942] wl_callback#23.done(1474421)
-[2376090.199]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376090.249]  -> wl_surface#11.commit()
-[2376106.507] {Display Queue} wl_display#1.delete_id(23)
-[2376106.555] wl_callback#23.done(1474438)
-[2376106.844]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376106.926]  -> wl_surface#11.commit()
-[2376123.201] {Display Queue} wl_display#1.delete_id(23)
-[2376123.251] wl_callback#23.done(1474454)
-[2376123.558]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376123.641]  -> wl_surface#11.commit()
-[2376139.707] {Display Queue} wl_display#1.delete_id(23)
-[2376139.764] wl_callback#23.done(1474471)
-[2376140.101]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376140.208]  -> wl_surface#11.commit()
-[2376156.657] {Display Queue} wl_display#1.delete_id(23)
-[2376156.710] wl_callback#23.done(1474488)
-[2376157.015]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376157.102]  -> wl_surface#11.commit()
-[2376173.312] {Display Queue} wl_display#1.delete_id(23)
-[2376173.360] wl_callback#23.done(1474504)
-[2376173.658]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376173.736]  -> wl_surface#11.commit()
-[2376189.647] {Display Queue} wl_display#1.delete_id(23)
-[2376189.753] wl_callback#23.done(1474521)
-[2376190.117]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376190.260]  -> wl_surface#11.commit()
-[2376206.037] {Display Queue} wl_display#1.delete_id(23)
-[2376206.082] wl_callback#23.done(1474537)
-[2376206.448]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376206.516]  -> wl_surface#11.commit()
-[2376223.174] {Display Queue} wl_display#1.delete_id(23)
-[2376223.263] wl_callback#23.done(1474554)
-[2376223.616]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376223.670]  -> wl_surface#11.commit()
-[2376239.397] {Display Queue} wl_display#1.delete_id(23)
-[2376239.467] wl_callback#23.done(1474571)
-[2376239.725]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376239.809]  -> wl_surface#11.commit()
-[2376256.129] {Display Queue} wl_display#1.delete_id(23)
-[2376256.247] wl_callback#23.done(1474587)
-[2376256.624]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376256.715]  -> wl_surface#11.commit()
-[2376272.860] {Display Queue} wl_display#1.delete_id(23)
-[2376272.920] wl_callback#23.done(1474604)
-[2376273.203]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376273.276]  -> wl_surface#11.commit()
-[2376289.846] {Display Queue} wl_display#1.delete_id(23)
-[2376289.898] wl_callback#23.done(1474621)
-[2376290.395]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376290.490]  -> wl_surface#11.commit()
-[2376306.379] {Display Queue} wl_display#1.delete_id(23)
-[2376306.418] wl_callback#23.done(1474637)
-[2376306.713]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376306.769]  -> wl_surface#11.commit()
-[2376323.114] {Display Queue} wl_display#1.delete_id(23)
-[2376323.221] wl_callback#23.done(1474654)
-[2376323.554]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376323.613]  -> wl_surface#11.commit()
-[2376340.354] {Display Queue} wl_display#1.delete_id(23)
-[2376340.399] wl_callback#23.done(1474671)
-[2376340.688]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376340.775]  -> wl_surface#11.commit()
-[2376356.510] {Display Queue} wl_display#1.delete_id(23)
-[2376356.597] wl_callback#23.done(1474688)
-[2376356.888]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376356.939]  -> wl_surface#11.commit()
-[2376373.103] {Display Queue} wl_display#1.delete_id(23)
-[2376373.174] wl_callback#23.done(1474704)
-[2376373.552]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376373.610]  -> wl_surface#11.commit()
-[2376390.085] {Display Queue} wl_display#1.delete_id(23)
-[2376390.134] wl_callback#23.done(1474721)
-[2376390.466]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376390.545]  -> wl_surface#11.commit()
-[2376406.422] {Display Queue} wl_display#1.delete_id(23)
-[2376406.469] wl_callback#23.done(1474738)
-[2376406.755]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376406.834]  -> wl_surface#11.commit()
-[2376423.163] {Display Queue} wl_display#1.delete_id(23)
-[2376423.212] wl_callback#23.done(1474754)
-[2376423.598]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376423.678]  -> wl_surface#11.commit()
-[2376439.859] {Display Queue} wl_display#1.delete_id(23)
-[2376439.937] wl_callback#23.done(1474771)
-[2376440.265]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376440.319]  -> wl_surface#11.commit()
-[2376457.007] {Display Queue} wl_display#1.delete_id(23)
-[2376457.064] wl_callback#23.done(1474788)
-[2376457.444]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376457.529]  -> wl_surface#11.commit()
-[2376473.773] {Display Queue} wl_display#1.delete_id(23)
-[2376473.822] wl_callback#23.done(1474805)
-[2376474.114]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376474.210]  -> wl_surface#11.commit()
-[2376489.624] {Display Queue} wl_display#1.delete_id(23)
-[2376489.729] wl_callback#23.done(1474821)
-[2376490.123]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376490.243]  -> wl_surface#11.commit()
-[2376506.466] {Display Queue} wl_display#1.delete_id(23)
-[2376506.507] wl_callback#23.done(1474838)
-[2376506.803]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376506.861]  -> wl_surface#11.commit()
-[2376523.073] {Display Queue} wl_display#1.delete_id(23)
-[2376523.118] wl_callback#23.done(1474854)
-[2376523.512]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376523.576]  -> wl_surface#11.commit()
-[2376539.476] {Display Queue} wl_display#1.delete_id(23)
-[2376539.558] wl_callback#23.done(1474871)
-[2376539.941]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376540.060]  -> wl_surface#11.commit()
-[2376556.681] {Display Queue} wl_display#1.delete_id(23)
-[2376556.726] wl_callback#23.done(1474888)
-[2376557.126]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376557.209]  -> wl_surface#11.commit()
-[2376573.865] {Display Queue} wl_display#1.delete_id(23)
-[2376573.909] wl_callback#23.done(1474905)
-[2376574.299]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376574.393]  -> wl_surface#11.commit()
-[2376590.490] {Display Queue} wl_display#1.delete_id(23)
-[2376590.588] wl_callback#23.done(1474921)
-[2376590.968]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376591.082]  -> wl_surface#11.commit()
-[2376606.465] {Display Queue} wl_display#1.delete_id(23)
-[2376606.509] wl_callback#23.done(1474937)
-[2376606.890]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376606.972]  -> wl_surface#11.commit()
-[2376623.223] {Display Queue} wl_display#1.delete_id(23)
-[2376623.274] wl_callback#23.done(1474954)
-[2376623.593]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376623.665]  -> wl_surface#11.commit()
-[2376639.759] {Display Queue} wl_display#1.delete_id(23)
-[2376639.822] wl_callback#23.done(1474971)
-[2376640.082]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376640.174]  -> wl_surface#11.commit()
-[2376657.155] {Display Queue} wl_display#1.delete_id(23)
-[2376657.245] wl_callback#23.done(1474988)
-[2376657.604]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376657.688]  -> wl_surface#11.commit()
-[2376673.423] {Display Queue} wl_display#1.delete_id(23)
-[2376673.476] wl_callback#23.done(1475004)
-[2376673.840]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376673.921]  -> wl_surface#11.commit()
-[2376689.837] {Display Queue} wl_display#1.delete_id(23)
-[2376689.889] wl_callback#23.done(1475021)
-[2376690.213]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376690.328]  -> wl_surface#11.commit()
-[2376706.535] {Display Queue} wl_display#1.delete_id(23)
-[2376706.586] wl_callback#23.done(1475038)
-[2376706.891]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376706.972]  -> wl_surface#11.commit()
-[2376723.223] {Display Queue} wl_display#1.delete_id(23)
-[2376723.272] wl_callback#23.done(1475054)
-[2376723.745]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376723.837]  -> wl_surface#11.commit()
-[2376739.733] {Display Queue} wl_display#1.delete_id(23)
-[2376739.783] wl_callback#23.done(1475071)
-[2376740.112]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376740.183]  -> wl_surface#11.commit()
-[2376757.163] {Display Queue} wl_display#1.delete_id(23)
-[2376757.210] wl_callback#23.done(1475088)
-[2376757.471]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376757.550]  -> wl_surface#11.commit()
-[2376773.391] {Display Queue} wl_display#1.delete_id(23)
-[2376773.439] wl_callback#23.done(1475104)
-[2376773.727]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376773.780]  -> wl_surface#11.commit()
-[2376789.899] {Display Queue} wl_display#1.delete_id(23)
-[2376789.941] wl_callback#23.done(1475121)
-[2376790.331]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376790.396]  -> wl_surface#11.commit()
-[2376806.232] {Display Queue} wl_display#1.delete_id(23)
-[2376806.281] wl_callback#23.done(1475137)
-[2376806.693]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376806.782]  -> wl_surface#11.commit()
-[2376822.810] {Display Queue} wl_display#1.delete_id(23)
-[2376822.892] wl_callback#23.done(1475154)
-[2376823.355]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376823.464]  -> wl_surface#11.commit()
-[2376839.598] {Display Queue} wl_display#1.delete_id(23)
-[2376839.652] wl_callback#23.done(1475171)
-[2376840.114]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376840.304]  -> wl_surface#11.commit()
-[2376856.197] {Display Queue} wl_display#1.delete_id(23)
-[2376856.252] wl_callback#23.done(1475187)
-[2376856.678]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376856.758]  -> wl_surface#11.commit()
-[2376872.879] {Display Queue} wl_display#1.delete_id(23)
-[2376872.939] wl_callback#23.done(1475204)
-[2376873.225]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376873.286]  -> wl_surface#11.commit()
-[2376890.024] {Display Queue} wl_display#1.delete_id(23)
-[2376890.065] wl_callback#23.done(1475221)
-[2376890.404]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376890.464]  -> wl_surface#11.commit()
-[2376906.855] {Display Queue} wl_display#1.delete_id(23)
-[2376906.921] wl_callback#23.done(1475238)
-[2376907.235]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376907.296]  -> wl_surface#11.commit()
-[2376923.027] {Display Queue} wl_display#1.delete_id(23)
-[2376923.087] wl_callback#23.done(1475254)
-[2376923.422]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376923.483]  -> wl_surface#11.commit()
-[2376939.671] {Display Queue} wl_display#1.delete_id(23)
-[2376939.719] wl_callback#23.done(1475271)
-[2376940.072]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376940.183]  -> wl_surface#11.commit()
-[2376956.434] {Display Queue} wl_display#1.delete_id(23)
-[2376956.482] wl_callback#23.done(1475287)
-[2376956.839]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376956.954]  -> wl_surface#11.commit()
-[2376973.327] {Display Queue} wl_display#1.delete_id(23)
-[2376973.421] wl_callback#23.done(1475304)
-[2376973.817]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376973.882]  -> wl_surface#11.commit()
-[2376990.251] {Display Queue} wl_display#1.delete_id(23)
-[2376990.298] wl_callback#23.done(1475321)
-[2376990.603]  -> wl_surface#11.frame(new id wl_callback#23)
-[2376990.666]  -> wl_surface#11.commit()
-[2377007.282] {Display Queue} wl_display#1.delete_id(23)
-[2377007.367] wl_callback#23.done(1475338)
-[2377007.698]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377007.761]  -> wl_surface#11.commit()
-[2377023.407] {Display Queue} wl_display#1.delete_id(23)
-[2377023.508] wl_callback#23.done(1475354)
-[2377023.915]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377024.029]  -> wl_surface#11.commit()
-[2377040.452] {Display Queue} wl_display#1.delete_id(23)
-[2377040.544] wl_callback#23.done(1475371)
-[2377040.903]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377040.966]  -> wl_surface#11.commit()
-[2377056.469] {Display Queue} wl_display#1.delete_id(23)
-[2377056.517] wl_callback#23.done(1475388)
-[2377056.922]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377057.015]  -> wl_surface#11.commit()
-[2377073.245] {Display Queue} wl_display#1.delete_id(23)
-[2377073.316] wl_callback#23.done(1475404)
-[2377073.732]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377073.822]  -> wl_surface#11.commit()
-[2377089.460] {Display Queue} wl_display#1.delete_id(23)
-[2377089.543] wl_callback#23.done(1475421)
-[2377089.958]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377090.083]  -> wl_surface#11.commit()
-[2377106.239] {Display Queue} wl_display#1.delete_id(23)
-[2377106.303] wl_callback#23.done(1475437)
-[2377106.681]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377106.799]  -> wl_surface#11.commit()
-[2377122.849] {Display Queue} wl_display#1.delete_id(23)
-[2377122.937] wl_callback#23.done(1475454)
-[2377123.451]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377123.533]  -> wl_surface#11.commit()
-[2377139.608] {Display Queue} wl_display#1.delete_id(23)
-[2377139.674] wl_callback#23.done(1475471)
-[2377139.997]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377140.061]  -> wl_surface#11.commit()
-[2377155.974] {Display Queue} wl_display#1.delete_id(23)
-[2377156.029] wl_callback#23.done(1475487)
-[2377156.316]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377156.380]  -> wl_surface#11.commit()
-[2377173.672] {Display Queue} wl_display#1.delete_id(23)
-[2377173.731] wl_callback#23.done(1475505)
-[2377174.059]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377174.126]  -> wl_surface#11.commit()
-[2377190.294] {Display Queue} wl_display#1.delete_id(23)
-[2377190.335] wl_callback#23.done(1475521)
-[2377190.662]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377190.725]  -> wl_surface#11.commit()
-[2377206.959] {Display Queue} wl_display#1.delete_id(23)
-[2377207.036] wl_callback#23.done(1475538)
-[2377207.417]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377207.521]  -> wl_surface#11.commit()
-[2377223.337] {Display Queue} wl_display#1.delete_id(23)
-[2377223.389] wl_callback#23.done(1475554)
-[2377223.803]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377223.899]  -> wl_surface#11.commit()
-[2377239.805] {Display Queue} wl_display#1.delete_id(23)
-[2377239.856] wl_callback#23.done(1475571)
-[2377240.360]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377240.476]  -> wl_surface#11.commit()
-[2377256.426] {Display Queue} wl_display#1.delete_id(23)
-[2377256.483] wl_callback#23.done(1475588)
-[2377256.826]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377256.923]  -> wl_surface#11.commit()
-[2377273.313] {Display Queue} wl_display#1.delete_id(23)
-[2377273.369] wl_callback#23.done(1475604)
-[2377273.799]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377273.876]  -> wl_surface#11.commit()
-[2377289.992] {Display Queue} wl_display#1.delete_id(23)
-[2377290.058] wl_callback#23.done(1475621)
-[2377290.496]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377290.590]  -> wl_surface#11.commit()
-[2377306.385] {Display Queue} wl_display#1.delete_id(23)
-[2377306.488] wl_callback#23.done(1475637)
-[2377307.187]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377307.332]  -> wl_surface#11.commit()
-[2377323.062] {Display Queue} wl_display#1.delete_id(23)
-[2377323.124] wl_callback#23.done(1475654)
-[2377323.547]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377323.630]  -> wl_surface#11.commit()
-[2377339.620] {Display Queue} wl_display#1.delete_id(23)
-[2377339.681] wl_callback#23.done(1475671)
-[2377340.159]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377340.237]  -> wl_surface#11.commit()
-[2377356.252] {Display Queue} wl_display#1.delete_id(23)
-[2377356.349] wl_callback#23.done(1475687)
-[2377356.919]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377357.012]  -> wl_surface#11.commit()
-[2377372.993] {Display Queue} wl_display#1.delete_id(23)
-[2377373.088] wl_callback#23.done(1475704)
-[2377373.536]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377373.660]  -> wl_surface#11.commit()
-[2377389.972] {Display Queue} wl_display#1.delete_id(23)
-[2377390.035] wl_callback#23.done(1475721)
-[2377390.480]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377390.576]  -> wl_surface#11.commit()
-[2377406.208] {Display Queue} wl_display#1.delete_id(23)
-[2377406.258] wl_callback#23.done(1475737)
-[2377406.657]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377406.749]  -> wl_surface#11.commit()
-[2377423.215] {Display Queue} wl_display#1.delete_id(23)
-[2377423.265] wl_callback#23.done(1475754)
-[2377423.747]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377423.831]  -> wl_surface#11.commit()
-[2377439.277] {Display Queue} wl_display#1.delete_id(23)
-[2377439.337] wl_callback#23.done(1475770)
-[2377439.740]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377439.873]  -> wl_surface#11.commit()
-[2377456.055] {Display Queue} wl_display#1.delete_id(23)
-[2377456.113] wl_callback#23.done(1475787)
-[2377456.557]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377456.670]  -> wl_surface#11.commit()
-[2377472.829] {Display Queue} wl_display#1.delete_id(23)
-[2377472.868] wl_callback#23.done(1475804)
-[2377473.280]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377473.332]  -> wl_surface#11.commit()
-[2377489.778] {Display Queue} wl_display#1.delete_id(23)
-[2377489.817] wl_callback#23.done(1475821)
-[2377490.169]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377490.233]  -> wl_surface#11.commit()
-[2377506.435] {Display Queue} wl_display#1.delete_id(23)
-[2377506.475] wl_callback#23.done(1475837)
-[2377506.821]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377506.913]  -> wl_surface#11.commit()
-[2377523.631] {Display Queue} wl_display#1.delete_id(23)
-[2377523.674] wl_callback#23.done(1475855)
-[2377523.976]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377524.040]  -> wl_surface#11.commit()
-[2377540.094] {Display Queue} wl_display#1.delete_id(23)
-[2377540.160] wl_callback#23.done(1475871)
-[2377540.619]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377540.712]  -> wl_surface#11.commit()
-[2377556.510] {Display Queue} wl_display#1.delete_id(23)
-[2377556.553] wl_callback#23.done(1475888)
-[2377556.843]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377556.895]  -> wl_surface#11.commit()
-[2377573.830] {Display Queue} wl_display#1.delete_id(23)
-[2377573.916] wl_callback#23.done(1475905)
-[2377574.224]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377574.278]  -> wl_surface#11.commit()
-[2377589.814] {Display Queue} wl_display#1.delete_id(23)
-[2377589.878] wl_callback#23.done(1475921)
-[2377590.216]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377590.298]  -> wl_surface#11.commit()
-[2377606.865] {Display Queue} wl_display#1.delete_id(23)
-[2377606.917] wl_callback#23.done(1475938)
-[2377607.248]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377607.305]  -> wl_surface#11.commit()
-[2377623.406] {Display Queue} wl_display#1.delete_id(23)
-[2377623.454] wl_callback#23.done(1475954)
-[2377623.709]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377623.792]  -> wl_surface#11.commit()
-[2377639.909] {Display Queue} wl_display#1.delete_id(23)
-[2377639.951] wl_callback#23.done(1475971)
-[2377640.263]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377640.317]  -> wl_surface#11.commit()
-[2377656.507] {Display Queue} wl_display#1.delete_id(23)
-[2377656.564] wl_callback#23.done(1475988)
-[2377656.829]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377656.883]  -> wl_surface#11.commit()
-[2377673.565] {Display Queue} wl_display#1.delete_id(23)
-[2377673.612] wl_callback#23.done(1476004)
-[2377673.924]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377674.007]  -> wl_surface#11.commit()
-[2377689.305] {Display Queue} wl_display#1.delete_id(23)
-[2377689.382] wl_callback#23.done(1476020)
-[2377689.785]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377689.857]  -> wl_surface#11.commit()
-[2377705.876] {Display Queue} wl_display#1.delete_id(23)
-[2377705.936] wl_callback#23.done(1476037)
-[2377706.195]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377706.253]  -> wl_surface#11.commit()
-[2377722.697] {Display Queue} wl_display#1.delete_id(23)
-[2377722.743] wl_callback#23.done(1476054)
-[2377723.084]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377723.180]  -> wl_surface#11.commit()
-[2377739.952] {Display Queue} wl_display#1.delete_id(23)
-[2377740.012] wl_callback#23.done(1476071)
-[2377740.500]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377740.569]  -> wl_surface#11.commit()
-[2377757.064] {Display Queue} wl_display#1.delete_id(23)
-[2377757.110] wl_callback#23.done(1476088)
-[2377757.489]  -> wl_surface#11.frame(new id wl_callback#23)
-[2377757.562]  -> wl_surface#11.commit()
-[2377764.345]  -> wl_surface#11.attach(nil, 0, 0)
-[2377772.743] {Display Queue} wl_display#1.delete_id(23)
-[2377772.778] wl_callback#23.done(1476104)
-[2377773.040]  -> wl_surface#11.commit()
-[2377773.492] wl_buffer#13.release()
-[2379563.076]  -> zwlr_layer_surface_v1#20.set_size(376, 576)
-[2379563.123]  -> zwlr_layer_surface_v1#20.set_margin(5, 0, 0, 10)
-[2379563.155]  -> zwlr_layer_surface_v1#20.set_keyboard_interactivity(0)
-[2379563.183]  -> wl_surface#11.set_input_region(wl_region#7)
-[2379563.196]  -> wl_surface#11.set_opaque_region(wl_region#8)
-[2379563.207]  -> zwlr_layer_surface_v1#20.set_anchor(1)
-[2379563.218]  -> wl_surface#11.commit()
-[2379563.645] zwlr_layer_surface_v1#20.configure(9723, 376, 576)
-[2379563.719]  -> zwlr_layer_surface_v1#20.ack_configure(9723)
-[2379563.787]  -> wl_surface#11.damage_buffer(0, 0, 376, 576)
-[2379563.803]  -> wl_surface#11.attach(wl_buffer#13, 0, 0)
-[2379563.829]  -> wl_surface#11.frame(new id wl_callback#23)
-[2379563.861]  -> wl_surface#11.commit()
-[2379574.282] {Display Queue} wl_display#1.delete_id(23)
-[2379574.343] wl_callback#23.done(1477905)
-[2379574.658]  -> wl_surface#11.frame(new id wl_callback#23)
-[2379574.723]  -> wl_surface#11.commit()
-[2379589.573] {Display Queue} wl_display#1.delete_id(23)
-[2379589.660] wl_callback#23.done(1477920)
-[2379590.123]  -> wl_surface#11.frame(new id wl_callback#23)
-[2379590.217]  -> wl_surface#11.commit()
-[2379606.888] {Display Queue} wl_display#1.delete_id(23)
-[2379606.945] wl_callback#23.done(1477938)
-[2379607.349]  -> wl_surface#11.frame(new id wl_callback#23)
-[2379607.466]  -> wl_surface#11.commit()
-[2379622.731] {Display Queue} wl_display#1.delete_id(23)
-[2379622.791] wl_callback#23.done(1477954)
-[2379623.261]  -> wl_surface#11.frame(new id wl_callback#23)
-[2379623.384]  -> wl_surface#11.commit()
-[2379639.541] {Display Queue} wl_display#1.delete_id(23)
-[2379639.592] wl_callback#23.done(1477971)
-[2379639.847]  -> wl_surface#11.frame(new id wl_callback#23)
-[2379639.900]  -> wl_surface#11.commit()
-[2379656.273] {Display Queue} wl_display#1.delete_id(23)
-[2379656.332] wl_callback#23.done(1477987)
-[2379656.719]  -> wl_surface#11.frame(new id wl_callback#23)
-[2379656.812]  -> wl_surface#11.commit()
-[2379672.881] {Display Queue} wl_display#1.delete_id(23)
-[2379672.941] wl_callback#23.done(1478004)
-[2379673.340]  -> wl_surface#11.frame(new id wl_callback#23)
-[2379673.430]  -> wl_surface#11.commit()
-[2379690.012] {Display Queue} wl_display#1.delete_id(23)
-[2379690.067] wl_callback#23.done(1478021)
-[2379690.421]  -> wl_surface#11.frame(new id wl_callback#23)
-[2379690.508]  -> wl_surface#11.commit()
-[2379706.246] {Display Queue} wl_display#1.delete_id(23)
-[2379706.320] wl_callback#23.done(1478037)
-[2379706.716]  -> wl_surface#11.frame(new id wl_callback#23)
-[2379706.809]  -> wl_surface#11.commit()
-[2379722.770] {Display Queue} wl_display#1.delete_id(23)
-[2379722.818] wl_callback#23.done(1478054)
-[2379723.087]  -> wl_surface#11.frame(new id wl_callback#23)
-[2379723.187]  -> wl_surface#11.commit()
-[2379740.734] {Display Queue} wl_display#1.delete_id(23)
-[2379740.785] wl_callback#23.done(1478072)
-[2379741.176]  -> wl_surface#11.frame(new id wl_callback#23)
-[2379741.267]  -> wl_surface#11.commit()
-[2379756.009] {Display Queue} wl_display#1.delete_id(23)
-[2379756.105] wl_callback#23.done(1478087)
-[2379756.671]  -> wl_surface#11.frame(new id wl_callback#23)
-[2379756.769]  -> wl_surface#11.commit()
-[2379772.895] {Display Queue} wl_display#1.delete_id(23)
-[2379772.947] wl_callback#23.done(1478104)
-[2379773.258]  -> wl_surface#11.frame(new id wl_callback#23)
-[2379773.312]  -> wl_surface#11.commit()
-[2379789.520] {Display Queue} wl_display#1.delete_id(23)
-[2379789.565] wl_callback#23.done(1478121)
-[2379789.868]  -> wl_surface#11.frame(new id wl_callback#23)
-[2379789.934]  -> wl_surface#11.commit()
-[2379805.985] {Display Queue} wl_display#1.delete_id(23)
-[2379806.043] wl_callback#23.done(1478137)
-[2379806.433]  -> wl_surface#11.frame(new id wl_callback#23)
-[2379806.500]  -> wl_surface#11.commit()
-[2379822.569] {Display Queue} wl_display#1.delete_id(23)
-[2379822.618] wl_callback#23.done(1478154)
-[2379822.998]  -> wl_surface#11.frame(new id wl_callback#23)
-[2379823.092]  -> wl_surface#11.commit()
-[2379839.429] {Display Queue} wl_display#1.delete_id(23)
-[2379839.484] wl_callback#23.done(1478171)
-[2379839.870]  -> wl_surface#11.frame(new id wl_callback#23)
-[2379839.960]  -> wl_surface#11.commit()
-[2379855.884] {Display Queue} wl_display#1.delete_id(23)
-[2379855.971] wl_callback#23.done(1478187)
-[2379856.417]  -> wl_surface#11.frame(new id wl_callback#23)
-[2379856.514]  -> wl_surface#11.commit()
-[2379872.897] {Display Queue} wl_display#1.delete_id(23)
-[2379872.965] wl_callback#23.done(1478204)
-[2379873.465]  -> wl_surface#11.frame(new id wl_callback#23)
-[2379873.562]  -> wl_surface#11.commit()
-[2379889.466] {Display Queue} wl_display#1.delete_id(23)
-[2379889.517] wl_callback#23.done(1478221)
-[2379889.881]  -> wl_surface#11.frame(new id wl_callback#23)
-[2379889.978]  -> wl_surface#11.commit()
-[2379905.949] {Display Queue} wl_display#1.delete_id(23)
-[2379906.013] wl_callback#23.done(1478237)
-[2379906.426]  -> wl_surface#11.frame(new id wl_callback#23)
-[2379906.525]  -> wl_surface#11.commit()
-[2379922.950] {Display Queue} wl_display#1.delete_id(23)
-[2379923.011] wl_callback#23.done(1478254)
-[2379923.440]  -> wl_surface#11.frame(new id wl_callback#23)
-[2379923.536]  -> wl_surface#11.commit()
-[2379939.964] {Display Queue} wl_display#1.delete_id(23)
-[2379940.016] wl_callback#23.done(1478271)
-[2379940.447]  -> wl_surface#11.frame(new id wl_callback#23)
-[2379940.512]  -> wl_surface#11.commit()
-[2379956.799] {Display Queue} wl_display#1.delete_id(23)
-[2379956.852] wl_callback#23.done(1478288)
-[2379957.270]  -> wl_surface#11.frame(new id wl_callback#23)
-[2379957.364]  -> wl_surface#11.commit()
-[2379973.749] {Display Queue} wl_display#1.delete_id(23)
-[2379973.800] wl_callback#23.done(1478305)
-[2379974.280]  -> wl_surface#11.frame(new id wl_callback#23)
-[2379974.397]  -> wl_surface#11.commit()
-[2379989.690] {Display Queue} wl_display#1.delete_id(23)
-[2379989.772] wl_callback#23.done(1478321)
-[2379990.095]  -> wl_surface#11.frame(new id wl_callback#23)
-[2379990.233]  -> wl_surface#11.commit()
-[2380006.281] {Display Queue} wl_display#1.delete_id(23)
-[2380006.384] wl_callback#23.done(1478337)
-[2380006.812]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380006.906]  -> wl_surface#11.commit()
-[2380023.031] {Display Queue} wl_display#1.delete_id(23)
-[2380023.092] wl_callback#23.done(1478354)
-[2380023.522]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380023.587]  -> wl_surface#11.commit()
-[2380039.368] {Display Queue} wl_display#1.delete_id(23)
-[2380039.413] wl_callback#23.done(1478370)
-[2380039.864]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380039.977]  -> wl_surface#11.commit()
-[2380056.965] {Display Queue} wl_display#1.delete_id(23)
-[2380057.065] wl_callback#23.done(1478388)
-[2380057.529]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380057.622]  -> wl_surface#11.commit()
-[2380073.276] {Display Queue} wl_display#1.delete_id(23)
-[2380073.359] wl_callback#23.done(1478404)
-[2380073.755]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380073.848]  -> wl_surface#11.commit()
-[2380089.691] {Display Queue} wl_display#1.delete_id(23)
-[2380089.740] wl_callback#23.done(1478421)
-[2380090.113]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380090.223]  -> wl_surface#11.commit()
-[2380105.997] {Display Queue} wl_display#1.delete_id(23)
-[2380106.059] wl_callback#23.done(1478437)
-[2380106.461]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380106.530]  -> wl_surface#11.commit()
-[2380122.441] {Display Queue} wl_display#1.delete_id(23)
-[2380122.487] wl_callback#23.done(1478454)
-[2380122.795]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380122.859]  -> wl_surface#11.commit()
-[2380139.008] {Display Queue} wl_display#1.delete_id(23)
-[2380139.052] wl_callback#23.done(1478470)
-[2380139.355]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380139.422]  -> wl_surface#11.commit()
-[2380155.849] {Display Queue} wl_display#1.delete_id(23)
-[2380155.891] wl_callback#23.done(1478487)
-[2380156.280]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380156.347]  -> wl_surface#11.commit()
-[2380172.521] {Display Queue} wl_display#1.delete_id(23)
-[2380172.580] wl_callback#23.done(1478504)
-[2380173.055]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380173.172]  -> wl_surface#11.commit()
-[2380189.233] {Display Queue} wl_display#1.delete_id(23)
-[2380189.285] wl_callback#23.done(1478520)
-[2380189.732]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380189.833]  -> wl_surface#11.commit()
-[2380206.242] {Display Queue} wl_display#1.delete_id(23)
-[2380206.355] wl_callback#23.done(1478537)
-[2380206.787]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380206.875]  -> wl_surface#11.commit()
-[2380223.571] {Display Queue} wl_display#1.delete_id(23)
-[2380223.650] wl_callback#23.done(1478554)
-[2380224.127]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380224.248]  -> wl_surface#11.commit()
-[2380239.676] {Display Queue} wl_display#1.delete_id(23)
-[2380239.726] wl_callback#23.done(1478571)
-[2380240.117]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380240.209]  -> wl_surface#11.commit()
-[2380256.287] {Display Queue} wl_display#1.delete_id(23)
-[2380256.344] wl_callback#23.done(1478587)
-[2380256.706]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380256.771]  -> wl_surface#11.commit()
-[2380273.017] {Display Queue} wl_display#1.delete_id(23)
-[2380273.079] wl_callback#23.done(1478604)
-[2380273.746]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380273.835]  -> wl_surface#11.commit()
-[2380289.438] {Display Queue} wl_display#1.delete_id(23)
-[2380289.486] wl_callback#23.done(1478621)
-[2380289.866]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380289.961]  -> wl_surface#11.commit()
-[2380306.129] {Display Queue} wl_display#1.delete_id(23)
-[2380306.277] wl_callback#23.done(1478637)
-[2380306.631]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380306.711]  -> wl_surface#11.commit()
-[2380322.660] {Display Queue} wl_display#1.delete_id(23)
-[2380322.707] wl_callback#23.done(1478654)
-[2380323.030]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380323.088]  -> wl_surface#11.commit()
-[2380339.488] {Display Queue} wl_display#1.delete_id(23)
-[2380339.547] wl_callback#23.done(1478670)
-[2380339.881]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380339.949]  -> wl_surface#11.commit()
-[2380356.100] {Display Queue} wl_display#1.delete_id(23)
-[2380356.172] wl_callback#23.done(1478687)
-[2380356.609]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380356.703]  -> wl_surface#11.commit()
-[2380372.863] {Display Queue} wl_display#1.delete_id(23)
-[2380372.910] wl_callback#23.done(1478704)
-[2380373.456]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380373.592]  -> wl_surface#11.commit()
-[2380389.493] {Display Queue} wl_display#1.delete_id(23)
-[2380389.534] wl_callback#23.done(1478720)
-[2380389.885]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380389.955]  -> wl_surface#11.commit()
-[2380405.908] {Display Queue} wl_display#1.delete_id(23)
-[2380405.985] wl_callback#23.done(1478737)
-[2380406.356]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380406.421]  -> wl_surface#11.commit()
-[2380422.376] {Display Queue} wl_display#1.delete_id(23)
-[2380422.420] wl_callback#23.done(1478753)
-[2380422.757]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380422.820]  -> wl_surface#11.commit()
-[2380439.079] {Display Queue} wl_display#1.delete_id(23)
-[2380439.121] wl_callback#23.done(1478770)
-[2380439.473]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380439.539]  -> wl_surface#11.commit()
-[2380456.026] {Display Queue} wl_display#1.delete_id(23)
-[2380456.108] wl_callback#23.done(1478787)
-[2380456.475]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380456.540]  -> wl_surface#11.commit()
-[2380472.479] {Display Queue} wl_display#1.delete_id(23)
-[2380472.527] wl_callback#23.done(1478804)
-[2380472.902]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380472.991]  -> wl_surface#11.commit()
-[2380490.081] {Display Queue} wl_display#1.delete_id(23)
-[2380490.208] wl_callback#23.done(1478821)
-[2380490.610]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380490.679]  -> wl_surface#11.commit()
-[2380505.999] {Display Queue} wl_display#1.delete_id(23)
-[2380506.052] wl_callback#23.done(1478837)
-[2380506.376]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380506.472]  -> wl_surface#11.commit()
-[2380522.769] {Display Queue} wl_display#1.delete_id(23)
-[2380522.811] wl_callback#23.done(1478854)
-[2380523.116]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380523.198]  -> wl_surface#11.commit()
-[2380539.229] {Display Queue} wl_display#1.delete_id(23)
-[2380539.271] wl_callback#23.done(1478870)
-[2380539.552]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380539.614]  -> wl_surface#11.commit()
-[2380555.987] {Display Queue} wl_display#1.delete_id(23)
-[2380556.102] wl_callback#23.done(1478887)
-[2380556.558]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380556.681]  -> wl_surface#11.commit()
-[2380572.717] {Display Queue} wl_display#1.delete_id(23)
-[2380572.780] wl_callback#23.done(1478904)
-[2380573.163]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380573.255]  -> wl_surface#11.commit()
-[2380589.428] {Display Queue} wl_display#1.delete_id(23)
-[2380589.484] wl_callback#23.done(1478920)
-[2380589.974]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380590.100]  -> wl_surface#11.commit()
-[2380606.152] {Display Queue} wl_display#1.delete_id(23)
-[2380606.213] wl_callback#23.done(1478937)
-[2380606.729]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380606.858]  -> wl_surface#11.commit()
-[2380622.817] {Display Queue} wl_display#1.delete_id(23)
-[2380622.881] wl_callback#23.done(1478954)
-[2380623.325]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380623.403]  -> wl_surface#11.commit()
-[2380639.388] {Display Queue} wl_display#1.delete_id(23)
-[2380639.463] wl_callback#23.done(1478971)
-[2380639.807]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380639.869]  -> wl_surface#11.commit()
-[2380656.735] {Display Queue} wl_display#1.delete_id(23)
-[2380656.786] wl_callback#23.done(1478988)
-[2380657.112]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380657.203]  -> wl_surface#11.commit()
-[2380673.404] {Display Queue} wl_display#1.delete_id(23)
-[2380673.455] wl_callback#23.done(1479005)
-[2380673.708]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380673.788]  -> wl_surface#11.commit()
-[2380689.788] {Display Queue} wl_display#1.delete_id(23)
-[2380689.833] wl_callback#23.done(1479021)
-[2380690.251]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380690.329]  -> wl_surface#11.commit()
-[2380706.608] {Display Queue} wl_display#1.delete_id(23)
-[2380706.652] wl_callback#23.done(1479038)
-[2380707.014]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380707.078]  -> wl_surface#11.commit()
-[2380723.286] {Display Queue} wl_display#1.delete_id(23)
-[2380723.364] wl_callback#23.done(1479054)
-[2380723.722]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380723.783]  -> wl_surface#11.commit()
-[2380739.453] {Display Queue} wl_display#1.delete_id(23)
-[2380739.516] wl_callback#23.done(1479071)
-[2380740.026]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380740.203]  -> wl_surface#11.commit()
-[2380756.105] {Display Queue} wl_display#1.delete_id(23)
-[2380756.219] wl_callback#23.done(1479087)
-[2380756.771]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380756.897]  -> wl_surface#11.commit()
-[2380772.578] {Display Queue} wl_display#1.delete_id(23)
-[2380772.631] wl_callback#23.done(1479104)
-[2380773.072]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380773.197]  -> wl_surface#11.commit()
-[2380788.969] {Display Queue} wl_display#1.delete_id(23)
-[2380789.049] wl_callback#23.done(1479120)
-[2380789.464]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380789.550]  -> wl_surface#11.commit()
-[2380806.129] {Display Queue} wl_display#1.delete_id(23)
-[2380806.246] wl_callback#23.done(1479137)
-[2380806.630]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380806.735]  -> wl_surface#11.commit()
-[2380823.774] {Display Queue} wl_display#1.delete_id(23)
-[2380823.825] wl_callback#23.done(1479155)
-[2380824.197]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380824.267]  -> wl_surface#11.commit()
-[2380839.909] {Display Queue} wl_display#1.delete_id(23)
-[2380839.973] wl_callback#23.done(1479171)
-[2380840.321]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380840.404]  -> wl_surface#11.commit()
-[2380856.676] {Display Queue} wl_display#1.delete_id(23)
-[2380856.718] wl_callback#23.done(1479188)
-[2380857.033]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380857.101]  -> wl_surface#11.commit()
-[2380873.019] {Display Queue} wl_display#1.delete_id(23)
-[2380873.089] wl_callback#23.done(1479204)
-[2380873.418]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380873.479]  -> wl_surface#11.commit()
-[2380889.371] {Display Queue} wl_display#1.delete_id(23)
-[2380889.413] wl_callback#23.done(1479220)
-[2380889.758]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380889.818]  -> wl_surface#11.commit()
-[2380905.871] {Display Queue} wl_display#1.delete_id(23)
-[2380905.921] wl_callback#23.done(1479237)
-[2380906.214]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380906.276]  -> wl_surface#11.commit()
-[2380922.536] {Display Queue} wl_display#1.delete_id(23)
-[2380922.598] wl_callback#23.done(1479254)
-[2380922.944]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380923.009]  -> wl_surface#11.commit()
-[2380939.791] {Display Queue} wl_display#1.delete_id(23)
-[2380939.833] wl_callback#23.done(1479271)
-[2380940.133]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380940.448]  -> wl_surface#11.commit()
-[2380956.627] {Display Queue} wl_display#1.delete_id(23)
-[2380956.693] wl_callback#23.done(1479288)
-[2380957.084]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380957.362]  -> wl_surface#11.commit()
-[2380972.416] {Display Queue} wl_display#1.delete_id(23)
-[2380972.463] wl_callback#23.done(1479304)
-[2380972.838]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380972.931]  -> wl_surface#11.commit()
-[2380989.767] {Display Queue} wl_display#1.delete_id(23)
-[2380989.810] wl_callback#23.done(1479321)
-[2380990.161]  -> wl_surface#11.frame(new id wl_callback#23)
-[2380990.243]  -> wl_surface#11.commit()
-[2381006.262] {Display Queue} wl_display#1.delete_id(23)
-[2381006.402] wl_callback#23.done(1479337)
-[2381006.818]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381006.999]  -> wl_surface#11.commit()
-[2381022.530] {Display Queue} wl_display#1.delete_id(23)
-[2381022.597] wl_callback#23.done(1479353)
-[2381022.982]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381023.078]  -> wl_surface#11.commit()
-[2381038.902] {Display Queue} wl_display#1.delete_id(23)
-[2381038.962] wl_callback#23.done(1479370)
-[2381039.322]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381039.425]  -> wl_surface#11.commit()
-[2381055.592] {Display Queue} wl_display#1.delete_id(23)
-[2381055.656] wl_callback#23.done(1479387)
-[2381056.178]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381056.278]  -> wl_surface#11.commit()
-[2381072.345] {Display Queue} wl_display#1.delete_id(23)
-[2381072.392] wl_callback#23.done(1479403)
-[2381072.806]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381072.898]  -> wl_surface#11.commit()
-[2381089.579] {Display Queue} wl_display#1.delete_id(23)
-[2381089.632] wl_callback#23.done(1479421)
-[2381090.029]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381090.129]  -> wl_surface#11.commit()
-[2381105.991] {Display Queue} wl_display#1.delete_id(23)
-[2381106.052] wl_callback#23.done(1479437)
-[2381106.462]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381106.530]  -> wl_surface#11.commit()
-[2381122.482] {Display Queue} wl_display#1.delete_id(23)
-[2381122.538] wl_callback#23.done(1479454)
-[2381122.840]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381122.906]  -> wl_surface#11.commit()
-[2381139.202] {Display Queue} wl_display#1.delete_id(23)
-[2381139.274] wl_callback#23.done(1479470)
-[2381139.573]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381139.636]  -> wl_surface#11.commit()
-[2381155.945] {Display Queue} wl_display#1.delete_id(23)
-[2381156.014] wl_callback#23.done(1479487)
-[2381156.664]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381156.783]  -> wl_surface#11.commit()
-[2381172.437] {Display Queue} wl_display#1.delete_id(23)
-[2381172.487] wl_callback#23.done(1479504)
-[2381172.799]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381172.888]  -> wl_surface#11.commit()
-[2381189.157] {Display Queue} wl_display#1.delete_id(23)
-[2381189.219] wl_callback#23.done(1479520)
-[2381189.569]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381189.642]  -> wl_surface#11.commit()
-[2381205.956] {Display Queue} wl_display#1.delete_id(23)
-[2381206.005] wl_callback#23.done(1479537)
-[2381206.406]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381206.501]  -> wl_surface#11.commit()
-[2381222.497] {Display Queue} wl_display#1.delete_id(23)
-[2381222.549] wl_callback#23.done(1479554)
-[2381223.002]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381223.111]  -> wl_surface#11.commit()
-[2381239.519] {Display Queue} wl_display#1.delete_id(23)
-[2381239.564] wl_callback#23.done(1479570)
-[2381239.968]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381240.043]  -> wl_surface#11.commit()
-[2381256.008] {Display Queue} wl_display#1.delete_id(23)
-[2381256.078] wl_callback#23.done(1479587)
-[2381256.514]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381256.639]  -> wl_surface#11.commit()
-[2381272.491] {Display Queue} wl_display#1.delete_id(23)
-[2381272.545] wl_callback#23.done(1479604)
-[2381272.880]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381272.943]  -> wl_surface#11.commit()
-[2381289.374] {Display Queue} wl_display#1.delete_id(23)
-[2381289.470] wl_callback#23.done(1479620)
-[2381289.843]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381289.948]  -> wl_surface#11.commit()
-[2381306.105] {Display Queue} wl_display#1.delete_id(23)
-[2381306.178] wl_callback#23.done(1479637)
-[2381306.577]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381306.721]  -> wl_surface#11.commit()
-[2381322.371] {Display Queue} wl_display#1.delete_id(23)
-[2381322.435] wl_callback#23.done(1479653)
-[2381322.745]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381322.810]  -> wl_surface#11.commit()
-[2381338.893] {Display Queue} wl_display#1.delete_id(23)
-[2381338.967] wl_callback#23.done(1479670)
-[2381339.338]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381339.435]  -> wl_surface#11.commit()
-[2381355.578] {Display Queue} wl_display#1.delete_id(23)
-[2381355.625] wl_callback#23.done(1479687)
-[2381355.998]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381356.090]  -> wl_surface#11.commit()
-[2381372.154] {Display Queue} wl_display#1.delete_id(23)
-[2381372.207] wl_callback#23.done(1479703)
-[2381372.611]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381372.715]  -> wl_surface#11.commit()
-[2381389.462] {Display Queue} wl_display#1.delete_id(23)
-[2381389.512] wl_callback#23.done(1479720)
-[2381389.941]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381390.128]  -> wl_surface#11.commit()
-[2381405.908] {Display Queue} wl_display#1.delete_id(23)
-[2381405.978] wl_callback#23.done(1479737)
-[2381406.442]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381406.543]  -> wl_surface#11.commit()
-[2381422.749] {Display Queue} wl_display#1.delete_id(23)
-[2381422.809] wl_callback#23.done(1479754)
-[2381423.251]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381423.346]  -> wl_surface#11.commit()
-[2381439.633] {Display Queue} wl_display#1.delete_id(23)
-[2381439.680] wl_callback#23.done(1479771)
-[2381440.119]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381440.244]  -> wl_surface#11.commit()
-[2381455.965] {Display Queue} wl_display#1.delete_id(23)
-[2381456.068] wl_callback#23.done(1479787)
-[2381456.455]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381456.530]  -> wl_surface#11.commit()
-[2381472.889] {Display Queue} wl_display#1.delete_id(23)
-[2381472.952] wl_callback#23.done(1479804)
-[2381473.392]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381473.490]  -> wl_surface#11.commit()
-[2381489.853] {Display Queue} wl_display#1.delete_id(23)
-[2381489.903] wl_callback#23.done(1479821)
-[2381490.243]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381490.308]  -> wl_surface#11.commit()
-[2381505.849] {Display Queue} wl_display#1.delete_id(23)
-[2381505.898] wl_callback#23.done(1479837)
-[2381506.250]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381506.319]  -> wl_surface#11.commit()
-[2381522.867] {Display Queue} wl_display#1.delete_id(23)
-[2381522.932] wl_callback#23.done(1479854)
-[2381523.396]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381523.500]  -> wl_surface#11.commit()
-[2381539.410] {Display Queue} wl_display#1.delete_id(23)
-[2381539.467] wl_callback#23.done(1479870)
-[2381539.828]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381539.928]  -> wl_surface#11.commit()
-[2381556.016] {Display Queue} wl_display#1.delete_id(23)
-[2381556.072] wl_callback#23.done(1479887)
-[2381556.522]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381556.641]  -> wl_surface#11.commit()
-[2381572.639] {Display Queue} wl_display#1.delete_id(23)
-[2381572.709] wl_callback#23.done(1479904)
-[2381573.090]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381573.223]  -> wl_surface#11.commit()
-[2381589.615] {Display Queue} wl_display#1.delete_id(23)
-[2381589.669] wl_callback#23.done(1479921)
-[2381590.050]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381590.130]  -> wl_surface#11.commit()
-[2381606.027] {Display Queue} wl_display#1.delete_id(23)
-[2381606.086] wl_callback#23.done(1479937)
-[2381606.444]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381606.507]  -> wl_surface#11.commit()
-[2381622.343] {Display Queue} wl_display#1.delete_id(23)
-[2381622.385] wl_callback#23.done(1479953)
-[2381622.728]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381622.794]  -> wl_surface#11.commit()
-[2381638.694] {Display Queue} wl_display#1.delete_id(23)
-[2381638.756] wl_callback#23.done(1479970)
-[2381639.101]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381639.183]  -> wl_surface#11.commit()
-[2381655.542] {Display Queue} wl_display#1.delete_id(23)
-[2381655.586] wl_callback#23.done(1479987)
-[2381655.894]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381655.956]  -> wl_surface#11.commit()
-[2381672.695] {Display Queue} wl_display#1.delete_id(23)
-[2381672.754] wl_callback#23.done(1480004)
-[2381673.051]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381673.114]  -> wl_surface#11.commit()
-[2381689.387] {Display Queue} wl_display#1.delete_id(23)
-[2381689.482] wl_callback#23.done(1480020)
-[2381689.909]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381690.015]  -> wl_surface#11.commit()
-[2381706.436] {Display Queue} wl_display#1.delete_id(23)
-[2381706.489] wl_callback#23.done(1480038)
-[2381706.862]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381706.933]  -> wl_surface#11.commit()
-[2381722.624] {Display Queue} wl_display#1.delete_id(23)
-[2381722.695] wl_callback#23.done(1480054)
-[2381723.052]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381723.160]  -> wl_surface#11.commit()
-[2381739.041] {Display Queue} wl_display#1.delete_id(23)
-[2381739.160] wl_callback#23.done(1480070)
-[2381739.531]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381739.624]  -> wl_surface#11.commit()
-[2381756.090] {Display Queue} wl_display#1.delete_id(23)
-[2381756.166] wl_callback#23.done(1480087)
-[2381756.524]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381756.593]  -> wl_surface#11.commit()
-[2381773.324] {Display Queue} wl_display#1.delete_id(23)
-[2381773.383] wl_callback#23.done(1480104)
-[2381773.721]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381773.790]  -> wl_surface#11.commit()
-[2381789.171] {Display Queue} wl_display#1.delete_id(23)
-[2381789.250] wl_callback#23.done(1480120)
-[2381789.596]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381789.685]  -> wl_surface#11.commit()
-[2381805.895] {Display Queue} wl_display#1.delete_id(23)
-[2381805.943] wl_callback#23.done(1480137)
-[2381806.308]  -> wl_surface#11.frame(new id wl_callback#23)
-[2381806.399]  -> wl_surface#11.commit()
+Application Running String.: sh -c '/home/ramayen/tor-browser/Browser/start-tor-browser || ([ !  -x /home/ramayen/tor-browser/Browser/start-tor-browser ] && $(dirname $*)/Browser/start-tor-browser)' dummy
+"sh -c '/home/ramayen/tor-browser/Browser/start-tor-browser || ([ !  -x /home/ramayen/tor-browser/Browser/start-tor-browser ] && $(dirname $*)/Browser/start-tor-browser)' dummy"
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (828.23828125, 396.70703125)

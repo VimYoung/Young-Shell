@@ -7,7 +7,7 @@ use sysinfo::{Components, CpuRefreshKind, RefreshKind, System};
 
 pub fn configure_bar(bar: &mut TopBarSpell, bar_tx: WinHandle) {
     let app_selector = AppSelector::default();
-    // println!("{:#?}", app_selector);
+    println!("{:#?}", app_selector);
     let app_data_slint: Vec<AppLineData> = app_selector
         .get_primary()
         .map(|value| {
@@ -32,23 +32,26 @@ pub fn configure_bar(bar: &mut TopBarSpell, bar_tx: WinHandle) {
     let vac_model = Rc::new(slint::VecModel::from(app_data_slint));
     bar.set_app_lines(vac_model.clone().into());
     bar.on_open_app(|string_val| {
-        let command_val: &str;
-        let mut args_vec: Vec<&str> = Vec::new();
+        // let command_val: &str;
+        // let mut args_vec: Vec<&str> = Vec::new();
         let binding = string_val.to_string();
-        println!("Application Running String.: {}", binding);
-        if let Some((command, args)) = binding.split_once(' ') {
-            command_val = command;
-            args_vec = args.split(' ').collect();
-        } else {
-            command_val = &string_val;
-        };
+        // if let Some((command, args)) = binding.split_once(' ') {
+        //     command_val = command;
+        //     args_vec = args.split(' ').collect();
+        // } else {
+        //     command_val = &string_val;
+        // };
         let mut final_comm = Command::new("setsid");
-        final_comm.arg(command_val);
-        if !args_vec.is_empty() {
-            args_vec.iter().for_each(|argument| {
-                final_comm.arg(argument);
-            });
-        }
+        final_comm.arg("sh");
+        final_comm.arg("-c");
+        final_comm.arg(binding);
+        // final_comm.arg(command_val);
+        // if !args_vec.is_empty() {
+        //     args_vec.iter().for_each(|argument| {
+        //         final_comm.arg(argument);
+        //     });
+        // }
+        println!("{:?}", final_comm);
         final_comm.spawn().unwrap();
         println!("{string_val:?}");
     });

@@ -24,41 +24,87 @@ pub fn configure_workpaces(workspace: &mut WorkspacesSpell) {
             let mut reader = BufReader::new(unix_stream);
             let workspace_n = workspace.as_weak().unwrap();
             workspace.on_refresh_workspaces(move|| {
-                let mut line = String::new();
-                match reader.read_line(&mut line) {
-                    Ok(0) => {}
-                    Err(ref e) if e.kind() == io::ErrorKind::WouldBlock => {}
-                    Ok(_) => {
-                        let curr_active = String::from_utf8( Command::new("sh").arg("-c")
-                            .arg("hyprctl monitors -j | jq --argjson arg 0 '.[] | select(.id == 0).activeWorkspace.id'").output().expect("Couldn't run command").stdout).unwrap();
-                        let filled = String::from_utf8(Command::new("sh")
-                            .arg("-c")
-                            .arg("hyprctl workspaces -j | jq '.[] | .id'")
-                            .output().expect("couldn't run").stdout).unwrap();
-                        let curr_active_num: i32 =  curr_active.trim().parse().unwrap();
-                        if curr_active_num > 0 && curr_active_num < 11{
-                            let mut v = vec![false; 10];
-                            if (1..=10).contains(&curr_active_num) {
-                                v[curr_active_num as usize - 1] = true;
-                            }
-                            workspace_n.set_is_active(Rc::new(slint::VecModel::from(v)).into());
-                        }
-
-                        let mut v = vec![false; 10];
-                        let some_v: Vec<_> = filled.split('\n').collect();
-                        some_v.iter().enumerate().for_each(|(i, m)|{
-                            if i < (some_v.len() -1) && *m != "null" {
-                                let m_int: i32 = m.trim().parse().unwrap();
-                                if m_int > 0 && m_int < 11{
-                                    v[ m_int as usize - 1] = true;
+                    let mut line = String::new();
+                    match reader.read_line(&mut line) {
+                        Ok(0) => {}
+                        Err(ref e) if e.kind() == io::ErrorKind::WouldBlock => {}
+                        Ok(_) => {
+                            let curr_active = String::from_utf8( Command::new("sh").arg("-c")
+                                .arg("hyprctl monitors -j | jq --argjson arg 0 '.[] | select(.id == 0).activeWorkspace.id'").output().expect("Couldn't run command").stdout).unwrap();
+                            let filled = String::from_utf8(Command::new("sh")
+                                .arg("-c")
+                                .arg("hyprctl workspaces -j | jq '.[] | .id'")
+                                .output().expect("couldn't run").stdout).unwrap();
+                            let curr_active_num: i32 =  curr_active.trim().parse().unwrap();
+                            if curr_active_num > 0 && curr_active_num < 11{
+                                let mut v = vec![false; 10];
+                                if (1..=10).contains(&curr_active_num) {
+                                    v[curr_active_num as usize - 1] = true;
                                 }
+                                workspace_n.set_is_active(Rc::new(slint::VecModel::from(v)).into());
                             }
-                        });
 
-                        workspace_n.set_is_filled(Rc::new(slint::VecModel::from(v)).into());
+                            let mut v = vec![false; 10];
+                            let some_v: Vec<_> = filled.split('\n').collect();
+                            some_v.iter().enumerate().for_each(|(i, m)|{
+                                // println!("/{m}/");
+                                // println!("{}, //{:?}", some_v.len(), some_v);
+                                if i < (some_v.len() -1) && *m != "null" {
+                                    let m_int: i32 = m.trim().parse().unwrap();
+                                    if m_int > 0 && m_int < 11{
+                                        v[ m_int as usize - 1] = true;
+                                    }
+                                }
+                            });
+
+                            workspace_n.set_is_filled(Rc::new(slint::VecModel::from(v)).into());
+                            // println!("{}, /{}", curr_active, filled);
+                        }
+                        Err(_) => todo!(),
                     }
-                    Err(_) => todo!(),
+                });
+        } else {
+            let workspace_n = workspace.as_weak().unwrap();
+            workspace.on_refresh_workspaces(move || {
+                let workspaces: String = String::from_utf8(
+                    Command::new("niri")
+                        .arg("msg")
+                        .arg("workspaces")
+                        .output()
+                        .unwrap()
+                        .stdout,
+                )
+                .unwrap();
+                let mut values = workspaces.split('\n');
+                values.next_back();
+                values.next_back();
+                let mut v = vec![false; 10];
+                // println!("{:?}", values);
+                for value in values.skip(1) {
+                    // println!("fdvdsfdfs: {}", value);
+                    let val_bytes = value.trim().as_bytes();
+                    if val_bytes.len() > 1 {
+                        let no_str =
+                            String::from_utf8(vec![val_bytes[val_bytes.len() - 1]]).unwrap();
+                        let curr_active_num: i32 = no_str.parse().unwrap();
+                        if curr_active_num > 0 && curr_active_num < 11 {
+                            let mut v_a = vec![false; 10];
+                            if (1..=10).contains(&curr_active_num) {
+                                v_a[curr_active_num as usize - 1] = true;
+                            }
+                            workspace_n.set_is_active(Rc::new(slint::VecModel::from(v_a)).into());
+                        }
+                    }
+                    let current_active_num: i32 =
+                        String::from_utf8(vec![val_bytes[val_bytes.len() - 1]])
+                            .unwrap()
+                            .parse()
+                            .unwrap();
+                    if current_active_num > 0 && current_active_num < 11 {
+                        v[current_active_num as usize - 1] = true;
+                    }
                 }
+                workspace_n.set_is_filled(Rc::new(slint::VecModel::from(v)).into());
             });
         }
     }
@@ -66,10 +112,19 @@ pub fn configure_workpaces(workspace: &mut WorkspacesSpell) {
     workspace.on_change_called(move |mut val| {
         val += 1;
         let val_str: String = val.to_string();
-        let _ = Command::new("hyprctl")
-            .arg("dispatch")
-            .arg("workspace")
-            .arg(&val_str)
-            .output();
+        if env::var("NIRI_SOCKET").is_ok() {
+            let _ = Command::new("niri")
+                .arg("msg")
+                .arg("action")
+                .arg("focus-workspace")
+                .arg(&val_str)
+                .output();
+        } else {
+            let _ = Command::new("hyprctl")
+                .arg("dispatch")
+                .arg("workspace")
+                .arg(&val_str)
+                .output();
+        }
     });
 }

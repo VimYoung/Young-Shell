@@ -43,6 +43,7 @@ import {
     State,
     SearchButtonData,
     WifiLineData,
+    MenuFocus,
     SelectedSection,
     BarState,
 } from "data_structures.slint";
@@ -80,12 +81,14 @@ export global MainState {
 
 export component Menu inherits Window {
     out property <bool> first-run: true;
+    in-out property <MenuFocus> current_focus: MenuFocus.ActionPower;
     property <int> volume <=> MainState.vol;
     property <int> mic <=> MainState.mic;
     property <int> bright <=> MainState.brightness;
     property <percent> cpu <=> MainState.cpu;
     property <percent> temp <=> MainState.temp;
     callback power-action(string);
+    callback call-close();
 
     changed cpu => {
         cpu-bar.progress = self.cpu;
@@ -256,6 +259,9 @@ export component Menu inherits Window {
                             }
 
                             vol-slider := USlider {
+                                border-color: UAppTheme.geek-blue.active;
+                                border-width: current_focus == MenuFocus.Volume ? 2px : 0px;
+                                value: MainState.vol;
                                 min-value: 0;
                                 max-value: 120;
                                 width: parent.width - 25px - 2 * UAppTheme.spacing-medium;
@@ -276,6 +282,8 @@ export component Menu inherits Window {
                             }
 
                             bright-slider := USlider {
+                                border-color: UAppTheme.geek-blue.active;
+                                border-width: current_focus == MenuFocus.Brightness ? 2px : 0px;
                                 min-value: 0;
                                 max-value: 100;
                                 width: parent.width - 25px - 2 * UAppTheme.spacing-medium;
@@ -296,6 +304,8 @@ export component Menu inherits Window {
                             }
 
                             mic-slider := USlider {
+                                border-color: UAppTheme.geek-blue.active;
+                                border-width: current_focus == MenuFocus.Mic ? 2px : 0px;
                                 min-value: 0;
                                 max-value: 120;
                                 width: parent.width - 25px - 2 * UAppTheme.spacing-medium;
@@ -308,6 +318,8 @@ export component Menu inherits Window {
                 }
 
                 UCard {
+                    border-color: UAppTheme.geek-blue.active;
+                    border-width: current_focus == MenuFocus.Info ? 2px : 0px;
                     width: parent.width - 2 * UAppTheme.padding-medium;
                     VerticalLayout {
                         padding: UAppTheme.padding-medium;
@@ -332,14 +344,14 @@ export component Menu inherits Window {
                             spacing: UAppTheme.spacing-medium;
                             UIcon {
                                 vertical-alignment: ImageVerticalAlignment.top;
-                                source: @image-url("../assets/sleek/filled/cpu.svg");
+                                source: @image-url("../assets/sleek/filled/temp.svg");
                             }
 
                             Rectangle {
                                 width: parent.width - 2 * UAppTheme.padding-big;
                                 temp-bar := ULinearProgress {
                                     width: parent.width;
-                                    progress: 50%;
+                                    progress: MainState.temp;
                                 }
                             }
                         }
@@ -369,18 +381,34 @@ export component Menu inherits Window {
                 spacing: UAppTheme.spacing-medium;
                 y: parent.height - (4 * self.width - 3 * UAppTheme.padding-medium);
                 height: 4 * self.width - 3 * UAppTheme.padding-medium;
-                UIconButton {
+                powerbutton := UIconButton {
+                    border-width: current_focus == MenuFocus.ActionPower ? 3px : 0px;
+                    border-color: UAppTheme.geek-blue.selected;
                     width: parent.width - (2 * UAppTheme.padding-medium);
                     height: self.width;
                     // (parent.height / 10) - (UAppTheme.padding-medium);
                     variant: primary;
                     icon: @image-url("../assets/sleek/outlined/poweroff.svg");
                     clicked => {
+                        debug("Power button clicked ");
                         root.power-action("poweroff");
+                    }
+                    key-pressed(event) => {
+                        debug("power key event invoked");
+                        if event.text == Key.Tab {
+                            current_focus = MenuFocus.ActionLock;
+                            self.release-focus();
+                            sleepbutton.set-focus();
+                            accept;
+                        } else {
+                            reject;
+                        }
                     }
                 }
 
-                UIconButton {
+                sleepbutton := UIconButton {
+                    border-width: current_focus == MenuFocus.ActionSleep ? 3px : 0px;
+                    border-color: UAppTheme.geek-blue.selected;
                     width: parent.width - (2 * UAppTheme.padding-medium);
                     height: self.width;
                     // (parent.height / 10) - (UAppTheme.padding-medium);
@@ -389,9 +417,22 @@ export component Menu inherits Window {
                     clicked => {
                         root.power-action("sleep");
                     }
+                    key-pressed(event) => {
+                        debug("sleep key event invoked");
+                        if event.text == Key.Tab {
+                            current_focus = MenuFocus.ActionLock;
+                            self.release-focus();
+                            logoutbutton.set-focus();
+                            accept;
+                        } else {
+                            reject;
+                        }
+                    }
                 }
 
-                UIconButton {
+                logoutbutton := UIconButton {
+                    border-width: current_focus == MenuFocus.ActionLogout ? 3px : 0px;
+                    border-color: UAppTheme.geek-blue.selected;
                     width: parent.width - (2 * UAppTheme.padding-medium);
                     height: self.width;
                     // (parent.height / 10) - (UAppTheme.padding-medium);
@@ -400,9 +441,22 @@ export component Menu inherits Window {
                     clicked => {
                         root.power-action("logout");
                     }
+                    key-pressed(event) => {
+                        debug("logout key event invoked");
+                        if event.text == Key.Tab {
+                            current_focus = MenuFocus.ActionLock;
+                            self.release-focus();
+                            lockbutton.set-focus();
+                            accept;
+                        } else {
+                            reject;
+                        }
+                    }
                 }
 
-                UIconButton {
+                lockbutton := UIconButton {
+                    border-width: current_focus == MenuFocus.ActionLock ? 3px : 0px;
+                    border-color: UAppTheme.geek-blue.selected;
                     width: parent.width - (2 * UAppTheme.padding-medium);
                     height: self.width;
                     // (parent.height / 10) - (UAppTheme.padding-medium);
@@ -411,7 +465,79 @@ export component Menu inherits Window {
                     clicked => {
                         root.power-action("lock");
                     }
+                    key-pressed(event) => {
+                        debug("lock key event invoked");
+                        if event.text == Key.Tab {
+                            current_focus = MenuFocus.ActionLock;
+                            self.release-focus();
+                            powerbutton.set-focus();
+                            accept;
+                        } else {
+                            reject;
+                        }
+                    }
                 }
+            }
+        }
+    }
+
+    FocusScope {
+        enabled: current_focus == MenuFocus.None ? false : true;
+        key-pressed(event) => {
+            if current_focus == MenuFocus.Volume {
+                if event.text == Key.UpArrow {
+                    MainState.set-volume(MainState.vol + 10);
+                    accept;
+                } else if event.text == Key.DownArrow {
+                    MainState.set-volume(MainState.vol - 10);
+                    accept;
+                } else {
+                    reject;
+                }
+            } else if current_focus == MenuFocus.Mic {
+                if event.text == Key.UpArrow {
+                    MainState.set-mic(MainState.mic + 10);
+                    accept;
+                } else if event.text == Key.DownArrow {
+                    MainState.set-mic(MainState.mic - 10);
+                    accept;
+                } else {
+                    reject;
+                }
+            } else if current_focus == MenuFocus.Brightness {
+                if event.text == Key.UpArrow {
+                    MainState.set-bright(MainState.brightness + 10);
+                    accept;
+                } else if event.text == Key.DownArrow {
+                    MainState.set-bright(MainState.brightness - 10);
+                    accept;
+                } else {
+                    reject;
+                }
+            } else if current_focus == MenuFocus.ActionPower {
+                if event.text == Key.Tab {
+                    debug("Power and tab entered");
+                    powerbutton.set-focus();
+                    accept;
+                } else {
+                    reject;
+                }
+            } else if current_focus == MenuFocus.Mic {
+                if event.text == Key.UpArrow {
+                    MainState.set-mic(MainState.mic + 10);
+                    accept;
+                } else if event.text == Key.DownArrow {
+                    MainState.set-mic(MainState.mic - 10);
+                    accept;
+                } else {
+                    reject;
+                }
+            } else if event.text == Key.Escape {
+                current_focus = MenuFocus.None;
+                call-close();
+                accept;
+            } else {
+                reject;
             }
         }
     }

@@ -35,7 +35,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             (Some(LayerAnchor::TOP), Some(LayerAnchor::RIGHT)),
             (5, 0, 0, 10),
             LayerType::Top,
-            BoardType::None,
+            BoardType::OnDemand,
             None,
         ),
     );
