@@ -41,8 +41,8 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut workspace = WorkspacesSpell::invoke_spell(
         "workspace",
         WindowConf::new(
-            10,
-            738,
+            7,
+            830,
             (Some(LayerAnchor::LEFT), None),
             (0, 0, 0, 0),
             LayerType::Top,

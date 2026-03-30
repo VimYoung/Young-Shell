@@ -103,6 +103,7 @@ component ClipComponent inherits UScrollView {
                 height: parent.height;
                 vertical-alignment: center;
                 horizontal-alignment: left;
+                overflow: elide;
                 text: clip;
             }
 
@@ -354,7 +355,7 @@ export component DisplayComponent inherits Rectangle {
     callback select-bluetooth();
     callback toggle-inhibit(bool);
     callback bright-menu-focus();
-    y: get-search-active() ? 35px : 0px;
+    y: get-search-active() ? 30px : 0px;
     background: UAppTheme.bg-container;
 
     HorizontalLayout {

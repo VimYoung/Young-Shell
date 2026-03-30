@@ -1,0 +1,934 @@
+[32m INFO[0m Setting keyboard capability
+xkbcommon: ERROR: [XKB-679] No Compose file for locale "en_IN.ISO8859-1": locale is either invalid or not installed
+xkbcommon: ERROR: [XKB-679] couldn't find a Compose file for locale "en_IN" (mapped to "en_IN.ISO8859-1")
+[32m INFO[0m Setting pointer capability
+[32m INFO[0m Win: top-bar layer created successfully.
+[32m INFO[0m Win: menu layer created successfully.
+[32m INFO[0m Win: workspace layer created successfully.
+AppSelector {
+    app_list: [
+        AppData {
+            desktop_file_id: "org.gnome.dspy.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/var/lib/flatpak/exports/share/icons/hicolor/scalable/apps/org.gnome.dspy.svg",
+            ),
+            name: "D-Spy",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=d-spy org.gnome.dspy",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.gnome.dspy.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/var/lib/flatpak/exports/share/icons/hicolor/scalable/apps/org.gnome.dspy.svg",
+            ),
+            name: "D-Spy - New Window",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=d-spy org.gnome.dspy --new-window",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.onlyoffice.desktopeditors.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/var/lib/flatpak/exports/share/icons/hicolor/48x48/apps/org.onlyoffice.desktopeditors.png",
+            ),
+            name: "ONLYOFFICE",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=desktopeditors --file-forwarding org.onlyoffice.desktopeditors",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.onlyoffice.desktopeditors.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/var/lib/flatpak/exports/share/icons/hicolor/48x48/apps/org.onlyoffice.desktopeditors.png",
+            ),
+            name: "ONLYOFFICE - New document",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=desktopeditors org.onlyoffice.desktopeditors --new:word",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.onlyoffice.desktopeditors.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/var/lib/flatpak/exports/share/icons/hicolor/48x48/apps/org.onlyoffice.desktopeditors.png",
+            ),
+            name: "ONLYOFFICE - New spreadsheet",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=desktopeditors org.onlyoffice.desktopeditors --new:cell",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.onlyoffice.desktopeditors.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/var/lib/flatpak/exports/share/icons/hicolor/48x48/apps/org.onlyoffice.desktopeditors.png",
+            ),
+            name: "ONLYOFFICE - New presentation",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=desktopeditors org.onlyoffice.desktopeditors --new:slide",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.onlyoffice.desktopeditors.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/var/lib/flatpak/exports/share/icons/hicolor/48x48/apps/org.onlyoffice.desktopeditors.png",
+            ),
+            name: "ONLYOFFICE - New PDF",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=desktopeditors org.onlyoffice.desktopeditors --new:form",
+            ),
+        },
+        AppData {
+            desktop_file_id: "com.obsproject.Studio.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/var/lib/flatpak/exports/share/icons/hicolor/scalable/apps/com.obsproject.Studio.svg",
+            ),
+            name: "OBS Studio",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=obs com.obsproject.Studio",
+            ),
+        },
+        AppData {
+            desktop_file_id: "com.discordapp.Discord.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/var/lib/flatpak/exports/share/icons/hicolor/scalable/apps/com.discordapp.Discord.svg",
+            ),
+            name: "Discord",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=com.discordapp.Discord --file-forwarding com.discordapp.Discord",
+            ),
+        },
+        AppData {
+            desktop_file_id: "app.zen_browser.zen.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/var/lib/flatpak/exports/share/icons/hicolor/scalable/apps/app.zen_browser.zen.svg",
+            ),
+            name: "Zen Browser",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=launch-script.sh --file-forwarding app.zen_browser.zen",
+            ),
+        },
+        AppData {
+            desktop_file_id: "app.zen_browser.zen.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/var/lib/flatpak/exports/share/icons/hicolor/scalable/apps/app.zen_browser.zen.svg",
+            ),
+            name: "Zen Browser - Open a New Window",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=launch-script.sh --file-forwarding app.zen_browser.zen",
+            ),
+        },
+        AppData {
+            desktop_file_id: "app.zen_browser.zen.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/var/lib/flatpak/exports/share/icons/hicolor/scalable/apps/app.zen_browser.zen.svg",
+            ),
+            name: "Zen Browser - Open a New Blank Window",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=launch-script.sh --file-forwarding app.zen_browser.zen --blank-window",
+            ),
+        },
+        AppData {
+            desktop_file_id: "app.zen_browser.zen.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/var/lib/flatpak/exports/share/icons/hicolor/scalable/apps/app.zen_browser.zen.svg",
+            ),
+            name: "Zen Browser - Open a New Private Window",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=launch-script.sh --file-forwarding app.zen_browser.zen --private-window",
+            ),
+        },
+        AppData {
+            desktop_file_id: "app.zen_browser.zen.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/var/lib/flatpak/exports/share/icons/hicolor/scalable/apps/app.zen_browser.zen.svg",
+            ),
+            name: "Zen Browser - Open the Profile Manager",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=launch-script.sh --file-forwarding app.zen_browser.zen --ProfileManager",
+            ),
+        },
+        AppData {
+            desktop_file_id: "com.visualstudio.code.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/var/lib/flatpak/exports/share/icons/hicolor/64x64/apps/com.visualstudio.code.png",
+            ),
+            name: "Visual Studio Code",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=code --file-forwarding com.visualstudio.code --reuse-window",
+            ),
+        },
+        AppData {
+            desktop_file_id: "com.visualstudio.code.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/var/lib/flatpak/exports/share/icons/hicolor/64x64/apps/com.visualstudio.code.png",
+            ),
+            name: "Visual Studio Code - New Empty Window",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=code --file-forwarding com.visualstudio.code --new-window",
+            ),
+        },
+        AppData {
+            desktop_file_id: "it.mijorus.gearlever.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/var/lib/flatpak/exports/share/icons/hicolor/scalable/apps/it.mijorus.gearlever.svg",
+            ),
+            name: "Gear Lever",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=gearlever --file-forwarding it.mijorus.gearlever",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.mozilla.Thunderbird.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/var/lib/flatpak/exports/share/icons/hicolor/48x48/apps/org.mozilla.Thunderbird.png",
+            ),
+            name: "Thunderbird",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=thunderbird --file-forwarding org.mozilla.Thunderbird",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.mozilla.Thunderbird.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/var/lib/flatpak/exports/share/icons/hicolor/48x48/apps/org.mozilla.Thunderbird.png",
+            ),
+            name: "Thunderbird - Write New Message",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=thunderbird org.mozilla.Thunderbird -compose",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.mozilla.Thunderbird.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/var/lib/flatpak/exports/share/icons/hicolor/48x48/apps/org.mozilla.Thunderbird.png",
+            ),
+            name: "Thunderbird - Open the Address Book",
+            exec_comm: Some(
+                "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=thunderbird org.mozilla.Thunderbird -addressbook",
+            ),
+        },
+        AppData {
+            desktop_file_id: "nvim.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/local/share/icons/hicolor/128x128/apps/nvim.png",
+            ),
+            name: "Neovim",
+            exec_comm: Some(
+                "nvim",
+            ),
+        },
+        AppData {
+            desktop_file_id: "octopi-cachecleaner.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/48x48/apps/octopi.png",
+            ),
+            name: "Octopi CacheCleaner",
+            exec_comm: Some(
+                "/usr/bin/octopi-cachecleaner",
+            ),
+        },
+        AppData {
+            desktop_file_id: "octopi-notifier.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/48x48/apps/octopi.png",
+            ),
+            name: "Octopi Notifier",
+            exec_comm: Some(
+                "/usr/bin/octopi-notifier",
+            ),
+        },
+        AppData {
+            desktop_file_id: "octopi-repoeditor.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/48x48/apps/octopi.png",
+            ),
+            name: "Octopi Repository Editor",
+            exec_comm: Some(
+                "/usr/bin/octopi-repoeditor",
+            ),
+        },
+        AppData {
+            desktop_file_id: "octopi.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/48x48/apps/octopi.png",
+            ),
+            name: "Octopi",
+            exec_comm: Some(
+                "/usr/bin/octopi",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.pulseaudio.pavucontrol.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/scalable/apps/org.pulseaudio.pavucontrol.svg",
+            ),
+            name: "Volume Control",
+            exec_comm: Some(
+                "pavucontrol",
+            ),
+        },
+        AppData {
+            desktop_file_id: "Alacritty.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/pixmaps/Alacritty.svg",
+            ),
+            name: "Alacritty",
+            exec_comm: Some(
+                "alacritty",
+            ),
+        },
+        AppData {
+            desktop_file_id: "Alacritty.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/usr/share/pixmaps/Alacritty.svg",
+            ),
+            name: "Alacritty - New Terminal",
+            exec_comm: Some(
+                "alacritty",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.gnome.Meld.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/scalable/apps/org.gnome.Meld.svg",
+            ),
+            name: "Meld",
+            exec_comm: Some(
+                "meld",
+            ),
+        },
+        AppData {
+            desktop_file_id: "qt5ct.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Qt5 Settings",
+            exec_comm: Some(
+                "qt5ct",
+            ),
+        },
+        AppData {
+            desktop_file_id: "xgps.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/gpsd/icons/gpsd-logo.png",
+            ),
+            name: "xgps",
+            exec_comm: Some(
+                "xgps",
+            ),
+        },
+        AppData {
+            desktop_file_id: "xgpsspeed.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/gpsd/icons/gpsd-logo.png",
+            ),
+            name: "xgpsspeed",
+            exec_comm: Some(
+                "xgpsspeed",
+            ),
+        },
+        AppData {
+            desktop_file_id: "start-tor-browser.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/home/ramayen/tor-browser/Browser/browser/chrome/icons/default/default128.png",
+            ),
+            name: "Tor Browser",
+            exec_comm: Some(
+                "sh -c '/home/ramayen/tor-browser/Browser/start-tor-browser || ([ !  -x /home/ramayen/tor-browser/Browser/start-tor-browser ] && $(dirname $*)/Browser/start-tor-browser)' dummy",
+            ),
+        },
+        AppData {
+            desktop_file_id: "ranger.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "ranger",
+            exec_comm: Some(
+                "ranger",
+            ),
+        },
+        AppData {
+            desktop_file_id: "avahi-discover.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Avahi Zeroconf Browser",
+            exec_comm: Some(
+                "/usr/bin/avahi-discover",
+            ),
+        },
+        AppData {
+            desktop_file_id: "bssh.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Avahi SSH Server Browser",
+            exec_comm: Some(
+                "/usr/bin/bssh",
+            ),
+        },
+        AppData {
+            desktop_file_id: "bvnc.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "Avahi VNC Server Browser",
+            exec_comm: Some(
+                "/usr/bin/bvnc",
+            ),
+        },
+        AppData {
+            desktop_file_id: "micro.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/scalable/apps/micro.svg",
+            ),
+            name: "Micro",
+            exec_comm: Some(
+                "micro",
+            ),
+        },
+        AppData {
+            desktop_file_id: "kvantummanager.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/scalable/apps/kvantum.svg",
+            ),
+            name: "Kvantum Manager",
+            exec_comm: Some(
+                "kvantummanager",
+            ),
+        },
+        AppData {
+            desktop_file_id: "mpv.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/32x32/apps/mpv.png",
+            ),
+            name: "mpv Media Player",
+            exec_comm: Some(
+                "mpv --player-operation-mode=pseudo-gui --",
+            ),
+        },
+        AppData {
+            desktop_file_id: "deluge.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/48x48/apps/deluge.png",
+            ),
+            name: "Deluge",
+            exec_comm: Some(
+                "deluge-gtk",
+            ),
+        },
+        AppData {
+            desktop_file_id: "transmission-qt.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/scalable/apps/transmission-qt.svg",
+            ),
+            name: "Transmission (Qt)",
+            exec_comm: Some(
+                "transmission-qt",
+            ),
+        },
+        AppData {
+            desktop_file_id: "transmission-qt.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/usr/share/icons/hicolor/scalable/apps/transmission-qt.svg",
+            ),
+            name: "Transmission (Qt) - Start Transmission Minimized",
+            exec_comm: Some(
+                "transmission-qt --minimized",
+            ),
+        },
+        AppData {
+            desktop_file_id: "uuctl.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "uuctl",
+            exec_comm: Some(
+                "uuctl",
+            ),
+        },
+        AppData {
+            desktop_file_id: "rofi-theme-selector.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/scalable/apps/rofi.svg",
+            ),
+            name: "Rofi Theme Selector",
+            exec_comm: Some(
+                "rofi-theme-selector",
+            ),
+        },
+        AppData {
+            desktop_file_id: "rofi.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/scalable/apps/rofi.svg",
+            ),
+            name: "Rofi",
+            exec_comm: Some(
+                "rofi -show",
+            ),
+        },
+        AppData {
+            desktop_file_id: "com.github.dynobo.normcap.desktop",
+            is_primary: true,
+            image_path: None,
+            name: "NormCap",
+            exec_comm: Some(
+                "normcap",
+            ),
+        },
+        AppData {
+            desktop_file_id: "qv4l2.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/32x32/apps/qv4l2.png",
+            ),
+            name: "Qt V4L2 test Utility",
+            exec_comm: Some(
+                "qv4l2",
+            ),
+        },
+        AppData {
+            desktop_file_id: "qvidcap.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/32x32/apps/qvidcap.png",
+            ),
+            name: "Qt V4L2 video capture utility",
+            exec_comm: Some(
+                "qvidcap",
+            ),
+        },
+        AppData {
+            desktop_file_id: "cachyos-pi.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/scalable/apps/cachyos-pi.png",
+            ),
+            name: "CachyOS Package Installer",
+            exec_comm: Some(
+                "/usr/bin/cachyos-pi",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.kde.dolphin.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/scalable/apps/org.kde.dolphin.svg",
+            ),
+            name: "Dolphin",
+            exec_comm: Some(
+                "dolphin",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.kde.kamoso.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/48x48/apps/kamoso.png",
+            ),
+            name: "Kamoso",
+            exec_comm: Some(
+                "kamoso -qwindowtitle",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.cachyos.scx-manager.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/scalable/apps/org.cachyos.scx-manager.png",
+            ),
+            name: "SchedExt GUI Manager",
+            exec_comm: Some(
+                "scx-manager",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.gnome.Nautilus.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/scalable/apps/org.gnome.Nautilus.svg",
+            ),
+            name: "Files",
+            exec_comm: Some(
+                "nautilus --new-window",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.gnome.Nautilus.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/usr/share/icons/hicolor/scalable/apps/org.gnome.Nautilus.svg",
+            ),
+            name: "Files - New Window",
+            exec_comm: Some(
+                "nautilus --new-window",
+            ),
+        },
+        AppData {
+            desktop_file_id: "ca.desrt.dconf-editor.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/scalable/apps/ca.desrt.dconf-editor.svg",
+            ),
+            name: "dconf Editor",
+            exec_comm: Some(
+                "dconf-editor",
+            ),
+        },
+        AppData {
+            desktop_file_id: "cachyos-hello.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/scalable/apps/org.cachyos.hello.svg",
+            ),
+            name: "CachyOS Hello",
+            exec_comm: Some(
+                "/usr/bin/cachyos-hello",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.cachyos.KernelManager.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/48x48/apps/org.cachyos.KernelManager.png",
+            ),
+            name: "CachyOS Kernel Manager",
+            exec_comm: Some(
+                "cachyos-kernel-manager",
+            ),
+        },
+        AppData {
+            desktop_file_id: "kitty.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/scalable/apps/kitty.svg",
+            ),
+            name: "kitty",
+            exec_comm: Some(
+                "kitty",
+            ),
+        },
+        AppData {
+            desktop_file_id: "vim.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/48x48/apps/gvim.png",
+            ),
+            name: "Vim",
+            exec_comm: Some(
+                "vim",
+            ),
+        },
+        AppData {
+            desktop_file_id: "brave-browser.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/48x48/apps/brave-desktop.png",
+            ),
+            name: "Brave",
+            exec_comm: Some(
+                "brave",
+            ),
+        },
+        AppData {
+            desktop_file_id: "brave-browser.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/usr/share/icons/hicolor/48x48/apps/brave-desktop.png",
+            ),
+            name: "Brave - New Window",
+            exec_comm: Some(
+                "brave",
+            ),
+        },
+        AppData {
+            desktop_file_id: "brave-browser.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/usr/share/icons/hicolor/48x48/apps/brave-desktop.png",
+            ),
+            name: "Brave - New Incognito Window",
+            exec_comm: Some(
+                "brave --incognito",
+            ),
+        },
+        AppData {
+            desktop_file_id: "btop.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/48x48/apps/btop.png",
+            ),
+            name: "btop++",
+            exec_comm: Some(
+                "btop",
+            ),
+        },
+        AppData {
+            desktop_file_id: "btrfs-assistant.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/scalable/apps/btrfs-assistant.svg",
+            ),
+            name: "Btrfs Assistant",
+            exec_comm: Some(
+                "btrfs-assistant-launcher",
+            ),
+        },
+        AppData {
+            desktop_file_id: "cmake-gui.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/32x32/apps/CMakeSetup.png",
+            ),
+            name: "CMake",
+            exec_comm: Some(
+                "cmake-gui",
+            ),
+        },
+        AppData {
+            desktop_file_id: "firefox.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/48x48/apps/firefox.png",
+            ),
+            name: "Firefox",
+            exec_comm: Some(
+                "/usr/lib/firefox/firefox",
+            ),
+        },
+        AppData {
+            desktop_file_id: "firefox.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/usr/share/icons/hicolor/48x48/apps/firefox.png",
+            ),
+            name: "Firefox - New Window",
+            exec_comm: Some(
+                "/usr/lib/firefox/firefox --new-window",
+            ),
+        },
+        AppData {
+            desktop_file_id: "firefox.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/usr/share/icons/hicolor/48x48/apps/firefox.png",
+            ),
+            name: "Firefox - New Private Window",
+            exec_comm: Some(
+                "/usr/lib/firefox/firefox --private-window",
+            ),
+        },
+        AppData {
+            desktop_file_id: "firefox.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/usr/share/icons/hicolor/48x48/apps/firefox.png",
+            ),
+            name: "Firefox - Open Profile Manager",
+            exec_comm: Some(
+                "/usr/lib/firefox/firefox --ProfileManager",
+            ),
+        },
+        AppData {
+            desktop_file_id: "gimp.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/48x48/apps/gimp.png",
+            ),
+            name: "GNU Image Manipulation Program",
+            exec_comm: Some(
+                "gimp-3.2",
+            ),
+        },
+        AppData {
+            desktop_file_id: "org.pwmt.zathura.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/32x32/apps/org.pwmt.zathura.png",
+            ),
+            name: "Zathura",
+            exec_comm: Some(
+                "zathura",
+            ),
+        },
+        AppData {
+            desktop_file_id: "dev.zed.Zed.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/home/ramayen/.local/zed.app/share/icons/hicolor/512x512/apps/zed.png",
+            ),
+            name: "Zed",
+            exec_comm: Some(
+                "/home/ramayen/.local/zed.app/bin/zed",
+            ),
+        },
+        AppData {
+            desktop_file_id: "dev.zed.Zed.desktop",
+            is_primary: false,
+            image_path: Some(
+                "/home/ramayen/.local/zed.app/share/icons/hicolor/512x512/apps/zed.png",
+            ),
+            name: "Zed - Open a new workspace",
+            exec_comm: Some(
+                "/home/ramayen/.local/zed.app/bin/zed --new",
+            ),
+        },
+        AppData {
+            desktop_file_id: "logseq.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/home/ramayen/AppImages/.icons/logseq",
+            ),
+            name: "Logseq",
+            exec_comm: Some(
+                "env DESKTOPINTEGRATION=1 /home/ramayen/AppImages/logseq.appimage",
+            ),
+        },
+        AppData {
+            desktop_file_id: "audacity.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/home/ramayen/AppImages/.icons/audacity",
+            ),
+            name: "Audacity",
+            exec_comm: Some(
+                "env DESKTOPINTEGRATION=1 /home/ramayen/AppImages/audacity.appimage",
+            ),
+        },
+        AppData {
+            desktop_file_id: "synfig_studio.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/home/ramayen/AppImages/.icons/synfig_studio",
+            ),
+            name: "Synfig Studio",
+            exec_comm: Some(
+                "env DESKTOPINTEGRATION=1 /home/ramayen/AppImages/synfig_studio.appimage",
+            ),
+        },
+    ],
+}
+[32m INFO[0m [1mslint-log[0m[2m:[0m Error loading image from /home/ramayen/AppImages/.icons/logseq: No such file or directory (os error 2)
+[32m INFO[0m [1mslint-log[0m[2m:[0m Error loading image from /home/ramayen/AppImages/.icons/audacity: No such file or directory (os error 2)
+[32m INFO[0m [1mslint-log[0m[2m:[0m Error loading image from /home/ramayen/AppImages/.icons/synfig_studio: The image format could not be determined
+[32m INFO[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 575]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Hiding window
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Setting keyboard capability
+xkbcommon: ERROR: [XKB-679] No Compose file for locale "en_IN.ISO8859-1": locale is either invalid or not installed
+xkbcommon: ERROR: [XKB-679] couldn't find a Compose file for locale "en_IN" (mapped to "en_IN.ISO8859-1")
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Setting pointer capability
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Scale factor changed, compositor msg
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Scale factor changed, invoked from custom trait. 150
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Physical Size: width: 470, height: 720
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Scale factor changed, compositor msg
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Scale factor changed, invoked from custom trait. 150
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Physical Size: width: 1920, height: 763
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Setting keyboard capability
+xkbcommon: ERROR: [XKB-679] No Compose file for locale "en_IN.ISO8859-1": locale is either invalid or not installed
+xkbcommon: ERROR: [XKB-679] couldn't find a Compose file for locale "en_IN" (mapped to "en_IN.ISO8859-1")
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Setting pointer capability
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Scale factor changed, compositor msg
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Scale factor changed, invoked from custom trait. 150
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Physical Size: width: 9, height: 1038
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m c
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m a
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m m
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m m
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m \x08
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m \x08
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m \x08
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m \x08
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m s
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m p
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m l
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m i
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m t
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (670.01953125, 590.90234375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m l
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m e
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m t
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m  
+[32m INFO[0m [1mslint-log[0m[2m:[0m true
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+[32m INFO[0m [1mslint-log[0m[2m:[0m true
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+[32m INFO[0m [1mslint-log[0m[2m:[0m true
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+[32m INFO[0m [1mslint-log[0m[2m:[0m true
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (670.01953125, 590.90234375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (670.01953125, 590.90234375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (1105.98046875, 576.28125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (1105.98046875, 576.28125)

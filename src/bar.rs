@@ -1,8 +1,15 @@
 use crate::{AppLineData, MainState, TopBarSpell};
 use chrono::Local;
-use slint::{ComponentHandle, Image, SharedString};
-use spell_framework::{vault::AppSelector, wayland_adapter::WinHandle};
-use std::{path::Path, process::Command, rc::Rc};
+use slint::{ComponentHandle, Image, Model, SharedString};
+use spell_framework::{
+    vault::{AppSelector, fuzzy_search_best_n},
+    wayland_adapter::WinHandle,
+};
+use std::{
+    path::Path,
+    process::{Command, Stdio},
+    rc::Rc,
+};
 use sysinfo::{Components, CpuRefreshKind, RefreshKind, System};
 
 pub fn configure_bar(bar: &mut TopBarSpell, bar_tx: WinHandle) {
@@ -52,13 +59,35 @@ pub fn configure_bar(bar: &mut TopBarSpell, bar_tx: WinHandle) {
         //     });
         // }
         println!("{:?}", final_comm);
-        final_comm.spawn().unwrap();
+        final_comm
+            .stdin(Stdio::null())
+            .stdout(Stdio::null())
+            .stderr(Stdio::null())
+            .spawn()
+            .unwrap();
         println!("{string_val:?}");
     });
 
-    let bar_tx_another = bar_tx.clone();
-    let bar_tx_clone = bar_tx.clone();
+    bar.on_refresh_clip({
+        let bar_weak = bar.as_weak();
+        move || {
+            let clips = Command::new("cliphist")
+                .arg("list")
+                .output()
+                .unwrap()
+                .stdout;
+            let clip_hist: Vec<SharedString> = clips
+                .split(|&b| b == b'\n')
+                .take(100)
+                .map(|line| SharedString::from(std::str::from_utf8(line).unwrap()))
+                .collect();
+            let clip_model = Rc::new(slint::VecModel::from(clip_hist));
+            bar_weak.unwrap().set_clip_lines(clip_model.clone().into());
+        }
+    });
     bar.on_search_toggle({
+        let bar_tx_another = bar_tx.clone();
+        let bar_tx_clone = bar_tx.clone();
         move |search_toggle_value| {
             if search_toggle_value {
                 bar_tx_another.grab_focus();
@@ -112,6 +141,25 @@ pub fn configure_bar(bar: &mut TopBarSpell, bar_tx: WinHandle) {
                 .collect();
             let vac_model = Rc::new(slint::VecModel::from(app_data_slint));
             bar_handle.set_app_lines(vac_model.clone().into());
+        }
+    });
+
+    bar.on_query_clipboard({
+        let bar_weak = bar.as_weak();
+        move |query_val| {
+            let x = bar_weak.unwrap().get_clip_lines().clone();
+            let clips: Vec<String> = x.iter().map(|s| s.to_string()).collect();
+            let string_refs: Vec<&str> = clips.iter().map(|s| s.as_str()).collect();
+            let result: Vec<&str> = fuzzy_search_best_n(query_val.as_str(), &string_refs, 50)
+                .iter()
+                .map(|s| s.0)
+                .collect();
+            let result_clip_hist: Vec<SharedString> = result
+                .iter()
+                .map(|line| SharedString::from(*line))
+                .collect();
+            let clip_model = Rc::new(slint::VecModel::from(result_clip_hist));
+            bar_weak.unwrap().set_clip_lines(clip_model.clone().into());
         }
     });
     // // Commented for the sake of faster compilation

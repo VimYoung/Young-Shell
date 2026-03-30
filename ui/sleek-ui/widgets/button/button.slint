@@ -83,8 +83,8 @@ export component UButton inherits ButtonInterface {
     HorizontalLayout {
         alignment: center;
         spacing: UAppTheme.spacing-base;
-        padding-top: UAppTheme.padding-vertical;
-        padding-bottom: UAppTheme.padding-vertical;
+        // padding-top: UAppTheme.padding-vertical;
+        // padding-bottom: UAppTheme.padding-vertical;
         padding-left: UAppTheme.padding-horizontal;
         padding-right: UAppTheme.padding-horizontal;
         if icon-placement == IconTextPlacement.start: VerticalLayout {
@@ -116,10 +116,11 @@ export component UButton inherits ButtonInterface {
         }
         VerticalLayout {
             alignment: center;
-			// Used to move the text down which improves visual alignment, especially when using icons.
+            // Used to move the text down which improves visual alignment, especially when using icons.
             padding-top: 1px;
             padding-bottom: -1px;
             text-obj := UText {
+                vertical-alignment: top;
                 color: get-color(theme.text);
                 font-size: UAppTheme.font-size-base;
                 animate color { duration: UAppTheme.animation-duration; }
