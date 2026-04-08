@@ -229,6 +229,14 @@ pub fn configure_menu(menu: &mut MenuSpell) {
         }
     });
 
+    menu.on_call_close({
+        let handle = menu.get_handler();
+        move || {
+            handle.remove_focus();
+            handle.hide();
+        }
+    });
+
     menu.invoke_set_dark_theme();
 }
 

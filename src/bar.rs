@@ -1,4 +1,4 @@
-use crate::{AppLineData, MainState, TopBarSpell};
+use crate::{AppLineData, MainState, MenuFocus, TopBarSpell};
 use chrono::Local;
 use slint::{ComponentHandle, Image, Model, SharedString};
 use spell_framework::{
@@ -6,13 +6,14 @@ use spell_framework::{
     wayland_adapter::WinHandle,
 };
 use std::{
+    io::Write,
     path::Path,
     process::{Command, Stdio},
     rc::Rc,
 };
 use sysinfo::{Components, CpuRefreshKind, RefreshKind, System};
 
-pub fn configure_bar(bar: &mut TopBarSpell, bar_tx: WinHandle) {
+pub fn configure_bar(bar: &mut TopBarSpell, bar_tx: WinHandle, menu_tx: WinHandle) {
     let app_selector = AppSelector::default();
     println!("{:#?}", app_selector);
     let app_data_slint: Vec<AppLineData> = app_selector
@@ -162,6 +163,56 @@ pub fn configure_bar(bar: &mut TopBarSpell, bar_tx: WinHandle) {
             bar_weak.unwrap().set_clip_lines(clip_model.clone().into());
         }
     });
+
+    bar.on_set_clip(move |val| {
+        let mut decode = Command::new("cliphist")
+            .arg("decode")
+            .stdin(Stdio::piped())
+            .stdout(Stdio::piped())
+            .spawn()
+            .expect("Failed to spawn `cliphist decode`");
+
+        decode
+            .stdin
+            .take()
+            .expect("Failed to open stdin for `cliphist decode`")
+            .write_all(val.as_bytes())
+            .expect("Failed to write to `cliphist decode` stdin");
+        let decode_output = decode
+            .wait_with_output()
+            .expect("Failed to wait on `cliphist decode`");
+
+        let mut wl_copy = Command::new("wl-copy")
+            .stdin(Stdio::piped())
+            .spawn()
+            .expect("Failed to spawn `wl-copy`");
+
+        // Write cliphist's output into wl-copy's stdin
+        wl_copy
+            .stdin
+            .take()
+            .expect("Failed to open stdin for `wl-copy`")
+            .write_all(&decode_output.stdout)
+            .expect("Failed to write to `wl-copy` stdin");
+
+        wl_copy.wait().expect("Failed to wait on `wl-copy`");
+        // if !wl_copy_status.success() {
+        //     eprintln!("`wl-copy` exited with status: {}", wl_copy_status);
+        //     std::process::exit(1);
+        // }
+    });
+
+    bar.on_open_menu({
+        let menu_txy = menu_tx.clone();
+        move |val| match val {
+            MenuFocus::None => {
+                menu_txy.toggle();
+                menu_txy.grab_focus();
+            }
+            _ => {}
+        }
+    });
+
     // // Commented for the sake of faster compilation
     // //
     // // let bar_handle = bar.as_weak().unwrap();

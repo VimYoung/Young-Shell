@@ -610,17 +610,6 @@ AppSelector {
             ),
         },
         AppData {
-            desktop_file_id: "cachyos-hello.desktop",
-            is_primary: true,
-            image_path: Some(
-                "/usr/share/icons/hicolor/scalable/apps/org.cachyos.hello.svg",
-            ),
-            name: "CachyOS Hello",
-            exec_comm: Some(
-                "/usr/bin/cachyos-hello",
-            ),
-        },
-        AppData {
             desktop_file_id: "org.cachyos.KernelManager.desktop",
             is_primary: true,
             image_path: Some(
@@ -640,17 +629,6 @@ AppSelector {
             name: "kitty",
             exec_comm: Some(
                 "kitty",
-            ),
-        },
-        AppData {
-            desktop_file_id: "vim.desktop",
-            is_primary: true,
-            image_path: Some(
-                "/usr/share/icons/hicolor/48x48/apps/gvim.png",
-            ),
-            name: "Vim",
-            exec_comm: Some(
-                "vim",
             ),
         },
         AppData {
@@ -786,6 +764,28 @@ AppSelector {
             ),
         },
         AppData {
+            desktop_file_id: "cachyos-hello.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/scalable/apps/org.cachyos.hello.svg",
+            ),
+            name: "CachyOS Hello",
+            exec_comm: Some(
+                "/usr/bin/cachyos-hello",
+            ),
+        },
+        AppData {
+            desktop_file_id: "vim.desktop",
+            is_primary: true,
+            image_path: Some(
+                "/usr/share/icons/hicolor/48x48/apps/gvim.png",
+            ),
+            name: "Vim",
+            exec_comm: Some(
+                "vim",
+            ),
+        },
+        AppData {
             desktop_file_id: "dev.zed.Zed.desktop",
             is_primary: true,
             image_path: Some(
@@ -846,8 +846,6 @@ AppSelector {
 [32m INFO[0m [1mslint-log[0m[2m:[0m Error loading image from /home/ramayen/AppImages/.icons/audacity: No such file or directory (os error 2)
 [32m INFO[0m [1mslint-log[0m[2m:[0m Error loading image from /home/ramayen/AppImages/.icons/synfig_studio: The image format could not be determined
 [32m INFO[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 575]
-[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
-[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Hiding window
 [32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Setting keyboard capability
 xkbcommon: ERROR: [XKB-679] No Compose file for locale "en_IN.ISO8859-1": locale is either invalid or not installed
 xkbcommon: ERROR: [XKB-679] couldn't find a Compose file for locale "en_IN" (mapped to "en_IN.ISO8859-1")
@@ -855,6 +853,8 @@ xkbcommon: ERROR: [XKB-679] couldn't find a Compose file for locale "en_IN" (map
 [32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Scale factor changed, compositor msg
 [32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Scale factor changed, invoked from custom trait. 150
 [32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Physical Size: width: 470, height: 720
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Hiding window
 [32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Scale factor changed, compositor msg
 [32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Scale factor changed, invoked from custom trait. 150
 [32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Physical Size: width: 1920, height: 763
@@ -865,70 +865,909 @@ xkbcommon: ERROR: [XKB-679] couldn't find a Compose file for locale "en_IN" (map
 [32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Scale factor changed, compositor msg
 [32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Scale factor changed, invoked from custom trait. 150
 [32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Physical Size: width: 9, height: 1038
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Pointer left: (367.38671875, 300.33203125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (377.38671875, 335.33203125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (377.38671875, 335.33203125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (377.38671875, 335.33203125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (377.38671875, 335.33203125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Showing window again
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (20.55859375, 33.71484375)
+[32m INFO[0m [1mslint-log[0m[2m:[0m Power and tab entered
+[32m INFO[0m [1mslint-log[0m[2m:[0m power key event invoked
+[32m INFO[0m [1mslint-log[0m[2m:[0m sleep key event invoked
+[32m INFO[0m [1mslint-log[0m[2m:[0m logout key event invoked
+[32m INFO[0m [1mslint-log[0m[2m:[0m lock key event invoked
+[32m INFO[0m [1mslint-log[0m[2m:[0m power key event invoked
+[32m INFO[0m [1mslint-log[0m[2m:[0m sleep key event invoked
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Pointer left: (30.37109375, 1.796875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Hiding window
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Showing window again
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (18.96484375, 29.83203125)
+[32m INFO[0m [1mslint-log[0m[2m:[0m power key event invoked
+[32m INFO[0m [1mslint-log[0m[2m:[0m power key event invoked
+[32m INFO[0m [1mslint-log[0m[2m:[0m sleep key event invoked
+[32m INFO[0m [1mslint-log[0m[2m:[0m sleep key event invoked
+[32m INFO[0m [1mslint-log[0m[2m:[0m logout key event invoked
+[32m INFO[0m [1mslint-log[0m[2m:[0m lock key event invoked
+[32m INFO[0m [1mslint-log[0m[2m:[0m power key event invoked
+[32m INFO[0m [1mslint-log[0m[2m:[0m sleep key event invoked
+[32m INFO[0m [1mslint-log[0m[2m:[0m logout key event invoked
+[32m INFO[0m [1mslint-log[0m[2m:[0m lock key event invoked
+[32m INFO[0m [1mslint-log[0m[2m:[0m power key event invoked
+[32m INFO[0m [1mslint-log[0m[2m:[0m sleep key event invoked
+[32m INFO[0m [1mslint-log[0m[2m:[0m logout key event invoked
+[32m INFO[0m [1mslint-log[0m[2m:[0m lock key event invoked
+[32m INFO[0m [1mslint-log[0m[2m:[0m power key event invoked
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Pointer left: (1.62109375, 48.296875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Hiding window
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (31.67578125, 33.40625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Showing window again
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (17.4296875, 32.84375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Pointer left: (1.9609375, 3.6796875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (24.703125, 34.609375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Pointer left: (361.9296875, 258.0234375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Pointer left: (98.5703125, 1.7421875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (1.63671875, 0.0)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Hiding window
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Showing window again
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Hiding window
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (0.0, 1.02734375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (41.109375, 34.5234375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Showing window again
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (19.32421875, 30.92578125)
+Updated device 'intel_backlight':
+Device 'intel_backlight' of class 'backlight':
+	Current brightness: 19200 (100%)
+	Max brightness: 19200
+
+Updated device 'intel_backlight':
+Device 'intel_backlight' of class 'backlight':
+	Current brightness: 10944 (57%)
+	Max brightness: 19200
+
+Updated device 'intel_backlight':
+Device 'intel_backlight' of class 'backlight':
+	Current brightness: 4032 (21%)
+	Max brightness: 19200
+
+Updated device 'intel_backlight':
+Device 'intel_backlight' of class 'backlight':
+	Current brightness: 10368 (54%)
+	Max brightness: 19200
+
+Updated device 'intel_backlight':
+Device 'intel_backlight' of class 'backlight':
+	Current brightness: 13824 (72%)
+	Max brightness: 19200
+
+Updated device 'intel_backlight':
+Device 'intel_backlight' of class 'backlight':
+	Current brightness: 19200 (100%)
+	Max brightness: 19200
+
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Pointer left: (0.58203125, 61.6640625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (2.16015625, 1.50390625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Hiding window
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (32.796875, 30.4921875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (682.24609375, 33.1640625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (825.80859375, 32.62890625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (16.9765625, 0.0)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (14.6796875, 32.95703125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (0.0, 3.0703125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Showing window again
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (56.0390625, 32.7734375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Pointer left: (106.02734375, 16.33203125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (2.05859375, 0.0)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (45.26953125, 33.97265625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Pointer left: (29.62890625, 4.7890625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (7.28515625, 0.0)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Hiding window
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Showing window again
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Hiding window
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (23.171875, 33.3359375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mslint-log[0m[2m:[0m true
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (421.02734375, 278.08984375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (421.02734375, 278.08984375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mslint-log[0m[2m:[0m true
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+[32m INFO[0m [1mslint-log[0m[2m:[0m true
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+[32m INFO[0m [1mslint-log[0m[2m:[0m true
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+[32m INFO[0m [1mslint-log[0m[2m:[0m true
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (932.41015625, 56.31640625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.890625, 255.84375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Showing window again
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (44.859375, 30.7734375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Pointer left: (0.7890625, 68.00390625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (4.66015625, 1.71484375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Hiding window
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (40.796875, 32.38671875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (15.35546875, 32.640625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.16796875, 448.86328125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.8984375, 364.90625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.30859375, 535.93359375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.10546875, 409.234375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Showing window again
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Hiding window
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Showing window again
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Hiding window
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (62.625, 31.17578125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Showing window again
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (19.3046875, 28.24609375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Pointer left: (2.484375, 1.96875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Hiding window
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (25.3828125, 34.28515625)
 [32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
 [32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
 [32m INFO[0m [1mslint-log[0m[2m:[0m false
-[32m INFO[0m [1mslint-log[0m[2m:[0m c
+[32m INFO[0m [1mslint-log[0m[2m:[0m d
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+
+"setsid" "sh" "-c" "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=d-spy org.gnome.dspy"
+"/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=d-spy org.gnome.dspy"
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (578.35546875, 429.5625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.1953125, 230.92578125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (1364.61328125, 34.85546875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (1489.44140625, 28.6953125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (1205.63671875, 29.49609375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.578125, 366.58203125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.90625, 377.11328125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (0.0, 4.25390625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (0.0, 3.78515625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (14.47265625, 16.4453125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Showing window again
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Hiding window
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Showing window again
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Hiding window
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (23.26171875, 29.19921875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.640625, 239.97265625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (0.0, 2.09375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (0.0, 6.5)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (20.4453125, 27.359375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (3.61328125, 0.00390625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Showing window again
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (21.546875, 27.5234375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Pointer left: (72.9140625, 1.55859375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Hiding window
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (47.609375, 24.16796875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (2.30078125, 31.22265625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.9140625, 6.80078125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Showing window again
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Hiding window
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Showing window again
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Hiding window
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Showing window again
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Hiding window
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (785.3671875, 30.08984375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.3984375, 533.375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (699.390625, 32.62890625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (774.2890625, 34.53515625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.3515625, 301.375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.4140625, 225.109375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (1402.85546875, 31.0234375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (156.66015625, 33.265625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (510.09765625, 31.6015625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (1108.703125, 33.97265625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (1191.046875, 33.9296875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m t
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m o
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m r
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+
+"setsid" "sh" "-c" "sh -c '/home/ramayen/tor-browser/Browser/start-tor-browser || ([ !  -x /home/ramayen/tor-browser/Browser/start-tor-browser ] && $(dirname $*)/Browser/start-tor-browser)' dummy"
+"sh -c '/home/ramayen/tor-browser/Browser/start-tor-browser || ([ !  -x /home/ramayen/tor-browser/Browser/start-tor-browser ] && $(dirname $*)/Browser/start-tor-browser)' dummy"
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (36.9453125, 546.2734375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (321.68359375, 441.88671875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (5.77734375, 549.46484375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (108.83984375, 31.55078125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (559.81640625, 33.8125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (1018.96875, 32.6171875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (503.41796875, 34.90234375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (239.33984375, 34.66796875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m d
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m e
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m l
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+
+"setsid" "sh" "-c" "deluge-gtk"
+"deluge-gtk"
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (150.50390625, 32.93359375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Showing window again
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (36.99609375, 34.25390625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Pointer left: (355.6328125, 292.78125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Pointer left: (267.90625, 7.140625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Hiding window
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (71.40625, 34.140625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (204.83984375, 34.484375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m d
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m e
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m l
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+
+"setsid" "sh" "-c" "deluge-gtk"
+"deluge-gtk"
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (199.23046875, 120.33984375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (803.93359375, 34.453125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (922.57421875, 34.98046875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m t
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m o
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m t
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m r
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+
+"setsid" "sh" "-c" "sh -c '/home/ramayen/tor-browser/Browser/start-tor-browser || ([ !  -x /home/ramayen/tor-browser/Browser/start-tor-browser ] && $(dirname $*)/Browser/start-tor-browser)' dummy"
+"sh -c '/home/ramayen/tor-browser/Browser/start-tor-browser || ([ !  -x /home/ramayen/tor-browser/Browser/start-tor-browser ] && $(dirname $*)/Browser/start-tor-browser)' dummy"
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m d
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m e
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m l
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+
+"setsid" "sh" "-c" "deluge-gtk"
+"deluge-gtk"
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (344.65625, 211.9921875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (1268.421875, 409.33203125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (406.55078125, 33.46484375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Showing window again
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (29.421875, 32.30078125)
+Updated device 'intel_backlight':
+Device 'intel_backlight' of class 'backlight':
+	Current brightness: 10944 (57%)
+	Max brightness: 19200
+
+Updated device 'intel_backlight':
+Device 'intel_backlight' of class 'backlight':
+	Current brightness: 1536 (8%)
+	Max brightness: 19200
+
+Updated device 'intel_backlight':
+Device 'intel_backlight' of class 'backlight':
+	Current brightness: 1536 (8%)
+	Max brightness: 19200
+
+Updated device 'intel_backlight':
+Device 'intel_backlight' of class 'backlight':
+	Current brightness: 17088 (89%)
+	Max brightness: 19200
+
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Pointer left: (55.66015625, 0.2890625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Hiding window
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (5.57421875, 26.48828125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (4.1015625, 101.328125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m d
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m e
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m l
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+
+"setsid" "sh" "-c" "deluge-gtk"
+"deluge-gtk"
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (182.6640625, 110.51171875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (5.98828125, 430.546875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (1273.1875, 34.66796875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (0.0, 189.578125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.859375, 461.11328125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (891.3046875, 403.1640625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (3.19921875, 395.0390625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m l
+[32m INFO[0m [1mslint-log[0m[2m:[0m Error loading image from /home/ramayen/AppImages/.icons/logseq: No such file or directory (os error 2)
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m o
+[32m INFO[0m [1mslint-log[0m[2m:[0m Error loading image from /home/ramayen/AppImages/.icons/logseq: No such file or directory (os error 2)
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m g
+[32m INFO[0m [1mslint-log[0m[2m:[0m Error loading image from /home/ramayen/AppImages/.icons/logseq: No such file or directory (os error 2)
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+
+"setsid" "sh" "-c" "env DESKTOPINTEGRATION=1 /home/ramayen/AppImages/logseq.appimage"
+"env DESKTOPINTEGRATION=1 /home/ramayen/AppImages/logseq.appimage"
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (100.80859375, 314.3984375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (1477.59765625, 33.20703125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (0.0, 614.51953125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (1120.53515625, 596.7890625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+
+"setsid" "sh" "-c" "env DESKTOPINTEGRATION=1 /home/ramayen/AppImages/logseq.appimage"
+"env DESKTOPINTEGRATION=1 /home/ramayen/AppImages/logseq.appimage"
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (753.85546875, 450.00390625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (4.3515625, 458.06640625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.46484375, 336.109375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (1488.4921875, 28.18359375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (5.91015625, 553.0546875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.66015625, 530.625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (258.96484375, 512.6640625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m d
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m e
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+
+"setsid" "sh" "-c" "deluge-gtk"
+"deluge-gtk"
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (261.640625, 209.79296875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m m
 [32m INFO[0m [1mslint-log[0m[2m:[0m false
 [32m INFO[0m [1mslint-log[0m[2m:[0m a
 [32m INFO[0m [1mslint-log[0m[2m:[0m false
-[32m INFO[0m [1mslint-log[0m[2m:[0m m
+[32m INFO[0m [1mslint-log[0m[2m:[0m g
 [32m INFO[0m [1mslint-log[0m[2m:[0m false
-[32m INFO[0m [1mslint-log[0m[2m:[0m m
-[32m INFO[0m [1mslint-log[0m[2m:[0m false
-[32m INFO[0m [1mslint-log[0m[2m:[0m \x08
-[32m INFO[0m [1mslint-log[0m[2m:[0m false
-[32m INFO[0m [1mslint-log[0m[2m:[0m \x08
-[32m INFO[0m [1mslint-log[0m[2m:[0m false
-[32m INFO[0m [1mslint-log[0m[2m:[0m \x08
-[32m INFO[0m [1mslint-log[0m[2m:[0m false
-[32m INFO[0m [1mslint-log[0m[2m:[0m \x08
-[32m INFO[0m [1mslint-log[0m[2m:[0m false
-[32m INFO[0m [1mslint-log[0m[2m:[0m s
-[32m INFO[0m [1mslint-log[0m[2m:[0m false
-[32m INFO[0m [1mslint-log[0m[2m:[0m p
-[32m INFO[0m [1mslint-log[0m[2m:[0m false
-[32m INFO[0m [1mslint-log[0m[2m:[0m l
-[32m INFO[0m [1mslint-log[0m[2m:[0m false
-[32m INFO[0m [1mslint-log[0m[2m:[0m i
-[32m INFO[0m [1mslint-log[0m[2m:[0m false
-[32m INFO[0m [1mslint-log[0m[2m:[0m t
-[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
-[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
-[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (670.01953125, 590.90234375)
-[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
-[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
-[32m INFO[0m [1mslint-log[0m[2m:[0m false
-[32m INFO[0m [1mslint-log[0m[2m:[0m l
+[32m INFO[0m [1mslint-log[0m[2m:[0m n
 [32m INFO[0m [1mslint-log[0m[2m:[0m false
 [32m INFO[0m [1mslint-log[0m[2m:[0m e
 [32m INFO[0m [1mslint-log[0m[2m:[0m false
 [32m INFO[0m [1mslint-log[0m[2m:[0m t
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (793.05078125, 264.0703125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
 [32m INFO[0m [1mslint-log[0m[2m:[0m false
-[32m INFO[0m [1mslint-log[0m[2m:[0m  
+[32m INFO[0m [1mslint-log[0m[2m:[0m t
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m o
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m r
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+
+"setsid" "sh" "-c" "sh -c '/home/ramayen/tor-browser/Browser/start-tor-browser || ([ !  -x /home/ramayen/tor-browser/Browser/start-tor-browser ] && $(dirname $*)/Browser/start-tor-browser)' dummy"
+"sh -c '/home/ramayen/tor-browser/Browser/start-tor-browser || ([ !  -x /home/ramayen/tor-browser/Browser/start-tor-browser ] && $(dirname $*)/Browser/start-tor-browser)' dummy"
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (956.6640625, 483.0)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (590.4453125, 34.8515625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (230.02734375, 34.07421875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (904.765625, 23.8203125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (1389.203125, 33.12890625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m t
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m u
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m d
+[32m INFO[0m [1mslint-log[0m[2m:[0m Error loading image from /home/ramayen/AppImages/.icons/synfig_studio: The image format could not be determined
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m \x08
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+
+"setsid" "sh" "-c" "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=thunderbird --file-forwarding org.mozilla.Thunderbird"
+"/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=thunderbird --file-forwarding org.mozilla.Thunderbird"
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (202.0859375, 479.95703125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (1490.3515625, 31.69921875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m v
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m s
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+
+"setsid" "sh" "-c" "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=code --file-forwarding com.visualstudio.code --reuse-window"
+"/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=code --file-forwarding com.visualstudio.code --reuse-window"
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (755.2265625, 32.73046875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (59.578125, 28.64453125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (4.93359375, 86.93359375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.25, 382.5546875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (4.2734375, 216.4609375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (3.2890625, 231.4140625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (5.26171875, 201.3125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (0.0, 207.75390625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.2421875, 167.078125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (4.921875, 311.37109375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (5.8125, 327.0078125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (3.90625, 818.34765625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (0.57421875, 829.6171875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (5.96484375, 552.51953125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.0, 396.7265625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (5.86328125, 208.8515625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (558.0546875, 33.97265625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (687.05859375, 33.90625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.3046875, 466.26171875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (0.0, 11.453125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (0.0, 15.453125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (9.40234375, 27.9375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (5.0, 315.390625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (0.0, 3.703125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (31.49609375, 31.35546875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (126.73828125, 33.78515625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.35546875, 184.5390625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (4.984375, 296.5703125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.0390625, 235.90625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (5.0, 265.609375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.82421875, 36.015625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (98.67578125, 33.3671875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (90.50390625, 33.7578125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (989.75, 31.109375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (1274.0234375, 28.1953125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (4.5, 266.921875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (856.71484375, 34.2109375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (53.79296875, 338.875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (4.0, 166.109375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.0, 338.85546875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (4.8046875, 391.37109375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (4.91015625, 272.9140625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.45703125, 289.94140625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (944.8046875, 34.19921875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.69921875, 171.42578125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (5.0, 279.08203125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (899.05078125, 34.60546875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (147.234375, 34.99609375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m d
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m e
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+
+"setsid" "sh" "-c" "deluge-gtk"
+"deluge-gtk"
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (746.81640625, 29.203125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m t
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m o
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m r
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+
+"setsid" "sh" "-c" "sh -c '/home/ramayen/tor-browser/Browser/start-tor-browser || ([ !  -x /home/ramayen/tor-browser/Browser/start-tor-browser ] && $(dirname $*)/Browser/start-tor-browser)' dummy"
+"sh -c '/home/ramayen/tor-browser/Browser/start-tor-browser || ([ !  -x /home/ramayen/tor-browser/Browser/start-tor-browser ] && $(dirname $*)/Browser/start-tor-browser)' dummy"
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (1480.25390625, 521.72265625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (639.51953125, 382.1875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (31.33984375, 32.8515625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (1174.33203125, 577.25390625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (1174.33203125, 577.25390625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (1176.96484375, 596.33203125)
 [32m INFO[0m [1mslint-log[0m[2m:[0m true
 [32m INFO[0m [1mslint-log[0m[2m:[0m 
+[32m INFO[0m [1mslint-log[0m[2m:[0m true
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
 [32m INFO[0m [1mslint-log[0m[2m:[0m true
 [32m INFO[0m [1mslint-log[0m[2m:[0m 
 [32m INFO[0m [1mslint-log[0m[2m:[0m true
 [32m INFO[0m [1mslint-log[0m[2m:[0m 
 [32m INFO[0m [1mslint-log[0m[2m:[0m true
 [32m INFO[0m [1mslint-log[0m[2m:[0m 
+[32m INFO[0m [1mslint-log[0m[2m:[0m true
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+[32m INFO[0m [1mslint-log[0m[2m:[0m true
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
 [32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
 [32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
-[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (670.01953125, 590.90234375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (970.12890625, 31.921875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (6.75390625, 0.0)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (22.8203125, 34.48046875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (0.0, 20.34375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Showing window again
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (30.95703125, 28.9296875)
+Updated device 'intel_backlight':
+Device 'intel_backlight' of class 'backlight':
+	Current brightness: 2688 (14%)
+	Max brightness: 19200
+
+Updated device 'intel_backlight':
+Device 'intel_backlight' of class 'backlight':
+	Current brightness: 8064 (42%)
+	Max brightness: 19200
+
+Updated device 'intel_backlight':
+Device 'intel_backlight' of class 'backlight':
+	Current brightness: 14976 (78%)
+	Max brightness: 19200
+
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Hiding window
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Pointer left: (31.72265625, 361.8125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Showing window again
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (19.6953125, 34.95703125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Hiding window
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Pointer left: (26.015625, 127.59375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Showing window again
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Hiding window
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Showing window again
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (16.2578125, 32.14453125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Hiding window
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Pointer left: (14.0234375, 98.13671875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Showing window again
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Hiding window
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Showing window again
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (28.1875, 30.29296875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Hiding window
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Pointer left: (94.71484375, 240.546875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.05859375, 296.52734375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (5.24609375, 429.91796875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (5.0703125, 234.7890625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (5.4609375, 381.82421875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (713.87109375, 29.3125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (3.9453125, 65.578125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.7265625, 340.26171875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.125, 488.9609375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (5.91796875, 213.26953125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.5703125, 530.7421875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (789.86328125, 30.890625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.4765625, 408.47265625)
 [32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
 [32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
 [32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
 [32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
-[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (670.01953125, 590.90234375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (247.97265625, 506.015625)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m d
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m e
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m l
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+
+"setsid" "sh" "-c" "deluge-gtk"
+"deluge-gtk"
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (424.27734375, 198.3359375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m t
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m o
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m r
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+
+"setsid" "sh" "-c" "sh -c '/home/ramayen/tor-browser/Browser/start-tor-browser || ([ !  -x /home/ramayen/tor-browser/Browser/start-tor-browser ] && $(dirname $*)/Browser/start-tor-browser)' dummy"
+"sh -c '/home/ramayen/tor-browser/Browser/start-tor-browser || ([ !  -x /home/ramayen/tor-browser/Browser/start-tor-browser ] && $(dirname $*)/Browser/start-tor-browser)' dummy"
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (791.89453125, 417.89453125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (409.26171875, 29.63671875)
 [32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
 [32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
 [32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
 [32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
-[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (1105.98046875, 576.28125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (1169.3515625, 416.58203125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"workspace"[1m}[0m[2m:[0m Pointer left: (6.4453125, 27.30859375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Showing window again
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Hiding window
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: view toggled
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Showing window again
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (18.1328125, 31.59375)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Win: Hiding window
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"menu"[1m}[0m[2m:[0m Pointer left: (40.26953125, 104.20703125)
 [32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
 [32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
 [32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
 [32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
-[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (1105.98046875, 576.28125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (458.60546875, 438.41796875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (458.60546875, 438.41796875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (458.60546875, 438.41796875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (458.60546875, 438.41796875)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (375.58203125, 241.4453125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (3.6640625, 0.0)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (16.390625, 0.0)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (78.98828125, 34.03125)
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m z
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m e
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m d
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+
+"setsid" "sh" "-c" "xgpsspeed"
+"xgpsspeed"
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region added: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus entered
+[32m INFO[0m [1mslint-log[0m[2m:[0m true
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+[32m INFO[0m [1mslint-log[0m[2m:[0m false
+[32m INFO[0m [1mslint-log[0m[2m:[0m 
+
+"setsid" "sh" "-c" "/home/ramayen/.local/zed.app/bin/zed"
+"/home/ramayen/.local/zed.app/bin/zed"
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 35, width: 1536, height: 565]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Keyboard focus left
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"top-bar"[1m}[0m[2m:[0m Pointer left: (1300.85546875, 477.52734375)

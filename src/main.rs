@@ -81,29 +81,31 @@ fn main() -> Result<(), Box<dyn Error>> {
     //
     let bar_tx = bar.get_handler();
     let menu_tx = menu.get_handler();
+    let menu_tx_another = menu_tx.clone();
 
     configure_menu(&mut menu);
-    configure_bar(&mut bar, bar_tx);
+    configure_bar(&mut bar, bar_tx, menu_tx_another);
     configure_workpaces(&mut workspace);
     menu_tx.toggle();
     cast_spell!(windows: [menu, (bar,ipc), workspace])
 }
 
 impl IpcController for TopBar {
-    fn change_val(&mut self, _key: &str, _val: &str) {}
+    fn change_val(&self, _key: &str, _val: &str) {}
 
     fn get_type(&self, _key: &str) -> String {
         String::from("")
     }
 
-    fn custom_command(&mut self, command: &str) {
+    fn custom_command(&self, command: &str) {
         match command {
             "toggle_search" => {
-                if self.get_search_active() {
-                    self.set_search_active(false);
-                } else {
-                    self.set_search_active(true);
-                }
+                let val = !self.get_search_active();
+                self.set_search_active(val);
+            }
+            "toggle_clip" => {
+                self.set_selected(SelectedSection::Clipboard);
+                self.set_search_active(true);
             }
             _ => {}
         }
