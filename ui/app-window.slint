@@ -1,16 +1,5 @@
+import { Palette } from "std-widgets.slint";
 import {
-    Button,
-    VerticalBox,
-    Palette,
-    Slider,
-    Spinner,
-    HorizontalBox,
-    TabWidget,
-    LineEdit,
-    ScrollView,
-} from "std-widgets.slint";
-import {
-    UButton,
     UDivider,
     UButton,
     UIconButton,
@@ -21,21 +10,12 @@ import {
     USlider,
     UInput,
 } from "@sleek/widgets.slint";
+import { NotificationCard } from "noti.slint";
 import { UAppTheme } from "@sleek/app-theme.slint";
-import { Styles } from "styles.slint";
 import { Mpris } from "mpris.slint";
 import { OptionSection, DisplayComponent } from "bar.slint";
-import { WallpaperManager } from "wallpaper.slint";
-import {
-    PowerMenuButton,
-    MenuButton,
-    GeneralButton,
-    SearchButton,
-    AppDisplayButton,
-    WorkspaceButton,
-    BarButton,
-} from "buttons.slint";
-import { AppViewer, GeneralCard } from "menu.slint";
+import { WorkspaceButton } from "buttons.slint";
+import { GeneralCard } from "menu.slint";
 import {
     AppLineData,
     ConnectionStatus,
@@ -44,12 +24,14 @@ import {
     SearchButtonData,
     WifiLineData,
     MenuFocus,
+    NotifData,
     SelectedSection,
     BarState,
 } from "data_structures.slint";
 import { UTitle } from "@sleek/widgets/title.slint";
 import { UCode } from "@sleek/widgets/code.slint";
 import { USwitch } from "@sleek/widgets/switch.slint";
+import { UDarkColors } from "@sleek/colors.slint";
 export { MprisState } from "mpris.slint";
 
 export global MainState {
@@ -81,7 +63,7 @@ export global MainState {
 
 export component Menu inherits Window {
     out property <bool> first-run: true;
-    in-out property <MenuFocus> current_focus: MenuFocus.ActionPower;
+    in-out property <MenuFocus> current_focus: MenuFocus.None;
     property <int> volume <=> MainState.vol;
     property <int> mic <=> MainState.mic;
     property <int> bright <=> MainState.brightness;
@@ -89,6 +71,8 @@ export component Menu inherits Window {
     property <percent> temp <=> MainState.temp;
     callback power-action(string);
     callback call-close();
+    callback signal_light_theme();
+    callback signal_dark_theme();
 
     changed cpu => {
         cpu-bar.progress = self.cpu;
@@ -111,9 +95,11 @@ export component Menu inherits Window {
     background: transparent;
     public function set_dark_theme() {
         Palette.color-scheme = ColorScheme.dark;
+        signal_dark_theme();
     }
     public function set_light_theme() {
         Palette.color-scheme = ColorScheme.light;
+        signal_light_theme();
     }
 
     Timer {
@@ -482,14 +468,18 @@ export component Menu inherits Window {
     }
 
     FocusScope {
-        enabled: current_focus == MenuFocus.None ? false : true;
+        enabled: true;
         key-pressed(event) => {
+            debug("current state:", current_focus);
             if current_focus == MenuFocus.Volume {
                 if event.text == Key.UpArrow {
                     MainState.set-volume(MainState.vol + 10);
                     accept;
                 } else if event.text == Key.DownArrow {
                     MainState.set-volume(MainState.vol - 10);
+                    accept;
+                } else if event.text == Key.Escape {
+                    current_focus = MenuFocus.None;
                     accept;
                 } else {
                     reject;
@@ -500,6 +490,9 @@ export component Menu inherits Window {
                     accept;
                 } else if event.text == Key.DownArrow {
                     MainState.set-mic(MainState.mic - 10);
+                    accept;
+                } else if event.text == Key.Escape {
+                    current_focus = MenuFocus.None;
                     accept;
                 } else {
                     reject;
@@ -511,6 +504,9 @@ export component Menu inherits Window {
                 } else if event.text == Key.DownArrow {
                     MainState.set-bright(MainState.brightness - 10);
                     accept;
+                } else if event.text == Key.Escape {
+                    current_focus = MenuFocus.None;
+                    accept;
                 } else {
                     reject;
                 }
@@ -518,6 +514,9 @@ export component Menu inherits Window {
                 if event.text == Key.Tab {
                     debug("Power and tab entered");
                     powerbutton.set-focus();
+                    accept;
+                } else if event.text == Key.Escape {
+                    current_focus = MenuFocus.None;
                     accept;
                 } else {
                     reject;
@@ -529,10 +528,13 @@ export component Menu inherits Window {
                 } else if event.text == Key.DownArrow {
                     MainState.set-mic(MainState.mic - 10);
                     accept;
+                } else if event.text == Key.Escape {
+                    current_focus = MenuFocus.None;
+                    accept;
                 } else {
                     reject;
                 }
-            } else if event.text == Key.Escape {
+            } else if event.text == Key.Escape || current_focus == MenuFocus.None {
                 current_focus = MenuFocus.None;
                 call-close();
                 accept;
@@ -556,6 +558,12 @@ export component TopBar inherits Window {
     in-out property <bool> search-active: false;
     in-out property <string> battery-val: "Unknown";
     in-out property <SelectedSection> selected: Application;
+    public function set_dark_theme() {
+        Palette.color-scheme = ColorScheme.dark;
+    }
+    public function set_light_theme() {
+        Palette.color-scheme = ColorScheme.light;
+    }
     pure function selected-string(selection: SelectedSection) -> string {
         if selection == SelectedSection.Application {
             return "Applications";
@@ -675,7 +683,7 @@ export component TopBar inherits Window {
 
     Timer {
         running: run-once;
-        interval: 1s;
+        interval: 86400s;
         triggered => {
         // Update bar state with actual conditions.
         // Cases:
@@ -684,6 +692,7 @@ export component TopBar inherits Window {
         // 3. State of Wifi and Bluetooth initially.
             run-once = false;
             // stop-inhibtor();
+            MainState.get-date();
         }
     }
 
@@ -698,6 +707,10 @@ export component TopBar inherits Window {
             MainState.get-temp();
             MainState.get-bright();
             refresh-battery();
+            if run-once {
+                run-once = false;
+                MainState.get-date();
+            }
         }
     }
 
@@ -886,6 +899,7 @@ export component TopBar inherits Window {
 
                 display-section := DisplayComponent {
                     time: MainState.time;
+                    date: MainState.date;
                     vol: MainState.vol;
                     mic: MainState.mic;
                     cpu: MainState.cpu;
@@ -904,6 +918,9 @@ export component TopBar inherits Window {
                     }
                     select-bluetooth => {
                         selected = SelectedSection.Bluetooth;
+                    }
+                    vol-menu-focus => {
+                        open-menu(MenuFocus.Volume);
                     }
                     toggle-inhibit(val) => {
                         toggle-inhibit(val);
@@ -955,12 +972,12 @@ export component AppWindow inherits Window {
     callback request-increase-value();
     width: 376px;
     height: 576px;
-    VerticalBox {
+    VerticalLayout {
         Text {
             text: "Counter: \{root.counter}";
         }
 
-        Button {
+        UButton {
             text: "Increase value";
             clicked => {
                 root.request-increase-value();
@@ -1056,7 +1073,7 @@ export component LockScreen inherits Window {
                 y: 220px;
                 vertical-alignment: TextVerticalAlignment.center;
                 horizontal-alignment: TextHorizontalAlignment.center;
-                color: Styles.font-color-light;
+                // color: Styles.font-color-light;
                 font-size: 75px;
                 font-family: "Source Code Pro";
             // font-family: "DS DIGI Orbitron-Regular";
@@ -1068,7 +1085,7 @@ export component LockScreen inherits Window {
                 y: 258px;
                 vertical-alignment: TextVerticalAlignment.center;
                 horizontal-alignment: TextHorizontalAlignment.center;
-                color: Styles.font-color-light;
+                // color: Styles.font-color-light;
                 font-size: 35px;
                 font-family: "Source Code Pro";
                 text: time_ampm;
@@ -1078,24 +1095,24 @@ export component LockScreen inherits Window {
                 y: 310px;
                 vertical-alignment: TextVerticalAlignment.center;
                 horizontal-alignment: TextHorizontalAlignment.center;
-                color: Styles.font-color-light;
+                // color: Styles.font-color-light;
                 font-size: 35px;
                 font-family: "Source Code Pro";
                 text: "Welcome Back!";
             }
 
-            input := LineEdit {
+            input := UInput {
                 input-type: password;
                 height: 37px;
                 width: 260px;
-                font-size: 20px;
-                placeholder-text: " Enter Password";
-                accepted(text) => {
-                    root.check-pass(text);
+                // font-size: 20px;
+                placeholder: " Enter Password";
+                accepted => {
+                    root.check-pass(self.text);
                     self.text = "";
                 }
                 init => {
-                    self.focus();
+                    self.grab-focus();
                 }
             }
 
@@ -1140,10 +1157,15 @@ export component Workspaces inherits Window {
     callback refresh-vol();
     callback refresh-info();
     callback change_called(int);
+    public function set_dark_theme() {
+        Palette.color-scheme = ColorScheme.dark;
+    }
+    public function set_light_theme() {
+        Palette.color-scheme = ColorScheme.light;
+    }
     width: 7px;
     x: 0px;
     height: 830px;
-    background: Styles.dark-background;
 
     Timer {
         interval: 300ms;
@@ -1173,5 +1195,111 @@ export component Workspaces inherits Window {
                 change_called(i)
             }
         }
+    }
+}
+
+export component YoungNC inherits Window {
+    in-out property <bool> new_notification: false;
+    title: "Notification Demo";
+    preferred-width: 950px;
+    preferred-height: 830px;
+    background: transparent;
+
+    property <int> nid: 0;
+    property <length> pad: 16px;
+    property <length> stride: 90px;
+    property <length> cx: root.width - 316px;
+
+    property <NotifData> slot0: { id: -1, title: "", message: "", accent: #000000, icon: false };
+    property <NotifData> slot1: { id: -1, title: "", message: "", accent: #000000, icon: false };
+    property <NotifData> slot2: { id: -1, title: "", message: "", accent: #000000, icon: false };
+    property <NotifData> slot3: { id: -1, title: "", message: "", accent: #000000, icon: false };
+    property <NotifData> slot4: { id: -1, title: "", message: "", accent: #000000, icon: false };
+
+    callback add-notif(int, string, string, string, int, color);
+    add-notif(id_rust, app_name, title, msg, timeout, accent) => {
+        if (!c0.alive) {
+            slot0 = {
+                id: nid,
+                id_rust: id_rust,
+                app_name: app_name,
+                title: title,
+                message: msg,
+                accent: accent,
+                timeout: timeout
+            };
+        } else if (!c1.alive) {
+            slot1 = {
+                id: nid,
+                id_rust: id_rust,
+                app_name: app_name,
+                title: title,
+                message: msg,
+                accent: accent,
+                timeout: timeout
+            };
+        } else if (!c2.alive) {
+            slot2 = {
+                id: nid,
+                id_rust: id_rust,
+                app_name: app_name,
+                title: title,
+                message: msg,
+                accent: accent,
+                timeout: timeout
+            };
+        } else if (!c3.alive) {
+            slot3 = {
+                id: nid,
+                id_rust: id_rust,
+                app_name: app_name,
+                title: title,
+                message: msg,
+                accent: accent,
+                timeout: timeout
+            };
+        } else if (!c4.alive) {
+            slot4 = {
+                id: nid,
+                id_rust: id_rust,
+                app_name: app_name,
+                title: title,
+                message: msg,
+                accent: accent,
+                timeout: timeout
+            };
+        } else {
+            slot0 = { id: nid, id_rust: id_rust, app_name: app_name, title: title, message: msg, accent: accent };
+        }
+        nid += 1;
+    }
+    c0 := NotificationCard {
+        x: cx;
+        y: pad;
+        data: slot0;
+    }
+
+    c1 := NotificationCard {
+        x: cx;
+        y: pad + (c0.layout-alive ? stride : 0px);
+        data: slot1;
+    }
+
+    c2 := NotificationCard {
+        x: cx;
+        y: pad + (c0.layout-alive ? stride : 0px) + (c1.layout-alive ? stride : 0px);
+        data: slot2;
+    }
+
+    c3 := NotificationCard {
+        x: cx;
+        y: pad + (c0.layout-alive ? stride : 0px) + (c1.layout-alive ? stride : 0px) + (c2.layout-alive ? stride : 0px);
+        data: slot3;
+    }
+
+    c4 := NotificationCard {
+        x: cx;
+        y: pad + (c0.layout-alive ? stride : 0px) + (c1.layout-alive ? stride : 0px) + (c2.layout-alive ? stride : 0px) + (c3.layout-alive ? stride : 0px);
+        data: slot4;
     }
 }

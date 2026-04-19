@@ -1,8 +1,8 @@
-use crate::{MainState, MenuSpell, MprisState};
+use crate::{MainState, MenuSpell, MprisState, TopBar, Workspaces};
 use chrono::Local;
 use image::{imageops::crop_imm, open};
 use imageproc::filter::gaussian_blur_f32;
-use slint::{ComponentHandle, Image, SharedString};
+use slint::{ComponentHandle, Image, SharedString, Weak};
 use spell_framework::{self, vault::mpris::PlayerFinder};
 use std::{
     error::Error,
@@ -11,7 +11,7 @@ use std::{
 };
 use sysinfo::{Components, CpuRefreshKind, RefreshKind, System};
 
-pub fn configure_menu(menu: &mut MenuSpell) {
+pub fn configure_menu(menu: &mut MenuSpell, bar_handle: Weak<TopBar>, ws_handle: Weak<Workspaces>) {
     let mut s =
         System::new_with_specifics(RefreshKind::nothing().with_cpu(CpuRefreshKind::everything()));
 
@@ -238,6 +238,24 @@ pub fn configure_menu(menu: &mut MenuSpell) {
     });
 
     menu.invoke_set_dark_theme();
+
+    menu.on_signal_dark_theme({
+        let bar_weak = bar_handle.clone();
+        let ws_weak = ws_handle.clone();
+        move || {
+            bar_weak.unwrap().invoke_set_dark_theme();
+            ws_weak.unwrap().invoke_set_dark_theme();
+        }
+    });
+
+    menu.on_signal_light_theme({
+        let bar_weak = bar_handle.clone();
+        let ws_weak = ws_handle.clone();
+        move || {
+            bar_weak.unwrap().invoke_set_light_theme();
+            ws_weak.unwrap().invoke_set_light_theme();
+        }
+    });
 }
 
 pub fn crop_blur_center<P: AsRef<Path>>(

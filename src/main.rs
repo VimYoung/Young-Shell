@@ -83,8 +83,12 @@ fn main() -> Result<(), Box<dyn Error>> {
     let menu_tx = menu.get_handler();
     let menu_tx_another = menu_tx.clone();
 
-    configure_menu(&mut menu);
-    configure_bar(&mut bar, bar_tx, menu_tx_another);
+    configure_menu(
+        &mut menu,
+        bar.as_weak().clone(),
+        workspace.as_weak().clone(),
+    );
+    configure_bar(&mut bar, bar_tx, menu_tx_another, menu.as_weak().clone());
     configure_workpaces(&mut workspace);
     menu_tx.toggle();
     cast_spell!(windows: [menu, (bar,ipc), workspace])

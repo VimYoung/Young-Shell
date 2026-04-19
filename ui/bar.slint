@@ -1,14 +1,6 @@
 import { Spinner, Slider, ScrollView, VerticalBox } from "std-widgets.slint";
 import { Styles } from "styles.slint";
 import {
-    AppDisplayButton,
-    WifiButton,
-    WifiButtonConnected,
-    ClipButton,
-    BlueButton,
-    BlueButtonConnected,
-} from "buttons.slint";
-import {
     AppLineData,
     WifiLineData,
     SelectedSection,
@@ -341,12 +333,14 @@ export component OptionSection inherits Rectangle {
 
 export component DisplayComponent inherits Rectangle {
     in property <string> time;
+    in property <string> date;
     in property <int> vol;
     in property <int> mic;
     in property <percent> cpu;
     in property <percent> temp;
     in property <int> bright;
     in property <string> battery-val;
+    property <bool> show-date: false;
     out property <bool> battery-text;
     in-out property <bool> is-inhibit;
     pure callback get-search-active() -> bool;
@@ -355,6 +349,7 @@ export component DisplayComponent inherits Rectangle {
     callback select-bluetooth();
     callback toggle-inhibit(bool);
     callback bright-menu-focus();
+    callback vol-menu-focus();
     y: get-search-active() ? 30px : 0px;
     background: UAppTheme.bg-container;
 
@@ -390,6 +385,13 @@ export component DisplayComponent inherits Rectangle {
                         UIcon {
                             source: @image-url("../assets/sleek/filled/mic.svg");
                         }
+                    }
+                }
+
+                TouchArea {
+                    mouse-cursor: pointer;
+                    clicked => {
+                        vol-menu-focus();
                     }
                 }
             }
@@ -430,7 +432,14 @@ export component DisplayComponent inherits Rectangle {
 
         UCard {
             UText {
-                text: time;
+                text: show-date ? date : time;
+            }
+
+            TouchArea {
+                mouse-cursor: pointer;
+                clicked => {
+                    show-date = !show-date
+                }
             }
         }
 

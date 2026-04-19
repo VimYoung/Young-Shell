@@ -30,13 +30,13 @@ fn main() -> Result<(), Box<dyn Error>> {
 }
 
 impl IpcController for TopBar {
-    fn change_val(&mut self, _key: &str, _val: &str) {}
+    fn change_val(&self, _key: &str, _val: &str) {}
 
     fn get_type(&self, _key: &str) -> String {
         String::from("")
     }
 
-    fn custom_command(&mut self, command: &str) {
+    fn custom_command(&self, command: &str) {
         match command {
             "toggle_search" => {
                 if self.get_search_active() {

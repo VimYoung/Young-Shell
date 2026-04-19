@@ -55,3 +55,14 @@ export struct State {
     string-type: string,
     cards-type: Cards,
 }
+export struct NotifData {
+    id      : int,
+    id_rust : int,
+    app-name: string,
+    title   : string,
+    subtitle: string,
+    message : string,
+    accent  : color,
+    timeout : int,
+    icon    : bool,
+}

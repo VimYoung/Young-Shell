@@ -1,6 +1,6 @@
-use crate::{AppLineData, MainState, MenuFocus, TopBarSpell};
+use crate::{AppLineData, MainState, Menu, MenuFocus, TopBarSpell};
 use chrono::Local;
-use slint::{ComponentHandle, Image, Model, SharedString};
+use slint::{ComponentHandle, Image, Model, SharedString, Weak};
 use spell_framework::{
     vault::{AppSelector, fuzzy_search_best_n},
     wayland_adapter::WinHandle,
@@ -13,7 +13,12 @@ use std::{
 };
 use sysinfo::{Components, CpuRefreshKind, RefreshKind, System};
 
-pub fn configure_bar(bar: &mut TopBarSpell, bar_tx: WinHandle, menu_tx: WinHandle) {
+pub fn configure_bar(
+    bar: &mut TopBarSpell,
+    bar_tx: WinHandle,
+    menu_tx: WinHandle,
+    menu: Weak<Menu>,
+) {
     let app_selector = AppSelector::default();
     println!("{:#?}", app_selector);
     let app_data_slint: Vec<AppLineData> = app_selector
@@ -204,8 +209,14 @@ pub fn configure_bar(bar: &mut TopBarSpell, bar_tx: WinHandle, menu_tx: WinHandl
 
     bar.on_open_menu({
         let menu_txy = menu_tx.clone();
+        let menu_weak = menu.clone();
         move |val| match val {
             MenuFocus::None => {
+                menu_txy.toggle();
+                menu_txy.grab_focus();
+            }
+            MenuFocus::Volume => {
+                menu_weak.unwrap().set_current_focus(MenuFocus::Volume);
                 menu_txy.toggle();
                 menu_txy.grab_focus();
             }
@@ -448,6 +459,18 @@ pub fn configure_bar(bar: &mut TopBarSpell, bar_tx: WinHandle, menu_tx: WinHandl
             }
             let temp = total / components.len() as f32;
             bar_handle.unwrap().global::<MainState>().set_temp(temp);
+        }
+    });
+
+    bar.global::<MainState>().on_get_date({
+        let bar_handle = bar.as_weak();
+        move || {
+            let now = Local::now();
+            let date = now.format("%A %d, %b").to_string();
+            bar_handle
+                .unwrap()
+                .global::<MainState>()
+                .set_date(SharedString::from(date));
         }
     });
     // bar.on_refresh_temp({

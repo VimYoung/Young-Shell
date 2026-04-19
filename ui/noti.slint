@@ -1,0 +1,219 @@
+import {
+    UButton,
+    UDivider,
+    UIconButton,
+    UText,
+    UIcon,
+    UTitle,
+    ULinearProgress,
+} from "@sleek/widgets.slint";
+import { Button } from "std-widgets.slint";
+import { UAppTheme } from "@sleek/app-theme.slint";
+import { NotifData } from "data_structures.slint";
+
+export component NotificationCard inherits Rectangle {
+    in property <NotifData> data;
+    in property <float> timeout-s: 5.0;
+    out property <bool> alive: i-alive;
+    in property <bool> icon: false;
+    in property <image> app-icon;
+    in property <bool> actions: false;
+    out property <bool> layout-alive: i-alive && !falling;
+
+    private property <bool> i-alive: false;
+    private property <float> life: 0.0;
+    private property <bool> entering: false;
+    private property <int> last-id: -99;
+    private property <bool> falling: false;
+    private property <duration> fall-start: 0ms;
+    private property <length> fall-x0: 0px;
+
+    private property <float> fall-t: falling ? ((animation-tick() - fall-start) / 1s) : 0.0;
+
+    // width: 350px;
+    // height: 125px;
+    width: 300px;
+    // height: icon ? 120px : 82px;
+    height: 82px;
+    clip: false;
+    background: transparent;
+    opacity: (i-alive && !entering) ? 1.0 : 0.0;
+
+    animate y {
+        duration: 280ms;
+        easing: ease-in-out;
+    }
+    animate opacity { duration: 200ms; }
+
+    changed data => {
+        if (data.id != last-id) {
+            last-id = data.id;
+            falling = false;
+            fall-start = 0ms;
+            fall-x0 = 0px;
+            if (data.id >= 0) {
+                i-alive = true;
+                life = 1.0;
+                entering = true;
+            } else {
+                i-alive = false;
+            }
+        }
+    }
+
+    Timer {
+        interval: 16ms;
+        running: root.entering;
+        triggered => {
+            root.entering = false;
+        }
+    }
+
+    Timer {
+        interval: 50ms;
+        running: root.i-alive && !root.falling;
+        triggered => {
+            root.life = max(0.0, root.life - (0.05 / root.timeout-s));
+            if (root.life <= 0.0) {
+                root.i-alive = false;
+            }
+        }
+    }
+
+    Timer {
+        interval: 1000ms;
+        running: root.falling;
+        triggered => {
+            root.i-alive = false;
+            root.falling = false;
+        }
+    }
+
+    sgh := SwipeGestureHandler {
+        x: 0;
+        y: 0;
+        width: parent.width;
+        height: parent.height;
+        handle-swipe-left: true;
+
+        swiped => {
+            if (self.current-position.x < self.pressed-position.x - 70px) {
+                root.fall-x0 = clamp(self.current-position.x - self.pressed-position.x,
+                                        -120px, 0px);
+                root.fall-start = animation-tick();
+                root.falling = true;
+            }
+        }
+
+        Rectangle {
+            width: parent.width;
+            height: parent.height;
+            border-radius: 10px;
+            background: #f8514918;
+            opacity: sgh.swiping && !root.falling ? clamp((sgh.pressed-position.x - sgh.current-position.x) / 120px, 0.0, 1.0) : 0.0;
+            animate opacity { duration: 100ms; }
+
+            Text {
+                x: parent.width / 2 - self.width / 2;
+                y: (parent.height - self.height) / 2;
+                text: "↙  release to drop";
+                color: #f85149cc;
+                font-size: 11px;
+                horizontal-alignment: center;
+            }
+        }
+
+        Rectangle {
+            transform-rotation: root.falling ? min((animation-tick() - fall-start) / 2s, 1) * -30deg : 0deg;
+            x: root.falling && i-alive ? (root.fall-x0 - 500px * root.fall-t) : (sgh.swiping ? clamp(sgh.current-position.x - sgh.pressed-position.x, -120px, 0px) : 0px);
+            y: root.falling && i-alive ? (800px * root.fall-t * root.fall-t) : 0px;
+
+            width: parent.width;
+            height: parent.height;
+            background: #15172b;
+            border-radius: 10px;
+            border-width: 1px;
+            border-color: #ffffff18;
+            clip: true;
+
+            HorizontalLayout {
+                padding: UAppTheme.padding-big;
+                spacing: UAppTheme.spacing-medium;
+                Rectangle {
+                    height: 90px;
+                    VerticalLayout {
+                        spacing: UAppTheme.spacing-big;
+                        if actions: HorizontalLayout {
+                            spacing: UAppTheme.spacing-medium;
+                            UButton {
+                                text: "Button 1";
+                            }
+
+                            UButton {
+                                text: "Button 2";
+                            }
+                        }
+                        HorizontalLayout {
+                            height: parent.height - 4 * UAppTheme.padding-medium;
+                            spacing: UAppTheme.spacing-big;
+                            alignment: start;
+                            if icon: Rectangle {
+                                width: 50px;
+                                UIcon {
+                                    width: parent.width;
+                                    height: self.width;
+                                    image-fit: ImageFit.contain;
+                                    vertical-alignment: center;
+                                    source: app_icon;
+                                }
+                            }
+
+                            if icon: UDivider {
+                                orientation: vertical;
+                            }
+
+                            VerticalLayout {
+                                alignment: start;
+                                UTitle {
+                                    level: 4;
+                                    vertical-alignment: top;
+                                    text: data.title;
+                                    overflow: elide;
+                                }
+
+                                UText {
+                                    vertical-alignment: top;
+                                    text: data.message;
+                                    wrap: TextWrap.word-wrap;
+                                    overflow: elide;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                Rectangle {
+                    y: 0px;
+                    width: 3px;
+                    height: (parent.height - 3 * UAppTheme.padding-medium) * root.life;
+                    background: data.accent;
+                    border-radius: 1.5px;
+                }
+
+                UIconButton {
+                    danger: true;
+                    variant: filled;
+                    icon: @image-url("../assets/sleek/outlined/close.svg");
+                    width: 25px;
+                    border-bottom-left-radius: 0px;
+                    border-top-left-radius: 0px;
+                    border-bottom-right-radius: UAppTheme.radius-large;
+                    border-top-right-radius: UAppTheme.radius-large;
+                    clicked => {
+                        root.i-alive = false;
+                    }
+                }
+            }
+        }
+    }
+}
