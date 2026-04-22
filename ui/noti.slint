@@ -20,20 +20,28 @@ export component NotificationCard inherits Rectangle {
     in property <bool> actions: false;
     out property <bool> layout-alive: i-alive && !falling;
 
+    // App handler resets the slot to id=-1 so add-notif sees it free immediately
+    callback release();
+
     private property <bool> i-alive: false;
     private property <float> life: 0.0;
     private property <bool> entering: false;
     private property <int> last-id: -99;
     private property <bool> falling: false;
+    // Latched true by the cleanup timer; keeps chrome frozen off-screen
+    // at fall-t=2.0 while the 200ms opacity fade plays out — prevents ghost
+    private property <bool> fall-done: false;
     private property <duration> fall-start: 0ms;
     private property <length> fall-x0: 0px;
 
-    private property <float> fall-t: falling ? ((animation-tick() - fall-start) / 1s) : 0.0;
+    // Three states:
+    //   fall-done → frozen 2.0       (chrome off-screen, opacity fading invisibly)
+    //   falling   → live physics     (animation-tick drives the parabola)
+    //   rest      → 0.0              (animation-tick not in dep-chain, no re-eval)
+    private property <float> fall-t:
+        fall-done ? 2.0 : (falling ? ((animation-tick() - fall-start) / 1s) : 0.0);
 
-    // width: 350px;
-    // height: 125px;
     width: 300px;
-    // height: icon ? 120px : 82px;
     height: 82px;
     clip: false;
     background: transparent;
@@ -48,19 +56,24 @@ export component NotificationCard inherits Rectangle {
     changed data => {
         if (data.id != last-id) {
             last-id = data.id;
-            falling = false;
-            fall-start = 0ms;
-            fall-x0 = 0px;
             if (data.id >= 0) {
+                // Fresh notification — full reset of all fall state
+                falling = false;
+                fall-done = false;
+                fall-start = 0ms;
+                fall-x0 = 0px;
                 i-alive = true;
                 life = 1.0;
                 entering = true;
-            } else {
-                i-alive = false;
             }
+            // id = -1 means App just cleared the slot after release().
+            // Deliberately do NOT reset falling/fall-done here —
+            // fall-t stays frozen at 2.0 so the chrome stays off-screen
+            // while the opacity fade finishes. No ghost.
         }
     }
 
+    // One-shot: triggers fade-in on the first rendered frame
     Timer {
         interval: 16ms;
         running: root.entering;
@@ -69,23 +82,30 @@ export component NotificationCard inherits Rectangle {
         }
     }
 
+    // Countdown — suspended while card is in free-fall
     Timer {
         interval: 50ms;
         running: root.i-alive && !root.falling;
         triggered => {
             root.life = max(0.0, root.life - (0.05 / root.timeout-s));
-            if (root.life <= 0.0) {
+            if (root.life <= 0.0 && root.i-alive) {
                 root.i-alive = false;
+                root.release();
             }
         }
     }
 
+    // Fall cleanup — fires once at t=1s
+    // Latches fall-done (keeps chrome frozen off-screen) then vacates slot
     Timer {
         interval: 1000ms;
-        running: root.falling;
+        running: root.falling && !root.fall-done;
         triggered => {
-            root.i-alive = false;
-            root.falling = false;
+            root.fall-done = true;
+            if (root.i-alive) {
+                root.i-alive = false;
+                root.release();
+            }
         }
     }
 
@@ -98,13 +118,13 @@ export component NotificationCard inherits Rectangle {
 
         swiped => {
             if (self.current-position.x < self.pressed-position.x - 70px) {
-                root.fall-x0 = clamp(self.current-position.x - self.pressed-position.x,
-                                        -120px, 0px);
+                root.fall-x0 = clamp(self.current-position.x - self.pressed-position.x, -120px, 0px);
                 root.fall-start = animation-tick();
                 root.falling = true;
             }
         }
 
+        // Dismiss hint strip
         Rectangle {
             width: parent.width;
             height: parent.height;
@@ -123,10 +143,14 @@ export component NotificationCard inherits Rectangle {
             }
         }
 
+        // Card chrome
+        // x/y have NO animate — animation-tick owns the clock during fall.
+        // fall-done keeps chrome at t=2.0 (far off-screen) during fade-out.
         Rectangle {
             transform-rotation: root.falling ? min((animation-tick() - fall-start) / 2s, 1) * -30deg : 0deg;
-            x: root.falling && i-alive ? (root.fall-x0 - 500px * root.fall-t) : (sgh.swiping ? clamp(sgh.current-position.x - sgh.pressed-position.x, -120px, 0px) : 0px);
-            y: root.falling && i-alive ? (800px * root.fall-t * root.fall-t) : 0px;
+
+            x: (root.falling || root.fall-done) ? (root.fall-x0 - 500px * root.fall-t) : (sgh.swiping ? clamp(sgh.current-position.x - sgh.pressed-position.x, -120px, 0px) : 0px);
+            y: (root.falling || root.fall-done) ? (800px * root.fall-t * root.fall-t) : 0px;
 
             width: parent.width;
             height: parent.height;
@@ -139,10 +163,12 @@ export component NotificationCard inherits Rectangle {
             HorizontalLayout {
                 padding: UAppTheme.padding-big;
                 spacing: UAppTheme.spacing-medium;
+
                 Rectangle {
                     height: 90px;
                     VerticalLayout {
                         spacing: UAppTheme.spacing-big;
+
                         if actions: HorizontalLayout {
                             spacing: UAppTheme.spacing-medium;
                             UButton {
@@ -153,10 +179,12 @@ export component NotificationCard inherits Rectangle {
                                 text: "Button 2";
                             }
                         }
+
                         HorizontalLayout {
                             height: parent.height - 4 * UAppTheme.padding-medium;
                             spacing: UAppTheme.spacing-big;
                             alignment: start;
+
                             if icon: Rectangle {
                                 width: 50px;
                                 UIcon {
@@ -210,7 +238,10 @@ export component NotificationCard inherits Rectangle {
                     border-bottom-right-radius: UAppTheme.radius-large;
                     border-top-right-radius: UAppTheme.radius-large;
                     clicked => {
-                        root.i-alive = false;
+                        if (root.i-alive) {
+                            root.i-alive = false;
+                            root.release();
+                        }
                     }
                 }
             }

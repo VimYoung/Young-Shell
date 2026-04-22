@@ -353,10 +353,10 @@ export component DisplayComponent inherits Rectangle {
     y: get-search-active() ? 30px : 0px;
     background: UAppTheme.bg-container;
 
-    HorizontalLayout {
-        padding: UAppTheme.padding-small;
-        alignment: LayoutAlignment.space-between;
+    Rectangle {
         HorizontalLayout {
+            x: 0px;
+            padding: UAppTheme.padding-small;
             spacing: UAppTheme.spacing-base;
             UCard {
                 HorizontalLayout {
@@ -431,6 +431,7 @@ export component DisplayComponent inherits Rectangle {
         }
 
         UCard {
+            x: (parent.width / 2) - (self.width / 2);
             UText {
                 text: show-date ? date : time;
             }
@@ -444,7 +445,9 @@ export component DisplayComponent inherits Rectangle {
         }
 
         Rectangle {
+            x: parent.width - self.width;
             HorizontalLayout {
+                padding: UAppTheme.padding-small;
                 spacing: UAppTheme.spacing-base;
                 UIconButton {
                     width: self.height;

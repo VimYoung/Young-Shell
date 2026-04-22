@@ -683,7 +683,7 @@ export component TopBar inherits Window {
 
     Timer {
         running: run-once;
-        interval: 86400s;
+        interval: 3600s;
         triggered => {
         // Update bar state with actual conditions.
         // Cases:
@@ -1210,6 +1210,7 @@ export component YoungNC inherits Window {
     property <length> stride: 90px;
     property <length> cx: root.width - 316px;
 
+    // id = -1 means FREE — read synchronously in add-notif (Bug 1 fix)
     property <NotifData> slot0: { id: -1, title: "", message: "", accent: #000000, icon: false };
     property <NotifData> slot1: { id: -1, title: "", message: "", accent: #000000, icon: false };
     property <NotifData> slot2: { id: -1, title: "", message: "", accent: #000000, icon: false };
@@ -1218,7 +1219,10 @@ export component YoungNC inherits Window {
 
     callback add-notif(int, string, string, string, int, color);
     add-notif(id_rust, app_name, title, msg, timeout, accent) => {
-        if (!c0.alive) {
+        // Bug 1 fix: slot.id is a plain struct field — reading it is fully
+        // synchronous. No deferred callback involved, so rapid back-to-back
+        // calls never collide into the same slot.
+        if (slot0.id < 0) {
             slot0 = {
                 id: nid,
                 id_rust: id_rust,
@@ -1228,7 +1232,7 @@ export component YoungNC inherits Window {
                 accent: accent,
                 timeout: timeout
             };
-        } else if (!c1.alive) {
+        } else if (slot1.id < 0) {
             slot1 = {
                 id: nid,
                 id_rust: id_rust,
@@ -1238,7 +1242,7 @@ export component YoungNC inherits Window {
                 accent: accent,
                 timeout: timeout
             };
-        } else if (!c2.alive) {
+        } else if (slot2.id < 0) {
             slot2 = {
                 id: nid,
                 id_rust: id_rust,
@@ -1248,7 +1252,7 @@ export component YoungNC inherits Window {
                 accent: accent,
                 timeout: timeout
             };
-        } else if (!c3.alive) {
+        } else if (slot3.id < 0) {
             slot3 = {
                 id: nid,
                 id_rust: id_rust,
@@ -1258,7 +1262,7 @@ export component YoungNC inherits Window {
                 accent: accent,
                 timeout: timeout
             };
-        } else if (!c4.alive) {
+        } else if (slot4.id < 0) {
             slot4 = {
                 id: nid,
                 id_rust: id_rust,
@@ -1269,37 +1273,64 @@ export component YoungNC inherits Window {
                 timeout: timeout
             };
         } else {
-            slot0 = { id: nid, id_rust: id_rust, app_name: app_name, title: title, message: msg, accent: accent };
+            // All slots full — evict the oldest (slot0)
+            slot0 = {
+                id: nid,
+                id_rust: id_rust,
+                app_name: app_name,
+                title: title,
+                message: msg,
+                accent: accent,
+                timeout: timeout
+            };
         }
         nid += 1;
     }
+
+    // Each card's release() handler resets its slot to id=-1 so the next
+    // add-notif call sees it as free on the very next synchronous id-check
     c0 := NotificationCard {
         x: cx;
         y: pad;
         data: slot0;
+        release => {
+            slot0 = { id: -1, title: "", message: "", accent: #000000, icon: false };
+        }
     }
 
     c1 := NotificationCard {
         x: cx;
         y: pad + (c0.layout-alive ? stride : 0px);
         data: slot1;
+        release => {
+            slot1 = { id: -1, title: "", message: "", accent: #000000, icon: false };
+        }
     }
 
     c2 := NotificationCard {
         x: cx;
         y: pad + (c0.layout-alive ? stride : 0px) + (c1.layout-alive ? stride : 0px);
         data: slot2;
+        release => {
+            slot2 = { id: -1, title: "", message: "", accent: #000000, icon: false };
+        }
     }
 
     c3 := NotificationCard {
         x: cx;
         y: pad + (c0.layout-alive ? stride : 0px) + (c1.layout-alive ? stride : 0px) + (c2.layout-alive ? stride : 0px);
         data: slot3;
+        release => {
+            slot3 = { id: -1, title: "", message: "", accent: #000000, icon: false };
+        }
     }
 
     c4 := NotificationCard {
         x: cx;
         y: pad + (c0.layout-alive ? stride : 0px) + (c1.layout-alive ? stride : 0px) + (c2.layout-alive ? stride : 0px) + (c3.layout-alive ? stride : 0px);
         data: slot4;
+        release => {
+            slot4 = { id: -1, title: "", message: "", accent: #000000, icon: false };
+        }
     }
 }
