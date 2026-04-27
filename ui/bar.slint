@@ -354,7 +354,9 @@ export component DisplayComponent inherits Rectangle {
     background: UAppTheme.bg-container;
 
     Rectangle {
+        x: 0px;
         HorizontalLayout {
+            width: 30px;
             x: 0px;
             padding: UAppTheme.padding-small;
             spacing: UAppTheme.spacing-base;
@@ -431,6 +433,8 @@ export component DisplayComponent inherits Rectangle {
         }
 
         UCard {
+            width: 20px;
+            horizontal-stretch: 0;
             x: (parent.width / 2) - (self.width / 2);
             UText {
                 text: show-date ? date : time;
@@ -444,94 +448,98 @@ export component DisplayComponent inherits Rectangle {
             }
         }
 
-        Rectangle {
-            x: parent.width - self.width;
-            HorizontalLayout {
-                padding: UAppTheme.padding-small;
-                spacing: UAppTheme.spacing-base;
-                UIconButton {
-                    width: self.height;
-                    variant: text;
-                    icon: @image-url("../assets/sleek/outlined/apple.svg");
-                }
+        HorizontalLayout {
+            x: parent.width - self.preferred-width - UAppTheme.padding-medium;
+            width: self.preferred-width;
+            padding: UAppTheme.padding-small;
+            spacing: UAppTheme.spacing-base;
+            UIconButton {
+                width: self.height;
+                variant: text;
+                icon: @image-url("../assets/sleek/outlined/apple.svg");
+            }
 
-                UIconButton {
-                    width: self.height;
-                    variant: text;
-                    icon: @image-url("../assets/sleek/outlined/thunderbolt.svg");
-                }
+            UIconButton {
+                width: self.height;
+                variant: text;
+                icon: @image-url("../assets/sleek/outlined/thunderbolt.svg");
+            }
 
-                UCard {
-                    HorizontalLayout {
-                        spacing: UAppTheme.spacing-small;
-
-                        ULinearProgress {
-                            orientation: vertical;
-                            height: parent.height;
-                            progress: cpu;
-                        }
-
-                        Rectangle {
-                            height: parent.height;
-                            width: self.height;
-                            UIcon {
-                                image-fit: ImageFit.cover;
-                                source: @image-url("../assets/sleek/filled/cpu.svg");
-                            }
-                        }
-
-                        ULinearProgress {
-                            orientation: vertical;
-                            height: parent.height;
-                            progress: temp;
-                        }
-
-                        Rectangle {
-                            height: parent.height;
-                            width: self.height;
-                            UIcon {
-                                source: @image-url("../assets/sleek/filled/temp.svg");
-                            }
-                        }
+            UCard {
+                height: parent.height;
+                HorizontalLayout {
+                    spacing: UAppTheme.spacing-small;
+                    ULinearProgress {
+                        y: UAppTheme.padding-small;
+                        orientation: vertical;
+                        height: parent.height - 2 * UAppTheme.padding-small;
+                        progress: cpu;
                     }
-                }
 
-                UCard {
-                    height: parent.height;
-                    width: self.height;
-                    UIconButton {
-                        height: parent.height - 5px;
+                    Rectangle {
+                        height: parent.height;
                         width: self.height;
-                        variant: text;
-                        icon: @image-url("../assets/sleek/filled/circle-25.svg");
-                        clicked => {
-                            bright-menu-focus();
+                        UIcon {
+                            image-fit: ImageFit.cover;
+                            source: @image-url("../assets/sleek/filled/cpu.svg");
                         }
                     }
-                }
 
-                UCard {
-                    width: battery-text ? 3 * self.height : self.height;
-                    if !battery-text: UIcon {
+                    ULinearProgress {
+                        y: UAppTheme.padding-small;
+                        orientation: vertical;
+                        height: parent.height - 2 * UAppTheme.padding-small;
+                        progress: temp;
+                    }
+
+                    Rectangle {
+                        height: parent.height;
                         width: self.height;
-                        image-fit: cover;
-                        source: @image-url("../assets/sleek/outlined/battery-half.svg");
-                    }
-                    if battery-text: UText {
-                        text: battery-val;
-                    }
-                    TouchArea {
-                        clicked => {
-                            battery-text = !battery-text;
+                        UIcon {
+                            source: @image-url("../assets/sleek/filled/temp.svg");
                         }
                     }
                 }
+            }
 
+            UCard {
+                height: parent.height;
+                width: self.height;
                 UIconButton {
+                    height: parent.height - 5px;
                     width: self.height;
                     variant: text;
-                    icon: @image-url("../assets/sleek/outlined/poweroff.svg");
+                    icon: @image-url("../assets/sleek/filled/circle-25.svg");
+                    clicked => {
+                        bright-menu-focus();
+                    }
                 }
+            }
+
+            UCard {
+                width: battery-text ? 78px : self.height + 10px;
+                height: parent.height;
+                if !battery-text: UIcon {
+                    width: self.height;
+                    image-fit: cover;
+                    source: @image-url("../assets/sleek/outlined/battery-half.svg");
+                }
+                if battery-text:  UText {
+                    text: battery-val;
+                }
+
+                TouchArea {
+                    mouse-cursor: pointer;
+                    clicked => {
+                        battery-text = !battery-text;
+                    }
+                }
+            }
+
+            UIconButton {
+                width: self.height;
+                variant: text;
+                icon: @image-url("../assets/sleek/outlined/poweroff.svg");
             }
         }
     }
