@@ -433,10 +433,10 @@ export component DisplayComponent inherits Rectangle {
         }
 
         UCard {
-            width: 20px;
+            width: cloc-date.width;
             horizontal-stretch: 0;
             x: (parent.width / 2) - (self.width / 2);
-            UText {
+            cloc-date := UText {
                 text: show-date ? date : time;
             }
 

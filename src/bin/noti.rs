@@ -1,10 +1,10 @@
-use std::{env, error::Error};
+use std::{env, error::Error, thread};
 
 use slint::{Color, ToSharedString};
 use spell_framework::{
     cast_spell,
     layer_properties::{BoardType, LayerAnchor, LayerType, WindowConf},
-    vault::{NotificationManager, Timeout},
+    vault::{NOTIFICATION_EVENT, NotificationManager, Timeout},
 };
 slint::include_modules!();
 spell_framework::generate_widgets![YoungNC];
@@ -13,8 +13,8 @@ fn main() -> Result<(), Box<dyn Error>> {
     let window_conf = WindowConf::new(
         950,
         830,
-        (Some(LayerAnchor::RIGHT), Some(LayerAnchor::TOP)),
-        (0, 0, 0, 0),
+        (Some(LayerAnchor::RIGHT), Some(LayerAnchor::BOTTOM)),
+        (0, -250, 0, 0),
         LayerType::Top,
         BoardType::None,
         None,
@@ -22,6 +22,30 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let notinc = YoungNCSpell::invoke_spell("youngnc", window_conf);
 
+    notinc.on_a_input_region({
+        let handle = notinc.get_handler().clone();
+        move |x, y, width, height| {
+            handle.add_input_region(x, y, width, height);
+        }
+    });
+
+    notinc.on_r_input_region({
+        let handle = notinc.get_handler().clone();
+        move |x, y, width, height| {
+            handle.subtract_input_region(x, y, width, height);
+        }
+    });
+
+    notinc.on_noti_close(move |id| {
+        thread::spawn(move || {
+            let _ = NOTIFICATION_EVENT
+                .get()
+                .unwrap()
+                .call_close(id.try_into().unwrap());
+        });
+    });
+
+    notinc.subtract_input_region(0, 0, 950, 830);
     cast_spell!(notification: notinc)
 }
 
@@ -39,10 +63,7 @@ impl NotificationManager for YoungNC {
             give_timeout(notification.timeout),
             Color::from_rgb_u8(63, 185, 80),
         );
-        Ok(())
-    }
-    fn notifcation_close(&self, id: u32) -> Result<(), spell_framework::vault::NotiError> {
-        println!("New Notification closed called");
+        self.invoke_a_input_region(650, 0, 299, 825);
         Ok(())
     }
 }

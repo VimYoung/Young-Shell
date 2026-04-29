@@ -1204,7 +1204,6 @@ export component YoungNC inherits Window {
     preferred-width: 950px;
     preferred-height: 830px;
     background: transparent;
-
     property <int> nid: 0;
     property <length> pad: 16px;
     property <length> stride: 90px;
@@ -1218,11 +1217,15 @@ export component YoungNC inherits Window {
     property <NotifData> slot4: { id: -1, title: "", message: "", accent: #000000, icon: false };
 
     callback add-notif(int, string, string, string, int, color);
+    callback a_input_region(int, int, int, int);
+    callback r_input_region(int, int, int, int);
+    callback noti-close(int);
     add-notif(id_rust, app_name, title, msg, timeout, accent) => {
         // Bug 1 fix: slot.id is a plain struct field — reading it is fully
         // synchronous. No deferred callback involved, so rapid back-to-back
         // calls never collide into the same slot.
         if (slot0.id < 0) {
+            a_input_region(650, 0, 299, c0.width / 1px);
             slot0 = {
                 id: nid,
                 id_rust: id_rust,
@@ -1233,6 +1236,7 @@ export component YoungNC inherits Window {
                 timeout: timeout
             };
         } else if (slot1.id < 0) {
+            a_input_region(650, c0.height / 1px, 299, c0.width / 1px);
             slot1 = {
                 id: nid,
                 id_rust: id_rust,
@@ -1243,6 +1247,7 @@ export component YoungNC inherits Window {
                 timeout: timeout
             };
         } else if (slot2.id < 0) {
+            a_input_region(650, (c0.height + c1.height) / 1px, 299, c1.width / 1px);
             slot2 = {
                 id: nid,
                 id_rust: id_rust,
@@ -1253,6 +1258,7 @@ export component YoungNC inherits Window {
                 timeout: timeout
             };
         } else if (slot3.id < 0) {
+            a_input_region(650, (c0.height + c1.height + c2.height) / 1px, 299, c2.width / 1px);
             slot3 = {
                 id: nid,
                 id_rust: id_rust,
@@ -1263,6 +1269,7 @@ export component YoungNC inherits Window {
                 timeout: timeout
             };
         } else if (slot4.id < 0) {
+            a_input_region(650, (c0.height + c1.height + c2.height + c3.height) / 1px, 299, c0.width / 1px);
             slot4 = {
                 id: nid,
                 id_rust: id_rust,
@@ -1273,7 +1280,7 @@ export component YoungNC inherits Window {
                 timeout: timeout
             };
         } else {
-            // All slots full — evict the oldest (slot0)
+            a_input_region(650, 0, 299, c0.width / 1px);
             slot0 = {
                 id: nid,
                 id_rust: id_rust,
@@ -1294,6 +1301,10 @@ export component YoungNC inherits Window {
         y: pad;
         data: slot0;
         release => {
+            if !c1.alive {
+                r_input_region(650, 0, 299, c0.width / 1px);
+            }
+            noti-close(slot0.id-rust);
             slot0 = { id: -1, title: "", message: "", accent: #000000, icon: false };
         }
     }
@@ -1303,6 +1314,10 @@ export component YoungNC inherits Window {
         y: pad + (c0.layout-alive ? stride : 0px);
         data: slot1;
         release => {
+            if !c2.alive {
+                r_input_region(650, c0.height / 1px, 299, c0.width / 1px);
+            }
+            noti-close(slot1.id-rust);
             slot1 = { id: -1, title: "", message: "", accent: #000000, icon: false };
         }
     }
@@ -1312,6 +1327,10 @@ export component YoungNC inherits Window {
         y: pad + (c0.layout-alive ? stride : 0px) + (c1.layout-alive ? stride : 0px);
         data: slot2;
         release => {
+            if !c3.alive {
+                r_input_region(650, (c0.height + c1.height) / 1px, 299, c1.width / 1px);
+            }
+            noti-close(slot2.id-rust);
             slot2 = { id: -1, title: "", message: "", accent: #000000, icon: false };
         }
     }
@@ -1321,6 +1340,10 @@ export component YoungNC inherits Window {
         y: pad + (c0.layout-alive ? stride : 0px) + (c1.layout-alive ? stride : 0px) + (c2.layout-alive ? stride : 0px);
         data: slot3;
         release => {
+            if !c4.alive {
+                r_input_region(650, (c0.height + c1.height + c2.height) / 1px, 299, c2.width / 1px);
+            }
+            noti-close(slot3.id-rust);
             slot3 = { id: -1, title: "", message: "", accent: #000000, icon: false };
         }
     }
@@ -1330,6 +1353,8 @@ export component YoungNC inherits Window {
         y: pad + (c0.layout-alive ? stride : 0px) + (c1.layout-alive ? stride : 0px) + (c2.layout-alive ? stride : 0px) + (c3.layout-alive ? stride : 0px);
         data: slot4;
         release => {
+            r_input_region(650, (c0.height + c1.height + c2.height + c3.height) / 1px, 299, c0.width / 1px);
+            noti-close(slot4.id-rust);
             slot4 = { id: -1, title: "", message: "", accent: #000000, icon: false };
         }
     }

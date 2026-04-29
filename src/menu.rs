@@ -8,6 +8,7 @@ use std::{
     error::Error,
     fs,
     path::{Path, PathBuf},
+    thread,
 };
 use sysinfo::{Components, CpuRefreshKind, RefreshKind, System};
 
@@ -132,14 +133,16 @@ pub fn configure_menu(menu: &mut MenuSpell, bar_handle: Weak<TopBar>, ws_handle:
     });
 
     menu.global::<MainState>().on_set_volume(move |volume_val| {
-        std::process::Command::new("pactl")
-            .args([
-                "set-sink-volume",
-                "@DEFAULT_SINK@",
-                &format!("{}%", volume_val),
-            ])
-            .status()
-            .unwrap();
+        thread::spawn(move || {
+            std::process::Command::new("pactl")
+                .args([
+                    "set-sink-volume",
+                    "@DEFAULT_SINK@",
+                    &format!("{}%", volume_val),
+                ])
+                .status()
+                .unwrap();
+        });
     });
 
     menu.global::<MainState>().on_get_mic({
