@@ -32,6 +32,7 @@ import { UTitle } from "@sleek/widgets/title.slint";
 import { UCode } from "@sleek/widgets/code.slint";
 import { USwitch } from "@sleek/widgets/switch.slint";
 import { UDarkColors } from "@sleek/colors.slint";
+import { WallpaperManager } from "wallpaper.slint";
 export { MprisState } from "mpris.slint";
 
 export global MainState {
@@ -553,11 +554,14 @@ export component TopBar inherits Window {
     callback query-clipboard(string);
     callback open-app(string);
     callback set-clip(string);
+    callback set-wallpaper(image);
     pure callback refresh-battery();
     pure callback refresh-clip();
     in-out property <bool> search-active: false;
     in-out property <string> battery-val: "Unknown";
     in-out property <SelectedSection> selected: Application;
+    in-out property <[image]> walls_paths;
+    in-out property <[image]> walls_light_paths;
     public function set_dark_theme() {
         Palette.color-scheme = ColorScheme.dark;
     }
@@ -615,6 +619,10 @@ export component TopBar inherits Window {
     changed selected => {
         if root.selected == SelectedSection.Clipboard {
             refresh-clip();
+        } else if root.selected == SelectedSection.WallPaper {
+            wall-open = true;
+        } else {
+            wall-open = false;
         }
     }
     changed search-active => {
@@ -626,6 +634,7 @@ export component TopBar inherits Window {
             root.selected = SelectedSection.Application;
             search-bar.text = "";
             search-bar.remove-focus();
+            option-window.selected-content = 0;
         }
     }
     background: transparent;
@@ -680,6 +689,7 @@ export component TopBar inherits Window {
     in-out property <bool> is-inhibit: false;
     in-out property <int> connected-network: 1;
     in-out property <bool> run-once: true;
+    in-out property <bool> wall-open:false;
 
     Timer {
         running: run-once;
@@ -718,7 +728,7 @@ export component TopBar inherits Window {
         width: 435px;
         height: 450px;
         background: transparent;
-        y: search-active ? 30px : -600px;
+        y: search-active && !wall-open ? 30px : -600px;
 
         Path {
             x: 0px;
@@ -760,6 +770,20 @@ export component TopBar inherits Window {
         }
 
         animate y { duration: UAppTheme.animation-duration; }
+    }
+
+    wallpaper-section := WallpaperManager {
+        clip: true;
+        y: search-active && wall-open ? 30px : -400px;
+        walls_paths: walls_paths;
+        walls_light_paths: walls_light_paths;
+        switch-wallpapers(img) => {
+            set-wallpaper(img);
+        }
+        regain-focus => {
+            search-bar.grab-focus();
+            search-active = !search-active;
+        }
     }
 
     bar-section := Rectangle {
@@ -992,6 +1016,8 @@ export component LockScreen inherits Window {
     callback check-pass(string);
     callback request_time();
     callback verify_fingerprint();
+    pure callback wallpaper() -> image;
+    pure callback wallpaper-blur() -> image;
     in-out property <string> time_var: "04:34";
     in-out property <string> time_ampm: "AP";
     in-out property <string> finger_verification_response;
@@ -1040,17 +1066,14 @@ export component LockScreen inherits Window {
         width: parent.width;
         Image {
             width: parent.width;
-            source: @image-url("../../../../assets/wallpapers/city lights/wallpaperflare.com_wallpaper(5).jpg");
+            source: wallpaper();
+            // @image-url("../../../../assets/lock/wallpaper.jpeg");
             image-fit: cover;
         }
 
         TouchArea {
             clicked => {
-                if is_lock_activated {
-                    is_lock_activated = false;
-                } else {
-                    is_lock_activated = true;
-                }
+                is_lock_activated = !is_lock_activated
             }
         }
     }
@@ -1063,7 +1086,8 @@ export component LockScreen inherits Window {
     width: 350px;
         Image {
             height: parent.height;
-            source: @image-url("../assets/frosted_glass_2.jpeg");
+            source: wallpaper-blur();
+            //@image-url("../../../../assets/lock/wallpaper_blur.png");
         }
 
         Rectangle {
@@ -1359,3 +1383,9 @@ export component YoungNC inherits Window {
         }
     }
 }
+
+// export component ImageEx inherits Window {
+//     Image {
+//         source: @image-url("~/hello.png");
+//     }
+// }

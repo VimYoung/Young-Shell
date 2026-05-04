@@ -35,7 +35,8 @@ export component UInput inherits Rectangle {
             padding-left: UAppTheme.padding-horizontal / 2;
             padding-right: UAppTheme.padding-horizontal / 2;
             Rectangle {
-                height: UAppTheme.font-size-base + UAppTheme.padding-vertical * 3;
+                // height: UAppTheme.font-size-base + UAppTheme.padding-vertical * 3;
+                height: parent.height;
                 clip: true;
                 input := TextInput {
                     private property <length> cursor-padding: UAppTheme.padding-horizontal / 2 * 3;

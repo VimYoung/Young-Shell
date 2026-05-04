@@ -1,15 +1,21 @@
 use crate::{AppLineData, MainState, Menu, MenuFocus, TopBarSpell};
 use chrono::Local;
+use image::{imageops::crop_imm, open};
+use imageproc::filter::gaussian_blur_f32;
 use slint::{ComponentHandle, Image, Model, SharedString, Weak};
 use spell_framework::{
     vault::{AppSelector, fuzzy_search_best_n},
     wayland_adapter::WinHandle,
 };
 use std::{
+    env,
+    error::Error,
+    fs,
     io::Write,
-    path::Path,
+    path::{Path, PathBuf},
     process::{Command, Stdio},
     rc::Rc,
+    thread,
 };
 use sysinfo::{Components, CpuRefreshKind, RefreshKind, System};
 
@@ -224,86 +230,50 @@ pub fn configure_bar(
         }
     });
 
-    // // Commented for the sake of faster compilation
-    // //
-    // // let bar_handle = bar.as_weak().unwrap();
-    // // let dark_wall_dir = Path::new("/home/ramayen/assets/wallpapers/");
-    // // let light_wall_dir = Path::new("/home/ramayen/assets/light_walls/");
-    // // let mut light_walls: Vec<Image> = Vec::new();
-    // // let mut dark_walls: Vec<Image> = Vec::new();
-    // //
-    // // for inner_path in light_wall_dir.read_dir().expect("Couldn't read").flatten() {
-    // //     if inner_path.path().is_file()
-    // //         && (inner_path.path().extension().unwrap() == "png"
-    // //             || inner_path.path().extension().unwrap() == "jpg"
-    // //             || inner_path.path().extension().unwrap() == "jpeg")
-    // //     {
-    // //         light_walls.push(Image::load_from_path(&inner_path.path()).unwrap());
-    // //     } else if inner_path.path().is_dir() {
-    // //         for wall in inner_path
-    // //             .path()
-    // //             .read_dir()
-    // //             .expect("Couldn't read")
-    // //             .flatten()
-    // //         {
-    // //             if wall.path().is_file()
-    // //                 && (wall.path().extension().unwrap() == "png"
-    // //                     || wall.path().extension().unwrap() == "jpg"
-    // //                     || wall.path().extension().unwrap() == "jpeg")
-    // //             {
-    // //                 light_walls.push(Image::load_from_path(&wall.path()).unwrap());
-    // //             }
-    // //         }
-    // //     }
-    // // }
-    // // for inner_path in dark_wall_dir.read_dir().expect("Couldn't read").flatten() {
-    // //     if inner_path.path().is_file()
-    // //         && (inner_path.path().extension().unwrap() == "png"
-    // //             || inner_path.path().extension().unwrap() == "jpg"
-    // //             || inner_path.path().extension().unwrap() == "jpeg")
-    // //     {
-    // //         dark_walls.push(Image::load_from_path(&inner_path.path()).unwrap());
-    // //     } else if inner_path.path().is_dir() {
-    // //         for wall in inner_path
-    // //             .path()
-    // //             .read_dir()
-    // //             .expect("Couldn't read")
-    // //             .flatten()
-    // //         {
-    // //             if wall.path().is_file()
-    // //                 && (wall.path().extension().unwrap() == "png"
-    // //                     || wall.path().extension().unwrap() == "jpg"
-    // //                     || wall.path().extension().unwrap() == "jpeg")
-    // //             {
-    // //                 dark_walls.push(Image::load_from_path(&wall.path()).unwrap());
-    // //             }
-    // //         }
-    // //     }
-    // // }
-    // // println!("For loops set");
-    // //
-    // // let dark_walls_slint: Rc<slint::VecModel<Image>> = Rc::new(slint::VecModel::from(dark_walls));
-    // // bar_handle.set_walls_paths(dark_walls_slint.into());
-    // //
-    // // let light_walls_slint: Rc<slint::VecModel<Image>> = Rc::new(slint::VecModel::from(light_walls));
-    // // bar_handle.set_walls_light_paths(light_walls_slint.into());
-    // //
-    // // bar.on_walls_window_called({ move || {} });
+    let bar_handle = bar.as_weak().unwrap();
 
-    // bar.on_set_wallpaper(|img_path| {
-    //     let img_path_str = img_path.path().unwrap().as_os_str().to_str().unwrap();
-    //     println!("Image path : {}", img_path_str);
-    //     let comm: String = if env::var("NIRI_SOCKET").is_ok() {
-    //         String::from("swww img ") + "\"" + img_path_str + "\""
-    //     } else {
-    //         String::from("papermizer ") + img_path_str
-    //     };
-    //     println!("The command is :{}", comm);
-    //     // let final_comm = Command::new(&sh).arg(c).arg(&comm);
-    //     let mut final_comm = Command::new("sh");
-    //     final_comm.arg("-c").arg(comm);
-    //     final_comm.output().unwrap();
-    // });
+    let dark_wall_dir = Path::new("/home/ramayen/assets/wallpapers/");
+    let light_wall_dir = Path::new("/home/ramayen/assets/light_walls/");
+    let fallback = Path::new("/home/ramayen/assets/kitty.png");
+    let dark_walls = collect_images(dark_wall_dir, fallback);
+    let light_walls = collect_images(light_wall_dir, fallback);
+
+    println!("Images loaded");
+
+    let dark_walls_slint = Rc::new(slint::VecModel::from(dark_walls));
+    bar_handle.set_walls_paths(dark_walls_slint.into());
+
+    let light_walls_slint = Rc::new(slint::VecModel::from(light_walls));
+    bar_handle.set_walls_light_paths(light_walls_slint.into());
+    // bar.on_walls_window_called({ move || {} });
+
+    bar.on_set_wallpaper(|img| {
+        let img_path = img.path().unwrap().to_owned().clone();
+        thread::spawn(move || {
+            let img_path_str = img_path.as_os_str().to_str().unwrap();
+            println!("Image path : {}", img_path_str);
+            let blur_path = blur(img_path_str).unwrap();
+            let sec_comm = "swaybg --image ".to_string() + blur_path.as_os_str().to_str().unwrap();
+            println!("Image path blur: {}", sec_comm);
+            if let Err(err) = copy_with_replace(&img_path) {
+                println!("{}", err);
+            }
+            let comm: String = if env::var("NIRI_SOCKET").is_ok() {
+                String::from("awww img --transition-type wipe ") + "\"" + img_path_str + "\""
+            } else {
+                String::from("papermizer ") + img_path_str
+            };
+            println!("The command is :{}", comm);
+            // let final_comm = Command::new(&sh).arg(c).arg(&comm);
+            let mut final_comm = Command::new("sh");
+            final_comm.arg("-c").arg(comm);
+            final_comm.output().unwrap();
+            let mut blur_comm = Command::new("sh");
+            blur_comm.arg("-c").arg(sec_comm);
+            blur_comm.output().unwrap();
+            // This needs to be handled properly
+        });
+    });
 
     bar.global::<MainState>().on_get_time({
         let menu_handle = bar.as_weak();
@@ -478,4 +448,140 @@ pub fn configure_bar(
     //     move || {
     //    }
     // })
+}
+fn collect_images(dir: &Path, fallback: &Path) -> Vec<Image> {
+    let mut images = Vec::new();
+
+    fn visit(path: &Path, images: &mut Vec<Image>, fallback: &Path) {
+        if let Ok(entries) = fs::read_dir(path) {
+            for entry in entries.flatten() {
+                let path = entry.path();
+
+                if path.is_dir() {
+                    visit(&path, images, fallback);
+                } else {
+                    let img = load_image_or_fallback(&path, fallback);
+                    images.push(img);
+                }
+            }
+        }
+    }
+
+    visit(dir, &mut images, fallback);
+    images
+}
+fn is_image(path: &Path) -> bool {
+    matches!(
+        path.extension()
+            .and_then(|ext| ext.to_str())
+            .map(|ext| ext.to_ascii_lowercase()),
+        Some(ref ext) if ext == "png" || ext == "jpg" || ext == "jpeg"
+    )
+}
+
+fn load_image_or_fallback(path: &Path, fallback: &Path) -> Image {
+    if path.exists() && path.is_file() && is_image(path) {
+        if let Ok(img) = Image::load_from_path(path) {
+            return img;
+        } else {
+            panic!("panicked here");
+        }
+    }
+    Image::load_from_path(fallback).expect("Fallback image missing or invalid")
+}
+
+pub fn blur<P: AsRef<Path>>(input_path: P) -> Result<PathBuf, Box<dyn Error>> {
+    // Load image
+    let img = open(&input_path)?.to_rgba8();
+    let blurred = gaussian_blur_f32(&img, 10.0);
+
+    let output_path = PathBuf::from("/home/ramayen/output-wall-blur.png");
+
+    // Remove existing file if it exists
+    if output_path.exists() {
+        fs::remove_file(&output_path)?;
+    }
+
+    // Save (this overwrites anyway, but we explicitly remove as requested)
+    blurred.save(&output_path)?;
+
+    Ok(output_path)
+}
+
+// fn copy_with_replace(src: &Path) -> std::io::Result<()> {
+//     let dest: &Path = Path::new("/home/ramayen/assets/lock/wallpaper.jpeg");
+//     if dest.exists() {
+//         fs::remove_file(dest)?;
+//     }
+//     fs::copy(src, dest)?;
+//     if let Err(err) = blur_lock(dest) {
+//         println!("{}", err)
+//     }
+//     Ok(())
+// }
+
+// pub fn blur_lock<P: AsRef<Path>>(input_path: P) -> Result<(), Box<dyn Error>> {
+//     // Load image
+//     let img = open(&input_path)?.to_rgba8();
+//     let (orig_w, orig_h) = img.dimensions();
+
+//     let target_width = orig_h as f32 / 2.5;
+//     let x = orig_w - target_width as u32;
+
+//     let cropped = crop_imm(&img, x, 0, target_width as u32, orig_h).to_image();
+
+//     // Apply Gaussian blur (sigma = 8.0, adjust if needed)
+//     let blurred = gaussian_blur_f32(&cropped, 10.0);
+
+//     let output_path = PathBuf::from("/home/ramayen/assets/lock/wallpaper_blur.png");
+
+//     // Remove existing file if it exists
+//     if output_path.exists() {
+//         fs::remove_file(&output_path)?;
+//     }
+
+//     // Save (this overwrites anyway, but we explicitly remove as requested)
+//     blurred.save(&output_path)?;
+
+//     Ok(())
+// }
+pub fn blur_lock<P: AsRef<Path>>(input_path: P) -> Result<(), Box<dyn Error>> {
+    let img = open(&input_path)?.to_rgba8();
+    let (orig_w, orig_h) = img.dimensions();
+
+    let target_width = (orig_h as f32 / 2.5).min(orig_w as f32) as u32;
+    let x = orig_w.saturating_sub(target_width);
+
+    let cropped = crop_imm(&img, x, 0, target_width, orig_h).to_image();
+
+    let blurred = gaussian_blur_f32(&cropped, 10.0);
+
+    let output_path = PathBuf::from("/home/ramayen/assets/lock/wallpaper_blur.png");
+
+    blurred.save(&output_path)?;
+
+    Ok(())
+}
+fn copy_with_replace(src: &Path) -> std::io::Result<()> {
+    let dest = Path::new("/home/ramayen/assets/lock/wallpaper.jpg");
+
+    if let Some(parent) = dest.parent() {
+        fs::create_dir_all(parent)?;
+    }
+
+    println!("{:?}", dest);
+    println!("{:?}", src);
+
+    if dest.exists() {
+        fs::remove_file(dest)?;
+    }
+
+    fs::copy(src, dest)?;
+
+    // propagate error instead of swallowing
+    if let Err(err) = blur_lock(dest) {
+        println!("{}", err);
+    }
+
+    Ok(())
 }

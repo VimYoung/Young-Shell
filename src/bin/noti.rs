@@ -63,7 +63,7 @@ impl NotificationManager for YoungNC {
             give_timeout(notification.timeout),
             Color::from_rgb_u8(63, 185, 80),
         );
-        self.invoke_a_input_region(650, 0, 299, 825);
+        // self.invoke_a_input_region(650, 0, 299, 825);
         Ok(())
     }
 }

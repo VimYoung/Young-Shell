@@ -6,7 +6,7 @@ use bar::configure_bar;
 use menu::configure_menu;
 use spell_framework::{
     IpcController, cast_spell,
-    layer_properties::{BoardType, LayerAnchor, LayerType, WindowConf},
+    layer_properties::{LayerAnchor, LayerType, WindowConf},
 };
 use workspace::configure_workpaces;
 
@@ -16,39 +16,36 @@ spell_framework::generate_widgets![TopBar, Menu, Workspaces];
 fn main() -> Result<(), Box<dyn Error>> {
     let mut bar = TopBarSpell::invoke_spell(
         "top-bar",
-        WindowConf::new(
-            1536,
-            610,
-            (Some(LayerAnchor::TOP), None),
-            (0, 0, 0, 0),
-            LayerType::Top,
-            BoardType::None,
-            Some(30),
-        ),
+        WindowConf::builder()
+            .width(1536_u32)
+            .height(610_u32)
+            .anchor_1(LayerAnchor::TOP)
+            .layer_type(LayerType::Top)
+            .exclusive_zone(30)
+            .natural_scroll(true)
+            .build()
+            .unwrap(),
     );
     let mut menu = MenuSpell::invoke_spell(
         "menu",
-        WindowConf::new(
-            376,
-            576,
-            (Some(LayerAnchor::TOP), Some(LayerAnchor::LEFT)),
-            (5, 0, 0, 10),
-            LayerType::Top,
-            BoardType::None,
-            None,
-        ),
+        WindowConf::builder()
+            .width(376_u32)
+            .height(576_u32)
+            .anchor_1(LayerAnchor::TOP)
+            .anchor_2(LayerAnchor::LEFT)
+            .layer_type(LayerType::Top)
+            .build()
+            .unwrap(),
     );
     let mut workspace = WorkspacesSpell::invoke_spell(
         "workspace",
-        WindowConf::new(
-            7,
-            830,
-            (Some(LayerAnchor::LEFT), None),
-            (0, 0, 0, 0),
-            LayerType::Top,
-            BoardType::None,
-            Some(10),
-        ),
+        WindowConf::builder()
+            .width(7_u32)
+            .height(830_u32)
+            .anchor_1(LayerAnchor::LEFT)
+            .layer_type(LayerType::Top)
+            .build()
+            .unwrap(),
     );
     // let bar = TopBar::new().unwrap();
     // let menu = Menu::new().unwrap();

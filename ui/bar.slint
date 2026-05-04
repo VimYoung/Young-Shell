@@ -14,18 +14,15 @@ import {
     UDivider,
     ULinearProgress,
     UButton,
+    UText,
     UIconButton,
     UInput,
+    UScrollView,
     UNotification,
 } from "@sleek/widgets.slint";
 import { UAppTheme } from "@sleek/app-theme.slint";
-import { UText } from "@sleek/widgets/text.slint";
-import { UScrollView } from "@sleek/widgets/scrollview.slint";
 import { UDarkColors } from "@sleek/colors.slint";
 import { UButtonThemes } from "@sleek/widgets/button/theme.slint";
-import { UFloatingIconButton } from "@sleek/widgets/floating-icon-button.slint";
-import { UPopover } from "@sleek/widgets/popover.slint";
-import { URadio } from "@sleek/widgets/radio.slint";
 
 component AppComponent inherits UScrollView {
     in property <[AppLineData]> app_lines;

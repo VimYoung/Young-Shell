@@ -1,7 +1,7 @@
 use spell_framework::cast_spell;
-use std::{env, error::Error, process::Command};
+use std::{env, error::Error, path::Path, process::Command};
 
-use slint::{ComponentHandle, SharedString};
+use slint::{ComponentHandle, Image, SharedString};
 use spell_framework::wayland_adapter::SpellLock;
 slint::include_modules!();
 
@@ -10,6 +10,21 @@ fn main() -> Result<(), Box<dyn Error>> {
     let lock = SpellLock::invoke_lock_spell();
     let lock_ui = LockScreen::new().unwrap();
     let looop_handle = lock.get_handler();
+    lock_ui.on_wallpaper(move || {
+        // Image::load_from_path(Path::new("../../../../../../assets/lock/wallpaper.jpeg"))
+        let path = Path::new("/home/ramayen/assets/lock/wallpaper.jpg");
+        if path.exists() {
+            return Image::load_from_path(path).expect("Couldn't load wallaper");
+        } else {
+            panic!("here");
+        }
+    });
+
+    lock_ui.on_wallpaper_blur(move || {
+        Image::load_from_path(Path::new("/home/ramayen/assets/lock/wallpaper_blur.png"))
+            .expect("Could't load wallpaper blur")
+    });
+
     lock_ui.on_check_pass({
         let lock_handle = lock_ui.as_weak();
         let looop_han = looop_handle.clone();
@@ -34,7 +49,6 @@ fn main() -> Result<(), Box<dyn Error>> {
         let lock_handle = lock_ui.as_weak();
         let loop_handle = looop_handle.clone();
         move || {
-            println!("inside the function");
             let loock_handle = lock_handle.clone().unwrap();
             loop_handle.verify_fingerprint(Box::new(move || {
                 loock_handle.set_finger_verification_response(SharedString::from("Failed"));
@@ -67,7 +81,5 @@ fn main() -> Result<(), Box<dyn Error>> {
             lock_copy.set_time_ampm(am_pm.trim().into());
         }
     });
-    // lock_ui.run()
-
     cast_spell!(lock: lock)
 }

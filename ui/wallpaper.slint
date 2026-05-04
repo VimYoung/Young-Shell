@@ -1,42 +1,43 @@
 
 import { Styles } from "styles.slint";
 import { ScrollView, TextEdit, VerticalBox } from "std-widgets.slint";
+import { UAppTheme } from "@sleek/app-theme.slint";
+import { UScrollView } from "@sleek/widgets/scrollview.slint";
 export component WallpaperManager inherits Rectangle {
-    in-out property <bool> walls_open;
     in-out property <[image]> walls_paths;
     in-out property <[image]> walls_light_paths;
     out property <bool> dark-selected: true;
     callback switch-wallpapers(image);
+    callback regain-focus();
     height: 350px - 30px;
-    width: 1366px;
-    y: walls_open ? 30px : 0px;
-    background: Styles.dark-background;
+    background: UAppTheme.bg-container;
     Rectangle {
         width: 30px;
         x: 10px;
         height: parent.height - 20px;
-        VerticalLayout {
-            Rectangle {
-                background: dark-selected ? blue : pink;
+        border-radius: UAppTheme.radius-round;
+        background: UAppTheme.bg-spotlight;
+        Rectangle {
+            y: dark-selected ? 0px : parent.height / 2;
+            height: parent.height / 2;
+            width: parent.width;
+            background: UAppTheme.golden-purple.base;
+            border-radius: UAppTheme.radius-round;
+            animate y { duration: UAppTheme.animation-duration; }
+            Text {
+                transform-rotation: -90deg;
+                text: dark-selected ? "Dark Themes" : "Light Themes";
             }
 
-            Rectangle {
-                background: dark-selected ? pink : blue;
-            }
-        }
-
-        TouchArea {
-            clicked => {
-                if dark-selected {
-                    dark-selected = false;
-                } else {
-                    dark-selected = true;
+            TouchArea {
+                clicked => {
+                    dark-selected = !dark-selected;
                 }
             }
         }
     }
 
-    dark-scroll := ScrollView {
+    dark-scroll := UScrollView {
         x: 50px;
         width: parent.width - 50px;
         y: dark-selected ? 0px : parent.width;
@@ -72,6 +73,7 @@ export component WallpaperManager inherits Rectangle {
                 sensor := TouchArea {
                     clicked => {
                         switch-wallpapers(path);
+                        regain-focus();
                     }
                 }
             }
@@ -80,7 +82,7 @@ export component WallpaperManager inherits Rectangle {
         animate y { duration: 200ms; }
     }
 
-    light-scroll := ScrollView {
+    light-scroll := UScrollView {
         x: 50px;
         y: dark-selected ? -350px : 0px;
         width: parent.width - 50px;
@@ -102,6 +104,7 @@ export component WallpaperManager inherits Rectangle {
                 TouchArea {
                     clicked => {
                         switch-wallpapers(path);
+                        regain-focus();
                     }
                 }
             }
