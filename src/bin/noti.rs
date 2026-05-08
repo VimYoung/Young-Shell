@@ -10,17 +10,28 @@ slint::include_modules!();
 spell_framework::generate_widgets![YoungNC];
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let window_conf = WindowConf::new(
-        950,
-        830,
-        (Some(LayerAnchor::RIGHT), Some(LayerAnchor::BOTTOM)),
-        (0, -250, 0, 0),
-        LayerType::Top,
-        BoardType::None,
-        None,
-    );
+    // let window_conf = WindowConf::new(
+    //     950,
+    //     830,
+    //     (Some(LayerAnchor::RIGHT), Some(LayerAnchor::BOTTOM)),
+    //     (0, -250, 0, 0),
+    //     LayerType::Top,
+    //     BoardType::None,
+    //     None,
+    // );
 
-    let notinc = YoungNCSpell::invoke_spell("youngnc", window_conf);
+    let notinc = YoungNCSpell::invoke_spell(
+        "youngnc",
+        WindowConf::builder()
+            .width(950_u32)
+            .height(830_u32)
+            .anchor_1(LayerAnchor::RIGHT)
+            .anchor_2(LayerAnchor::BOTTOM)
+            .margins(0, -250, 0, 0)
+            .layer_type(LayerType::Top)
+            .build()
+            .unwrap(),
+    );
 
     notinc.on_a_input_region({
         let handle = notinc.get_handler().clone();

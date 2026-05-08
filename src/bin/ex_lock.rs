@@ -44,7 +44,6 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
     });
 
-    println!("Hello");
     lock_ui.on_verify_fingerprint({
         let lock_handle = lock_ui.as_weak();
         let loop_handle = looop_handle.clone();

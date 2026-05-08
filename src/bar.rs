@@ -24,9 +24,8 @@ pub fn configure_bar(
     bar_tx: WinHandle,
     menu_tx: WinHandle,
     menu: Weak<Menu>,
-) {
+) -> Vec<AppLineData> {
     let app_selector = AppSelector::default();
-    println!("{:#?}", app_selector);
     let app_data_slint: Vec<AppLineData> = app_selector
         .get_primary()
         .map(|value| {
@@ -48,28 +47,22 @@ pub fn configure_bar(
             }
         })
         .collect();
+
+    let dock_apps: Vec<AppLineData> = app_data_slint
+        .iter()
+        .filter(|x| {
+            ["Zed", "Dolphin", "Zen Browser", "Firefox", "Discord"].contains(&x.name.as_str())
+        })
+        .cloned()
+        .collect();
     let vac_model = Rc::new(slint::VecModel::from(app_data_slint));
     bar.set_app_lines(vac_model.clone().into());
     bar.on_open_app(|string_val| {
-        // let command_val: &str;
-        // let mut args_vec: Vec<&str> = Vec::new();
         let binding = string_val.to_string();
-        // if let Some((command, args)) = binding.split_once(' ') {
-        //     command_val = command;
-        //     args_vec = args.split(' ').collect();
-        // } else {
-        //     command_val = &string_val;
-        // };
         let mut final_comm = Command::new("setsid");
         final_comm.arg("sh");
         final_comm.arg("-c");
         final_comm.arg(binding);
-        // final_comm.arg(command_val);
-        // if !args_vec.is_empty() {
-        //     args_vec.iter().for_each(|argument| {
-        //         final_comm.arg(argument);
-        //     });
-        // }
         println!("{:?}", final_comm);
         final_comm
             .stdin(Stdio::null())
@@ -111,19 +104,6 @@ pub fn configure_bar(
         }
     });
     bar.subtract_input_region(0, 35, 1536, 575);
-    // let bar_tx_clone_a = bar_tx.clone();
-    // let bar_tx_clone_b = bar_tx.clone();
-    // bar_tx_clone_b.subtract_input_region(0, 35, 1366, 576);
-    // bar.on_walls_window_called({
-    //     let bar_handle = bar.as_weak().unwrap();
-    //     move || {
-    //         if !bar_handle.get_walls_open() {
-    //             bar_tx_clone_a.add_input_region(0, 35, 1366, 315);
-    //         } else {
-    //             bar_tx_clone_a.subtract_input_region(0, 35, 1366, 315);
-    //         }
-    //     }
-    // });
     bar.on_query_applications({
         let bar_handle = bar.as_weak().unwrap();
         move |query_value| {
@@ -448,7 +428,10 @@ pub fn configure_bar(
     //     move || {
     //    }
     // })
+    //
+    return dock_apps;
 }
+
 fn collect_images(dir: &Path, fallback: &Path) -> Vec<Image> {
     let mut images = Vec::new();
 
@@ -508,43 +491,6 @@ pub fn blur<P: AsRef<Path>>(input_path: P) -> Result<PathBuf, Box<dyn Error>> {
     Ok(output_path)
 }
 
-// fn copy_with_replace(src: &Path) -> std::io::Result<()> {
-//     let dest: &Path = Path::new("/home/ramayen/assets/lock/wallpaper.jpeg");
-//     if dest.exists() {
-//         fs::remove_file(dest)?;
-//     }
-//     fs::copy(src, dest)?;
-//     if let Err(err) = blur_lock(dest) {
-//         println!("{}", err)
-//     }
-//     Ok(())
-// }
-
-// pub fn blur_lock<P: AsRef<Path>>(input_path: P) -> Result<(), Box<dyn Error>> {
-//     // Load image
-//     let img = open(&input_path)?.to_rgba8();
-//     let (orig_w, orig_h) = img.dimensions();
-
-//     let target_width = orig_h as f32 / 2.5;
-//     let x = orig_w - target_width as u32;
-
-//     let cropped = crop_imm(&img, x, 0, target_width as u32, orig_h).to_image();
-
-//     // Apply Gaussian blur (sigma = 8.0, adjust if needed)
-//     let blurred = gaussian_blur_f32(&cropped, 10.0);
-
-//     let output_path = PathBuf::from("/home/ramayen/assets/lock/wallpaper_blur.png");
-
-//     // Remove existing file if it exists
-//     if output_path.exists() {
-//         fs::remove_file(&output_path)?;
-//     }
-
-//     // Save (this overwrites anyway, but we explicitly remove as requested)
-//     blurred.save(&output_path)?;
-
-//     Ok(())
-// }
 pub fn blur_lock<P: AsRef<Path>>(input_path: P) -> Result<(), Box<dyn Error>> {
     let img = open(&input_path)?.to_rgba8();
     let (orig_w, orig_h) = img.dimensions();

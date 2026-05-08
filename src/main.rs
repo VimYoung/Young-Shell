@@ -1,4 +1,8 @@
-use std::error::Error;
+use std::{
+    error::Error,
+    process::{Command, Stdio},
+    rc::Rc,
+};
 mod bar;
 mod menu;
 mod workspace;
@@ -11,7 +15,7 @@ use spell_framework::{
 use workspace::configure_workpaces;
 
 slint::include_modules!();
-spell_framework::generate_widgets![TopBar, Menu, Workspaces];
+spell_framework::generate_widgets![TopBar, Menu, Workspaces, Dock];
 
 fn main() -> Result<(), Box<dyn Error>> {
     let mut bar = TopBarSpell::invoke_spell(
@@ -47,35 +51,18 @@ fn main() -> Result<(), Box<dyn Error>> {
             .build()
             .unwrap(),
     );
-    // let bar = TopBar::new().unwrap();
-    // let menu = Menu::new().unwrap();
-    // let workspace = Workspaces::new().unwrap();
-    // let [ref mut way_bar, ref mut way_menu, _] = windows[..] else {
-    //     panic!("Error getting wayland handles");
-    // };
+    let dock = DockSpell::invoke_spell(
+        "dock",
+        WindowConf::builder()
+            .width(420_u32)
+            .height(80_u32)
+            .anchor_1(LayerAnchor::BOTTOM)
+            .margins(0, 0, -20, 0)
+            .layer_type(LayerType::Top)
+            .build()
+            .unwrap(),
+    );
 
-    // way_bar.set_exclusive_zone(30);
-    // way_bar.set_exclusive_zone(30);
-    // forge.add_event(Duration::from_secs(2), move |_| {
-    //     let output = Command::new("date")
-    //         .args(["+%I:%M"])
-    //         .output()
-    //         .expect("failed to execute process");
-    //
-    //     let am_pm = String::from_utf8(
-    //         Command::new("date")
-    //             .args(["+%p"])
-    //             .output()
-    //             .expect("couldn't run")
-    //             .stdout,
-    //     )
-    //     .unwrap();
-    //     let mut time = String::from_utf8(output.stdout).unwrap();
-    //     time = format!("{} {}", time.trim(), am_pm.trim());
-    //     // println!("/{}/", time);
-    //     bar_n.set_time_var(time.into());
-    // });
-    //
     let bar_tx = bar.get_handler();
     let menu_tx = menu.get_handler();
     let menu_tx_another = menu_tx.clone();
@@ -85,10 +72,40 @@ fn main() -> Result<(), Box<dyn Error>> {
         bar.as_weak().clone(),
         workspace.as_weak().clone(),
     );
-    configure_bar(&mut bar, bar_tx, menu_tx_another, menu.as_weak().clone());
+    let dock_apps = configure_bar(&mut bar, bar_tx, menu_tx_another, menu.as_weak().clone());
+    let dock_model = Rc::new(slint::VecModel::from(dock_apps));
+    dock.set_docked_apps(dock_model.clone().into());
+    // dock.subtract_input_region(0, 0, 420, 80);
+    dock.on_hovered_on({
+        let hx = dock.get_handler();
+        move || {
+            hx.add_input_region(0, 0, 420, 60);
+        }
+    });
+
+    dock.on_hovered_off({
+        let hx = dock.get_handler();
+        move || {
+            hx.subtract_input_region(0, 0, 420, 60);
+        }
+    });
+    dock.on_open_app(|string_val| {
+        let binding = string_val.to_string();
+        let mut final_comm = Command::new("setsid");
+        final_comm.arg("sh");
+        final_comm.arg("-c");
+        final_comm.arg(binding);
+        println!("{:?}", final_comm);
+        final_comm
+            .stdin(Stdio::null())
+            .stdout(Stdio::null())
+            .stderr(Stdio::null())
+            .spawn()
+            .unwrap();
+    });
     configure_workpaces(&mut workspace);
     menu_tx.toggle();
-    cast_spell!(windows: [menu, (bar,ipc), workspace])
+    cast_spell!(windows: [menu, (bar,ipc), workspace, dock])
 }
 
 impl IpcController for TopBar {

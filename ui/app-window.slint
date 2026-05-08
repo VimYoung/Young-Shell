@@ -1,4 +1,4 @@
-import { Palette } from "std-widgets.slint";
+import { Palette, VerticalBox } from "std-widgets.slint";
 import {
     UDivider,
     UButton,
@@ -1384,8 +1384,54 @@ export component YoungNC inherits Window {
     }
 }
 
-// export component ImageEx inherits Window {
-//     Image {
-//         source: @image-url("~/hello.png");
-//     }
-// }
+export component Dock inherits Window {
+    width: 420px;
+    height: 80px;
+    background: transparent;
+    in-out property <[AppLineData]> docked_apps;
+    callback open-app(string);
+    callback hovered-on();
+    callback hovered-off();
+    property <bool> has-hover <=> main-sensor.has-hover;
+    changed has-hover => {
+        if has-hover {
+            hovered-on();
+        } else {
+            hovered-off();
+        }
+    }
+    Rectangle {
+        y: main-sensor.has-hover ? 0px : parent.height;
+        // y: main-sensor.has-hover ? parent.height : 0px;
+        clip: true;
+        background: UAppTheme.bg-container;
+        border-radius: UAppTheme.radius-medium;
+        HorizontalLayout {
+            x: 15px;
+            spacing: UAppTheme.spacing-big;
+            padding: UAppTheme.padding-medium;
+            for app[i] in docked_apps: UCard {
+                height: parent.height - 13px;
+                width: self.height;
+                border-radius: UAppTheme.radius-large;
+                background: sensor.has-hover ? UAppTheme.bg-spotlight : UAppTheme.bg-elevated;
+                Image {
+                    image-fit: fill;
+                    height: parent.height - 20px;
+                    source: app.image;
+                }
+
+                sensor := TouchArea {
+                    mouse-cursor: pointer;
+                    clicked => {
+                        open-app(app.action);
+                    }
+                }
+            }
+        }
+
+        animate y { duration: UAppTheme.animation-duration; }
+    }
+
+    main-sensor := TouchArea { }
+}
