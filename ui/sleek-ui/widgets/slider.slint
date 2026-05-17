@@ -40,23 +40,31 @@ export component USlider inherits ButtonInterface {
         let raw-value = min-value + (max-value - min-value) * (pos-value / max-length);
         let next-step-up = ceil(raw-value / step) * step;
         let next-step-down = floor(raw-value / step) * step;
-        if (raw-value >= value && raw-value >= next-step-up - (step / 2)) {
+        let cond1 = step == 1 ? true : raw-value >= next-step-up - (step / 2);
+        let cond2 = step == 1 ? true : raw-value <= next-step-up + (step / 2);
+        debug(pos-value, max-length, value, raw-value, next-step-up, next-step-down);
+        if (raw-value >= value && cond1) {
             value = next-step-up;
-        } else if (raw-value < value && raw-value <= next-step-down + (step / 2)) {
+        } else if (raw-value < value && cond2) {
             value = next-step-down;
+        // } else {
+        //     debug("Third case reached");
         }
     }
     callback released(value: float);
+    callback moved_val(value: float);
     changed pressed => {
         if !root.pressed {
             root.released(root.value)
         }
     }
     clicked => {
+        // debug("Slider is clicked");
         update-value();
     }
     moved => {
         update-value();
+        moved_val(root.value)
     }
     key-pressed(event) => {
         if event.text == Key.UpArrow {

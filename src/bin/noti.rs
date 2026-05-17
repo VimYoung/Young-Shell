@@ -52,7 +52,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             let _ = NOTIFICATION_EVENT
                 .get()
                 .unwrap()
-                .call_close(id.try_into().unwrap());
+                .call_close(id.try_into().unwrap(), spell_framework::vault::CloseReason::Dismissed);
         });
     });
 
@@ -74,7 +74,10 @@ impl NotificationManager for YoungNC {
             give_timeout(notification.timeout),
             Color::from_rgb_u8(63, 185, 80),
         );
-        // self.invoke_a_input_region(650, 0, 299, 825);
+        Ok(())
+    }
+
+    fn close_notification(&self, id: u32) -> Result<(), spell_framework::vault::NotiError> {
         Ok(())
     }
 }

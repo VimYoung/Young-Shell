@@ -494,18 +494,12 @@ pub fn blur<P: AsRef<Path>>(input_path: P) -> Result<PathBuf, Box<dyn Error>> {
 pub fn blur_lock<P: AsRef<Path>>(input_path: P) -> Result<(), Box<dyn Error>> {
     let img = open(&input_path)?.to_rgba8();
     let (orig_w, orig_h) = img.dimensions();
-
     let target_width = (orig_h as f32 / 2.5).min(orig_w as f32) as u32;
     let x = orig_w.saturating_sub(target_width);
-
     let cropped = crop_imm(&img, x, 0, target_width, orig_h).to_image();
-
     let blurred = gaussian_blur_f32(&cropped, 10.0);
-
     let output_path = PathBuf::from("/home/ramayen/assets/lock/wallpaper_blur.png");
-
     blurred.save(&output_path)?;
-
     Ok(())
 }
 fn copy_with_replace(src: &Path) -> std::io::Result<()> {

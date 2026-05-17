@@ -252,7 +252,7 @@ export component Menu inherits Window {
                                 min-value: 0;
                                 max-value: 120;
                                 width: parent.width - 25px - 2 * UAppTheme.spacing-medium;
-                                released(val) => {
+                                moved_val(val) => {
                                     MainState.set-volume(val);
                                 }
                             }
@@ -274,7 +274,7 @@ export component Menu inherits Window {
                                 min-value: 0;
                                 max-value: 100;
                                 width: parent.width - 25px - 2 * UAppTheme.spacing-medium;
-                                released(val) => {
+                                moved_val(val) => {
                                     MainState.set-bright(val);
                                 }
                             }
@@ -296,7 +296,7 @@ export component Menu inherits Window {
                                 min-value: 0;
                                 max-value: 120;
                                 width: parent.width - 25px - 2 * UAppTheme.spacing-medium;
-                                released(val) => {
+                                moved_val(val) => {
                                     MainState.set-mic(val);
                                 }
                             }
@@ -967,7 +967,7 @@ export component TopBar inherits Window {
         }
 
         Path {
-            x: 1525px;
+            x: parent.width - 10px;
             commands: "M 7 3 L 12 3 L 12 8 C 11 5 10 4 7 3";
             stroke: UAppTheme.bg-container;
             fill: UAppTheme.bg-container;
@@ -1011,6 +1011,8 @@ export component AppWindow inherits Window {
 }
 
 export component LockScreen inherits Window {
+    // width: 1536px;
+    // height: 830px;
     in-out property <bool> is_lock_activated: false;
     in-out property <bool> lock_error: false;
     callback check-pass(string);
@@ -1141,7 +1143,7 @@ export component LockScreen inherits Window {
             }
 
             Text {
-                y: 410px;
+                y: 470px;
                 font-size: 25px;
                 font-family: "Source Code Pro";
                 text: "Incorrect Password";

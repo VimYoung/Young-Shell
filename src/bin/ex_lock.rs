@@ -1,5 +1,5 @@
 use spell_framework::cast_spell;
-use std::{env, error::Error, path::Path, process::Command};
+use std::{env, error::Error, path::Path, process::Command, thread};
 
 use slint::{ComponentHandle, Image, SharedString};
 use spell_framework::wayland_adapter::SpellLock;
@@ -48,9 +48,13 @@ fn main() -> Result<(), Box<dyn Error>> {
         let lock_handle = lock_ui.as_weak();
         let loop_handle = looop_handle.clone();
         move || {
-            let loock_handle = lock_handle.clone().unwrap();
+            let loock_handle = lock_handle.clone();
             loop_handle.verify_fingerprint(Box::new(move || {
-                loock_handle.set_finger_verification_response(SharedString::from("Failed"));
+                let _ = slint::invoke_from_event_loop(move || {
+                    loock_handle
+                        .unwrap()
+                        .set_finger_verification_response(SharedString::from("Failed"));
+                });
             }));
         }
     });

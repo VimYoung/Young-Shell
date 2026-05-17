@@ -8,6 +8,7 @@ use std::{
     error::Error,
     fs,
     path::{Path, PathBuf},
+    process::Command,
     thread,
 };
 use sysinfo::{Components, CpuRefreshKind, RefreshKind, System};
@@ -21,6 +22,34 @@ pub fn configure_menu(menu: &mut MenuSpell, bar_handle: Weak<TopBar>, ws_handle:
     s.refresh_cpu_all();
 
     let player_finder = PlayerFinder::new().expect("Couldn't get mpris handler");
+    menu.global::<MprisState>().on_forward(move || {
+        thread::spawn(move || {
+            let _ = Command::new("playerctl").arg("position").arg("5+").output();
+        });
+    });
+
+    menu.global::<MprisState>().on_backward(move || {
+        thread::spawn(move || {
+            let _ = Command::new("playerctl").arg("position").arg("5-").output();
+        });
+    });
+
+    menu.global::<MprisState>().on_prev_track(move || {
+        thread::spawn(move || {
+            let _ = Command::new("playerctl").arg("previous").output();
+        });
+    });
+    menu.global::<MprisState>().on_next_track(move || {
+        thread::spawn(move || {
+            let _ = Command::new("playerctl").arg("next").output();
+        });
+    });
+
+    menu.global::<MprisState>().on_play_pause(move || {
+        thread::spawn(move || {
+            let _ = Command::new("playerctl").arg("play-pause").output();
+        });
+    });
     menu.global::<MprisState>().on_refresh_mpris({
         let menu_weak = menu.as_weak();
         move || {
@@ -55,7 +84,16 @@ pub fn configure_menu(menu: &mut MenuSpell, bar_handle: Weak<TopBar>, ws_handle:
                         .art_url()
                         .unwrap_or("......./home/ramayen/assets/nomusic.png")
                         .to_string();
-                    let image = Image::load_from_path(Path::new(&image_path[7..])).unwrap();
+                    let img = Path::new(&image_path[7..]);
+                    // let x = if img.extension().is_some() {
+                    //     img.to_path_buf()
+                    // } else {
+                    //     img.with_extension("jpeg")
+                    // };
+                    let image = Image::load_from_path(img).unwrap_or(
+                        Image::load_from_path(Path::new("/home/ramayen/assets/nomusic.png"))
+                            .unwrap(),
+                    );
                     if let Ok(image_blur) = crop_blur_center(&image_path[7..], 326, 50) {
                         let image_blur_slint = Image::load_from_path(&image_blur).unwrap();
                         menu_weak
