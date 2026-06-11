@@ -638,7 +638,7 @@ export component TopBar inherits Window {
         }
     }
     background: transparent;
-    width: 1536px;
+    // width: 1536px;
     height: 610px;
     in-out property <bool> wifi-on: true;
     in-out property <[AppLineData]> app_lines:[
@@ -994,8 +994,8 @@ export component HideWin inherits Window {
 export component AppWindow inherits Window {
     in-out property <int> counter: 42;
     callback request-increase-value();
-    width: 376px;
-    height: 576px;
+    // width: 376px;
+    // height: 576px;
     VerticalLayout {
         Text {
             text: "Counter: \{root.counter}";
@@ -1146,12 +1146,13 @@ export component LockScreen inherits Window {
                 y: 470px;
                 font-size: 25px;
                 font-family: "Source Code Pro";
-                text: "Incorrect Password";
+                text: @tr("Incorrent Password: {}", 3 - no_of_attempts);
+                //"Incorrect Password" + 3- no_of_attempts ;
                 opacity: lock_error ? 100 : 0;
             }
 
             Text {
-                y: 410px;
+                y: 500px;
                 font-size: 25px;
                 font-family: "Source Code Pro";
                 text: finger_verification_response;
@@ -1189,7 +1190,7 @@ export component Workspaces inherits Window {
     public function set_light_theme() {
         Palette.color-scheme = ColorScheme.light;
     }
-    width: 7px;
+    width: 9px;
     x: 0px;
     height: 830px;
 
@@ -1209,7 +1210,7 @@ export component Workspaces inherits Window {
     }
 
     VerticalLayout {
-        y: 0px;
+        y: 2px;
         alignment: LayoutAlignment.space-evenly;
         height: parent.height;
         spacing: 4px;

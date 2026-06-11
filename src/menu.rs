@@ -80,10 +80,15 @@ pub fn configure_menu(menu: &mut MenuSpell, bar_handle: Weak<TopBar>, ws_handle:
                 {
                     let artist = metadata.artists().unwrap_or(vec!["Unknown"])[0].to_string();
                     let album = metadata.album_name().unwrap_or("Unknown").to_string();
-                    let image_path = metadata
+                    let mut image_path = metadata
                         .art_url()
                         .unwrap_or("......./home/ramayen/assets/nomusic.png")
                         .to_string();
+                    image_path = if image_path.is_empty() {
+                        String::from("......./home/ramayen/assets/nomusic.png")
+                    } else {
+                        image_path
+                    };
                     let img = Path::new(&image_path[7..]);
                     // let x = if img.extension().is_some() {
                     //     img.to_path_buf()

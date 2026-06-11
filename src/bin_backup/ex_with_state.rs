@@ -6,10 +6,9 @@ use std::{
 
 use slint::ComponentHandle;
 use spell_framework::{
-    cast_spell,
+    ForeignController, cast_spell,
     layer_properties::{BoardType, DataType, LayerAnchor, LayerType, WindowConf},
     wayland_adapter::SpellWin,
-    ForeignController,
 };
 slint::include_modules!();
 
@@ -40,7 +39,7 @@ impl ForeignController for State {
 }
 fn main() -> Result<(), Box<dyn Error>> {
     std::env::set_var("RUST_BACKTRACE", "full");
-    // Dimentions for the widget size
+    // Dimensions for the widget size
     // let width: u32 = 376; //1366;
     // let height: u32 = 576; //768;
     let window_conf = WindowConf::new(

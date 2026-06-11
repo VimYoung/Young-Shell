@@ -84,7 +84,7 @@ pub fn configure_bar(
             let clip_hist: Vec<SharedString> = clips
                 .split(|&b| b == b'\n')
                 .take(100)
-                .map(|line| SharedString::from(std::str::from_utf8(line).unwrap()))
+                .map(|line| SharedString::from(std::str::from_utf8(line).unwrap_or_default()))
                 .collect();
             let clip_model = Rc::new(slint::VecModel::from(clip_hist));
             bar_weak.unwrap().set_clip_lines(clip_model.clone().into());

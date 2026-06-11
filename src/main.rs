@@ -1,4 +1,5 @@
 use std::{
+    env,
     error::Error,
     process::{Command, Stdio},
     rc::Rc,
@@ -10,7 +11,7 @@ use bar::configure_bar;
 use menu::configure_menu;
 use spell_framework::{
     IpcController, cast_spell,
-    layer_properties::{LayerAnchor, LayerType, WindowConf},
+    layer_properties::{Dimension, LayerAnchor, LayerType, WindowConf},
 };
 use workspace::configure_workpaces;
 
@@ -18,15 +19,19 @@ slint::include_modules!();
 spell_framework::generate_widgets![TopBar, Menu, Workspaces, Dock];
 
 fn main() -> Result<(), Box<dyn Error>> {
+    unsafe {
+        env::set_var("RUST_BACKTRACE", "1");
+    }
     let mut bar = TopBarSpell::invoke_spell(
         "top-bar",
         WindowConf::builder()
-            .width(1536_u32)
+            .width(Dimension::Full)
             .height(610_u32)
             .anchor_1(LayerAnchor::TOP)
             .layer_type(LayerType::Top)
             .exclusive_zone(30)
             .natural_scroll(true)
+            .monitor("eDP-1".to_string())
             .build()
             .unwrap(),
     );
@@ -44,7 +49,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut workspace = WorkspacesSpell::invoke_spell(
         "workspace",
         WindowConf::builder()
-            .width(7_u32)
+            .width(9_u32)
             .height(830_u32)
             .anchor_1(LayerAnchor::LEFT)
             .layer_type(LayerType::Top)

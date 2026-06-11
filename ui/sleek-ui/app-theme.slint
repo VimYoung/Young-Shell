@@ -5,8 +5,8 @@ import { ULightColors, UDarkColors } from "colors.slint";
 
 export global UAppTheme {
     in-out property <UAppThemeConfig> theme: Palette.color-scheme == ColorScheme.dark ? root.dark : root.light;
-    
-	// Animation duration
+
+    // Animation duration
 	out property <duration> animation-duration: root.theme.animation-duration;
 
     // Main colors
@@ -61,7 +61,7 @@ export global UAppTheme {
     out property <length> font-size-medium: root.theme.font-size-medium;
     out property <length> font-size-big: root.theme.font-size-big;
     out property <length> font-size-bigger: root.theme.font-size-bigger;
-	
+
     // Icons
     out property <length> icon-size-base: root.theme.icon-size-base;
 
@@ -89,7 +89,7 @@ export global UAppTheme {
     out property <length> radius-round: root.theme.radius-round;
     out property <length> radius-circle: root.theme.radius-circle;
 
-	// Theming configurations
+    // Theming configurations
     in-out property <UAppThemeConfig> light: {
 		// Animation duration
 		animation-duration: 150ms,
@@ -104,7 +104,7 @@ export global UAppTheme {
 		bg-layout: #F5F5F5,
         bg-container: Colors.white,
         bg-elevated: Colors.white,
-        bg-spotlight: #262626,
+        bg-spotlight: #B7B7B7,
 
     	// Fill colors
 		color-fill-plus: rgb(192, 192, 192),
@@ -146,7 +146,7 @@ export global UAppTheme {
         font-size-medium: 16px,
         font-size-big: 18px,
         font-size-bigger: 20px,
-	
+
     	// Icons
     	icon-size-base: 16px,
 
@@ -230,7 +230,7 @@ export global UAppTheme {
         font-size-medium: 16px,
         font-size-big: 18px,
         font-size-bigger: 20px,
-	
+
     	// Icons
     	icon-size-base: 16px,
 

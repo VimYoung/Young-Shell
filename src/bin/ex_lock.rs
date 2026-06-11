@@ -35,6 +35,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                 None,
                 string_val.to_string(),
                 Box::new(move || {
+                    println!("Ran this");
                     lock_handle_a.set_lock_error(true);
                 }),
                 Box::new(move || {
