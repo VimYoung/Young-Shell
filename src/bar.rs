@@ -1,4 +1,5 @@
-use crate::{AppLineData, MainState, Menu, MenuFocus, TopBarSpell};
+use crate::{AppLineData, MainState, Menu, MenuFocus, TopBarSpell, portmanteau::Portmanteau};
+use calloop::channel::Sender;
 use chrono::Local;
 use image::{imageops::crop_imm, open};
 use imageproc::filter::gaussian_blur_f32;
@@ -24,6 +25,7 @@ pub fn configure_bar(
     bar_tx: WinHandle,
     menu_tx: WinHandle,
     menu: Weak<Menu>,
+    sender: Sender<Portmanteau>,
 ) -> Vec<AppLineData> {
     let app_selector = AppSelector::default();
     let app_data_slint: Vec<AppLineData> = app_selector
@@ -314,7 +316,7 @@ pub fn configure_bar(
             let mic = text
                 .split_whitespace()
                 .find(|s| s.ends_with('%'))
-                .unwrap()
+                .unwrap_or("0%")
                 .trim_end_matches('%')
                 .trim();
             let mic_int = mic.parse::<i32>().unwrap();
@@ -380,23 +382,33 @@ pub fn configure_bar(
     });
 
     bar.on_refresh_battery({
-        let bar_handle = bar.as_weak();
         move || {
-            let output = std::process::Command::new("sh")
-                .args(["-c", "acpi -b"])
-                .output()
-                .unwrap();
-            let text = String::from_utf8_lossy(&output.stdout);
-            if let Some((before, _)) = text.rsplit_once(':') {
-                let mut vals: Vec<&str> = before.split(", ").collect();
-                vals.remove(0);
-                let output_string = vals.join(" ");
-                bar_handle
-                    .unwrap()
-                    .set_battery_val(SharedString::from(output_string));
-            }
+            sender
+                .send(Portmanteau::Bar(
+                    crate::process_handler::bar::BarMessage::UpdateBattery,
+                ))
+                .expect("Failed to send message");
         }
     });
+    // bar.on_refresh_battery({
+    //     let bar_handle = bar.as_weak();
+    //     move || {
+    //         let output = std::process::Command::new("sh")
+    //             .args(["-c", "acpi -b"])
+    //             .output()
+    //             .unwrap();
+    //         let text = String::from_utf8_lossy(&output.stdout);
+    //         if let Some((before, _)) = text.rsplit_once(':') {
+    //             let mut vals: Vec<&str> = before.split(", ").collect();
+    //             vals.remove(0);
+    //             let output_string = vals.join(" ");
+    //             bar_handle
+    //                 .unwrap()
+    //                 .set_battery_val(SharedString::from(output_string));
+    //         }
+    //     }
+    // });
+
     let mut components = Components::new_with_refreshed_list();
 
     bar.global::<MainState>().on_get_temp({

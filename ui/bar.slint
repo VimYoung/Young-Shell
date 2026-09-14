@@ -5,6 +5,8 @@ import {
     WifiLineData,
     SelectedSection,
     ConnectionStatus,
+    BatteryData,
+    BatteryState,
 } from "data_structures.slint";
 import {
     UCard,
@@ -336,7 +338,7 @@ export component DisplayComponent inherits Rectangle {
     in property <percent> cpu;
     in property <percent> temp;
     in property <int> bright;
-    in property <string> battery-val;
+    in property <BatteryData> battery;
     property <bool> show-date: false;
     out property <bool> battery-text;
     in-out property <bool> is-inhibit;
@@ -516,13 +518,36 @@ export component DisplayComponent inherits Rectangle {
             UCard {
                 width: battery-text ? 78px : self.height + 10px;
                 height: parent.height;
-                if !battery-text: UIcon {
-                    width: self.height;
-                    image-fit: cover;
-                    source: @image-url("../assets/sleek/outlined/battery-half.svg");
+
+                if !battery-text: Rectangle {
+                    battery-icon := UIcon {
+                        width: self.height;
+                        image-fit: cover;
+                        source: battery.state != BatteryState.Charging ? @image-url("../assets/sleek/outlined/battery-empty.svg") : @image-url("../assets/sleek/outlined/battery-charge.svg");
+                    }
+
+                    Rectangle {
+                        height: 9px;
+                        x: 9px;
+                        width: (battery.value / 100) * 11px;
+                        states [
+                            charging when battery.state == BatteryState.Charging: {
+                                background: transparent;
+                            }
+                            low when battery.state != BatteryState.Charging && battery.value <= 20: {
+                                background: UAppTheme.dust-red.base;
+                            }
+                            normal when battery.state != BatteryState.Charging && battery.value > 20 && battery.value < 80: {
+                                background: battery-icon.colorize;
+                            }
+                            high when battery.state == BatteryState.Full || battery.value >= 80: {
+                                background: UAppTheme.polar-green.base;
+                            }
+                        ]
+                    }
                 }
                 if battery-text:  UText {
-                    text: battery-val;
+                    text: @tr("{}%", battery.value);
                 }
 
                 TouchArea {

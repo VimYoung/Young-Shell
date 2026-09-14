@@ -10,14 +10,7 @@ export enum MenuFocus {
     ActionLogout,
 }
 
-export enum SelectedSection {
-    Application,
-    Clipboard,
-    Wifi,
-    Bluetooth,
-    WallPaper,
-    Emoji
-}
+export enum SelectedSection { Application, Clipboard, Wifi, Bluetooth, WallPaper, Emoji }
 export struct AppLineData {
     image: image,
     name: string,
@@ -37,12 +30,16 @@ export struct WifiLineData {
     connection-status: ConnectionStatus,
 }
 
+
+export enum BatteryState { Discharging, Charging, Full }
+export struct BatteryData { text_enabled: bool, value: int, state: BatteryState }
+
 export struct SearchButtonData {
     text_val: string,
     place_no: int,
 }
 
-export enum Cards {hearts, diamonds, spade, yellow }
+export enum Cards { hearts, diamonds, spade, yellow }
 
 export struct BarState {
     is_search_on: bool,
@@ -56,13 +53,13 @@ export struct State {
     cards-type: Cards,
 }
 export struct NotifData {
-    id      : int,
-    id_rust : int,
+    id: int,
+    id_rust: int,
     app-name: string,
-    title   : string,
+    title: string,
     subtitle: string,
-    message : string,
-    accent  : color,
-    timeout : int,
-    icon    : bool,
+    message: string,
+    accent: color,
+    timeout: int,
+    icon: bool,
 }

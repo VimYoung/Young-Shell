@@ -1,11 +1,18 @@
+use crate::{
+    portmanteau::Portmanteau,
+    process_handler::{ProcessHandler, initialise_executor},
+};
 use std::{
     env,
     error::Error,
     process::{Command, Stdio},
     rc::Rc,
 };
+
 mod bar;
 mod menu;
+mod portmanteau;
+mod process_handler;
 mod workspace;
 use bar::configure_bar;
 use menu::configure_menu;
@@ -68,6 +75,13 @@ fn main() -> Result<(), Box<dyn Error>> {
             .unwrap(),
     );
 
+    let bar_x = bar.as_weak().clone();
+    let (sender, receiver) = calloop::channel::channel::<Portmanteau>();
+
+    std::thread::spawn(move || {
+        initialise_executor(ProcessHandler::new(bar_x), receiver);
+    });
+
     let bar_tx = bar.get_handler();
     let menu_tx = menu.get_handler();
     let menu_tx_another = menu_tx.clone();
@@ -77,7 +91,13 @@ fn main() -> Result<(), Box<dyn Error>> {
         bar.as_weak().clone(),
         workspace.as_weak().clone(),
     );
-    let dock_apps = configure_bar(&mut bar, bar_tx, menu_tx_another, menu.as_weak().clone());
+    let dock_apps = configure_bar(
+        &mut bar,
+        bar_tx,
+        menu_tx_another,
+        menu.as_weak().clone(),
+        sender,
+    );
     let dock_model = Rc::new(slint::VecModel::from(dock_apps));
     dock.set_docked_apps(dock_model.clone().into());
     // dock.subtract_input_region(0, 0, 420, 80);
