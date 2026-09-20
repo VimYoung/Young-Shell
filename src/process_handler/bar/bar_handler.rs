@@ -1,7 +1,7 @@
 use battery::{Manager, State};
 use slint::Weak;
 
-use crate::{BatteryData, BatteryState, TopBar, TopBarSpell, process_handler::bar::BarMessage};
+use crate::{BatteryData, BatteryState, TopBar, process_handler::bar::BarMessage};
 
 pub struct BarHandler {
     bar_weak: Weak<TopBar>,

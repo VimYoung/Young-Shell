@@ -113,6 +113,7 @@ component WifiComponent inherits VerticalLayout {
     in property <int> connected-network;
     in property <[WifiLineData]> wifi_lines;
     in-out property <bool> wifi-on;
+
     callback escape-focus();
     callback connect-with(WifiLineData);
     padding: UAppTheme.padding-medium;
@@ -155,7 +156,7 @@ component WifiComponent inherits VerticalLayout {
             }
 
             if switch.checked && connected-network < 0: UText {
-                text: "Not Connected";
+                text: "Not connected to any network...";
             }
 
             if !switch.checked: UText {

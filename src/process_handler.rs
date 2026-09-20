@@ -1,5 +1,5 @@
 use crate::{
-    TopBar, WifiLineData,
+    ConnectionStatus, TopBar, WifiLineData,
     portmanteau::{AsyncMessage, Portmanteau},
     process_handler::bar::BarHandler,
 };
@@ -66,20 +66,35 @@ async fn fetch_network_info(bar: Weak<TopBar>) -> Result<(), Box<dyn std::error:
     // FIXME: This shouldnt be generated on each connection.
     let nm = NetworkManager::new().await?;
     let networks = nm.list_networks(None).await?;
+    let connected_network = networks
+        .iter()
+        .position(|network| network.is_active)
+        .map(|x| x as i32)
+        .unwrap_or(-1);
 
+    // FIXME:: No way to manage and display if ethernet is in use.
     let wifi_lines: Vec<WifiLineData> = networks
         .iter()
-        .map(|network| WifiLineData {
-            connection_status: crate::ConnectionStatus::Known,
-            name: SharedString::from(network.ssid.clone()),
-            pass_error: false,
-            strength: (network.strength.unwrap_or_default() / 100) as f32,
+        .map(|network| {
+            let connection_status = if network.is_active {
+                ConnectionStatus::Connected
+            } else if network.known {
+                ConnectionStatus::Known
+            } else {
+                ConnectionStatus::Unknown
+            };
+            WifiLineData {
+                connection_status,
+                name: SharedString::from(network.ssid.clone()),
+                pass_error: false,
+                strength: (network.strength.unwrap_or_default() / 100) as f32,
+            }
         })
         .collect();
     for net in &networks {
         println!("{} - Signal: {}%", net.ssid, net.strength.unwrap_or(0));
     }
-    //
+
     // // Connect to a network on the first Wi-Fi device
     // nm.connect(
     //     "MyNetwork",
@@ -94,6 +109,11 @@ async fn fetch_network_info(bar: Weak<TopBar>) -> Result<(), Box<dyn std::error:
     // if let Some(ssid) = nm.current_ssid().await {
     //     println!("Connected to: {}", ssid);
     // }
+
+    let bar_c = bar.clone();
+    slint::invoke_from_event_loop(move || {
+        bar_c.unwrap().set_connected_network(connected_network);
+    })?;
 
     bar.upgrade_in_event_loop(move |ui| {
         let model = ui.get_wifi_lines();
