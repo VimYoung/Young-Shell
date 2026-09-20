@@ -1,5 +1,5 @@
 use crate::{
-    portmanteau::Portmanteau,
+    portmanteau::{AsyncMessage, Portmanteau},
     process_handler::{ProcessHandler, initialise_executor},
 };
 use std::{
@@ -79,7 +79,9 @@ fn main() -> Result<(), Box<dyn Error>> {
     let (sender, receiver) = calloop::channel::channel::<Portmanteau>();
 
     std::thread::spawn(move || {
-        initialise_executor(ProcessHandler::new(bar_x), receiver);
+        if let Err(err) = initialise_executor(bar_x, receiver) {
+            panic!("Error in helper thread: {:?}", err);
+        };
     });
 
     let bar_tx = bar.get_handler();

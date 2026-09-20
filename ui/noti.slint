@@ -115,6 +115,7 @@ export component NotificationCard inherits Rectangle {
         width: parent.width;
         height: parent.height;
         handle-swipe-left: true;
+        enabled: root.layout-alive;
 
         swiped => {
             if (self.current-position.x < self.pressed-position.x - 70px) {
@@ -237,6 +238,7 @@ export component NotificationCard inherits Rectangle {
                     border-top-left-radius: 0px;
                     border-bottom-right-radius: UAppTheme.radius-large;
                     border-top-right-radius: UAppTheme.radius-large;
+                    enabled: root.layout-alive;
                     clicked => {
                         if (root.i-alive) {
                             root.i-alive = false;

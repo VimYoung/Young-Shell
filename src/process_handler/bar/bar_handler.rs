@@ -1,7 +1,7 @@
 use battery::{Manager, State};
 use slint::Weak;
 
-use crate::{BatteryData, BatteryState, TopBar, process_handler::bar::BarMessage};
+use crate::{BatteryData, BatteryState, TopBar, TopBarSpell, process_handler::bar::BarMessage};
 
 pub struct BarHandler {
     bar_weak: Weak<TopBar>,
@@ -16,6 +16,10 @@ impl BarHandler {
         }
     }
 
+    pub fn get_bar_instance_weak(&self) -> Weak<TopBar> {
+        self.bar_weak.clone()
+    }
+
     pub fn process_message(&self, msg: BarMessage) {
         match msg {
             BarMessage::UpdateBattery => {
@@ -28,7 +32,6 @@ impl BarHandler {
                     let bar_copy = self.bar_weak.clone();
                     slint::invoke_from_event_loop(move || {
                         bar_copy.unwrap().set_battery_val(BatteryData {
-                            text_enabled: false,
                             value: battery_percent,
                             state: match battery.state() {
                                 State::Full => BatteryState::Full,

@@ -557,6 +557,7 @@ export component TopBar inherits Window {
     callback open-app(string);
     callback set-clip(string);
     callback set-wallpaper(image);
+    callback refresh-network();
     pure callback refresh-battery();
     pure callback refresh-clip();
     in-out property <bool> search-active: false;
@@ -621,6 +622,8 @@ export component TopBar inherits Window {
     changed selected => {
         if root.selected == SelectedSection.Clipboard {
             refresh-clip();
+        } else if root.selected == SelectedSection.Wifi {
+            refresh-network();
         } else if root.selected == SelectedSection.WallPaper {
             wall-open = true;
         } else {
@@ -1235,158 +1238,167 @@ export component YoungNC inherits Window {
     background: transparent;
     property <int> nid: 0;
     property <length> pad: 16px;
-    property <length> stride: 90px;
+    property <length> gap: 8px;
     property <length> cx: root.width - 316px;
-
-    // id = -1 means FREE — read synchronously in add-notif (Bug 1 fix)
-    property <NotifData> slot0: { id: -1, title: "", message: "", accent: #000000, icon: false };
-    property <NotifData> slot1: { id: -1, title: "", message: "", accent: #000000, icon: false };
-    property <NotifData> slot2: { id: -1, title: "", message: "", accent: #000000, icon: false };
-    property <NotifData> slot3: { id: -1, title: "", message: "", accent: #000000, icon: false };
-    property <NotifData> slot4: { id: -1, title: "", message: "", accent: #000000, icon: false };
-
-    callback add-notif(int, string, string, string, int, color);
-    callback a_input_region(int, int, int, int);
-    callback r_input_region(int, int, int, int);
-    callback noti-close(int);
-    add-notif(id_rust, app_name, title, msg, timeout, accent) => {
-        // Bug 1 fix: slot.id is a plain struct field — reading it is fully
-        // synchronous. No deferred callback involved, so rapid back-to-back
-        // calls never collide into the same slot.
-        if (slot0.id < 0) {
-            a_input_region(650, 0, 299, c0.width / 1px);
-            slot0 = {
-                id: nid,
-                id_rust: id_rust,
-                app_name: app_name,
-                title: title,
-                message: msg,
-                accent: accent,
-                timeout: timeout
-            };
-        } else if (slot1.id < 0) {
-            a_input_region(650, c0.height / 1px, 299, c0.width / 1px);
-            slot1 = {
-                id: nid,
-                id_rust: id_rust,
-                app_name: app_name,
-                title: title,
-                message: msg,
-                accent: accent,
-                timeout: timeout
-            };
-        } else if (slot2.id < 0) {
-            a_input_region(650, (c0.height + c1.height) / 1px, 299, c1.width / 1px);
-            slot2 = {
-                id: nid,
-                id_rust: id_rust,
-                app_name: app_name,
-                title: title,
-                message: msg,
-                accent: accent,
-                timeout: timeout
-            };
-        } else if (slot3.id < 0) {
-            a_input_region(650, (c0.height + c1.height + c2.height) / 1px, 299, c2.width / 1px);
-            slot3 = {
-                id: nid,
-                id_rust: id_rust,
-                app_name: app_name,
-                title: title,
-                message: msg,
-                accent: accent,
-                timeout: timeout
-            };
-        } else if (slot4.id < 0) {
-            a_input_region(650, (c0.height + c1.height + c2.height + c3.height) / 1px, 299, c0.width / 1px);
-            slot4 = {
-                id: nid,
-                id_rust: id_rust,
-                app_name: app_name,
-                title: title,
-                message: msg,
-                accent: accent,
-                timeout: timeout
-            };
-        } else {
-            a_input_region(650, 0, 299, c0.width / 1px);
-            slot0 = {
-                id: nid,
-                id_rust: id_rust,
-                app_name: app_name,
-                title: title,
-                message: msg,
-                accent: accent,
-                timeout: timeout
-            };
-        }
-        nid += 1;
-    }
-
-    // Each card's release() handler resets its slot to id=-1 so the next
-    // add-notif call sees it as free on the very next synchronous id-check
-    c0 := NotificationCard {
-        x: cx;
-        y: pad;
-        data: slot0;
-        release => {
-            if !c1.alive {
-                r_input_region(650, 0, 299, c0.width / 1px);
-            }
-            noti-close(slot0.id-rust);
-            slot0 = { id: -1, title: "", message: "", accent: #000000, icon: false };
-        }
-    }
-
-    c1 := NotificationCard {
-        x: cx;
-        y: pad + (c0.layout-alive ? stride : 0px);
-        data: slot1;
-        release => {
-            if !c2.alive {
-                r_input_region(650, c0.height / 1px, 299, c0.width / 1px);
-            }
-            noti-close(slot1.id-rust);
-            slot1 = { id: -1, title: "", message: "", accent: #000000, icon: false };
-        }
-    }
-
-    c2 := NotificationCard {
-        x: cx;
-        y: pad + (c0.layout-alive ? stride : 0px) + (c1.layout-alive ? stride : 0px);
-        data: slot2;
-        release => {
-            if !c3.alive {
-                r_input_region(650, (c0.height + c1.height) / 1px, 299, c1.width / 1px);
-            }
-            noti-close(slot2.id-rust);
-            slot2 = { id: -1, title: "", message: "", accent: #000000, icon: false };
-        }
-    }
-
-    c3 := NotificationCard {
-        x: cx;
-        y: pad + (c0.layout-alive ? stride : 0px) + (c1.layout-alive ? stride : 0px) + (c2.layout-alive ? stride : 0px);
-        data: slot3;
-        release => {
-            if !c4.alive {
-                r_input_region(650, (c0.height + c1.height + c2.height) / 1px, 299, c2.width / 1px);
-            }
-            noti-close(slot3.id-rust);
-            slot3 = { id: -1, title: "", message: "", accent: #000000, icon: false };
-        }
-    }
-
-    c4 := NotificationCard {
-        x: cx;
-        y: pad + (c0.layout-alive ? stride : 0px) + (c1.layout-alive ? stride : 0px) + (c2.layout-alive ? stride : 0px) + (c3.layout-alive ? stride : 0px);
-        data: slot4;
-        release => {
-            r_input_region(650, (c0.height + c1.height + c2.height + c3.height) / 1px, 299, c0.width / 1px);
-            noti-close(slot4.id-rust);
-            slot4 = { id: -1, title: "", message: "", accent: #000000, icon: false };
-        }
-    }
+//
+//     // id = -1 means FREE — read synchronously in add-notif (Bug 1 fix)
+//     property <NotifData> slot0: { id: -1, title: "", message: "", accent: #000000, icon: false };
+//     property <NotifData> slot1: { id: -1, title: "", message: "", accent: #000000, icon: false };
+//     property <NotifData> slot2: { id: -1, title: "", message: "", accent: #000000, icon: false };
+//     property <NotifData> slot3: { id: -1, title: "", message: "", accent: #000000, icon: false };
+//     property <NotifData> slot4: { id: -1, title: "", message: "", accent: #000000, icon: false };
+//
+//     callback add-notif(int, string, string, string, int, color);
+//     callback a_input_region(int, int, int, int);
+//     callback r_input_region(int, int, int, int);
+//     callback noti-close(int);
+//
+//     property <bool> any-alive: c0.layout-alive || c1.layout-alive || c2.layout-alive || c3.layout-alive || c4.layout-alive;
+//     changed any-alive => {
+//         if !any-alive {
+//             r_input_region(0, 0, 950, 830);
+//         }
+//     }
+//
+//     add-notif(id_rust, app_name, title, msg, timeout, accent) => {
+//         // Bug 1 fix: slot.id is a plain struct field — reading it is fully
+//         // synchronous. No deferred callback involved, so rapid back-to-back
+//         // calls never collide into the same slot.
+//         if (slot0.id < 0) {
+//             slot0 = {
+//                 id: nid,
+//                 id_rust: id_rust,
+//                 app_name: app_name,
+//                 title: title,
+//                 message: msg,
+//                 accent: accent,
+//                 timeout: timeout
+//             };
+//         } else if (slot1.id < 0) {
+//             slot1 = {
+//                 id: nid,
+//                 id_rust: id_rust,
+//                 app_name: app_name,
+//                 title: title,
+//                 message: msg,
+//                 accent: accent,
+//                 timeout: timeout
+//             };
+//         } else if (slot2.id < 0) {
+//             slot2 = {
+//                 id: nid,
+//                 id_rust: id_rust,
+//                 app_name: app_name,
+//                 title: title,
+//                 message: msg,
+//                 accent: accent,
+//                 timeout: timeout
+//             };
+//         } else if (slot3.id < 0) {
+//             slot3 = {
+//                 id: nid,
+//                 id_rust: id_rust,
+//                 app_name: app_name,
+//                 title: title,
+//                 message: msg,
+//                 accent: accent,
+//                 timeout: timeout
+//             };
+//         } else if (slot4.id < 0) {
+//             slot4 = {
+//                 id: nid,
+//                 id_rust: id_rust,
+//                 app_name: app_name,
+//                 title: title,
+//                 message: msg,
+//                 accent: accent,
+//                 timeout: timeout
+//             };
+//         } else {
+//             slot0 = {
+//                 id: nid,
+//                 id_rust: id_rust,
+//                 app_name: app_name,
+//                 title: title,
+//                 message: msg,
+//                 accent: accent,
+//                 timeout: timeout
+//             };
+//         }
+//         nid += 1;
+//     }
+//
+//     // Each card manages its own input region dynamically based on its own geometry and target position.
+//     c0 := NotificationCard {
+//         x: cx;
+//         target-y: pad;
+//         data: slot0;
+//         a_input_region(x, y, w, h) => { root.a_input_region(x, y, w, h); }
+//         r_input_region(x, y, w, h) => { root.r_input_region(x, y, w, h); }
+//         release => {
+//             c0.force-remove-region();
+//             noti-close(slot0.id-rust);
+//             slot0 = { id: -1, title: "", message: "", accent: #000000, icon: false };
+//         }
+//     }
+//
+//     c1 := NotificationCard {
+//         x: cx;
+//         target-y: pad + (c0.layout-alive ? (c0.height + gap) : 0px);
+//         data: slot1;
+//         a_input_region(x, y, w, h) => { root.a_input_region(x, y, w, h); }
+//         r_input_region(x, y, w, h) => { root.r_input_region(x, y, w, h); }
+//         release => {
+//             c1.force-remove-region();
+//             noti-close(slot1.id-rust);
+//             slot1 = { id: -1, title: "", message: "", accent: #000000, icon: false };
+//         }
+//     }
+//
+//     c2 := NotificationCard {
+//         x: cx;
+//         target-y: pad + (c0.layout-alive ? (c0.height + gap) : 0px)
+//             + (c1.layout-alive ? (c1.height + gap) : 0px);
+//         data: slot2;
+//         a_input_region(x, y, w, h) => { root.a_input_region(x, y, w, h); }
+//         r_input_region(x, y, w, h) => { root.r_input_region(x, y, w, h); }
+//         release => {
+//             c2.force-remove-region();
+//             noti-close(slot2.id-rust);
+//             slot2 = { id: -1, title: "", message: "", accent: #000000, icon: false };
+//         }
+//     }
+//
+//     c3 := NotificationCard {
+//         x: cx;
+//         target-y: pad + (c0.layout-alive ? (c0.height + gap) : 0px)
+//             + (c1.layout-alive ? (c1.height + gap) : 0px)
+//             + (c2.layout-alive ? (c2.height + gap) : 0px);
+//         data: slot3;
+//         a_input_region(x, y, w, h) => { root.a_input_region(x, y, w, h); }
+//         r_input_region(x, y, w, h) => { root.r_input_region(x, y, w, h); }
+//         release => {
+//             c3.force-remove-region();
+//             noti-close(slot3.id-rust);
+//             slot3 = { id: -1, title: "", message: "", accent: #000000, icon: false };
+//         }
+//     }
+//
+//     c4 := NotificationCard {
+//         x: cx;
+//         target-y: pad + (c0.layout-alive ? (c0.height + gap) : 0px)
+//             + (c1.layout-alive ? (c1.height + gap) : 0px)
+//             + (c2.layout-alive ? (c2.height + gap) : 0px)
+//             + (c3.layout-alive ? (c3.height + gap) : 0px);
+//         data: slot4;
+//         a_input_region(x, y, w, h) => { root.a_input_region(x, y, w, h); }
+//         r_input_region(x, y, w, h) => { root.r_input_region(x, y, w, h); }
+//         release => {
+//             c4.force-remove-region();
+//             noti-close(slot4.id-rust);
+//             slot4 = { id: -1, title: "", message: "", accent: #000000, icon: false };
+//         }
+//     }
 }
 
 export component Dock inherits Window {

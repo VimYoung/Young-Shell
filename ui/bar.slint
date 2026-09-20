@@ -301,6 +301,7 @@ export component OptionSection inherits Rectangle {
             set-app(val)
         }
     }
+
     if selection == SelectedSection.Clipboard: ClipComponent {
         clip_lines: clip_lines;
         selected-content: selected-content;
@@ -339,8 +340,8 @@ export component DisplayComponent inherits Rectangle {
     in property <percent> temp;
     in property <int> bright;
     in property <BatteryData> battery;
+    property <bool> battery-text-enabled: false;
     property <bool> show-date: false;
-    out property <bool> battery-text;
     in-out property <bool> is-inhibit;
     pure callback get-search-active() -> bool;
     callback toggle-search-active();
@@ -516,20 +517,20 @@ export component DisplayComponent inherits Rectangle {
             }
 
             UCard {
-                width: battery-text ? 78px : self.height + 10px;
+                width: battery-text-enabled ? 78px : self.height + 10px;
                 height: parent.height;
 
-                if !battery-text: Rectangle {
+                if !battery-text-enabled: Rectangle {
                     battery-icon := UIcon {
                         width: self.height;
                         image-fit: cover;
-                        source: battery.state != BatteryState.Charging ? @image-url("../assets/sleek/outlined/battery-empty.svg") : @image-url("../assets/sleek/outlined/battery-charge.svg");
+                        source: battery.state == BatteryState.Charging || (battery.state == BatteryState.Full && battery.value != 100) ? @image-url("../assets/sleek/outlined/battery-charge.svg") : @image-url("../assets/sleek/outlined/battery-empty.svg");
                     }
 
                     Rectangle {
                         height: 9px;
                         x: 9px;
-                        width: (battery.value / 100) * 11px;
+                        width: (battery.value * 11px) / 100;
                         states [
                             charging when battery.state == BatteryState.Charging: {
                                 background: transparent;
@@ -546,14 +547,14 @@ export component DisplayComponent inherits Rectangle {
                         ]
                     }
                 }
-                if battery-text:  UText {
+                if battery-text-enabled:  UText {
                     text: @tr("{}%", battery.value);
                 }
 
                 TouchArea {
                     mouse-cursor: pointer;
                     clicked => {
-                        battery-text = !battery-text;
+                        battery-text-enabled = !battery-text-enabled;
                     }
                 }
             }

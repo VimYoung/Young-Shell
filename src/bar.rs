@@ -1,5 +1,8 @@
-use crate::{AppLineData, MainState, Menu, MenuFocus, TopBarSpell, portmanteau::Portmanteau};
-use calloop::channel::Sender;
+use crate::{
+    AppLineData, MainState, Menu, MenuFocus, TopBarSpell,
+    portmanteau::{AsyncMessage, Portmanteau},
+};
+use calloop::{channel::Sender, futures::Scheduler};
 use chrono::Local;
 use image::{imageops::crop_imm, open};
 use imageproc::filter::gaussian_blur_f32;
@@ -92,6 +95,16 @@ pub fn configure_bar(
             bar_weak.unwrap().set_clip_lines(clip_model.clone().into());
         }
     });
+
+    bar.on_refresh_network({
+        let sender_c = sender.clone();
+        move || {
+            sender_c
+                .send(Portmanteau::Async(AsyncMessage::FetchNetworkInfo))
+                .expect("Failed to send message");
+        }
+    });
+
     bar.on_search_toggle({
         let bar_tx_another = bar_tx.clone();
         let bar_tx_clone = bar_tx.clone();
@@ -105,7 +118,9 @@ pub fn configure_bar(
             }
         }
     });
+
     bar.subtract_input_region(0, 35, 1536, 575);
+
     bar.on_query_applications({
         let bar_handle = bar.as_weak().unwrap();
         move |query_value| {
@@ -382,8 +397,9 @@ pub fn configure_bar(
     });
 
     bar.on_refresh_battery({
+        let sender_c = sender.clone();
         move || {
-            sender
+            sender_c
                 .send(Portmanteau::Bar(
                     crate::process_handler::bar::BarMessage::UpdateBattery,
                 ))
