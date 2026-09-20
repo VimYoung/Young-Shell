@@ -5,19 +5,19 @@ edition = "2024"
 
 [dependencies]
 anyhow = "1.0.99"
+battery = "0.7.8"
+calloop = { version = "0.14.4", features = ["executor"] }
 chrono = "0.4.44"
 image = "0.25.9"
 imageproc = "0.26.0"
-slint = { version = "1.14.1", features = ["live-preview", "renderer-software"], default-features = false}
+nmrs = "3.5.2"
+slint = { version = "1.14.1", features = [
+  "live-preview",
+  "renderer-software",
+], default-features = false }
 spell-framework = { path = "../Spell/spell-framework/" }
 # spell-framework = { version = "0.1.4", git = "https://github.com/VimYoung/Spell/" }
 sysinfo = "0.37.0"
 
 [build-dependencies]
 slint-build = "1.14.1"
-
-[patch.crates-io]
-slint = { git = "https://github.com/slint-ui/slint" }
-slint-build = { git = "https://github.com/slint-ui/slint" }
-i-slint-core = { git = "https://github.com/slint-ui/slint" }
-i-slint-renderer-skia = { git = "https://github.com/slint-ui/slint" }
