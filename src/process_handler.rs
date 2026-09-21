@@ -29,7 +29,22 @@ pub fn initialise_executor(
                 Portmanteau::Async(msg) => match msg {
                     AsyncMessage::FetchNetworkInfo => async_scheduler
                         .schedule(fetch_network_info(data.bar.get_bar_instance_weak()))
-                        .expect("Message scheduling failed"),
+                        .expect("Executor doesn't exist"),
+                    AsyncMessage::Connect { ssid, pass } => async_scheduler
+                        .schedule(connect(ssid, pass))
+                        .expect("Executor doesn't exist"),
+                    AsyncMessage::Disconnect => async_scheduler
+                        .schedule(disconnect())
+                        .expect("Executor doesn't exist"),
+                    AsyncMessage::ForgetNetwork(ssid) => async_scheduler
+                        .schedule(forget_network(ssid))
+                        .expect("Executor doesn't exist"),
+                    AsyncMessage::RescanNetwork => async_scheduler
+                        .schedule(rescan_networks())
+                        .expect("Executor doesn't exist"),
+                    AsyncMessage::WifiToggle(wifi_on) => async_scheduler
+                        .schedule(wifi_toggle(wifi_on))
+                        .expect("Executor doesn't exist"),
                 },
             },
             calloop::channel::Event::Closed => {
@@ -61,11 +76,10 @@ impl ProcessHandler {
 }
 
 async fn fetch_network_info(bar: Weak<TopBar>) -> Result<(), Box<dyn std::error::Error>> {
-    println!("Hello world");
-
     // FIXME: This shouldnt be generated on each connection.
     let nm = NetworkManager::new().await?;
-    let networks = nm.list_networks(None).await?;
+    let mut networks = nm.list_networks(None).await?;
+    networks.sort_by_key(|key| key.ssid.clone());
     let connected_network = networks
         .iter()
         .position(|network| network.is_active)
@@ -87,30 +101,17 @@ async fn fetch_network_info(bar: Weak<TopBar>) -> Result<(), Box<dyn std::error:
                 connection_status,
                 name: SharedString::from(network.ssid.clone()),
                 pass_error: false,
-                strength: (network.strength.unwrap_or_default() / 100) as f32,
+                strength: network.strength.unwrap_or_default() as f32,
             }
         })
         .collect();
-    for net in &networks {
-        println!("{} - Signal: {}%", net.ssid, net.strength.unwrap_or(0));
-    }
-
-    // // Connect to a network on the first Wi-Fi device
-    // nm.connect(
-    //     "MyNetwork",
-    //     None,
-    //     WifiSecurity::WpaPsk {
-    //         psk: "password123".into(),
-    //     },
-    // )
-    // .await?;
-    //
-    // // Check current connection
-    // if let Some(ssid) = nm.current_ssid().await {
-    //     println!("Connected to: {}", ssid);
+    // for net in &networks {
+    //     println!("{} - Signal: {}%", net.ssid, net.strength.unwrap_or(0));
     // }
-
+    //
     let bar_c = bar.clone();
+    // FIXME: This will also change the index if the number of connections in
+    // vicinity changes.
     slint::invoke_from_event_loop(move || {
         bar_c.unwrap().set_connected_network(connected_network);
     })?;
@@ -123,5 +124,42 @@ async fn fetch_network_info(bar: Weak<TopBar>) -> Result<(), Box<dyn std::error:
             .expect("couldn't downref");
         model.set_vec(wifi_lines);
     })?;
+    Ok(())
+}
+
+async fn connect(ssid: SharedString, pass: SharedString) -> Result<(), Box<dyn std::error::Error>> {
+    let nm = NetworkManager::new().await?;
+    nm.connect(
+        ssid.as_str(),
+        None,
+        WifiSecurity::WpaPsk {
+            psk: pass.as_str().into(),
+        },
+    )
+    .await?;
+    Ok(())
+}
+
+async fn disconnect() -> Result<(), Box<dyn std::error::Error>> {
+    let nm = NetworkManager::new().await?;
+    nm.disconnect(None).await?;
+    Ok(())
+}
+
+async fn wifi_toggle(wifi_on: bool) -> Result<(), Box<dyn std::error::Error>> {
+    let nm = NetworkManager::new().await?;
+    nm.set_wireless_enabled(wifi_on).await?;
+    Ok(())
+}
+
+async fn forget_network(ssid: SharedString) -> Result<(), Box<dyn std::error::Error>> {
+    let nm = NetworkManager::new().await?;
+    nm.forget(ssid.as_str()).await?;
+    Ok(())
+}
+
+async fn rescan_networks() -> Result<(), Box<dyn std::error::Error>> {
+    let nm = NetworkManager::new().await?;
+    nm.scan_networks(None).await?;
     Ok(())
 }

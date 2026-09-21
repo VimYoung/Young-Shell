@@ -115,7 +115,11 @@ component WifiComponent inherits VerticalLayout {
     in-out property <bool> wifi-on;
 
     callback escape-focus();
-    callback connect-with(WifiLineData);
+    callback connect-with(ssid: string, pass: string);
+    callback disconnect-network();
+    callback rescan-networks();
+    callback wifi-toggle(bool);
+    callback forget-network(string);
     padding: UAppTheme.padding-medium;
     spacing: UAppTheme.spacing-medium;
     alignment: stretch;
@@ -152,11 +156,25 @@ component WifiComponent inherits VerticalLayout {
                     icon-placement: end;
                     variant: filled;
                     text: "Disconnect";
+                    clicked => {
+                        disconnect-network();
+                        escape-focus();
+                    }
                 }
             }
 
             if switch.checked && connected-network < 0: UText {
                 text: "Not connected to any network...";
+            }
+
+            if switch.checked && connected-network >= 0: UIconButton {
+                variant: filled;
+                width: self.height;
+                icon: @image-url("../assets/sleek/outlined/reload.svg");
+                clicked => {
+                    rescan-networks();
+                    escape-focus();
+                }
             }
 
             if !switch.checked: UText {
@@ -170,6 +188,8 @@ component WifiComponent inherits VerticalLayout {
                     checked: wifi-on;
                     toggled() => {
                         root.wifi-on = self.checked;
+                        wifi-toggle(wifi-on);
+                        escape-focus();
                     }
                 }
             }
@@ -228,6 +248,10 @@ component WifiComponent inherits VerticalLayout {
                         icon: @image-url("../assets/sleek/outlined/delete.svg");
                         icon-placement: end;
                         text: "Disconnect";
+                        clicked => {
+                            disconnect-network();
+                            escape-focus();
+                        }
                     }
 
                     if ask-password: UInput {
@@ -245,6 +269,10 @@ component WifiComponent inherits VerticalLayout {
                                 reject;
                             }
                         }
+                        accepted => {
+                            connect-with(wifi.name, self.text);
+                            escape-focus();
+                        }
                     }
 
                     if wifi.connection-status == ConnectionStatus.Known || wifi.connection-status == ConnectionStatus.Unknown: UButton {
@@ -258,7 +286,7 @@ component WifiComponent inherits VerticalLayout {
                             if wifi.connection-status == ConnectionStatus.Unknown {
                                 ask-password = true;
                             } else {
-                                connect-with(wifi);
+                                connect-with(wifi.name, "");
                             }
                         }
                     }
@@ -268,6 +296,10 @@ component WifiComponent inherits VerticalLayout {
                         danger: true;
                         width: self.height;
                         icon: @image-url("../assets/sleek/outlined/delete.svg");
+                        clicked => {
+                            forget-network(wifi.name);
+                            escape-focus();
+                        }
                     }
                 }
             }
@@ -289,7 +321,11 @@ export component OptionSection inherits Rectangle {
     in-out property <int> connected-network: -1;
     callback set-app(int);
     callback set-clip(int);
-    callback connect-with(WifiLineData);
+    callback connect-with(ssid: string, pass: string);
+    callback disconnect-network();
+    callback rescan-networks();
+    callback wifi-toggle(bool);
+    callback forget-network(string);
     callback escape-focus();
     changed selection => {
         self.selected-content = 0;
@@ -318,8 +354,20 @@ export component OptionSection inherits Rectangle {
         escape-focus => {
             escape-focus();
         }
-        connect-with(val) => {
-            connect-with(val)
+        connect-with(ssid, pass) => {
+            connect-with(ssid, pass)
+        }
+        disconnect-network => {
+            disconnect-network();
+        }
+        rescan-networks => {
+            rescan-networks();
+        }
+        wifi-toggle(val) => {
+            wifi-toggle(val);
+        }
+        forget-network(ssid) => {
+            forget-network(ssid);
         }
     }
 
@@ -342,7 +390,7 @@ export component DisplayComponent inherits Rectangle {
     in property <int> bright;
     in property <BatteryData> battery;
     property <bool> battery-text-enabled: false;
-    property <bool> show-date: false;
+    out property <bool> show-date: false;
     in-out property <bool> is-inhibit;
     pure callback get-search-active() -> bool;
     callback toggle-search-active();

@@ -1,7 +1,4 @@
-use crate::{
-    portmanteau::{AsyncMessage, Portmanteau},
-    process_handler::{ProcessHandler, initialise_executor},
-};
+use crate::{portmanteau::Portmanteau, process_handler::initialise_executor};
 use std::{
     env,
     error::Error,
@@ -150,6 +147,10 @@ impl IpcController for TopBar {
             }
             "toggle_clip" => {
                 self.set_selected(SelectedSection::Clipboard);
+                self.set_search_active(true);
+            }
+            "toggle_wifi" => {
+                self.set_selected(SelectedSection::Wifi);
                 self.set_search_active(true);
             }
             _ => {}

@@ -2,7 +2,7 @@ use crate::{
     AppLineData, MainState, Menu, MenuFocus, TopBarSpell,
     portmanteau::{AsyncMessage, Portmanteau},
 };
-use calloop::{channel::Sender, futures::Scheduler};
+use calloop::channel::Sender;
 use chrono::Local;
 use image::{imageops::crop_imm, open};
 use imageproc::filter::gaussian_blur_f32;
@@ -101,6 +101,51 @@ pub fn configure_bar(
         move || {
             sender_c
                 .send(Portmanteau::Async(AsyncMessage::FetchNetworkInfo))
+                .expect("Failed to send message");
+        }
+    });
+
+    bar.on_connect_with({
+        let sender_c = sender.clone();
+        move |ssid, pass| {
+            sender_c
+                .send(Portmanteau::Async(AsyncMessage::Connect { ssid, pass }))
+                .expect("Failed to send message");
+        }
+    });
+
+    bar.on_disconnect_network({
+        let sender_c = sender.clone();
+        move || {
+            sender_c
+                .send(Portmanteau::Async(AsyncMessage::Disconnect))
+                .expect("Failed to send message");
+        }
+    });
+
+    bar.on_rescan_networks({
+        let sender_c = sender.clone();
+        move || {
+            sender_c
+                .send(Portmanteau::Async(AsyncMessage::RescanNetwork))
+                .expect("Failed to send message");
+        }
+    });
+
+    bar.on_wifi_toggle({
+        let sender_c = sender.clone();
+        move |wifi_on| {
+            sender_c
+                .send(Portmanteau::Async(AsyncMessage::WifiToggle(wifi_on)))
+                .expect("Failed to send message");
+        }
+    });
+
+    bar.on_forget_network({
+        let sender_c = sender.clone();
+        move |ssid| {
+            sender_c
+                .send(Portmanteau::Async(AsyncMessage::ForgetNetwork(ssid)))
                 .expect("Failed to send message");
         }
     });
@@ -457,7 +502,7 @@ pub fn configure_bar(
     //    }
     // })
     //
-    return dock_apps;
+    dock_apps
 }
 
 fn collect_images(dir: &Path, fallback: &Path) -> Vec<Image> {

@@ -125,8 +125,6 @@ export component Menu inherits Window {
         running: true;
         interval: 1800s;
         triggered => {
-            debug(
-            "Reevaluating date value");
             MainState.get-date();
         }
     }
@@ -558,6 +556,11 @@ export component TopBar inherits Window {
     callback set-clip(string);
     callback set-wallpaper(image);
     callback refresh-network();
+    callback connect-with(string, string);
+    callback disconnect-network();
+    callback rescan-networks();
+    callback wifi-toggle(bool);
+    callback forget-network(string);
     pure callback refresh-battery();
     pure callback refresh-clip();
     in-out property <bool> search-active: false;
@@ -693,23 +696,7 @@ export component TopBar inherits Window {
     ];
     in-out property <bool> is-inhibit: false;
     in-out property <int> connected-network: -1;
-    in-out property <bool> run-once: true;
     in-out property <bool> wall-open:false;
-
-    Timer {
-        running: run-once;
-        interval: 3600s;
-        triggered => {
-        // Update bar state with actual conditions.
-        // Cases:
-        // 1. Is headphone connected(callback later if it fails).
-        // 2. State of inhibitor.
-        // 3. State of Wifi and Bluetooth initially.
-            run-once = false;
-            // stop-inhibtor();
-            MainState.get-date();
-        }
-    }
 
     Timer {
         running: true;
@@ -722,8 +709,10 @@ export component TopBar inherits Window {
             MainState.get-temp();
             MainState.get-bright();
             refresh-battery();
-            if run-once {
-                run-once = false;
+            if root.selected == SelectedSection.Wifi {
+                refresh-network();
+            }
+            if display-section.show-date {
                 MainState.get-date();
             }
         }
@@ -761,6 +750,21 @@ export component TopBar inherits Window {
             }
             escape-focus => {
                 search-bar.grab-focus();
+            }
+            connect-with(ssid, pass) => {
+                connect-with(ssid, pass);
+            }
+            disconnect-network => {
+                disconnect-network();
+            }
+            rescan-networks => {
+                rescan-networks();
+            }
+            wifi-toggle(val) => {
+                wifi-toggle(val);
+            }
+            forget-network(ssid) => {
+                forget-network(ssid);
             }
         }
 
