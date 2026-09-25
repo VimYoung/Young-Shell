@@ -1,0 +1,38 @@
+import { UAppTheme } from "../app-theme.slint";
+
+export component UTitle inherits Text {
+	// Accessibility properties
+	accessible-role: text;
+    accessible-value: self.text;
+	// Regular properties
+    in-out property <int> level: 1;
+    color: UAppTheme.text;
+    font-size: 36px;
+    font-weight: FontWeight.semi-bold;
+    states [
+        level-1 when level == 1: {
+            font-size: 36px;
+            font-weight: FontWeight.semi-bold;
+        }
+        level-2 when level == 2: {
+            font-size: 30px;
+            font-weight: FontWeight.medium;
+        }
+        level-3 when level == 3: {
+            font-size: 24px;
+            font-weight: FontWeight.normal;
+        }
+        level-4 when level == 4: {
+            font-size: 20px;
+            font-weight: FontWeight.normal;
+        }
+        level-5 when level == 5: {
+            font-size: 18px;
+            font-weight: FontWeight.normal;
+        }
+        level-6 when level == 6: {
+            font-size: 16px;
+            font-weight: FontWeight.normal;
+        }
+    ]
+}

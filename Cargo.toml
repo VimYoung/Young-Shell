@@ -21,3 +21,9 @@ sysinfo = "0.37.0"
 
 [build-dependencies]
 slint-build = "1.14.1"
+
+[patch.crates-io]
+slint = { git = "https://github.com/slint-ui/slint", rev = "fca8dcbacf79ce75c6e353fdfff58849f3566c89" }
+slint-build = { git = "https://github.com/slint-ui/slint", rev = "fca8dcbacf79ce75c6e353fdfff58849f3566c89" }
+i-slint-core = { git = "https://github.com/slint-ui/slint", rev = "fca8dcbacf79ce75c6e353fdfff58849f3566c89" }
+i-slint-renderer-skia = { git = "https://github.com/slint-ui/slint", rev = "fca8dcbacf79ce75c6e353fdfff58849f3566c89" }

@@ -1,0 +1,222 @@
+import { UAppTheme } from "../app-theme.slint";
+import { UIcon } from "icon.slint";
+import { UText } from "text.slint";
+
+
+export component UInputNumber inherits Rectangle {
+	// Accessibility properties
+	accessible-role: spinbox;
+    accessible-read-only: input.read-only;
+    accessible-value: self.value;
+    accessible-value-step: self.step;
+    accessible-value-minimum: self.enable-min-max ? self.min-value : 0;
+    accessible-value-maximum: self.enable-min-max ? self.max-value : 0;
+    accessible-action-default => {
+        self.accepted()
+    }
+    accessible-action-set-value(value) => {
+        input.text = value.to-float();
+    }
+    accessible-action-decrement => {
+        btn-decrease.clicked();
+    }
+    accessible-action-increment => {
+        btn-increase.clicked();
+    }
+	// Regular properties
+    in-out property <bool> enabled <=> input.enabled;
+    in-out property <bool> read-only <=> input.read-only;
+    in-out property <float> value: 0;
+    in-out property <float> step: 1;
+    in-out property <bool> number: false;
+    in-out property <bool> error: false;
+    in-out property <bool> enable-min-max: false;
+    in-out property <float> min-value: -100;
+    in-out property <float> max-value: 100;
+    border-width: UAppTheme.border-width-base;
+    border-radius: UAppTheme.radius-base;
+    border-color: UAppTheme.border;
+    background: UAppTheme.bg-elevated;
+    preferred-width: 150px;
+    clip: true;
+    init => {
+        if enable-min-max {
+            if value < min-value {
+                value = min-value;
+            } else if value > max-value {
+                value = max-value;
+            }
+        }
+    }
+    HorizontalLayout {
+        width: root.width;
+        HorizontalLayout {
+            padding-left: UAppTheme.padding-horizontal / 2;
+            padding-right: UAppTheme.padding-horizontal / 2;
+            Rectangle {
+                height: UAppTheme.font-size-base + UAppTheme.padding-vertical * 3;
+                clip: true;
+                input := TextInput {
+                    private property <length> right-margin: UAppTheme.padding-horizontal;
+                    private property <length> computed-x;
+                    width: max(parent.width, self.preferred_width + self.text-cursor-width);
+                    x: min(0px, max(parent.width - self.width - self.text-cursor-width, self.computed-x));
+                    text: root.value;
+                    input-type: root.number ? InputType.number : InputType.decimal;
+                    font-size: UAppTheme.font-size-base;
+                    color: UAppTheme.text;
+                    vertical-alignment: center;
+                    horizontal-alignment: left;
+                    single-line: true;
+                    wrap: no-wrap;
+                    // Disable the TextInput accessibility as the widget takes care of that.
+                    accessible-role: none;
+                    cursor-position-changed(cpos) => {
+                        if cpos.x + self.computed-x < self.right-margin {
+                            self.computed-x = - cpos.x + self.right-margin;
+                        } else if cpos.x + self.computed-x > parent.width - self.text-cursor-width {
+                            self.computed-x = parent.width - cpos.x - self.text-cursor-width;
+                        }
+                    }
+                    edited => {
+                        root.value = self.text.to-float();
+                        if root.enable-min-max {
+                            if root.value <= root.min-value {
+                                root.value = root.min-value;
+                            } else if root.value >= root.max-value {
+                                root.value = root.max-value;
+                            }
+                        }
+                        self.text = root.value;
+                    }
+                    key-pressed(event) => {
+                        if event.text == Key.UpArrow {
+                            btn-increase.clicked();
+                            return accept;
+                        } else if event.text == Key.DownArrow {
+                            btn-decrease.clicked();
+                            return accept;
+                        }
+                        reject
+                    }
+                }
+            }
+        }
+
+        VerticalLayout {
+            alignment: center;
+            padding-left: UAppTheme.padding-small;
+            Rectangle {
+                height: 100%;
+                width: UAppTheme.icon-size-base + UAppTheme.padding-horizontal / 2;
+                UIcon {
+                    size: UAppTheme.icon-size-base;
+                    colorize: UAppTheme.text-secondary;
+                    source: @image-url("../assets/icons/chevron-down.svg");
+                    states [
+                        disabled when !root.enabled: {
+                            colorize: UAppTheme.text-disabled;
+                        }
+                    ]
+                }
+
+                btn-decrease := TouchArea {
+                    accessible-role: button;
+                    accessible-label: @tr("Decrease number input value.");
+                    mouse-cursor: MouseCursor.pointer;
+                    clicked => {
+                        if !root.enabled || root.read-only {
+                            return;
+                        }
+                        if root.enable-min-max && root.value <= root.min-value {
+                            root.value = root.min-value;
+                        } else {
+                            root.value = input.text.to-float() - root.step;
+                        }
+                        input.text = root.value;
+                        input.focus();
+                    }
+                }
+            }
+        }
+
+        VerticalLayout {
+            alignment: center;
+            padding-right: 2px;
+            Rectangle {
+                height: 100%;
+                width: UAppTheme.icon-size-base + UAppTheme.padding-horizontal / 2;
+                UIcon {
+                    size: UAppTheme.icon-size-base;
+                    colorize: UAppTheme.text-secondary;
+                    source: @image-url("../assets/icons/chevron-down.svg");
+                    transform-rotation: 180deg;
+                    states [
+                        disabled when !root.enabled: {
+                            colorize: UAppTheme.text-disabled;
+                        }
+                    ]
+                }
+
+                btn-increase := TouchArea {
+                    accessible-role: button;
+                    accessible-label: @tr("Increase number input value.");
+                    mouse-cursor: MouseCursor.pointer;
+                    clicked => {
+                        if !root.enabled || root.read-only {
+                            return;
+                        }
+                        if root.enable-min-max && root.value >= root.max-value {
+                            root.value = root.max-value;
+                        } else {
+                            root.value = input.text.to-float() + root.step;
+                        }
+                        input.text = root.value;
+                        input.focus();
+                    }
+                }
+            }
+        }
+    }
+
+    states [
+        disabled when !input.enabled: {
+            background: UAppTheme.bg-elevated.with-alpha(0.4);
+            border-color: UAppTheme.border-secondary;
+            input.color: UAppTheme.text-disabled;
+        }
+        error when error: {
+            background: UAppTheme.bg-elevated;
+            border-color: UAppTheme.danger.base;
+        }
+        active when input.has-focus: {
+            background: UAppTheme.bg-elevated;
+            border-color: UAppTheme.primary.active;
+        }
+    ]
+
+    // Link the functions and callback of TextInput to child.
+	public function set-selection-offsets(start: int, end: int) {
+        input.set-selection-offsets(start, end);
+    }
+    public function select-all() {
+        input.select-all();
+    }
+    public function clear-selection() {
+        input.clear-selection();
+    }
+    public function copy() {
+        input.copy();
+    }
+    public function cut() {
+        input.cut();
+    }
+    public function paste() {
+        input.paste();
+    }
+    callback accepted <=> input.accepted;
+    callback cursor-position-changed <=> input.cursor-position-changed;
+    callback edited <=> input.edited;
+    callback key-pressed <=> input.key-pressed;
+    callback key-released <=> input.key-released;
+}

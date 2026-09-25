@@ -1,0 +1,71 @@
+import { UAppTheme } from "../app-theme.slint";
+import { UText } from "text.slint";
+import { ButtonInterface } from "button-interface.slint";
+import { UIconButton } from "icon-button.slint";
+
+
+
+export component UCode inherits Rectangle {
+    in-out property <string> code;
+    in-out property <bool> enable-clipboard: false;
+    in-out property <TextWrap> wrap: no-wrap;
+    callback copied(code: string) -> bool;
+    copied => {
+        true
+    }
+    background: UAppTheme.color-fill-secondary;
+    border-color: UAppTheme.border;
+    border-width: UAppTheme.border-width-base;
+    border-radius: UAppTheme.radius-small;
+    clip: true;
+    HorizontalLayout {
+        alignment: start;
+        padding: UAppTheme.padding-medium;
+        UText {
+            font-size: UAppTheme.font-size-small;
+            text: code;
+            wrap: root.wrap;
+        }
+    }
+
+    if enable-clipboard: VerticalLayout {
+        alignment: start;
+        HorizontalLayout {
+            alignment: end;
+            property <duration> feedback-duration: 1s;
+            property <duration> animation-duration: 0;
+            property <float> feedback-alpha: 0;
+            Rectangle {
+                background: UAppTheme.color-fill-secondary.with-alpha(feedback-alpha);
+                animate background { duration: animation-duration; }
+                UText {
+                    text: @tr("Copied!");
+                    color: UAppTheme.text.with-alpha(feedback-alpha);
+                    animate color { duration: animation-duration; }
+                }
+            }
+
+            UIconButton {
+                variant: text-stripped;
+                icon: @image-url("../assets/icons/clipboard.svg");
+                clicked => {
+                    if root.copied(code) {
+                        animation-duration = 0;
+                        feedback-alpha = 1;
+                        feedback-timer.start();
+                    }
+                }
+            }
+
+            feedback-timer := Timer {
+                running: false;
+                interval: feedback-duration;
+                triggered => {
+                    animation-duration = feedback-duration;
+                    feedback-alpha = 0;
+                    self.stop();
+                }
+            }
+        }
+    }
+}
