@@ -5,7 +5,7 @@ import {
     UIconButton,
     UText,
     UIcon,
-    ULinearProgress,
+    ULineProgress,
     UCard,
     USlider,
     UInput,
@@ -252,8 +252,8 @@ export component Menu inherits Window {
                                 min-value: 0;
                                 max-value: 120;
                                 width: parent.width - 25px - 2 * UAppTheme.spacing-medium;
-                                moved_val(val) => {
-                                    MainState.set-volume(val);
+                                moved => {
+                                    MainState.set-volume(self.value);
                                 }
                             }
                         }
@@ -274,8 +274,8 @@ export component Menu inherits Window {
                                 min-value: 0;
                                 max-value: 100;
                                 width: parent.width - 25px - 2 * UAppTheme.spacing-medium;
-                                moved_val(val) => {
-                                    MainState.set-bright(val);
+                                moved => {
+                                    MainState.set-bright(self.value);
                                 }
                             }
                         }
@@ -296,8 +296,8 @@ export component Menu inherits Window {
                                 min-value: 0;
                                 max-value: 120;
                                 width: parent.width - 25px - 2 * UAppTheme.spacing-medium;
-                                moved_val(val) => {
-                                    MainState.set-mic(val);
+                                moved => {
+                                    MainState.set-mic(self.value);
                                 }
                             }
                         }
@@ -320,7 +320,7 @@ export component Menu inherits Window {
 
                             Rectangle {
                                 width: parent.width - 2 * UAppTheme.padding-big;
-                                cpu-bar := ULinearProgress {
+                                cpu-bar := ULineProgress {
                                     width: parent.width;
                                     progress: MainState.cpu;
                                 }
@@ -336,7 +336,7 @@ export component Menu inherits Window {
 
                             Rectangle {
                                 width: parent.width - 2 * UAppTheme.padding-big;
-                                temp-bar := ULinearProgress {
+                                temp-bar := ULineProgress {
                                     width: parent.width;
                                     progress: MainState.temp;
                                 }

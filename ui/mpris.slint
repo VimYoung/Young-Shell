@@ -3,8 +3,7 @@ import { GeneralButton } from "buttons.slint";
 import { UAppTheme } from "@sleek/app-theme.slint";
 import { UText, UIconButton, UTitle } from "@sleek/widgets.slint";
 import { HorizontalBox, VerticalBox } from "std-widgets.slint";
-import { ULinearProgress } from "@sleek/widgets/linear-progress.slint";
-import { UButton } from "@sleek/widgets/button/button.slint";
+import { UButton, ULineProgress } from "@sleek/widgets.slint";
 
 export global MprisState {
     in-out property <string> title: "NoTitle";
@@ -127,7 +126,7 @@ export component Mpris inherits Rectangle {
             Rectangle {
                 width: 120px;
                 horizontal-stretch: 1;
-                song-progress := ULinearProgress {
+                song-progress := ULineProgress {
                     width: parent.width;
                     progress: 40%;
                 }

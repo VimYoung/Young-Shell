@@ -14,7 +14,7 @@ import {
     UIcon,
     UTitle,
     UDivider,
-    ULinearProgress,
+    ULineProgress,
     UButton,
     UText,
     UIconButton,
@@ -24,7 +24,6 @@ import {
 } from "@sleek/widgets.slint";
 import { UAppTheme } from "@sleek/app-theme.slint";
 import { UDarkColors } from "@sleek/colors.slint";
-import { UButtonThemes } from "@sleek/widgets/button/theme.slint";
 
 component AppComponent inherits UScrollView {
     in property <[AppLineData]> app_lines;
@@ -136,7 +135,7 @@ component WifiComponent inherits VerticalLayout {
                 Rectangle {
                     width: 20px;
                     height: parent.height;
-                    ULinearProgress {
+                    ULineProgress {
                         height: parent.height;
                         orientation: vertical;
                         progress: wifi_lines[connected-network].strength;
@@ -227,7 +226,7 @@ component WifiComponent inherits VerticalLayout {
 
                     Rectangle {
                         width: 20px;
-                        ULinearProgress {
+                        ULineProgress {
                             height: parent.height;
                             orientation: vertical;
                             progress: wifi_lines[i].strength;
@@ -518,7 +517,7 @@ export component DisplayComponent inherits Rectangle {
                 height: parent.height;
                 HorizontalLayout {
                     spacing: UAppTheme.spacing-small;
-                    ULinearProgress {
+                    ULineProgress {
                         y: UAppTheme.padding-small;
                         orientation: vertical;
                         height: parent.height - 2 * UAppTheme.padding-small;
@@ -534,7 +533,7 @@ export component DisplayComponent inherits Rectangle {
                         }
                     }
 
-                    ULinearProgress {
+                    ULineProgress {
                         y: UAppTheme.padding-small;
                         orientation: vertical;
                         height: parent.height - 2 * UAppTheme.padding-small;

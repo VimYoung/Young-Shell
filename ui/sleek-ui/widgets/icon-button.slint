@@ -21,10 +21,10 @@ export component UIconButton inherits ButtonInterface {
 	// Regular properties
     in-out property <UButtonVariant> variant: default;
     private property <UButtonTheme> theme: {
-        if variant == primary {
+        if variant == UButtonVariant.primary {
             return danger ? UButtonThemes.primary-danger : UButtonThemes.primary;
         }
-        if variant == filled {
+        if variant == UButtonVariant.filled {
             return danger ? UButtonThemes.filled-danger : UButtonThemes.filled;
         }
         if variant == UButtonVariant.text {

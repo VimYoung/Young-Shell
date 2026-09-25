@@ -171,6 +171,12 @@ export component UInput inherits Rectangle {
     public function copy() {
         input.copy();
     }
+    public function grab-focus() {
+        input.focus();
+    }
+    public function remove-focus() {
+        input.clear-focus();
+    }
     public function cut() {
         input.cut();
     }
