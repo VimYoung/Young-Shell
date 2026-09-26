@@ -92,12 +92,12 @@ export component UInputNumber inherits Rectangle {
                     key-pressed(event) => {
                         if event.text == Key.UpArrow {
                             btn-increase.clicked();
-                            return accept;
+                            return EventResult.accept;
                         } else if event.text == Key.DownArrow {
                             btn-decrease.clicked();
-                            return accept;
+                            return EventResult.accept;
                         }
-                        reject
+                        return EventResult.reject;
                     }
                 }
             }

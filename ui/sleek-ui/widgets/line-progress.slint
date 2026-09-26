@@ -25,7 +25,7 @@ export component ULineProgress inherits Rectangle {
     width: default-size;
     if orientation == Orientation.horizontal: Rectangle {
         private property <length> x-pos: 0;
-        x: indeterminate ? x-pos : direction == end ? root.width - self.width : 0;
+        x: indeterminate ? x-pos : direction == ProgressDirection.end ? root.width - self.width : 0;
         background: progress-color;
         border-radius: default-radius;
         width: indeterminate ? 30% : clamp(progress, 0%, 100%);
@@ -53,7 +53,7 @@ export component ULineProgress inherits Rectangle {
     }
     if orientation == Orientation.vertical: Rectangle {
         private property <length> y-pos: 0;
-        y: indeterminate ? y-pos : direction == end ? root.height - self.height : 0;
+        y: indeterminate ? y-pos : direction == ProgressDirection.end ? root.height - self.height : 0;
         background: progress-color;
         border-radius: default-radius;
         height: indeterminate ? 30% : clamp(progress, 0%, 100%);

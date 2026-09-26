@@ -143,6 +143,7 @@ component WifiComponent inherits VerticalLayout {
                 }
 
                 UText {
+                    overflow: TextOverflow.elide;
                     horizontal-alignment: left;
                     vertical-alignment: center;
                     text: wifi_lines[connected-network].name;
@@ -185,7 +186,7 @@ component WifiComponent inherits VerticalLayout {
                 width: 45px;
                 switch := USwitch {
                     checked: wifi-on;
-                    toggled() => {
+                    clicked => {
                         root.wifi-on = self.checked;
                         wifi-toggle(wifi-on);
                         escape-focus();
@@ -263,9 +264,9 @@ component WifiComponent inherits VerticalLayout {
                             if event.text == Key.Escape {
                                 ask-password = false;
                                 escape-focus();
-                                accept;
+                                return EventResult.accept;
                             } else {
-                                reject;
+                                return EventResult.reject;
                             }
                         }
                         accepted => {

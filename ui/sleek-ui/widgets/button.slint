@@ -24,10 +24,10 @@ export component UButton inherits ButtonInterface {
 	// Regular properties
     in-out property <UButtonVariant> variant: default;
     private property <UButtonTheme> theme: {
-        if variant == primary {
+        if variant == UButtonVariant.primary {
             return danger ? UButtonThemes.primary-danger : UButtonThemes.primary;
         }
-        if variant == filled {
+        if variant == UButtonVariant.filled {
             return danger ? UButtonThemes.filled-danger : UButtonThemes.filled;
         }
         if variant == UButtonVariant.text {
@@ -51,7 +51,7 @@ export component UButton inherits ButtonInterface {
         root.enabled = !root.loading;
     }
     init => {
-        if variant == text-stripped {
+        if variant == UButtonVariant.text-stripped {
             debug("The 'text-stripped' variant is not supported in the 'UButton' widget. Defaulting to 'default'.");
         }
         if root.loading {

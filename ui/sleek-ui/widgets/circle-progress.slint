@@ -59,13 +59,13 @@ export component UCircleProgress inherits Rectangle {
     in property <length> default-size: 120px;
     in property <length> line-width: default-size * 6 / 100;
     in property <angle> gap-degree: 0deg;
-    in property <UCircleProgressGapPosition> gap-position: bottom;
+    in property <UCircleProgressGapPosition> gap-position: UCircleProgressGapPosition.bottom;
     in property <ProgressDirection> direction: start;
     in-out property <percent> progress: 0%;
     in-out property <bool> indeterminate: false;
 	// Inner properties to manage the gap and track.
     private property <angle> gap: clamp(gap-degree, 0deg, 295deg);
-    private property <angle> gap-center: gap-position == top ? 0deg : gap-position == right ? 90deg : gap-position == left ? 270deg : 180deg;
+    private property <angle> gap-center: gap-position == UCircleProgressGapPosition.top ? 0deg : gap-position == UCircleProgressGapPosition.right ? 90deg : gap-position == UCircleProgressGapPosition.left ? 270deg : 180deg;
     // Without a gap, the progress starts from the top of the circle.
     private property <angle> track-start: gap > 0 ? gap-center + gap / 2 : 0deg;
     private property <angle> track-sweep: 360deg - gap;

@@ -52,6 +52,9 @@ export component UInput inherits Rectangle {
                     wrap: no-wrap;
                     // Disable the TextInput accessibility as the widget takes care of that.
                     accessible-role: none;
+                    key-pressed(event) => {
+                        return root.key-pressed(event);
+                    }
                     cursor-position-changed(cpos) => {
                         if cpos.x + self.computed-x < self.right-margin {
                             self.computed-x = - cpos.x + self.right-margin;
@@ -186,6 +189,6 @@ export component UInput inherits Rectangle {
     callback accepted <=> input.accepted;
     callback cursor-position-changed <=> input.cursor-position-changed;
     callback edited <=> input.edited;
-    callback key-pressed <=> input.key-pressed;
+    callback key-pressed(event: KeyEvent) -> EventResult;
     callback key-released <=> input.key-released;
 }

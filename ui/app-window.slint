@@ -34,7 +34,7 @@ import { UCode } from "@sleek/widgets/code.slint";
 import { USwitch } from "@sleek/widgets/switch.slint";
 import { UDarkColors } from "@sleek/colors.slint";
 import { WallpaperManager } from "wallpaper.slint";
-export { MprisState }from "mpris.slint";
+export { MprisState } from "mpris.slint";
 
 export global MainState {
     in-out property <string> time;
@@ -386,9 +386,9 @@ export component Menu inherits Window {
                             current_focus = MenuFocus.ActionLock;
                             self.release-focus();
                             sleepbutton.set-focus();
-                            accept;
+                            return EventResult.accept;
                         } else {
-                            reject;
+                            return EventResult.reject;
                         }
                     }
                 }
@@ -410,9 +410,9 @@ export component Menu inherits Window {
                             current_focus = MenuFocus.ActionLock;
                             self.release-focus();
                             logoutbutton.set-focus();
-                            accept;
+                            return EventResult.accept;
                         } else {
-                            reject;
+                            return EventResult.reject;
                         }
                     }
                 }
@@ -434,9 +434,9 @@ export component Menu inherits Window {
                             current_focus = MenuFocus.ActionLock;
                             self.release-focus();
                             lockbutton.set-focus();
-                            accept;
+                            return EventResult.accept;
                         } else {
-                            reject;
+                            return EventResult.reject;
                         }
                     }
                 }
@@ -458,9 +458,9 @@ export component Menu inherits Window {
                             current_focus = MenuFocus.ActionLock;
                             self.release-focus();
                             powerbutton.set-focus();
-                            accept;
+                            return EventResult.accept;
                         } else {
-                            reject;
+                            return EventResult.reject;
                         }
                     }
                 }
@@ -475,72 +475,72 @@ export component Menu inherits Window {
             if current_focus == MenuFocus.Volume {
                 if event.text == Key.UpArrow {
                     MainState.set-volume(MainState.vol + 10);
-                    accept;
+                    return EventResult.accept;
                 } else if event.text == Key.DownArrow {
                     MainState.set-volume(MainState.vol - 10);
-                    accept;
+                    return EventResult.accept;
                 } else if event.text == Key.Escape {
                     current_focus = MenuFocus.None;
-                    accept;
+                    return EventResult.accept;
                 } else {
-                    reject;
+                    return EventResult.reject;
                 }
             } else if current_focus == MenuFocus.Mic {
                 if event.text == Key.UpArrow {
                     MainState.set-mic(MainState.mic + 10);
-                    accept;
+                    return EventResult.accept;
                 } else if event.text == Key.DownArrow {
                     MainState.set-mic(MainState.mic - 10);
-                    accept;
+                    return EventResult.accept;
                 } else if event.text == Key.Escape {
                     current_focus = MenuFocus.None;
-                    accept;
+                    return EventResult.accept;
                 } else {
-                    reject;
+                    return EventResult.reject;
                 }
             } else if current_focus == MenuFocus.Brightness {
                 if event.text == Key.UpArrow {
                     MainState.set-bright(MainState.brightness + 10);
-                    accept;
+                    return EventResult.accept;
                 } else if event.text == Key.DownArrow {
                     MainState.set-bright(MainState.brightness - 10);
-                    accept;
+                    return EventResult.accept;
                 } else if event.text == Key.Escape {
                     current_focus = MenuFocus.None;
-                    accept;
+                    return EventResult.accept;
                 } else {
-                    reject;
+                    return EventResult.reject;
                 }
             } else if current_focus == MenuFocus.ActionPower {
                 if event.text == Key.Tab {
                     debug("Power and tab entered");
                     powerbutton.set-focus();
-                    accept;
+                    return EventResult.accept;
                 } else if event.text == Key.Escape {
                     current_focus = MenuFocus.None;
-                    accept;
+                    return EventResult.accept;
                 } else {
-                    reject;
+                    return EventResult.reject;
                 }
             } else if current_focus == MenuFocus.Mic {
                 if event.text == Key.UpArrow {
                     MainState.set-mic(MainState.mic + 10);
-                    accept;
+                    return EventResult.accept;
                 } else if event.text == Key.DownArrow {
                     MainState.set-mic(MainState.mic - 10);
-                    accept;
+                    return EventResult.accept;
                 } else if event.text == Key.Escape {
                     current_focus = MenuFocus.None;
-                    accept;
+                    return EventResult.accept;
                 } else {
-                    reject;
+                    return EventResult.reject;
                 }
             } else if event.text == Key.Escape || current_focus == MenuFocus.None {
                 current_focus = MenuFocus.None;
                 call-close();
-                accept;
+                return EventResult.accept;
             } else {
-                reject;
+                return EventResult.reject;
             }
         }
     }
@@ -871,20 +871,20 @@ export component TopBar inherits Window {
                             key-pressed(event) => {
                                 if event.text == Key.Tab {
                                     tab-selection(root.selected);
-                                    accept;
+                                    return EventResult.accept;
                                 } else if event.text == Key.Backtab {
                                     shift-tab-selection(root.selected);
-                                    accept;
+                                    return EventResult.accept;
                                 } else if event.text == Key.DownArrow {
                                     if option-window.selected-content < app_lines.length - 1 {
                                         option-window.selected-content += 1;
                                     }
-                                    accept;
+                                    return EventResult.accept;
                                 } else if event.text == Key.UpArrow {
                                     if option-window.selected-content > 0 {
                                         option-window.selected-content -= 1;
                                     }
-                                    accept;
+                                    return EventResult.accept;
                                 } else if event.text == Key.Escape {
                                     if search-active {
                                         search-bar.select-all();
@@ -893,11 +893,11 @@ export component TopBar inherits Window {
                                         search-bar.select-all();
                                         search-active = true;
                                     }
-                                    accept;
+                                    return EventResult.accept;
                                 } else {
                                     debug(event.modifiers.shift);
                                     debug(event.text);
-                                    reject;
+                                    return EventResult.reject;
                                 }
                             }
                         }
@@ -1200,7 +1200,6 @@ export component Workspaces inherits Window {
         Palette.color-scheme = ColorScheme.light;
     }
     width: 9px;
-    x: 0px;
     height: 830px;
 
     Timer {

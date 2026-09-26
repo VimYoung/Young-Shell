@@ -8,7 +8,7 @@ import { UVariantType } from "common/enums.slint";
 
 
 export component UNotification inherits Rectangle {
-    in-out property <UVariantType> variant: info;
+    in-out property <UVariantType> variant: UVariantType.info;
     in-out property <string> title;
     in-out property <string> message;
     in-out property <image> icon;
@@ -76,19 +76,19 @@ export component UNotification inherits Rectangle {
     }
 
     states [
-        info when variant == info: {
+        info when variant == UVariantType.info: {
             icon: @image-url("../assets/icons/circle-check.svg");
             icon-color: UAppTheme.primary.base;
         }
-        success when variant == success: {
+        success when variant == UVariantType.success: {
             icon: @image-url("../assets/icons/circle-check.svg");
             icon-color: UAppTheme.success.base;
         }
-        warning when variant == warning: {
+        warning when variant == UVariantType.warning: {
             icon: @image-url("../assets/icons/circle-check.svg");
             icon-color: UAppTheme.warning.base;
         }
-        danger when variant == error: {
+        danger when variant == UVariantType.error: {
             icon: @image-url("../assets/icons/circle-check.svg");
             icon-color: UAppTheme.danger.base;
         }
