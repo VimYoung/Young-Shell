@@ -14,7 +14,7 @@ import { NotifData } from "data_structures.slint";
 export component NotificationCard inherits Rectangle {
     in property <NotifData> data;
     // :  { app-name: "Custom", title: "Hello", message: "ZThis is the summary" };
-    in property <float> timeout-s: 10.0;
+    in property <float> timeout-s: 5.0;
     out property <bool> alive: i-alive;
     in property <bool> icon: data.icon;
     in property <image> app-icon;
@@ -109,7 +109,7 @@ export component NotificationCard inherits Rectangle {
         fall-done ? 2.0 : (falling ? ((animation-tick() - fall-start) / 1s) : 0.0);
 
     width: 300px;
-    height: root.actions ? 120px : 82px;
+    height: root.actions ? (120px + max(0, ceil(data.actions.length / 2) - 1) * (32px + UAppTheme.spacing-medium)) : 82px;
     clip: false;
     background: transparent;
     opacity: (i-alive && !entering) ? 1.0 : 0.0;
@@ -236,7 +236,6 @@ export component NotificationCard inherits Rectangle {
                 spacing: UAppTheme.spacing-medium;
 
                 VerticalLayout {
-                    spacing: UAppTheme.spacing-medium;
                     alignment: space-between;
 
                     HorizontalLayout {
@@ -268,6 +267,7 @@ export component NotificationCard inherits Rectangle {
                             }
 
                             UText {
+                                height: 3 * UAppTheme.font-size-base;
                                 vertical-alignment: top;
                                 text: data.message;
                                 wrap: TextWrap.word-wrap;
@@ -277,14 +277,15 @@ export component NotificationCard inherits Rectangle {
                     }
 
                     if root.actions: Rectangle {
-                        // spacing: UAppTheme.spacing-medium;
+                        height: ceil(data.actions.length / 2) * 32px + (ceil(data.actions.length / 2) - 1) * UAppTheme.spacing-medium;
 
                         for action[i] in data.actions: UButton {
+                            height: 32px;
                             variant: filled;
                             x: mod(i, 2) * (parent.width / 2);
-                            y: mod(i, 2) * (parent.height);
+                            y: floor(i / 2) * (self.height + UAppTheme.spacing-medium);
                             text: action.display;
-                            width: parent.width / 2;
+                            width: (parent.width - UAppTheme.spacing-medium) / 2;
                             horizontal-stretch: 1;
                             clicked => {
                                 action-called(action.action, data.id_rust);
