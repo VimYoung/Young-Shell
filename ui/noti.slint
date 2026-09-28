@@ -13,15 +13,22 @@ import { NotifData } from "data_structures.slint";
 
 export component NotificationCard inherits Rectangle {
     in property <NotifData> data;
-    in property <float> timeout-s: 5.0;
+    // :  { app-name: "Custom", title: "Hello", message: "ZThis is the summary" };
+    in property <float> timeout-s: 10.0;
     out property <bool> alive: i-alive;
-    in property <bool> icon: false;
+    in property <bool> icon: data.icon;
     in property <image> app-icon;
-    in property <bool> actions: false;
+    in property <bool> actions: data.actions.length > 0;
     out property <bool> layout-alive: i-alive && !falling;
+
+    in property <length> target-y: 0px;
+    y: target-y;
 
     // App handler resets the slot to id=-1 so add-notif sees it free immediately
     callback release();
+    callback a_input_region(int, int, int, int);
+    callback r_input_region(int, int, int, int);
+    callback action-called(string, int);
 
     private property <bool> i-alive: false;
     private property <float> life: 0.0;
@@ -34,6 +41,66 @@ export component NotificationCard inherits Rectangle {
     private property <duration> fall-start: 0ms;
     private property <length> fall-x0: 0px;
 
+    private property <bool> has-region: false;
+    private property <int> reg-x: 0;
+    private property <int> reg-y: 0;
+    private property <int> reg-w: 0;
+    private property <int> reg-h: 0;
+
+    function sync-region() {
+        if root.layout-alive {
+            let cur-x = round(root.x / 1px);
+            let cur-y = round(root.target-y / 1px);
+            let cur-w = round(root.width / 1px);
+            let cur-h = round(root.height / 1px);
+            if root.has-region {
+                if (cur-x != root.reg-x || cur-y != root.reg-y || cur-w != root.reg-w || cur-h != root.reg-h) {
+                    root.r_input_region(root.reg-x, root.reg-y, root.reg-w, root.reg-h);
+                    root.a_input_region(cur-x, cur-y, cur-w, cur-h);
+                    root.reg-x = cur-x;
+                    root.reg-y = cur-y;
+                    root.reg-w = cur-w;
+                    root.reg-h = cur-h;
+                }
+            } else {
+                root.a_input_region(cur-x, cur-y, cur-w, cur-h);
+                root.reg-x = cur-x;
+                root.reg-y = cur-y;
+                root.reg-w = cur-w;
+                root.reg-h = cur-h;
+                root.has-region = true;
+            }
+        } else {
+            if root.has-region {
+                root.r_input_region(root.reg-x, root.reg-y, root.reg-w, root.reg-h);
+                root.has-region = false;
+            }
+        }
+    }
+
+    public function force-remove-region() {
+        if root.has-region {
+            root.r_input_region(root.reg-x, root.reg-y, root.reg-w, root.reg-h);
+            root.has-region = false;
+        }
+    }
+
+    changed layout-alive => {
+        root.sync-region();
+    }
+
+    changed target-y => {
+        root.sync-region();
+    }
+
+    changed height => {
+        root.sync-region();
+    }
+
+    changed width => {
+        root.sync-region();
+    }
+
     // Three states:
     //   fall-done → frozen 2.0       (chrome off-screen, opacity fading invisibly)
     //   falling   → live physics     (animation-tick drives the parabola)
@@ -42,7 +109,7 @@ export component NotificationCard inherits Rectangle {
         fall-done ? 2.0 : (falling ? ((animation-tick() - fall-start) / 1s) : 0.0);
 
     width: 300px;
-    height: 82px;
+    height: root.actions ? 120px : 82px;
     clip: false;
     background: transparent;
     opacity: (i-alive && !entering) ? 1.0 : 0.0;
@@ -65,6 +132,9 @@ export component NotificationCard inherits Rectangle {
                 i-alive = true;
                 life = 1.0;
                 entering = true;
+                root.sync-region();
+            } else {
+                root.force-remove-region();
             }
             // id = -1 means App just cleared the slot after release().
             // Deliberately do NOT reset falling/fall-done here —
@@ -165,71 +235,72 @@ export component NotificationCard inherits Rectangle {
                 padding: UAppTheme.padding-big;
                 spacing: UAppTheme.spacing-medium;
 
-                Rectangle {
-                    height: 90px;
-                    VerticalLayout {
+                VerticalLayout {
+                    spacing: UAppTheme.spacing-medium;
+                    alignment: space-between;
+
+                    HorizontalLayout {
                         spacing: UAppTheme.spacing-big;
+                        alignment: start;
 
-                        if actions: HorizontalLayout {
-                            spacing: UAppTheme.spacing-medium;
-                            UButton {
-                                text: "Button 1";
-                            }
-
-                            UButton {
-                                text: "Button 2";
+                        if icon: Rectangle {
+                            width: 50px;
+                            UIcon {
+                                width: parent.width;
+                                height: self.width;
+                                image-fit: ImageFit.contain;
+                                vertical-alignment: center;
+                                source: app-icon;
                             }
                         }
 
-                        HorizontalLayout {
-                            height: parent.height - 4 * UAppTheme.padding-medium;
-                            spacing: UAppTheme.spacing-big;
+                        if icon: UDivider {
+                            orientation: vertical;
+                        }
+
+                        VerticalLayout {
                             alignment: start;
-
-                            if icon: Rectangle {
-                                width: 50px;
-                                UIcon {
-                                    width: parent.width;
-                                    height: self.width;
-                                    image-fit: ImageFit.contain;
-                                    vertical-alignment: center;
-                                    source: app_icon;
-                                }
+                            UTitle {
+                                level: 4;
+                                vertical-alignment: top;
+                                text: data.title;
+                                overflow: elide;
                             }
 
-                            if icon: UDivider {
-                                orientation: vertical;
+                            UText {
+                                vertical-alignment: top;
+                                text: data.message;
+                                wrap: TextWrap.word-wrap;
+                                overflow: elide;
                             }
+                        }
+                    }
 
-                            VerticalLayout {
-                                alignment: start;
-                                UTitle {
-                                    level: 4;
-                                    vertical-alignment: top;
-                                    text: data.title;
-                                    overflow: elide;
-                                }
+                    if root.actions: Rectangle {
+                        // spacing: UAppTheme.spacing-medium;
 
-                                UText {
-                                    vertical-alignment: top;
-                                    text: data.message;
-                                    wrap: TextWrap.word-wrap;
-                                    overflow: elide;
-                                }
+                        for action[i] in data.actions: UButton {
+                            variant: filled;
+                            x: mod(i, 2) * (parent.width / 2);
+                            y: mod(i, 2) * (parent.height);
+                            text: action.display;
+                            width: parent.width / 2;
+                            horizontal-stretch: 1;
+                            clicked => {
+                                action-called(action.action, data.id_rust);
                             }
                         }
                     }
                 }
 
-                Rectangle {
-                    y: 0px;
+                accent := Rectangle {
                     width: 3px;
                     height: (parent.height - 3 * UAppTheme.padding-medium) * root.life;
                     background: data.accent;
                     border-radius: 1.5px;
                 }
 
-                UIconButton {
+                close := UIconButton {
                     danger: true;
                     variant: filled;
                     icon: @image-url("../assets/sleek/outlined/close.svg");

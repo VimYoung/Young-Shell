@@ -1,25 +1,15 @@
-use std::{env, error::Error, thread};
+use std::{env, error::Error, rc::Rc, thread};
 
-use slint::{Color, ToSharedString};
+use slint::{Color, ToSharedString, VecModel};
 use spell_framework::{
     cast_spell,
-    layer_properties::{BoardType, LayerAnchor, LayerType, WindowConf},
+    layer_properties::{LayerAnchor, LayerType, WindowConf},
     vault::{NOTIFICATION_EVENT, NotificationManager, Timeout},
 };
 slint::include_modules!();
 spell_framework::generate_widgets![YoungNC];
 
 fn main() -> Result<(), Box<dyn Error>> {
-    // let window_conf = WindowConf::new(
-    //     950,
-    //     830,
-    //     (Some(LayerAnchor::RIGHT), Some(LayerAnchor::BOTTOM)),
-    //     (0, -250, 0, 0),
-    //     LayerType::Top,
-    //     BoardType::None,
-    //     None,
-    // );
-
     let notinc = YoungNCSpell::invoke_spell(
         "youngnc",
         WindowConf::builder()
@@ -48,15 +38,26 @@ fn main() -> Result<(), Box<dyn Error>> {
     });
 
     notinc.on_noti_close(move |id| {
+        // FIXME: Very poor design
+        thread::spawn(move || {
+            let _ = NOTIFICATION_EVENT.get().unwrap().call_close(
+                id.try_into().unwrap(),
+                spell_framework::vault::CloseReason::Dismissed,
+            );
+        });
+    });
+
+    notinc.on_action_called(|action, id| {
+        // FIXME: Very poor design
         thread::spawn(move || {
             let _ = NOTIFICATION_EVENT
                 .get()
                 .unwrap()
-                .call_close(id.try_into().unwrap(), spell_framework::vault::CloseReason::Dismissed);
+                .action_invoked(id as u32, action.as_str());
         });
     });
-
     notinc.subtract_input_region(0, 0, 950, 830);
+
     cast_spell!(notification: notinc)
 }
 
@@ -66,6 +67,14 @@ impl NotificationManager for YoungNC {
         notification: spell_framework::vault::Notification,
     ) -> Result<(), spell_framework::vault::NotiError> {
         println!("New Notification called: {:#?}", notification);
+        let actions: Vec<NotiAction> = notification
+            .actions
+            .chunks_exact(2)
+            .map(|val| NotiAction {
+                action: val[0].to_shared_string(), //SharedString::from(val[0]),
+                display: val[1].to_shared_string(),
+            })
+            .collect();
         self.invoke_add_notif(
             notification.id as i32,
             notification.appname.to_shared_string(),
@@ -73,11 +82,12 @@ impl NotificationManager for YoungNC {
             notification.body.to_shared_string(),
             give_timeout(notification.timeout),
             Color::from_rgb_u8(63, 185, 80),
+            Rc::new(VecModel::from(actions)).into(),
         );
         Ok(())
     }
 
-    fn close_notification(&self, id: u32) -> Result<(), spell_framework::vault::NotiError> {
+    fn close_notification(&self, _id: u32) -> Result<(), spell_framework::vault::NotiError> {
         Ok(())
     }
 }

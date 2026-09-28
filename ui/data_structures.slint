@@ -52,6 +52,8 @@ export struct State {
     string-type: string,
     cards-type: Cards,
 }
+
+export struct NotiAction { action: string, display: string }
 export struct NotifData {
     id: int,
     id_rust: int,
@@ -61,5 +63,6 @@ export struct NotifData {
     message: string,
     accent: color,
     timeout: int,
+    actions: [NotiAction],
     icon: bool,
 }
