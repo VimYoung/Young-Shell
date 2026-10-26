@@ -24,6 +24,7 @@ import {
 } from "@sleek/widgets.slint";
 import { UAppTheme } from "@sleek/app-theme.slint";
 import { UDarkColors } from "@sleek/colors.slint";
+import { UCircleProgress } from "@sleek/widgets/circle-progress.slint";
 
 component AppComponent inherits UScrollView {
     in property <[AppLineData]> app_lines;
@@ -519,9 +520,13 @@ export component DisplayComponent inherits Rectangle {
                 height: parent.height;
                 HorizontalLayout {
                     spacing: UAppTheme.spacing-small;
-                    ULineProgress {
+                    UCircleProgress {
                         y: UAppTheme.padding-small;
-                        orientation: vertical;
+                        direction: end;
+                        width: self.height;
+                        // gap-degree: 90deg;
+                        // gap-position: bottom;
+                        line-width: 3px;
                         height: parent.height - 2 * UAppTheme.padding-small;
                         progress: cpu;
                     }
@@ -535,9 +540,11 @@ export component DisplayComponent inherits Rectangle {
                         }
                     }
 
-                    ULineProgress {
+                    UCircleProgress {
                         y: UAppTheme.padding-small;
-                        orientation: vertical;
+                        direction: end;
+                        width: self.height;
+                        line-width: 3px;
                         height: parent.height - 2 * UAppTheme.padding-small;
                         progress: temp;
                     }

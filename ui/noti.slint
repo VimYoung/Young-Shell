@@ -284,24 +284,28 @@ export component NotificationCard inherits Rectangle {
                             variant: filled;
                             x: mod(i, 2) * (parent.width / 2);
                             y: floor(i / 2) * (self.height + UAppTheme.spacing-medium);
-                            text: action.display;
+                            text: action.display == "" ? "Default" : action.display;
                             width: (parent.width - UAppTheme.spacing-medium) / 2;
                             horizontal-stretch: 1;
                             clicked => {
                                 action-called(action.action, data.id_rust);
+                                if (root.i-alive) {
+                                    root.i-alive = false;
+                                    root.release();
+                                }
                             }
                         }
                     }
                 }
 
-                accent := Rectangle {
+                Rectangle {
                     width: 3px;
                     height: (parent.height - 3 * UAppTheme.padding-medium) * root.life;
                     background: data.accent;
                     border-radius: 1.5px;
                 }
 
-                close := UIconButton {
+                UIconButton {
                     danger: true;
                     variant: filled;
                     icon: @image-url("../assets/sleek/outlined/close.svg");

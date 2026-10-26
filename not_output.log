@@ -1,0 +1,2506 @@
+[32m INFO[0m Setting keyboard capability
+xkbcommon: ERROR: [XKB-679] No Compose file for locale "en_IN.ISO8859-1": locale is either invalid or not installed
+xkbcommon: ERROR: [XKB-679] couldn't find a Compose file for locale "en_IN" (mapped to "en_IN.ISO8859-1")
+[32m INFO[0m Setting pointer capability
+[32m INFO[0m Evaluated width: 950, evaluated_height: 830
+[32m INFO[0m Win: youngnc layer created successfully.
+[32m INFO[0m Win: Handle provided.
+[32m INFO[0m Win: Handle provided.
+[32m INFO[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Win: Handle provided.
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Scale factor changed, compositor msg
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Scale factor changed, invoked from custom trait: 150
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Physical Size: width: 1188, height: 1038
+[32m INFO[0m Object server is setup
+[32m INFO[0m Notification service is live with the provided name
+[32m INFO[0m capabilities called
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 1,
+    appname: "notify-send",
+    summary: "Dummy Notification",
+    subtitle: None,
+    body: "Click one of the buttons below:",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+    ],
+    actions: [
+        "action1",
+        "Button 1",
+        "action2",
+        "Button 2",
+        "action3",
+        "Button 3",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Action triggered for ID: 1, Action Key: 'action1'
+[32m INFO[0m Close triggered for ID: 1, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 2,
+    appname: "",
+    summary: "\u{2068}GitHub\u{2069} (\u{2068}#git-activity\u{2069}, \u{2068}Text channels\u{2069})",
+    subtitle: None,
+    body: "[VimYoung/Spell] New comment on issue #43: [BUG]: No window at startup I checked the exact code and it seems to be working fine, I think the event is ultimately generating from your resize event somehow(not sure though, strace suggests resize among the last incoming messages). Can you move back to `main` of the repo and recompile your code with the current state of Spell without your changes. It is to rule out the possibility that the `set_size` function change is causing a regression.",
+    icon: "",
+    hints: [
+        DesktopEntry(
+            "com.discordapp.Discord",
+        ),
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+    ],
+    actions: [
+        "default",
+        "",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m Close triggered for ID: 2, Reason: Dismissed
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 3,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking self protocol initiated",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 3, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 4,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking protocol terminated.",
+    icon: "",
+    hints: [
+        Invalid,
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 4, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 5,
+    appname: "",
+    summary: "\u{2068}GitHub\u{2069} (\u{2068}#git-activity\u{2069}, \u{2068}Text channels\u{2069})",
+    subtitle: None,
+    body: "[VimYoung/Spell] New comment on issue #43: [BUG]: No window at startup This bug is actually on main without my resize functionality.\n\nExact steps: \non main branch\n`cargo clean`\n`cargo run --bin bar`\n\nnothing shows up\n\nlogs: \n     Running `target/debug/bar`\n INFO Setting keyboard capability\n INFO Setting pointer capability\n INFO Evaluated width: 1536, evaluated_height: 40\n INFO Win: bar layer created successfully.\n INFO Win: Handle provided.\n\n\ncheckout commit 09ef5ba212847cf79406936f613a93a25e4b94db (before the event loop as fds)\n`cargo clean`\n`cargo run --bin ba...",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+        DesktopEntry(
+            "com.discordapp.Discord",
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m Close triggered for ID: 5, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 6,
+    appname: "Transmission",
+    summary: "Torrent Added",
+    subtitle: None,
+    body: "The.Batman.2022.1080p.WEBRip.x265-RARBN",
+    icon: "transmission",
+    hints: [
+        Category(
+            "transfer.complete",
+        ),
+    ],
+    actions: [
+        "start-now(5)",
+        "Start Now",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m Close triggered for ID: 6, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 7,
+    appname: "",
+    summary: "bhaumik2386@gmail.com received 1 new message",
+    subtitle: None,
+    body: "[VimYoung/Spell] [BUG]: No window at startup (Issue #43) from Sem Van Broekhoven",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+        "a8116586471e553bee3f89526abe6d81",
+        "Activate",
+        "mark-as-read-moz",
+        "Mark as Read",
+        "delete-moz",
+        "Delete",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m Close triggered for ID: 7, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 8,
+    appname: "",
+    summary: "bhaumik2386@gmail.com received 1 new message",
+    subtitle: None,
+    body: "The developer trends that shaped our industry from \"Stack Overflow\"",
+    icon: "",
+    hints: [
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+        "867ed514bc685660d4fc3fe46abe6e5a",
+        "Activate",
+        "mark-as-read-moz",
+        "Mark as Read",
+        "delete-moz",
+        "Delete",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Action triggered for ID: 8, Action Key: 'mark-as-read-moz'
+[32m INFO[0m Close triggered for ID: 8, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 9,
+    appname: "Transmission",
+    summary: "Torrent Completed",
+    subtitle: None,
+    body: "The.Batman.2022.1080p.WEBRip.x265-RARBG",
+    icon: "transmission",
+    hints: [
+        Category(
+            "transfer.complete",
+        ),
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 9, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m capabilities called
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 10,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking self protocol initiated",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 10, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 11,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking protocol terminated.",
+    icon: "",
+    hints: [
+        Invalid,
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 11, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m capabilities called
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 12,
+    appname: "",
+    summary: "25f2005943@ds.study.iitm.ac.in received 1 new message",
+    subtitle: None,
+    body: "Unlock More with ASUS & Google AI from \"ASUS India\"",
+    icon: "",
+    hints: [
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+        "83375a83b5d16f94314b6ae36abe7a78",
+        "Activate",
+        "mark-as-read-moz",
+        "Mark as Read",
+        "delete-moz",
+        "Delete",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m Close triggered for ID: 12, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 13,
+    appname: "",
+    summary: "bhaumik2386@gmail.com received 1 new message",
+    subtitle: None,
+    body: "\"Ling-3.1-flash builds a native Lua compiler in about 17 hours, passing 178...\" from Reddit",
+    icon: "",
+    hints: [
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+        "be18539d6d25ad6d59c1f3d56abe7e70",
+        "Activate",
+        "mark-as-read-moz",
+        "Mark as Read",
+        "delete-moz",
+        "Delete",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m Close triggered for ID: 13, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m capabilities called
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 14,
+    appname: "",
+    summary: "25f2005943@ds.study.iitm.ac.in",
+    subtitle: None,
+    body: "Failed to connect to server apidata.googleusercontent.com.",
+    icon: "",
+    hints: [
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 15,
+    appname: "",
+    summary: "Holidays in India",
+    subtitle: None,
+    body: "Failed to connect to server apidata.googleusercontent.com.",
+    icon: "",
+    hints: [
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m Notifcation event received
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 106, width: 300, height: 82]
+New Notification called: Notification {
+    id: 16,
+    appname: "",
+    summary: "Holidays in India",
+    subtitle: None,
+    body: "Failed to connect to server apidata.googleusercontent.com.",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 17,
+    appname: "",
+    summary: "bhaumik2386@gmail.com",
+    subtitle: None,
+    body: "Failed to connect to server apidata.googleusercontent.com.",
+    icon: "",
+    hints: [
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 196, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 196, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 196, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 286, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 15, Reason: Dismissed
+[32m INFO[0m Close triggered for ID: 14, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 106, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 196, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 286, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 106, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 17, Reason: Dismissed
+[32m INFO[0m Close triggered for ID: 16, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 106, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 18,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking self protocol initiated",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 18, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 19,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking protocol terminated.",
+    icon: "",
+    hints: [
+        Invalid,
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m capabilities called
+[32m INFO[0m Close triggered for ID: 19, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m capabilities called
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 20,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking self protocol initiated",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 20, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 21,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking protocol terminated.",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 21, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 22,
+    appname: "",
+    summary: "bhaumik2386@gmail.com received 7 new messages",
+    subtitle: None,
+    body: "Oculon.AI is hiring for Remote role from LinkedIn",
+    icon: "",
+    hints: [
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 23,
+    appname: "",
+    summary: "25f2005943@ds.study.iitm.ac.in received 12 new messages",
+    subtitle: None,
+    body: "NPTEL WORKSHOP - Getting Started with FreeRTOS on Arduino Uno from DONOT_REPLY",
+    icon: "",
+    hints: [
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 144, width: 300, height: 120]
+[32m INFO[0m Close triggered for ID: 23, Reason: Dismissed
+[32m INFO[0m Close triggered for ID: 22, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 144, width: 300, height: 120]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m capabilities called
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 24,
+    appname: "Firefox",
+    summary: "Claude responded",
+    subtitle: None,
+    body: "Yes. DirectAdmin's File Manager isn't a Git repo, but you can automate pushing your build to public_html in a few ways. The most common is a CI pipe",
+    icon: "",
+    hints: [
+        SuppressSound(
+            false,
+        ),
+        Invalid,
+        Invalid,
+        DesktopEntry(
+            "firefox",
+        ),
+    ],
+    actions: [
+        "default",
+        "Activate",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Close triggered for ID: 24, Reason: Dismissed
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 25,
+    appname: "Firefox",
+    summary: "Claude responded",
+    subtitle: None,
+    body: "Not much. CRA outputs to build/, which is what the workflow I gave already uses (./build/), so it works as written. There are a few CRA-specific t",
+    icon: "",
+    hints: [
+        Invalid,
+        SuppressSound(
+            false,
+        ),
+        Invalid,
+        DesktopEntry(
+            "firefox",
+        ),
+    ],
+    actions: [
+        "default",
+        "Activate",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m Close triggered for ID: 25, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 26,
+    appname: "",
+    summary: "bhaumik2386@gmail.com received 1 new message",
+    subtitle: None,
+    body: "[VimYoung/uip] Run failed: Deploy React to DirectAdmin - main (ff8eea3) from \"Ramayen\"",
+    icon: "",
+    hints: [
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+        "938d94fa26944e79ee7146ba6abfdbc0",
+        "Activate",
+        "mark-as-read-moz",
+        "Mark as Read",
+        "delete-moz",
+        "Delete",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m Close triggered for ID: 26, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 27,
+    appname: "",
+    summary: "bhaumik2386@gmail.com received 1 new message",
+    subtitle: None,
+    body: "[VimYoung/uip] Run failed: .github/workflows/deploy.yml - main (4858cd4) from \"Ramayen\"",
+    icon: "",
+    hints: [
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+        "33115eeb9ae7f1a4e1f992226abfdc98",
+        "Activate",
+        "mark-as-read-moz",
+        "Mark as Read",
+        "delete-moz",
+        "Delete",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Close triggered for ID: 27, Reason: Dismissed
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 28,
+    appname: "Firefox",
+    summary: "Claude responded",
+    subtitle: None,
+    body: "Glad it's fixed! YAML's whitespace sensitivity catches almost everyone at some point, and the error messages (\"Unexpected value ''\") don't exactly poi",
+    icon: "",
+    hints: [
+        DesktopEntry(
+            "firefox",
+        ),
+        Invalid,
+        SuppressSound(
+            false,
+        ),
+        Invalid,
+    ],
+    actions: [
+        "default",
+        "Activate",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Close triggered for ID: 28, Reason: Dismissed
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 29,
+    appname: "",
+    summary: "bhaumik2386@gmail.com received 1 new message",
+    subtitle: None,
+    body: "[VimYoung/uip] Run failed: Deploy React to DirectAdmin - main (5cde508) from \"Ramayen\"",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+        "d3a210585a76cfee9af3db7a6abfdd9b",
+        "Activate",
+        "mark-as-read-moz",
+        "Mark as Read",
+        "delete-moz",
+        "Delete",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m Close triggered for ID: 29, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 30,
+    appname: "",
+    summary: "bhaumik2386@gmail.com received 1 new message",
+    subtitle: None,
+    body: "[VimYoung/uip] Run failed: Deploy React to DirectAdmin - main (7ec4216) from \"Ramayen\"",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+        "e5d5fb96ecf3d5d1a4d51a0b6abfdec8",
+        "Activate",
+        "mark-as-read-moz",
+        "Mark as Read",
+        "delete-moz",
+        "Delete",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m Close triggered for ID: 30, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 31,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking self protocol initiated",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 31, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 32,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking protocol terminated.",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 32, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 33,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking self protocol initiated",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 33, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 34,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking protocol terminated.",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 34, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 35,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking self protocol initiated",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 36,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking protocol terminated.",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 106, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 35, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 106, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 36, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 37,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking self protocol initiated",
+    icon: "",
+    hints: [
+        Invalid,
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 37, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 38,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking protocol terminated.",
+    icon: "",
+    hints: [
+        Invalid,
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 38, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m capabilities called
+[32m INFO[0m capabilities called
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 39,
+    appname: "notify-send",
+    summary: "Dummy Notification",
+    subtitle: None,
+    body: "Click one of the buttons below:",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+    ],
+    actions: [
+        "action1",
+        "Button 1",
+        "action2",
+        "Button 2",
+        "action3",
+        "Button 3",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Close triggered for ID: 39, Reason: Dismissed
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 40,
+    appname: "Firefox",
+    summary: "Claude responded",
+    subtitle: None,
+    body: "Good progress: the secrets are loading now, and this error comes from the FTP connection itself. \"(control socket)\" means the action couldn't establis",
+    icon: "",
+    hints: [
+        Invalid,
+        Invalid,
+        DesktopEntry(
+            "firefox",
+        ),
+        SuppressSound(
+            false,
+        ),
+    ],
+    actions: [
+        "default",
+        "Activate",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Close triggered for ID: 40, Reason: Dismissed
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 41,
+    appname: "",
+    summary: "bhaumik2386@gmail.com received 1 new message",
+    subtitle: None,
+    body: "[VimYoung/uip] Run failed: Deploy React to DirectAdmin, Attempt #2 - main (7ec4216) from \"Ramayen\"",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+        "c2b6cc2cb62efe457ac84e546ac0659f",
+        "Activate",
+        "mark-as-read-moz",
+        "Mark as Read",
+        "delete-moz",
+        "Delete",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Action triggered for ID: 41, Action Key: 'delete-moz'
+[32m INFO[0m Close triggered for ID: 41, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 42,
+    appname: "",
+    summary: "bhaumik2386@gmail.com received 1 new message",
+    subtitle: None,
+    body: "[VimYoung/uip] Run failed: Deploy React to DirectAdmin - main (5f55e84) from \"Ramayen\"",
+    icon: "",
+    hints: [
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+        "70f7b407e5babecf250b97a16ac06715",
+        "Activate",
+        "mark-as-read-moz",
+        "Mark as Read",
+        "delete-moz",
+        "Delete",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Action triggered for ID: 42, Action Key: 'delete-moz'
+[32m INFO[0m Close triggered for ID: 42, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 43,
+    appname: "",
+    summary: "bhaumik2386@gmail.com received 1 new message",
+    subtitle: None,
+    body: "[VimYoung/uip] Run failed: Deploy React to DirectAdmin - main (fc5a0e8) from \"Ramayen\"",
+    icon: "",
+    hints: [
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+        "e133b7b01d49469335a0bcd36ac06832",
+        "Activate",
+        "mark-as-read-moz",
+        "Mark as Read",
+        "delete-moz",
+        "Delete",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Action triggered for ID: 43, Action Key: 'delete-moz'
+[32m INFO[0m Close triggered for ID: 43, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 44,
+    appname: "",
+    summary: "bhaumik2386@gmail.com received 1 new message",
+    subtitle: None,
+    body: "[VimYoung/uip] Run failed: Deploy React to DirectAdmin - main (331c40d) from \"Ramayen\"",
+    icon: "",
+    hints: [
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+        "413beac68e0e776fd138353e6ac06e50",
+        "Activate",
+        "mark-as-read-moz",
+        "Mark as Read",
+        "delete-moz",
+        "Delete",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m Close triggered for ID: 44, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m capabilities called
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 45,
+    appname: "Firefox",
+    summary: "Claude responded",
+    subtitle: None,
+    body: "Port 22 being reachable is good news. Note that I can't test your server from here, so I can't confirm the login works, but the nc result means GitH",
+    icon: "",
+    hints: [
+        Invalid,
+        DesktopEntry(
+            "firefox",
+        ),
+        Invalid,
+        SuppressSound(
+            false,
+        ),
+    ],
+    actions: [
+        "default",
+        "Activate",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m Close triggered for ID: 45, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 46,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking self protocol initiated",
+    icon: "",
+    hints: [
+        Invalid,
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 46, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 47,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking protocol terminated.",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 47, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 48,
+    appname: "",
+    summary: "bhaumik2386@gmail.com received 1 new message",
+    subtitle: None,
+    body: "[VimYoung/uip] Run failed: Deploy React to DirectAdmin - main (fcdff03) from \"Ramayen\"",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+        "fee1ff5c4a0b6d9fd7428cc46ac07336",
+        "Activate",
+        "mark-as-read-moz",
+        "Mark as Read",
+        "delete-moz",
+        "Delete",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Close triggered for ID: 48, Reason: Dismissed
+[32m INFO[0m capabilities called
+[32m INFO[0m capabilities called
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 49,
+    appname: "",
+    summary: "25f2005943@ds.study.iitm.ac.in received 12 new messages",
+    subtitle: None,
+    body: "NPTEL WORKSHOP - Getting Started with FreeRTOS on Arduino Uno from DONOT_REPLY",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Close triggered for ID: 49, Reason: Dismissed
+[32m INFO[0m capabilities called
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 50,
+    appname: "",
+    summary: "bhaumik2386@gmail.com received 1 new message",
+    subtitle: None,
+    body: "Bhaumik, your Pins? +1000 aura 😍 from Pinterest",
+    icon: "",
+    hints: [
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+        "70be6caacda130a8e6f0131d6ac0baca",
+        "Activate",
+        "mark-as-read-moz",
+        "Mark as Read",
+        "delete-moz",
+        "Delete",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 51,
+    appname: "",
+    summary: "25f2005943@ds.study.iitm.ac.in received 1 new message",
+    subtitle: None,
+    body: "Orientation Session – September 2026 Term - Happening Now from IITM BS Degree",
+    icon: "",
+    hints: [
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+        "ec1b083fdbb2540a2e6d3c4d6ac0baca",
+        "Activate",
+        "mark-as-read-moz",
+        "Mark as Read",
+        "delete-moz",
+        "Delete",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 184, width: 300, height: 160]
+[32m INFO[0m Close triggered for ID: 50, Reason: Dismissed
+[32m INFO[0m Close triggered for ID: 51, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 184, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m capabilities called
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 52,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking self protocol initiated",
+    icon: "",
+    hints: [
+        Invalid,
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 53,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking protocol terminated.",
+    icon: "",
+    hints: [
+        Invalid,
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 106, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 52, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 106, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Close triggered for ID: 53, Reason: Dismissed
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 54,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking self protocol initiated",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 54, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 55,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking protocol terminated.",
+    icon: "",
+    hints: [
+        Invalid,
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 55, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 56,
+    appname: "",
+    summary: "bhaumik2386@gmail.com received 1 new message",
+    subtitle: None,
+    body: "Big Grocery Savings, Delivered Fast from SBI",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+        "22b5e3a0055eae31647b74a46ac0ceac",
+        "Activate",
+        "mark-as-read-moz",
+        "Mark as Read",
+        "delete-moz",
+        "Delete",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m Close triggered for ID: 56, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m capabilities called
+[32m INFO[0m capabilities called
+[32m INFO[0m capabilities called
+[32m INFO[0m capabilities called
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 57,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking self protocol initiated",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 57, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 58,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking protocol terminated.",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 58, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 59,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking self protocol initiated",
+    icon: "",
+    hints: [
+        Invalid,
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 60,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking protocol terminated.",
+    icon: "",
+    hints: [
+        Invalid,
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 106, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 59, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 106, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 60, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m capabilities called
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 61,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking self protocol initiated",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 61, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 62,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking protocol terminated.",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 62, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 63,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking self protocol initiated",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 63, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 64,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking protocol terminated.",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Close triggered for ID: 64, Reason: Dismissed
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 65,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking self protocol initiated",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 65, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 66,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking protocol terminated.",
+    icon: "",
+    hints: [
+        Invalid,
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Close triggered for ID: 66, Reason: Dismissed
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 67,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking self protocol initiated",
+    icon: "",
+    hints: [
+        Invalid,
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 67, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 68,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking protocol terminated.",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 68, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 69,
+    appname: "niri",
+    summary: "Screenshot captured",
+    subtitle: None,
+    body: "You can paste the image from the clipboard.",
+    icon: "file:///home/ramayen/Pictures/Screenshots/Screenshot%20from%202026-10-04%2016-25-25.png",
+    hints: [
+        Transient(
+            true,
+        ),
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 69, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 70,
+    appname: "",
+    summary: "\u{2068}0hypercube\u{2069} (\u{2068}#✅code-todo-list\u{2069}, \u{2068}Development\u{2069})",
+    subtitle: None,
+    body: "0hypercube started a thread, 'Fill poperties missing'",
+    icon: "",
+    hints: [
+        DesktopEntry(
+            "com.discordapp.Discord",
+        ),
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+    ],
+    actions: [
+        "default",
+        "",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m Close triggered for ID: 70, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m capabilities called
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 71,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking self protocol initiated",
+    icon: "",
+    hints: [
+        Invalid,
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 71, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 72,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking protocol terminated.",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 72, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 73,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking self protocol initiated",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 73, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 74,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking protocol terminated.",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 74, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 75,
+    appname: "",
+    summary: "bhaumik2386@gmail.com received 21 new messages",
+    subtitle: None,
+    body: "Reminder about Google's Terms of Service from Google",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 76,
+    appname: "",
+    summary: "25f2005943@ds.study.iitm.ac.in received 5 new messages",
+    subtitle: None,
+    body: "Diploma Level Orientation – September 2026 Term | Today, 4:00 PM – 6:00 PM from Sep 2026 term - Diploma Level Announcement Group",
+    icon: "",
+    hints: [
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 144, width: 300, height: 120]
+[32m INFO[0m Close triggered for ID: 75, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 144, width: 300, height: 120]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m Close triggered for ID: 76, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 77,
+    appname: "",
+    summary: "bhaumik2386@gmail.com received 21 new messages",
+    subtitle: None,
+    body: "Big Grocery Savings, Delivered Fast from SBI",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m Close triggered for ID: 77, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 78,
+    appname: "",
+    summary: "25f2005943@ds.study.iitm.ac.in received 5 new messages",
+    subtitle: None,
+    body: "Diploma Level Orientation – September 2026 Term | Today, 4:00 PM – 6:00 PM from Sep 2026 term - Diploma Level Announcement Group",
+    icon: "",
+    hints: [
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m Close triggered for ID: 78, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 79,
+    appname: "",
+    summary: "25f2005943@ds.study.iitm.ac.in received 1 new message",
+    subtitle: None,
+    body: "App Development -1 Project Portal Access Update from POD Viva",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+        "1b60366ef6c50990fa54bfe26ac2471a",
+        "Activate",
+        "mark-as-read-moz",
+        "Mark as Read",
+        "delete-moz",
+        "Delete",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m Close triggered for ID: 79, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 80,
+    appname: "",
+    summary: "bhaumik2386@gmail.com received 1 new message",
+    subtitle: None,
+    body: "You appeared in 4 searches from LinkedIn",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+        "8a7a987930ff234bd70180a26ac24843",
+        "Activate",
+        "mark-as-read-moz",
+        "Mark as Read",
+        "delete-moz",
+        "Delete",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Action triggered for ID: 80, Action Key: 'mark-as-read-moz'
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Close triggered for ID: 80, Reason: Dismissed
+[32m INFO[0m capabilities called
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 81,
+    appname: "",
+    summary: "25f2005943@ds.study.iitm.ac.in received 1 new message",
+    subtitle: None,
+    body: "[GitHub] A new SSH authentication public key was added to your account from GitHub",
+    icon: "",
+    hints: [
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+        "9761fe33c206c856bb69facf6ac25139",
+        "Activate",
+        "mark-as-read-moz",
+        "Mark as Read",
+        "delete-moz",
+        "Delete",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Action triggered for ID: 81, Action Key: 'mark-as-read-moz'
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Close triggered for ID: 81, Reason: Dismissed
+[32m INFO[0m capabilities called
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 82,
+    appname: "",
+    summary: "bhaumik2386@gmail.com received 1 new message",
+    subtitle: None,
+    body: "\"I tried to leave Logseq for Obsidian. Here's my soapbox.\" from Reddit",
+    icon: "",
+    hints: [
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+        "1cd7fffee19a636f18196f6f6ac27117",
+        "Activate",
+        "mark-as-read-moz",
+        "Mark as Read",
+        "delete-moz",
+        "Delete",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m Close triggered for ID: 82, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 160]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 83,
+    appname: "",
+    summary: "\u{2068}Cot #announcements\u{2069} (\u{2068}#general\u{2069}, \u{2068}Text channels\u{2069})",
+    subtitle: None,
+    body: "You asked, we answered: the configuration page is now live at https://cot.rs/guide/master/configuration/. Automatically generated from the source code (meaning: never out of date), with a full TOML config example, and all that means no more guessing how the config structs map into the config file. Let us know your feedback!",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+        DesktopEntry(
+            "com.discordapp.Discord",
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m Close triggered for ID: 83, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 84,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking self protocol initiated",
+    icon: "",
+    hints: [
+        Invalid,
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 85,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking protocol terminated.",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 106, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 84, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 106, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 85, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 86,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking self protocol initiated",
+    icon: "",
+    hints: [
+        Invalid,
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 86, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 87,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking protocol terminated.",
+    icon: "",
+    hints: [
+        Invalid,
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 87, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 88,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking self protocol initiated",
+    icon: "",
+    hints: [
+        Invalid,
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 88, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+[33m WARN[0m Invalid hint passed with key: sender-pid
+New Notification called: Notification {
+    id: 89,
+    appname: "notify-send",
+    summary: "\u{f05a} System",
+    subtitle: None,
+    body: "Locking protocol terminated.",
+    icon: "",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Invalid,
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 89, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m capabilities called
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 90,
+    appname: "",
+    summary: "bhaumik2386@gmail.com received 2 new messages",
+    subtitle: None,
+    body: "[GraphiteEditor/Graphite] Pen tool offset (PR #4616) from \"cubic-dev-ai[bot]\"",
+    icon: "",
+    hints: [
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m Close triggered for ID: 90, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m capabilities called
+[32m INFO[0m capabilities called
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 91,
+    appname: "",
+    summary: "bhaumik2386@gmail.com received 2 new messages",
+    subtitle: None,
+    body: "You're doing amazing work! from Canva",
+    icon: "",
+    hints: [
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m Close triggered for ID: 91, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 92,
+    appname: "",
+    summary: "bhaumik2386@gmail.com received 2 new messages",
+    subtitle: None,
+    body: "You shared some Google Account data with HackerRank from Google",
+    icon: "",
+    hints: [
+        DesktopEntry(
+            "org.mozilla.thunderbird",
+        ),
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [
+        "default",
+        "",
+    ],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m Close triggered for ID: 92, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 120]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 93,
+    appname: "powernotd",
+    summary: "\u{f05a} System: Battery Low",
+    subtitle: None,
+    body: "The battery is 10%, connect the arc reactor.",
+    icon: "",
+    hints: [
+        Urgency(
+            Critical,
+        ),
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 93, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 94,
+    appname: "niri",
+    summary: "Screenshot captured",
+    subtitle: None,
+    body: "You can paste the image from the clipboard.",
+    icon: "file:///home/ramayen/Pictures/Screenshots/Screenshot%20from%202026-10-05%2012-01-28.png",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Transient(
+            true,
+        ),
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 95,
+    appname: "niri",
+    summary: "Screenshot captured",
+    subtitle: None,
+    body: "You can paste the image from the clipboard.",
+    icon: "file:///home/ramayen/Pictures/Screenshots/Screenshot%20from%202026-10-05%2012-01-32.png",
+    hints: [
+        Urgency(
+            Normal,
+        ),
+        Transient(
+            true,
+        ),
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 106, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 94, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 106, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 95, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 96,
+    appname: "niri",
+    summary: "Screenshot captured",
+    subtitle: None,
+    body: "You can paste the image from the clipboard.",
+    icon: "file:///home/ramayen/Pictures/Screenshots/Screenshot%20from%202026-10-05%2012-01-49.png",
+    hints: [
+        Transient(
+            true,
+        ),
+        Urgency(
+            Normal,
+        ),
+    ],
+    actions: [],
+    timeout: Default,
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 96, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]
+[32m INFO[0m Notifcation event received
+New Notification called: Notification {
+    id: 97,
+    appname: "powernotd",
+    summary: "\u{f05a} System: Battery Critical",
+    subtitle: None,
+    body: "Your power is below 5%, the system is about to shut down.",
+    icon: "",
+    hints: [
+        Urgency(
+            Critical,
+        ),
+    ],
+    actions: [],
+    timeout: Milliseconds(
+        10000,
+    ),
+}
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region added: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m Close triggered for ID: 97, Reason: Dismissed
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 634, y: 16, width: 300, height: 82]
+[32m INFO[0m [1mwidget[0m[1m{[0m[3mname[0m[2m=[0m"youngnc"[1m}[0m[2m:[0m Win: input region removed: [x: 0, y: 0, width: 950, height: 830]

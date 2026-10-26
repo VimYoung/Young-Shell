@@ -49,13 +49,12 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     notinc.on_action_called(|action, id| {
         // FIXME: Very poor design
-        thread::spawn(move || {
-            let _ = NOTIFICATION_EVENT
-                .get()
-                .unwrap()
-                .action_invoked(id as u32, action.as_str());
-        });
+        let _ = NOTIFICATION_EVENT
+            .get()
+            .unwrap()
+            .action_invoked(id as u32, action.as_str());
     });
+
     notinc.subtract_input_region(0, 0, 950, 830);
 
     cast_spell!(notification: notinc)
